@@ -15,6 +15,21 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('mail-accounts')" :active="request()->routeIs('mail-accounts')">
+                        {{ __('Mail Accounts') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('tags')" :active="request()->routeIs('tags')">
+                        {{ __('Tags') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('contacts')" :active="request()->routeIs('contacts')">
+                        {{ __('Contacts') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('campaigns')" :active="request()->routeIs('campaigns')">
+                        {{ __('Campaigns') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('newsletters')" :active="request()->routeIs('newsletters')">
+                        {{ __('Newsletters') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +84,21 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('mail-accounts')" :active="request()->routeIs('mail-accounts')">
+                {{ __('Mail Accounts') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('tags')" :active="request()->routeIs('tags')">
+                {{ __('Tags') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('contacts')" :active="request()->routeIs('contacts')">
+                {{ __('Contacts') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('campaigns')" :active="request()->routeIs('campaigns')">
+                {{ __('Campaigns') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('newsletters')" :active="request()->routeIs('newsletters')">
+                {{ __('Newsletters') }}
             </x-responsive-nav-link>
         </div>
 

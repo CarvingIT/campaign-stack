@@ -2,6 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OutboundMailAccountController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\NewsletterController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,4 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/mail-accounts',[OutboundMailAccountController::class, 'list'])->name('mail-accounts');
+    Route::get('/tags',[TagController::class, 'list'])->name('tags');
+    Route::get('/contacts',[ContactController::class, 'list'])->name('contacts');
+    Route::get('/campaigns',[CampaignController::class, 'list'])->name('campaigns');
+    Route::get('/newsletters',[NewsletterController::class, 'list'])->name('newsletters');
+});
 require __DIR__.'/auth.php';
