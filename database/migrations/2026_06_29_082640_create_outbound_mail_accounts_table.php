@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('outbound_mail_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('type');
             $table->text('config')->nullable();
             $table->timestamps();
         });

@@ -18,8 +18,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Campaign Stack Admin',
+            'email' => 'campaign-stack@carvingit.com',
+            'password'=>bcrypt('CampaignStack!@#'),
+            'remember_token'=>0,
+            'email_verified_at'=>NOW(),
+            'created_at'=>NOW(),
+            'updated_at'=>NOW()
         ]);
     }
 }
