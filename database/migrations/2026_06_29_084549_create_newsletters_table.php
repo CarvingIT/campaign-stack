@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('campaign_id');
             $table->unsignedBigInteger('outbound_mail_account_id');
+            $table->text('tag_ids');
             $table->string('subject_template');
             $table->text('body_template');
             $table->string('status');

@@ -25,6 +25,11 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/mail-accounts',[OutboundMailAccountController::class, 'list'])->name('mail-accounts');
+    Route::get('/account-form/{account_id}',[OutboundMailAccountController::class, 'addEditAccount']);
+    Route::post('/saveaccount',[OutboundMailAccountController::class, 'save']);
+    Route::get('/account/{account_id}',[OutboundMailAccountController::class, 'viewAccount']);
+    Route::post('/account/delete',[OutboundMailAccountController::class, 'deleteAccount']);
+
     Route::get('/tags',[TagController::class, 'list'])->name('tags');
     Route::get('/contacts',[ContactController::class, 'list'])->name('contacts');
     Route::get('/campaigns',[CampaignController::class, 'list'])->name('campaigns');
