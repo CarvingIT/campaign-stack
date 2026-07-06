@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mail_queues', function (Blueprint $table) {
+        Schema::create('sent_mails', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('newsletter_id');
             $table->unsignedBigInteger('outbound_mail_account_id');
             $table->unsignedBigInteger('contact_id');
             $table->string('subject');
             $table->text('body');
-            $table->string('status')->nullable();
-            $table->tinyInteger('attempt')->default(0);
-            $table->dateTime('sending_attempted_at')->nullable();
-            $table->integer('response_code')->nullable();
-            $table->string('error')->nullable();
+            $table->tinyInteger('opened')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mail_queues');
+        Schema::dropIfExists('sent_mails');
     }
 };
