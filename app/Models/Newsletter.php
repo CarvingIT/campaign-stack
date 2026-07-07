@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Newsletter extends Model
 {
+    public function tag(): BelongsTo
+    {
+        return $this->belongsTo(Tag::class, 'tag_ids');
+    }
     public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);

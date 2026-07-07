@@ -34,9 +34,11 @@ class OutboundMailAccountController extends Controller
         $account->name = $request->account_name;
         $account->type = $request->account_type;
         $config = array('username'=>$request->account_username,'password'=>$request->account_password,
-                        'ip_address'=>$request->account_ip_address,'port'=>$request->account_port);
+                        'ip_address'=>$request->account_ip_address,'port'=>$request->account_port,
+                        'encryption'=>$request->account_encryption, 
+                        'from_username'=>$request->account_from_username,
+                        'from_address'=>$request->account_from_address);
         $json_config = json_encode($config);
-        //echo $json_config; exit;
         $account->config = $json_config;
 
          try{
@@ -54,7 +56,19 @@ class OutboundMailAccountController extends Controller
         $account = OutboundMailAccount::find($account_id);
         return view('accountdetails',['account'=>$account]);
     }
-
+    
+    public function deleteAccount(Request $request){
+        $account = OutboundMailAccount::find($request->account_id);
+        if(!empty($account->id)){
+            if($account->delete()){
+                Session::flash('alert-success', 'Account deleted successfully!');
+            }
+            else{
+                Session::flash('alert-danger', "Error has orrcured: Please check. ".$e->getMessage());
+            }
+        }
+        return redirect('/mail-accounts');
+    }
 
 // Class ends here
 }
