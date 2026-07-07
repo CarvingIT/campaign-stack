@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('newsletter_outbound_mail_accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
+            $table->bigInteger('newsletter_id');
+            $table->bigInteger('outbound_mail_account_id');
+            $table->tinyInteger('priority');
             $table->timestamps();
+    
+            $table->unique(['newsletter_id', 'outbound_mail_account_id'], 'newsletter_mailaccount_idx');
         });
     }
 
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('newsletter_outbound_mail_accounts');
     }
 };

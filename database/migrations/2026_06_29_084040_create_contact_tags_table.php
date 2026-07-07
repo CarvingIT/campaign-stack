@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contact_tags', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('contact_id');
             $table->unsignedBigInteger('tag_id');
             $table->timestamps();
         });
