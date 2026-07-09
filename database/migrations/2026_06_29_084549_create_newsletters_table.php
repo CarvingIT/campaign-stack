@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('tag_ids');
             $table->string('subject_template');
             $table->text('body_template');
-            $table->string('status');
+            $table->char('status', 1);
             
             $table->timestamps();
         });

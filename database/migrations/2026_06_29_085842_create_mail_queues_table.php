@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('mail_queues', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('newsletter_id');
-            $table->unsignedBigInteger('outbound_mail_account_id');
             $table->unsignedBigInteger('contact_id');
             $table->string('subject');
             $table->text('body');
-            $table->string('status')->nullable();
+            $table->char('status', 1)->nullable();
             $table->tinyInteger('attempt')->default(0);
             $table->dateTime('sending_attempted_at')->nullable();
             $table->integer('response_code')->nullable();

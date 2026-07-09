@@ -13,7 +13,7 @@
         "scrollX": true,
         columnDefs: [
                         { width: '30%', targets: 0 },
-                        { "orderable": false, targets: 3 }
+                        { "orderable": false, targets: 4 }
                 ],
         "lengthMenu": [10,50,100, 500, 1000 ],
         "pageLength": 10,
@@ -93,7 +93,8 @@
                         <thead class="text-primary">
                             <tr>
                             <th>Label</th>
-                            <th>Created at</th>
+                            <th>Number of contacts tagged</th>
+                            <th>Number of emails tagged</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>
@@ -102,7 +103,8 @@
             @foreach ($tags as $c)
                 <tr>
             <td>{{ @$c->label }}</td>
-            <td>{{ $c->created_at }}</td>
+            <td>{{ @$c->taged_contacts_count }}</td>
+            <td>{{ @$c->taged_emails_count }}</td>
             <td>{{ $c->updated_at }}</td>
             <td>
                 <!--a href="/tag/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->

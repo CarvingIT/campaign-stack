@@ -95,7 +95,7 @@
                             <tr>
                             <th>Account Name</th>
                             <th>Account Type</th>
-                            <th>Created at</th>
+                            <th>Status</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>
@@ -105,7 +105,7 @@
                 <tr>
             <td>{{ @$c->name }}</td>
             <td>{{ @$c->type }}</td>
-            <td>{{ $c->created_at }}</td>
+            <td>{{ @$c->status }}</td>
             <td>{{ $c->updated_at }}</td>
             <td>
                 <!--a href="/account/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->
