@@ -34,9 +34,12 @@
              <label class="block font-medium text-sm" for="name">Name</label>
              <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="name" name="name" type="text" value="{{ $campaign->name }}" >
         </div>
+        @php
+            $attributes = json_decode($campaign->other_attributes);
+        @endphp
         <div class="col-span-8 md:col-span-4">
              <label class="block font-medium text-sm" for="campaign_type">Type</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="campaign_type" name="campaign_type" placeholder="Advertising & Marketing">
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="campaign_type" name="campaign_type" placeholder="Advertising & Marketing" value="{{ $attributes->type }}">
         </div>
        </div>
     </div>

@@ -35,17 +35,11 @@ class FlushMailQueue extends Command
                         $active_m_a = $m_a;
                         break;
                     }
+                }
                     // attempt to send mail
                     try{
                         $mailable = new DynamicDbMail($q_m->subject, $q_m->body);
-
-                        if($m_a->type == 'smtp'){
-                            $mailer = Mail::build(json_decode($m_a->config));
-                        }
-                        else{
-                            // custom transport
-                            $mailer = Mail::mailer($m_a->type);
-                        }
+                        $mailer = Mail::build(json_decode($active_m_a->config));
                         $mailer->to($q_m->contact->email)->send($mailable);
 
                         // on success add an entry in the sent_mails
@@ -71,7 +65,6 @@ class FlushMailQueue extends Command
                         $q_m->save();
                     }
                 }
-            }
         }); // chunking ends
     }
 }

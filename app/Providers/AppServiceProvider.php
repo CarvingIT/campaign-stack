@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Mail::extend('custom_api', function (array $config) {
-            return new CustomApiTransport($config['key'] ?? '');
+            return new CustomApiTransport($config ?? '');
         });
     }
 }

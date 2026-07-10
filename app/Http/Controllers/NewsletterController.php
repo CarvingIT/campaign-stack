@@ -34,7 +34,8 @@ class NewsletterController extends Controller
         else{
             $newsletter = Newsletter::find($request->newsletter_id);
         }
-        $newsletter->tag_ids = $request->tag_id;
+        $tag_ids = implode(",",$request->tag_ids);
+        $newsletter->tag_ids = $tag_ids;
         $newsletter->campaign_id = $request->campaign_id;
         $newsletter->subject_template = $request->subject_template;
         $newsletter->body_template = $request->body_template;

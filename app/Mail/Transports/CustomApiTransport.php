@@ -9,10 +9,10 @@ class CustomApiTransport extends AbstractTransport
 {
     protected string $apiKey;
 
-    public function __construct(string $apiKey)
+    public function __construct(array $config)
     {
         parent::__construct();
-        $this->apiKey = $apiKey;
+        $this->config = $config;
     }
 
     protected function doSend(SentMessage $message): void
@@ -21,7 +21,7 @@ class CustomApiTransport extends AbstractTransport
         $email = MessageConverter::toEmail($message->getOriginalMessage());
 
         // Implement your custom API sending logic here
-        // Example: Http::withToken($this->apiKey)->post('...', [...]);
+        // Example: Http::withToken($this->config['apiKey'])->post('...', [...]);
     }
 
     public function __toString(): string

@@ -101,9 +101,10 @@
                         </thead>
                         <tbody>
             @foreach ($campaigns as $c)
+                @php $attributes = json_decode($c->other_attributes);@endphp
                 <tr>
-            <td>{{ @$c->name }}</td>
-            <td>{{ @$c->type }}</td>
+            <td>{{ @$c->name }}{{ $attributes->type }}</td>
+            <td>{{ $attributes->type }}</td>
             <td>{{ @$c->campaign->newsletters }}</td>
             <td>{{ $c->updated_at }}</td>
             <td>

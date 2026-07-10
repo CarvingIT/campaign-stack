@@ -5,6 +5,16 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
+<!--script src="https://tiny.cloud" referrerpolicy="origin"></script-->
+<!--script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/8/tinymce.min.js" referrerpolicy="origin"></script-->
+<script src="https://cdn.tiny.cloud/1/lgwysaytr4tfzhs9q2uspwfz9zqj4qfhlrclnl0pfhughvrg/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+<script>
+    tinymce.init({
+     selector: 'textarea#body_template', // Replace this CSS selector to match the placeholder element for TinyMCE
+     plugins: 'table lists link image code',
+     toolbar: 'undo redo | blocks| bullist numlist checklist | code | table | fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | removeformat'
+   });
+</script>
 @endpush
 
 <x-app-layout>
@@ -31,7 +41,7 @@
        <div class="grid grid-cols-6 gap-6">
         <div class="col-span-8 md:col-span-4">
              <label class="block font-medium text-sm" for="tag_id">Tags</label>
-             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="tag_id" name="tag_id">
+             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="tag_ids" name="tag_ids[]" multiple>
                 <option value="">Select Tag</option>
                 @foreach($tags as $tag)
                 <option value="{{ $tag->id }}">{{ $tag->label }}</option>
@@ -51,18 +61,18 @@
              <label class="block font-medium text-sm" for="status">Status</label>
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="status" name="status">
                 <option value="">Select Status</option>
-                <option value="Draft" @if($newsletter->status == 'Draft') selected @endif>Draft</option>
-                <option value="Published" @if($newsletter->status == 'Published') selected @endif>Published</option>
-                <option value="UnPublished" @if($newsletter->status == 'UnPublished') selected @endif>UnPublished</option>
+                <option value="D" @if($newsletter->status == 'Draft') selected @endif>Draft</option>
+                <option value="P" @if($newsletter->status == 'Published') selected @endif>Published</option>
+                <option value="U" @if($newsletter->status == 'UnPublished') selected @endif>UnPublished</option>
              </select>
         </div>
         <div class="col-span-8 md:col-span-4">
              <label class="block font-medium text-sm" for="subject_template">Subject Template</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="subject_template" name="subject_template" type="text" value="{{ $newsletter->subject_template }}" placeholder="[[webinar_subject_template]]">
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="subject_template" name="subject_template" type="text" value="{{ $newsletter->subject_template }}" placeholder="New feature [[feature_name]]">
         </div>
         <div class="col-span-8 md:col-span-4">
              <label class="block font-medium text-sm" for="body_template">Body Template</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="body_template" name="body_template" type="text" value="{{ $newsletter->body_template }}" placeholder="[[webinar_body_template]]">
+             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="body_template" name="body_template" type="text">{{ $newsletter->body_template }}</textarea>
         </div>
        </div>
     </div>

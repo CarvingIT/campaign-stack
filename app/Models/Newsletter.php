@@ -16,6 +16,11 @@ class Newsletter extends Model
         return $this->belongsTo(Campaign::class);
     }
 
+    public function tag(): BelongsTo
+    {
+        return $this->belongsTo(Tag::class);
+    }
+
     public function sent_mails(): HasMany
     {
         return $this->hasMany(SentMail::class);

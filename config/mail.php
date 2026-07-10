@@ -51,7 +51,6 @@ return [
 
         'custom_api' => [
             'transport' => 'custom_api',
-            'key' => env('CUSTOM_API_KEY'),
         ],
 
         'ses' => [

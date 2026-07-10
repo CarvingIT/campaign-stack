@@ -94,23 +94,31 @@
                             <tr>
                             <th>Tags</th>
                             <th>Campaign</th>
-                            <th>Subject</th>
-                            <th>Body</th>
+                            <th>Contacts Count</th>
+                            <th>Sent Emails Count</th>
+                            <th>Queued Emails Count</th>
                             <th>Status</th>
-                            <th>Created at</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
             @foreach ($newsletters as $c)
+                @php 
+                    $tags = explode(",",$c->tag_ids);
+                    foreach($tags as $t){
+                        $tag = \App\Models\Tag::find($t);
+                        $tag_names[] = $tag->label;
+                    } 
+                        $tags = implode(",",$tag_names);
+                @endphp
                 <tr>
-            <td>{{ @$c->tag->label }}</td>
+            <td>{{ @$tags }}</td>
             <td>{{ @$c->campaign->name }}</td>
-            <td>{{ @$c->subject_template }}</td>
-            <td>{{ @$c->body_template }}</td>
-            <td>{{ @$c->status }}</td>
-            <td>{{ $c->created_at }}</td>
+            <td>{{ @$c->contacts }}</td>
+            <td>{{ @$c->sent_emails_count }}</td>
+            <td>{{ @$c->queued_emails_count }}</td>
+            <td>New</td>
             <td>{{ $c->updated_at }}</td>
             <td>
                 <!--a href="/newsletter/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->

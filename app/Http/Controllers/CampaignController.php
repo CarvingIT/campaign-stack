@@ -31,7 +31,9 @@ class CampaignController extends Controller
             $campaign = Campaign::find($request->campaign_id);
         }
         $campaign->name = $request->name;
-        $campaign->other_attributes = $request->other_attributes;
+        $attributes_array = array('type'=>$request->campaign_type);
+        $other_attributes = json_encode($attributes_array);
+        $campaign->other_attributes = $other_attributes;
         try{
             $campaign->save();
             Session::flash('alert-success', 'Campaign saved successfully!');
