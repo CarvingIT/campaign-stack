@@ -13,7 +13,7 @@
         "scrollX": true,
         columnDefs: [
                         { width: '10%', targets: 0 },
-                        { "orderable": false, targets: 3 }
+                        { "orderable": false, targets: 6 }
                 ],
         "lengthMenu": [10,50,100, 500, 1000 ],
         "pageLength": 10,
@@ -92,12 +92,11 @@
                     <table id="contacts" class="table table-bordered  display stripe hover" style="width:100%">
                         <thead class="text-primary">
                             <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th>Name</th>
                             <th>Email</th>
                             <th>Company</th>
                             <th>Mobile</th>
-                            <th>Created at</th>
+                            <th>Tags</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>
@@ -105,12 +104,11 @@
                         <tbody>
             @foreach ($contacts as $c)
                 <tr>
-            <td>{{ @$c->firstname }}</td>
-            <td>{{ @$c->lastname }}</td>
+            <td>{{ @$c->->salutation }} {{ @$c->firstname }} {{ @$c->lastname }}</td>
             <td>{{ @$c->email }}</td>
             <td>{{ @$c->company }}</td>
             <td>{{ @$c->mobile }}</td>
-            <td>{{ $c->created_at }}</td>
+            <td>{{ @$c->contact->tags }}</td>
             <td>{{ $c->updated_at }}</td>
             <td>
                 <!--a href="/contact/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->

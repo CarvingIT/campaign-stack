@@ -93,8 +93,8 @@
                         <thead class="text-primary">
                             <tr>
                             <th>Name</th>
-                            <th>Other Attributes</th>
-                            <th>Created at</th>
+                            <th>Type</th>
+                            <th>Total no.of Newsltters</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>
@@ -103,8 +103,8 @@
             @foreach ($campaigns as $c)
                 <tr>
             <td>{{ @$c->name }}</td>
-            <td>{{ @$c->other_attributes }}</td>
-            <td>{{ $c->created_at }}</td>
+            <td>{{ @$c->type }}</td>
+            <td>{{ @$c->campaign->newsletters }}</td>
             <td>{{ $c->updated_at }}</td>
             <td>
                 <!--a href="/campaign/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->

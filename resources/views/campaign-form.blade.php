@@ -35,8 +35,8 @@
              <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="name" name="name" type="text" value="{{ $campaign->name }}" >
         </div>
         <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="other_attributes">Other Attributes</label>
-             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="other_attributes" name="other_attributes">{{ $campaign->other_attributes }}</textarea>
+             <label class="block font-medium text-sm" for="campaign_type">Type</label>
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="campaign_type" name="campaign_type" placeholder="Advertising & Marketing">
         </div>
        </div>
     </div>
