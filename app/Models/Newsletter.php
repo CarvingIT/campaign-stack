@@ -23,6 +23,8 @@ class Newsletter extends Model
 
     public function outbound_mail_accounts(): HasManyThrough
     {
-        return $this->hasManyThrough(OutboundMailAccount::class, NewsletterOutboundMailAccount::class);
+        return $this
+            ->hasManyThrough(OutboundMailAccount::class, NewsletterOutboundMailAccount::class)
+            ->orderBy('priority');
     }
 }

@@ -11,4 +11,9 @@ class MailQueue extends Model
     {
         return $this->belongsTo(Newsletter::class);
     }
+
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class);
+    }
 }
