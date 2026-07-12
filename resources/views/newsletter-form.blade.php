@@ -12,9 +12,31 @@
     tinymce.init({
      selector: 'textarea#body_template', // Replace this CSS selector to match the placeholder element for TinyMCE
      plugins: 'table lists link image code',
-     toolbar: 'undo redo | blocks| bullist numlist checklist | code | table | fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | removeformat'
+     toolbar: 'undo redo | blocks| bullist numlist checklist | code | table | fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | removeformat',
+
+    file_picker_callback (callback, value, meta) {
+        let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth
+        let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight
+
+        tinymce.activeEditor.windowManager.openUrl({
+          url : '/file-manager/tinymce5',
+          title : 'Laravel File manager',
+          width : x * 0.8,
+          height : y * 0.8,
+          onMessage: (api, message) => {
+            callback(message.content, { text: message.text })
+          }
+        })
+      }
+
    });
 </script>
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
+<script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
 @endpush
 
 <x-app-layout>
@@ -41,10 +63,13 @@
        <div class="grid grid-cols-6 gap-6">
         <div class="col-span-8 md:col-span-4">
              <label class="block font-medium text-sm" for="tag_id">Tags</label>
+                @php
+                    $tags_array = explode(",",$newsletter->tag_ids);
+                @endphp
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="tag_ids" name="tag_ids[]" multiple>
                 <option value="">Select Tag</option>
                 @foreach($tags as $tag)
-                <option value="{{ $tag->id }}">{{ $tag->label }}</option>
+                <option value="{{ $tag->id }}" @if(in_array($tag->id,$tags_array)) selected @endif>{{ $tag->label }}</option>
                 @endforeach
              </select>
         </div>
@@ -53,7 +78,7 @@
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="campaign_id" name="campaign_id">
                 <option value="">Select Campaign</option>
                 @foreach($campaigns as $camp)
-                <option value="{{ $camp->id }}">{{ $camp->name }}</option>
+                <option value="{{ $camp->id }}" @if($newsletter->campaign_id == $camp->id) selected @endif>{{ $camp->name }}</option>
                 @endforeach
              </select>
         </div>
@@ -61,9 +86,9 @@
              <label class="block font-medium text-sm" for="status">Status</label>
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="status" name="status">
                 <option value="">Select Status</option>
-                <option value="D" @if($newsletter->status == 'Draft') selected @endif>Draft</option>
-                <option value="P" @if($newsletter->status == 'Published') selected @endif>Published</option>
-                <option value="U" @if($newsletter->status == 'UnPublished') selected @endif>UnPublished</option>
+                <option value="D" @if($newsletter->status == 'D') selected @endif>Draft</option>
+                <option value="P" @if($newsletter->status == 'P') selected @endif>Published</option>
+                <option value="U" @if($newsletter->status == 'U') selected @endif>UnPublished</option>
              </select>
         </div>
         <div class="col-span-8 md:col-span-4">
