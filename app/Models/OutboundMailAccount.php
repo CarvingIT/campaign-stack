@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OutboundMailAccount extends Model
 {
     use SoftDeletes;
 
-    public function newsletters(): HasManyThrough
+    public function newsletter_outbound_mail_accounts(): HasMany
     {
-        return $this->hasManyThrough(Newsletter::class, NewsletterOutboundMailAccount::class);
+        return $this->hasMany(NewsletterOutboundMailAccount::class);
     }
 }

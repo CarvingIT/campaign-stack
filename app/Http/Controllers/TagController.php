@@ -9,7 +9,7 @@ use Session;
 class TagController extends Controller
 {
     public function list(){
-        $tags = Tag::all();
+        $tags = Tag::withCount('contact_tags')->get();
         return view('tagsmanagement',['tags'=>$tags]);
     }
 

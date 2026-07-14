@@ -13,7 +13,7 @@
         "scrollX": true,
         columnDefs: [
                         { width: '30%', targets: 0 },
-                        { "orderable": false, targets: 4 }
+                        { "orderable": false, targets: 3 }
                 ],
         "lengthMenu": [10,50,100, 500, 1000 ],
         "pageLength": 10,
@@ -94,27 +94,25 @@
                             <tr>
                             <th>Label</th>
                             <th>Number of contacts tagged</th>
-                            <th>Number of emails tagged</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-            @foreach ($tags as $c)
+            @foreach ($tags as $t)
                 <tr>
-            <td>{{ @$c->label }}</td>
-            <td>{{ @$c->taged_contacts_count }}</td>
-            <td>{{ @$c->taged_emails_count }}</td>
-            <td>{{ $c->updated_at }}</td>
+            <td>{{ $t->label }}</td>
+            <td>{{ $t->contact_tags_count }}</td>
+            <td>{{ $t->updated_at }}</td>
             <td>
-                <!--a href="/tag/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->
-                <a href="/tag-form/{{ $c->id }}" title="Edit"><span class="fas fa-pencil-alt" style="padding:5%;"></span></a>
-                <button id="opener" onClick="showDeleteDialog({{ $c->id }});" title="Delete"><span class="fas fa-trash-alt"></span></button>
+                <!--a href="/tag/{{ $t->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->
+                <a href="/tag-form/{{ $t->id }}" title="Edit"><span class="fas fa-pencil-alt" style="padding:5%;"></span></a>
+                <button id="opener" onClick="showDeleteDialog({{ $t->id }});" title="Delete"><span class="fas fa-trash-alt"></span></button>
 
                 <div id="deletedialog" style="display:none;" class="bg-grey">
                 <form name="deletedoc" method="post" action="/tag/delete">
                 @csrf
-                <input type="hidden" id="delete_tag_id" name="tag_id" value="{{ $c->id }}" />
+                <input type="hidden" id="delete_tag_id" name="tag_id" value="{{ $t->id }}" />
             This action can not be undone.
             <div class="flex items-center justify-end px-4 py-3 sm:px-6">
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled">Delete</button>

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Newsletter extends Model
@@ -26,10 +25,10 @@ class Newsletter extends Model
         return $this->hasMany(SentMail::class);
     }
 
-    public function outbound_mail_accounts(): HasManyThrough
+    public function newsletter_outbound_mail_accounts(): HasMany
     {
         return $this
-            ->hasManyThrough(OutboundMailAccount::class, NewsletterOutboundMailAccount::class)
+            ->hasMany(NewsletterOutboundMailAccount::class)
             ->orderBy('priority');
     }
 }

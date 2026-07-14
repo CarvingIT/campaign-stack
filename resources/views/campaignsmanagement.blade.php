@@ -93,7 +93,6 @@
                         <thead class="text-primary">
                             <tr>
                             <th>Name</th>
-                            <th>Type</th>
                             <th>Total no.of Newsltters</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
@@ -103,9 +102,8 @@
             @foreach ($campaigns as $c)
                 @php $attributes = json_decode($c->other_attributes);@endphp
                 <tr>
-            <td>{{ @$c->name }}{{ $attributes->type }}</td>
-            <td>{{ $attributes->type }}</td>
-            <td>{{ @$c->campaign->newsletters }}</td>
+            <td>{{ $c->name }}</td>
+            <td>{{ $c->newsletters_count }}</td>
             <td>{{ $c->updated_at }}</td>
             <td>
                 <!--a href="/campaign/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->

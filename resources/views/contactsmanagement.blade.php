@@ -104,7 +104,7 @@
                         <tbody>
             @foreach ($contacts as $c)
                 <tr>
-            <td>{{ @$c->->salutation }} {{ @$c->firstname }} {{ @$c->lastname }}</td>
+            <td>{{ @$c->salutation }} {{ @$c->firstname }} {{ @$c->lastname }}</td>
             <td>{{ @$c->email }}</td>
             <td>{{ @$c->company }}</td>
             <td>{{ @$c->mobile }}</td>
