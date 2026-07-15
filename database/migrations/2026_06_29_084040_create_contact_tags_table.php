@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('contact_id');
             $table->unsignedBigInteger('tag_id');
             $table->timestamps();
+
+            $table->unique(['contact_id','tag_id']);
         });
     }
 

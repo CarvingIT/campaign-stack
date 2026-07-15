@@ -34,7 +34,7 @@
             <select name="salutation" class="form-input rounded-md shadow-sm mt-1 block w-full">
                 <option value=''>Select</option>
                 @php
-                    $salutations = ['Mr','Mrs','Ms','Dr','Sir','Madam'];
+                    $salutations = ['Mr.','Mrs.','Ms.','Dr.','Prof.'];
                     foreach($salutations as $s){
                         $selected = ($contact->salutation == $s) ? 'selected' : '';
                         echo "<option value=\"$s\" $selected>$s</option>";
@@ -67,7 +67,7 @@
              <label class="block font-medium text-sm" for="company">Tags</label>
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="tags" name="tags[]" multiple="multiple" value="" >
             @php
-                $contact_tags = $contact->contact_tags;
+                $contact_tags = $contact->contactTags;
                 $contact_tag_ids = [];
                 foreach($contact_tags as $ct){
                     $contact_tag_ids[] = $ct->tag_id;

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Tag extends Model
 {
     use SoftDeletes;
-    public function contact_tags(): HasMany
+    public function contactTags(): HasMany
     {
         return $this->hasMany(ContactTag::class);
     }
