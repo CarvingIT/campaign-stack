@@ -93,7 +93,7 @@
                         <thead class="text-primary">
                             <tr>
                             <th>Label</th>
-                            <th>Number of contacts tagged</th>
+                            <th>Contacts</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>
