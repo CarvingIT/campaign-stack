@@ -62,6 +62,10 @@
     <div class="px-4 py-5 bg-white sm:p-6 text-gray-900">
        <div class="grid grid-cols-6 gap-6">
         <div class="col-span-8 md:col-span-4">
+             <label class="block font-medium text-sm" for="title">Title</label>
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="title" name="title" type="text" value="{{ $newsletter->title }}" placeholder="Some announcement">
+        </div>
+        <div class="col-span-8 md:col-span-4">
              <label class="block font-medium text-sm" for="tag_id">Tags</label>
                 @php
                     $tags_array = explode(",",$newsletter->tag_ids);
@@ -69,7 +73,7 @@
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="tag_ids" name="tag_ids[]" multiple>
                 <option value="">Select Tag</option>
                 @foreach($tags as $tag)
-                <option value="{{ $tag->id }}" @if(in_array($tag->id,$tags_array)) selected @endif>{{ $tag->label }}</option>
+                <option value="{{ $tag->id }}" @if(in_array($tag->id,$newsletter->newsletter_tags->pluck('tag_id')->toArray())) selected @endif>{{ $tag->label }}</option>
                 @endforeach
              </select>
         </div>

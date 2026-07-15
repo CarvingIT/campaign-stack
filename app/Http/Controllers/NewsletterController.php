@@ -11,7 +11,7 @@ use Session;
 class NewsletterController extends Controller
 {
     public function list(){
-        $newsletters = Newsletter::all();
+        $newsletters = Newsletter::withCount(['sent_mails','queued_mails'])->get();
         return view('newslettersmanagement',['newsletters'=>$newsletters]);
     }
 
@@ -34,14 +34,14 @@ class NewsletterController extends Controller
         else{
             $newsletter = Newsletter::find($request->newsletter_id);
         }
-        $tag_ids = implode(",",$request->tag_ids);
-        $newsletter->tag_ids = $tag_ids;
+        $newsletter->title = $request->title;
         $newsletter->campaign_id = $request->campaign_id;
         $newsletter->subject_template = $request->subject_template;
         $newsletter->body_template = $request->body_template;
         $newsletter->status = $request->status;
         try{
             $newsletter->save();
+            $newsletter->updateTags($request->tag_ids);
             Session::flash('alert-success', 'Newsletter saved successfully!');
         }
         catch(\Exception $e){

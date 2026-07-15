@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\Tag;
 use Session;
 
 class ContactController extends Controller
@@ -20,7 +21,8 @@ class ContactController extends Controller
         else{
             $contact = Contact::find($contact_id);
         }
-        return view('contact-form',['contact'=>$contact]);
+        $tags = Tag::all();
+        return view('contact-form',['contact'=>$contact, 'tags'=>$tags]);
     }
 
     public function save(Request $request){
@@ -37,6 +39,7 @@ class ContactController extends Controller
         $contact->mobile = $request->mobile;
         try{
             $contact->save();
+            $contact->updateTags($request->tags);
             Session::flash('alert-success', 'Contact saved successfully!');
         }
         catch(\Exception $e){

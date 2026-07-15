@@ -93,7 +93,7 @@
                         <thead class="text-primary">
                             <tr>
                             <th>Name</th>
-                            <th>Total no.of Newsltters</th>
+                            <th>Newsletters</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>

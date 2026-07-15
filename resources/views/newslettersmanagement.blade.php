@@ -13,7 +13,7 @@
         "scrollX": true,
         columnDefs: [
                         { width: '10%', targets: 0 },
-                        { "orderable": false, targets: 7 }
+                        { "orderable": false, targets: 6 }
                 ],
         "lengthMenu": [10,50,100, 500, 1000 ],
         "pageLength": 10,
@@ -92,43 +92,37 @@
                     <table id="newsletters" class="table table-bordered  display stripe hover" style="width:100%">
                         <thead class="text-primary">
                             <tr>
+                            <th>Title</th>
                             <th>Tags</th>
-                            <th>Campaign</th>
-                            <th>Contacts Count</th>
-                            <th>Sent Emails Count</th>
-                            <th>Queued Emails Count</th>
+                            <th>Queued Emails</th>
+                            <th>Sent Emails</th>
                             <th>Status</th>
                             <th>Updated at</th>
                             <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-            @foreach ($newsletters as $c)
-                @php 
-                    $tags = explode(",",$c->tag_ids);
-                    foreach($tags as $t){
-                        $tag = \App\Models\Tag::find($t);
-                        $tag_names[] = $tag->label;
-                    } 
-                        $tags = implode(",",$tag_names);
-                @endphp
+            @foreach ($newsletters as $n)
                 <tr>
-            <td>{{ @$tags }}</td>
-            <td>{{ @$c->campaign->name }}</td>
-            <td>{{ @$c->contacts }}</td>
-            <td>{{ @$c->sent_emails_count }}</td>
-            <td>{{ @$c->queued_emails_count }}</td>
-            <td>New</td>
-            <td>{{ $c->updated_at }}</td>
+            <td>{{ @$n->title }}</td>
             <td>
-                <!--a href="/newsletter/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->
-                <a href="/newsletter-form/{{ $c->id }}" title="Edit"><span class="fas fa-pencil-alt" style="padding:5%;"></span></a>
-                <button id="opener" onClick="showDeleteDialog({{ $c->id }});" title="Delete"><span class="fas fa-trash-alt"></span></button>
+            @if(is_array($n->newsletter_tags->toArray()))
+                {{ implode(', ', $n->newsletter_tags->map(function ($nt){ return $nt->tag->label;})->toArray()) }}
+            @endif
+            </td>
+            <td>{{ @$n->queued_mails_count }}</td>
+            <td>{{ @$n->sent_mails_count }}</td>
+            <td>New</td>
+            <td>{{ $n->updated_at }}</td>
+            <td>
+                <!--a href="/newsletter/{{ $n->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->
+                <a href="/newsletter-form/{{ $n->id }}" title="Edit"><span class="fas fa-pencil-alt" style="padding:5%;"></span></a>
+                <button id="opener" onClick="showDeleteDialog({{ $n->id }});" title="Delete"><span class="fas fa-trash-alt"></span></button>
 
                 <div id="deletedialog" style="display:none;" class="bg-grey">
                 <form name="deletedoc" method="post" action="/newsletter/delete">
                 @csrf
-                <input type="hidden" id="delete_newsletter_id" name="newsletter_id" value="{{ $c->id }}" />
+                <input type="hidden" id="delete_newsletter_id" name="newsletter_id" value="{{ $n->id }}" />
             This action can not be undone.
             <div class="flex items-center justify-end px-4 py-3 sm:px-6">
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled">Delete</button>

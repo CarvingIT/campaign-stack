@@ -50,6 +50,25 @@
              <label class="block font-medium text-sm" for="mobile">Mobile</label>
              <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="mobile" name="mobile" type="text" value="{{ $contact->mobile }}" >
         </div>
+        <div class="col-span-8 md:col-span-4">
+             <label class="block font-medium text-sm" for="company">Tags</label>
+             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="tags" name="tags[]" multiple="multiple" value="" >
+            @php
+                $contact_tags = $contact->contact_tags;
+                $contact_tag_ids = [];
+                foreach($contact_tags as $ct){
+                    $contact_tag_ids[] = $ct->tag_id;
+                }
+            @endphp
+            @foreach($tags as $t)
+                @if(in_array($t->id, $contact_tag_ids))
+                <option value="{{ $t->id }}" selected="selected">{{ $t->label }}</option>
+                @else
+                <option value="{{ $t->id }}">{{ $t->label }}</option>
+                @endif 
+            @endforeach
+            </select>
+        </div>
     </div>
 
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">

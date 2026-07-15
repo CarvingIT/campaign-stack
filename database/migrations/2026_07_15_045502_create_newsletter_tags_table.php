@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('newsletters', function (Blueprint $table) {
+        Schema::create('newsletter_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->unsignedBigInteger('campaign_id');
-            $table->string('subject_template');
-            $table->text('body_template');
-            $table->char('status', 1);
-            
+            $table->bigInteger('newsletter_id');
+            $table->bigInteger('tag_id');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('newsletters');
+        Schema::dropIfExists('newsletter_tags');
     }
 };

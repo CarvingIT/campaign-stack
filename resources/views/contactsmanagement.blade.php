@@ -108,7 +108,15 @@
             <td>{{ @$c->email }}</td>
             <td>{{ @$c->company }}</td>
             <td>{{ @$c->mobile }}</td>
-            <td>{{ @$c->contact->tags }}</td>
+            <td>
+                @php
+                $tag_labels = [];
+                foreach($c->contact_tags as $ct){
+                    $tag_labels[] = $ct->tag->label;
+                }
+                echo implode(', ', $tag_labels);
+                @endphp
+            </td>
             <td>{{ $c->updated_at }}</td>
             <td>
                 <!--a href="/contact/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->
