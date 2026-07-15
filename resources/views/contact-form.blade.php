@@ -29,6 +29,19 @@
 <div class="overflow-hidden sm:rounded-md">
     <div class="px-4 py-5 bg-white sm:p-6 text-gray-900">
        <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-8 md:col-span-4">
+             <label class="block font-medium text-sm" for="salutation">Salutation/Title</label>
+            <select name="salutation" class="form-input rounded-md shadow-sm mt-1 block w-full">
+                <option value=''>Select</option>
+                @php
+                    $salutations = ['Mr','Mrs','Ms','Dr','Sir','Madam'];
+                    foreach($salutations as $s){
+                        $selected = ($contact->salutation == $s) ? 'selected' : '';
+                        echo "<option value=\"$s\" $selected>$s</option>";
+                    }
+                @endphp
+            </select>
+        </div>
         <!-- Contact Name -->
         <div class="col-span-8 md:col-span-4">
              <label class="block font-medium text-sm" for="firstname">Firstname</label>

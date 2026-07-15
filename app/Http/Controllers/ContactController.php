@@ -32,6 +32,7 @@ class ContactController extends Controller
         else{
             $contact = Contact::find($request->contact_id);
         }
+        $contact->salutation = $request->salutation;
         $contact->firstname = $request->firstname;
         $contact->lastname = $request->lastname;
         $contact->email = $request->email;
