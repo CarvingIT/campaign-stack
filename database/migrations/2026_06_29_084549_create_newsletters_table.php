@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('newsletters', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->string('title');
             $table->unsignedBigInteger('campaign_id');
             $table->string('subject_template');

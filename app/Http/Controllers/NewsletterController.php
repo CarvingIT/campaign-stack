@@ -7,6 +7,7 @@ use App\Models\Newsletter;
 use App\Models\Campaign;
 use App\Models\Tag;
 use Session;
+use Illuminate\Support\Str; 
 
 class NewsletterController extends Controller
 {
@@ -30,6 +31,7 @@ class NewsletterController extends Controller
     public function save(Request $request){
         if(empty($request->newsletter_id)){
             $newsletter = new Newsletter();
+            $newsletter->uuid = (string) Str::uuid();
         }
         else{
             $newsletter = Newsletter::find($request->newsletter_id);

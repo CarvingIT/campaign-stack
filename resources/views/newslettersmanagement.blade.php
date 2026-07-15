@@ -69,8 +69,6 @@
         </h2>
     </x-slot>
 
-
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -92,7 +90,7 @@
                     <table id="newsletters" class="table table-bordered  display stripe hover" style="width:100%">
                         <thead class="text-primary">
                             <tr>
-                            <th>Title</th>
+                            <th width="40%">Title</th>
                             <th>Tags</th>
                             <th>Queued Emails</th>
                             <th>Sent Emails</th>
@@ -104,7 +102,7 @@
                         <tbody>
             @foreach ($newsletters as $n)
                 <tr>
-            <td>{{ @$n->title }}</td>
+            <td>{{ $n->campaign->name }} :: {{ @$n->title }}</td>
             <td>
             @if(is_array($n->newsletter_tags->toArray()))
                 {{ implode(', ', $n->newsletter_tags->map(function ($nt){ return $nt->tag->label;})->toArray()) }}
@@ -112,7 +110,10 @@
             </td>
             <td>{{ @$n->queued_mails_count }}</td>
             <td>{{ @$n->sent_mails_count }}</td>
-            <td>New</td>
+            @php
+                $status_values = ['D'=>'Draft', 'N'=>'New', 'Q'=>'Queing','S'=>'Sent'];
+            @endphp
+            <td>{{ $status_values[$n->status] }}</td>
             <td>{{ $n->updated_at }}</td>
             <td>
                 <!--a href="/newsletter/{{ $n->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->

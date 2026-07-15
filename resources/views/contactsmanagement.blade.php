@@ -92,7 +92,7 @@
                     <table id="contacts" class="table table-bordered  display stripe hover" style="width:100%">
                         <thead class="text-primary">
                             <tr>
-                            <th>Name</th>
+                            <th width="20%">Name</th>
                             <th>Email</th>
                             <th>Company</th>
                             <th>Mobile</th>
