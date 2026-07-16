@@ -21,12 +21,12 @@ class ContactController extends Controller
         else{
             $contact = Contact::find($contact_id);
         }
-        $tags = Tag::all();
+        $tags = Tag::orderBy('label')->get();
         return view('contact-form',['contact'=>$contact, 'tags'=>$tags]);
     }
 
     public function importForm(){
-        $tags = Tag::all();
+        $tags = Tag::orderBy('label')->get();
         return view('import-contact-form', ['tags'=>$tags]);
     }
 

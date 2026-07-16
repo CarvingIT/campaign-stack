@@ -29,12 +29,12 @@
              <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="contacts" name="contacts" type="file" />
         </div>
         <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="company">Tags <a href="#" title="Select one or more by holding the Shift key">&#10067;</a></label>
-             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="tags" name="tags[]" multiple="multiple" value="" >
+             <label class="block font-medium text-sm" for="company">Tags</label>
             @foreach($tags as $t)
-                <option value="{{ $t->id }}">{{ $t->label }}</option>
+                <div>
+                <input name="tags[]" type="checkbox" value="{{ $t->id }}" /> {{ $t->label }}
+                </div>
             @endforeach
-            </select>
         </div>
     </div>
 
