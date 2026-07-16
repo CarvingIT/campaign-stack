@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('salutation')->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('email')->nullable();
+            $table->string('email')->unique();
             $table->string('company')->nullable();
             $table->string('mobile')->nullable();
             $table->timestamps();

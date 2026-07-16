@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Contact extends Model
 {
     use SoftDeletes, HasFactory;
+    protected $fillable = ['salutation','firstname','lastname','email','company','mobile'];
+
     public function contactTags(): HasMany
     {
         return $this->hasMany(ContactTag::class);

@@ -25,6 +25,51 @@ class ContactController extends Controller
         return view('contact-form',['contact'=>$contact, 'tags'=>$tags]);
     }
 
+    public function importForm(){
+        $tags = Tag::all();
+        return view('import-contact-form', ['tags'=>$tags]);
+    }
+
+    public function import(Request $request){
+        $request->validate([
+            'contacts' => 'required|file|mimes:csv,txt',
+        ]);
+
+        $file = $request->file('contacts');
+        $handle = fopen($file->getRealPath(), 'r');
+
+        $headers = fgetcsv($handle, 1000, ','); 
+        $batch = [];
+
+        while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+            // Combine headers with row values
+            $rowData = array_combine($headers, $row);
+
+            // Structure to match database columns
+            $batch[] = [
+                'salutation'       => $rowData['salutation'],
+                'firstname'       => $rowData['firstname'],
+                'lastname'       => $rowData['lastname'],
+                'email'      => $rowData['email'],
+                'company'      => $rowData['company'],
+                'mobile'      => $rowData['mobile'],
+            ];
+        }
+        fclose($handle);
+
+        foreach($batch as $b){
+            try{
+            $c = Contact::create($b);
+            $c->updateTags($request->tags);
+            Session::flash('alert-success', 'Contacts imported successfully!');
+            }
+            catch(\Exception $e){
+                Session::flash('alert-danger', "Some contacts were not imported perhaps because they are already present in the database.");
+            }
+        }
+        return redirect('/contacts');
+    }
+
     public function save(Request $request){
         if(empty($request->contact_id)){
             $contact = new Contact();
