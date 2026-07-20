@@ -65,7 +65,6 @@
         </div>
         <div class="col-span-8 md:col-span-4">
              <label class="block font-medium text-sm" for="company">Tags</label>
-             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="tags" name="tags[]" multiple="multiple" value="" >
             @php
                 $contact_tags = $contact->contactTags;
                 $contact_tag_ids = [];
@@ -74,13 +73,14 @@
                 }
             @endphp
             @foreach($tags as $t)
+                <div>
                 @if(in_array($t->id, $contact_tag_ids))
-                <option value="{{ $t->id }}" selected="selected">{{ $t->label }}</option>
+                <input name="tags[]" type="checkbox" value="{{ $t->id }}" checked /> {{ $t->label }}
                 @else
-                <option value="{{ $t->id }}">{{ $t->label }}</option>
+                <input name="tags[]" type="checkbox" value="{{ $t->id }}" /> {{ $t->label }}
                 @endif 
+                </div>
             @endforeach
-            </select>
         </div>
     </div>
 

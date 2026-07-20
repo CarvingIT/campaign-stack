@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/contacts',[ContactController::class, 'list'])->name('contacts');
     Route::get('/contact-form/{contact_id}',[ContactController::class, 'addEditContact']);
     Route::post('/savecontact',[ContactController::class, 'save']);
+    Route::get('/import-contact-form',[ContactController::class, 'importForm']);
+    Route::post('/import-contacts',[ContactController::class, 'import']);
     Route::post('/contact/delete',[ContactController::class, 'deleteContact']);
 
     Route::get('/campaigns',[CampaignController::class, 'list'])->name('campaigns');

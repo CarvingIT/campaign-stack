@@ -82,7 +82,8 @@
                @endforeach
 
             <div class="text-right">
-                <a class="m-5" title="New Book" href="/contact-form/new"><span class="fas fa-plus"></span></a>
+                <a class="m-5" title="New contact" href="/contact-form/new"><span class="fas fa-plus"></span></a>
+                <a class="m-5" title="Import contacts" href="/import-contact-form"><span class="fas fa-file-import"></span></a>
                 <!--a class="m-5" title="Export" href="/export/contacts"><span class="fas fa-file-export"></span></a-->
             </div>
                 <div class="mt-6 text-gray-900">
