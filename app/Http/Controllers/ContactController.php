@@ -85,7 +85,9 @@ class ContactController extends Controller
         $contact->mobile = $request->mobile;
         try{
             $contact->save();
-            $contact->updateTags($request->tags);
+ 	    if(!empty($request->tags)){		
+            	$contact->updateTags($request->tags);
+ 	    }		
             Session::flash('alert-success', 'Contact saved successfully!');
         }
         catch(\Exception $e){
