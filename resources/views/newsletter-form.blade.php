@@ -91,8 +91,9 @@
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="status" name="status">
                 <option value="">Select Status</option>
                 <option value="D" @if($newsletter->status == 'D') selected @endif>Draft</option>
-                <option value="P" @if($newsletter->status == 'P') selected @endif>Published</option>
-                <option value="U" @if($newsletter->status == 'U') selected @endif>UnPublished</option>
+                <option value="N" @if($newsletter->status == 'N') selected @endif>New</option>
+                <option value="Q" @if($newsletter->status == 'Q') selected @endif>Queing</option>
+                <option value="S" @if($newsletter->status == 'S') selected @endif>Sent</option>
              </select>
         </div>
         <div class="col-span-8 md:col-span-4">

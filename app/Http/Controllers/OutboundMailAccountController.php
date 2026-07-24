@@ -32,12 +32,23 @@ class OutboundMailAccountController extends Controller
         }
 
         $account->name = $request->account_name;
+        $account->status = $request->account_status;
         $account->type = $request->account_type;
-        $config = array('username'=>$request->account_username,'password'=>$request->account_password,
+	if($request->account_type == 'SMTP'){
+        	$config = array('username'=>$request->account_username,'password'=>$request->account_password,
                         'ip_address'=>$request->account_ip_address,'port'=>$request->account_port,
                         'encryption'=>$request->account_encryption, 
                         'from_username'=>$request->account_from_username,
                         'from_address'=>$request->account_from_address);
+	}
+	else if($request->account_type == 'API'){
+		$label = $request->label;
+		$value = $request->value;
+		for($i = 0; $i<count($request->label); $i++){
+		$config[] = array('key'=>$label[$i],'value' => $value[$i]);
+		}
+		//print_r(json_encode($config));
+	}
         $json_config = json_encode($config);
         $account->config = $json_config;
 

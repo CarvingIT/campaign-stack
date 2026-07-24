@@ -105,7 +105,7 @@
                 <tr>
             <td>{{ @$c->name }}</td>
             <td>{{ @$c->type }}</td>
-            <td>{{ @$c->status }}</td>
+            <td>@if(@$c->status == 1) {{ __('Active') }} @else {{ @$c->status }} @endif</td>
             <td>{{ $c->updated_at }}</td>
             <td>
                 <!--a href="/account/{{ $c->id }}" title="View Details"><span class="fas fa-eye" style="padding:5%;"></span></a-->
