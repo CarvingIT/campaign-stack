@@ -20,20 +20,28 @@
 	});
 
 var count=0;
-function newLineItem(){
+function newMailAccount(){
 //var line_div=$('<div id="line_item"></div>');
 var sopra=$('#line_item_new');
-$( sopra ).append( '<hr /><br /><span style="color:#F1541E;">Please enter the details.</span><div id="first'+count+'"><div class="px-4 py-5 bg-white sm:p-6 text-gray-900"><div class="grid grid-cols-6 gap-6"><div class="col-span-1" md:col-span-1"><input class="form-input rounded-md shadow-sm mt-1 block w-full" type="text" name="label[]" id="label-'+count+'" value="" placeholder="API Token"></div><div class="col-span-2" md:col-span-2"><input class="form-input rounded-md shadow-sm mt-1 block w-full" type="text" name="value[]" id="value'+count+'" value="" placeholder="Secret key"></div></div></div></div>');
+$( sopra ).append( '<div id="first'+count+'"><div class="px-4 py-5 bg-white sm:p-6 text-gray-900"><div class="grid grid-cols-6 gap-6"><div class="col-span-8 md:col-span-2"><label class="block font-medium text-sm" for="account_username">Key</label><input class="form-input rounded-md shadow-sm mt-1 block w-full" type="text" name="label[]" id="label-'+count+'" value=""></div><div class="col-span-8 md:col-span-2"><label class="block font-medium text-sm" for="account_username">Value</label><input class="form-input rounded-md shadow-sm mt-1 block w-full" type="text" name="value[]" id="value'+count+'" value=""></div><span id="close" title="Remove Account" onclick="removeAccountNode(this.parentNode.parentNode); return false;">x</span></div></div></div>');
 count++;
 }
-
+function removeAccountNode(parentNode){
+parentNode.remove();
+//count--;
+}
+    function removeEditAccountNode(button) {
+        // Find the parent <div> node and remove it entirely from the DOM
+        const div = button.closest('div');
+        div.remove();
+    }
 </script>
 @endpush
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-	@if(empty($book->id))
+	@if(empty($account->id))
             {{ __('New Mail Account') }}
 	@else
             {{ __('Edit Mail Account') }}
@@ -56,21 +64,21 @@ count++;
         <!-- Account Name -->
         <div class="col-span-4 md:col-span-2">
              <label class="block font-medium text-sm" for="account_name">Name</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block" id="account_name" name="account_name" type="text" value="{{ $account->name }}" placeholder="Smart Repo">
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="account_name" name="account_name" type="text" value="{{ $account->name }}" placeholder="Smart Repo">
         </div>
 		 <!-- Account Status -->
-        <div class="col-span-2 md:col-span-2">
+        <div class="col-span-4 md:col-span-2">
              <label class="block font-medium text-sm" for="account_status">Status</label>
-             <select class="form-input rounded-md shadow-sm mt-1 block" id="account_status" name="account_status">
+             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="account_status" name="account_status">
                 <option value="">Select Status</option>
-                <option value="1" @if(@$account->status= 'Active') selected @endif>Active</option>
-                <option value="0" @if(@$account->status= 'InActive') selected @endif>InActive</option>
+                <option value="1" @if(@$account->status= '1') selected @endif>Active</option>
+                <option value="0" @if(@$account->status= '0') selected @endif>Inactive</option>
              </select>
         </div>
         <!-- Account Type -->
         <div class="col-span-4 md:col-span-2">
              <label class="block font-medium text-sm" for="account_type">Type</label>
-             <select class="form-input rounded-md shadow-sm mt-1 block" id="account_type" name="account_type">
+             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="account_type" name="account_type">
                 <option value="">Select Type</option>
                 <option value="SMTP" @if(@$account->type == 'SMTP') selected @endif>SMTP</option>
                 <option value="API" @if(@$account->type == 'API') selected @endif>API</option>
@@ -79,7 +87,11 @@ count++;
 	</div>
 	</div>
 	<div>&nbsp;</div>
+	@if($account->type == 'SMTP')
+	<div id="SMTP" style="display:block;" class="content-div">
+	@else
 	<div id="SMTP" style="display:none;" class="content-div">
+	@endif
     <div class="px-4 py-5 bg-white sm:p-6 text-gray-900">
        <div class="grid grid-cols-6 gap-6">
         @php
@@ -111,7 +123,7 @@ count++;
              </select>
         </div>
         <div class="col-span-4 md:col-span-2">
-             <label class="block font-medium text-sm" for="account_from_username">From username</label>
+             <label class="block font-medium text-sm" for="account_from_username">From name</label>
              <input class="form-input rounded-md shadow-sm mt-1 block" id="account_from_username" name="account_from_username" type="text" value="{{ @$config_array->from_username }}" placeholder="Bob T."">
         </div>
         <div class="col-span-4 md:col-span-2">
@@ -122,14 +134,29 @@ count++;
 	</div>
 
 	</div><!-- SMTP Form ends -->
+
+	{{-- API display all account in edit --}}
+	@if($account->type == 'API')
+		@php
+		$api_account = json_decode($account->config);
+		@endphp
+		@foreach($api_account as $api_acc)
+			<div data-index="{{ $api_acc->key }}"><div class="px-4 py-5 bg-white sm:p-6 text-gray-900"><div class="grid grid-cols-6 gap-6"><div class="col-span-4 md:col-span-2"><label class="block font-medium text-sm" for="account_username">Key</label><input class="form-input rounded-md shadow-sm mt-1 block w-full" type="text" name="label[]" id="label-'+count+'" value="{{ $api_acc->key }}"></div><div class="col-span-4 md:col-span-2"><label class="block font-medium text-sm" for="account_username">Value</label><input class="form-input rounded-md shadow-sm mt-1 block w-full" type="text" name="value[]" id="value'+count+'" value="{{ $api_acc->value }}"></div><span id="close" onclick="removeEditAccountNode(this)" title="Remove Account">x</span></div></div></div>
+		@endforeach
+	@endif	
+
+	@if($account->type == 'API')
+	<div id="API" style="display:block;" class="content-div">
+	@else
 	<div id="API" style="display:none;" class="content-div">
+	@endif
 		<div id="line_item">
 		</div>
         <div id="line_item_new">
         </div>
         <div class="clear">&nbsp;</div>
 
-		<button type="button" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest focus:outline-none focus:border-gray-900 focus:shadow-outline-gray m-1" style="background:#000;"  onclick="newLineItem();">Add New Fields</button>
+		<button type="button" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest focus:outline-none focus:border-gray-900 focus:shadow-outline-gray m-1" style="background:#000;"  onclick="newMailAccount();">Add New Attributes</button>
 	</div><!-- API Form ends -->
        </div>
     </div>

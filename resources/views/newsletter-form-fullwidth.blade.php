@@ -61,10 +61,6 @@
 <div class="overflow-hidden sm:rounded-md">
     <div class="px-4 py-5 bg-white sm:p-6 text-gray-900">
        <div class="grid grid-cols-6 gap-6">
-        <div class="col-span-8 md:col-span-8">
-             <label class="block font-medium text-sm" for="body_template">Body Template</label>
-             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="body_template" name="body_template" type="text">{{ $newsletter->body_template }}</textarea>
-        </div>
         <div class="col-span-4 md:col-span-4">
              <label class="block font-medium text-sm" for="title">Title</label>
              <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="title" name="title" type="text" value="{{ $newsletter->title }}" placeholder="Some announcement">
@@ -79,11 +75,7 @@
 			{{ $tag->label }}&nbsp;
                 @endforeach
         </div>
-        <div class="col-span-4 md:col-span-2">
-             <label class="block font-medium text-sm" for="subject_template">Subject Template</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="subject_template" name="subject_template" type="text" value="{{ $newsletter->subject_template }}" placeholder="New feature [[feature_name]]">
-        </div>
-        <div class="col-span-4 md:col-span-2">
+        <div class="col-span-4 md:col-span-4">
              <label class="block font-medium text-sm" for="campaign_id">Campaings</label>
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="campaign_id" name="campaign_id">
                 <option value="">Select Campaign</option>
@@ -92,7 +84,7 @@
                 @endforeach
              </select>
         </div>
-        <div class="col-span-4 md:col-span-2">
+        <div class="col-span-4 md:col-span-4">
              <label class="block font-medium text-sm" for="status">Status</label>
              <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="status" name="status">
                 <option value="">Select Status</option>
@@ -101,6 +93,14 @@
                 <option value="Q" @if($newsletter->status == 'Q') selected @endif>Queing</option>
                 <option value="S" @if($newsletter->status == 'S') selected @endif>Sent</option>
              </select>
+        </div>
+        <div class="col-span-8 md:col-span-4">
+             <label class="block font-medium text-sm" for="subject_template">Subject Template</label>
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="subject_template" name="subject_template" type="text" value="{{ $newsletter->subject_template }}" placeholder="New feature [[feature_name]]">
+        </div>
+        <div class="col-span-8 md:col-span-4">
+             <label class="block font-medium text-sm" for="body_template">Body Template</label>
+             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="body_template" name="body_template" type="text">{{ $newsletter->body_template }}</textarea>
         </div>
        </div>
     </div>
