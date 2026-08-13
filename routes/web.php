@@ -7,7 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\NewsletterController;
-
+use App\Http\Controllers\EmailController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,6 +16,12 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/emails', [EmailController::class, 'list'])
+    ->name('emails');
+
+Route::get('/emails/data', [EmailController::class, 'data'])
+    ->name('emails.data');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

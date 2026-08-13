@@ -36,6 +36,12 @@ class FlushMailQueue extends Command
                         break;
                     }
                 }
+
+                if ($active_m_a) {
+                    $q_m->outbound_mail_account_id = $active_m_a->id;
+                    $q_m->save();
+                }
+
                     // attempt to send mail
                     try{
                         $mailable = new DynamicDbMail($q_m->subject, $q_m->body);
