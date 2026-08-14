@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MailQueue;
+use App\Models\SentMail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class EmailController extends Controller
 {
@@ -14,86 +15,89 @@ class EmailController extends Controller
 
     public function data(Request $request)
     {
-        $sent = DB::table('sent_mails as sm')
-            ->leftJoin('newsletters as n', 'sm.newsletter_id', '=', 'n.id')
+        $status = $request->input('status', 'all');
+
+        /*
+         * Sent emails
+         */
+        $sent = SentMail::query()
+            ->leftJoin('newsletters as n', 'sent_mails.newsletter_id', '=', 'n.id')
             ->leftJoin('campaigns as c', 'n.campaign_id', '=', 'c.id')
-            ->leftJoin('contacts as ct', 'sm.contact_id', '=', 'ct.id')
+            ->leftJoin('contacts as ct', 'sent_mails.contact_id', '=', 'ct.id')
             ->leftJoin(
                 'outbound_mail_accounts as oma',
-                'sm.outbound_mail_account_id',
+                'sent_mails.outbound_mail_account_id',
                 '=',
                 'oma.id'
             )
             ->select(
-                'sm.subject',
+                'sent_mails.subject',
                 'c.name as campaign_name',
                 'ct.email as recipient',
                 'oma.name as sender_mail_account',
-                'sm.created_at as timestamp'
+                'sent_mails.created_at as timestamp'
             )
             ->selectRaw("'sent' as email_status");
 
-        $queued = DB::table('mail_queues as mq')
-            ->leftJoin('newsletters as n', 'mq.newsletter_id', '=', 'n.id')
+        /*
+         * Queued and failed emails
+         *
+         * The outbound mail account is NOT selected here because
+         * the account is decided when the email is actually sent.
+         */
+        $queued = MailQueue::query()
+            ->leftJoin('newsletters as n', 'mail_queues.newsletter_id', '=', 'n.id')
             ->leftJoin('campaigns as c', 'n.campaign_id', '=', 'c.id')
-            ->leftJoin('contacts as ct', 'mq.contact_id', '=', 'ct.id')
-            ->leftJoin(
-                'outbound_mail_accounts as oma',
-                'mq.outbound_mail_account_id',
-                '=',
-                'oma.id'
-            )
-            ->where('mq.status', 'Q')
-            ->whereNull('mq.error')
+            ->leftJoin('contacts as ct', 'mail_queues.contact_id', '=', 'ct.id')
+            ->where('mail_queues.status', 'Q')
+            ->whereNull('mail_queues.error')
             ->select(
-                'mq.subject',
+                'mail_queues.subject',
                 'c.name as campaign_name',
-                'ct.email as recipient',
-                DB::raw("COALESCE(oma.name, 'Not assigned yet') as sender_mail_account"),
-                'mq.created_at as timestamp'
+                'ct.email as recipient'
             )
+            ->selectRaw("'Not assigned yet' as sender_mail_account")
+            ->selectRaw("mail_queues.created_at as timestamp")
             ->selectRaw("'queued' as email_status");
 
-        $failed = DB::table('mail_queues as mq')
-            ->leftJoin('newsletters as n', 'mq.newsletter_id', '=', 'n.id')
+        $failed = MailQueue::query()
+            ->leftJoin('newsletters as n', 'mail_queues.newsletter_id', '=', 'n.id')
             ->leftJoin('campaigns as c', 'n.campaign_id', '=', 'c.id')
-            ->leftJoin('contacts as ct', 'mq.contact_id', '=', 'ct.id')
-            ->leftJoin(
-                'outbound_mail_accounts as oma',
-                'mq.outbound_mail_account_id',
-                '=',
-                'oma.id'
-            )
-            ->where('mq.status', 'Q')
-            ->whereNotNull('mq.error')
+            ->leftJoin('contacts as ct', 'mail_queues.contact_id', '=', 'ct.id')
+            ->where('mail_queues.status', 'Q')
+            ->whereNotNull('mail_queues.error')
             ->select(
-                'mq.subject',
+                'mail_queues.subject',
                 'c.name as campaign_name',
-                'ct.email as recipient',
-                DB::raw("COALESCE(oma.name, 'N/A') as sender_mail_account"),
-                'mq.created_at as timestamp'
+                'ct.email as recipient'
             )
+            ->selectRaw("'Not assigned yet' as sender_mail_account")
+            ->selectRaw("mail_queues.created_at as timestamp")
             ->selectRaw("'failed' as email_status");
 
-        $query = DB::query()
-            ->fromSub(
-                $sent
-                    ->unionAll($queued)
-                    ->unionAll($failed),
-                'emails'
-            );
-
-        // Status filter
-        $status = $request->input('status', 'all');
-
-        if (in_array($status, ['sent', 'queued', 'failed'], true)) {
-            $query->where('email_status', $status);
+        /*
+         * Select the required email source based on the filter.
+         */
+        if ($status === 'sent') {
+            $query = $sent;
+        } elseif ($status === 'queued') {
+            $query = $queued;
+        } elseif ($status === 'failed') {
+            $query = $failed;
+        } else {
+            $query = $sent
+                ->unionAll($queued)
+                ->unionAll($failed);
         }
 
-        // Total records
-        $recordsTotal = (clone $query)->count();
+        /*
+         * Total records before search.
+         */
+        $recordsTotal = $this->countQuery($query);
 
-        // Search
+        /*
+         * DataTables search.
+         */
         $search = $request->input('search.value');
 
         if (!empty($search)) {
@@ -105,9 +109,11 @@ class EmailController extends Controller
             });
         }
 
-        $recordsFiltered = (clone $query)->count();
+        $recordsFiltered = $this->countQuery($query);
 
-        // Latest first
+        /*
+         * Latest emails first + server-side pagination.
+         */
         $data = $query
             ->orderBy('timestamp', 'desc')
             ->offset((int) $request->input('start', 0))
@@ -120,5 +126,10 @@ class EmailController extends Controller
             'recordsFiltered' => $recordsFiltered,
             'data' => $data,
         ]);
+    }
+
+    private function countQuery($query)
+    {
+        return $query->count();
     }
 }
