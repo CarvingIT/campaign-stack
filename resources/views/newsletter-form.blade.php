@@ -5,11 +5,12 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
-<script src="/js/tinymce/tinymce.min.js"></script>
+<script src="/build/assets/tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
      selector: 'textarea#body_template', // Replace this CSS selector to match the placeholder element for TinyMCE
      license_key: 'gpl', // Required for TinyMCE 7+
+     suffix: '.min',
      plugins: 'table lists link image code',
      toolbar: 'undo redo | blocks| bullist numlist checklist | code | table | fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | removeformat',
 
