@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
@@ -7,108 +8,324 @@
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <!-- Statistics -->
-                    <div class="grid grid-cols-5 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
 
                         <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
-                            <p class="text-sm text-gray-500">Mail Accounts</p>
-                            <p class="mt-2 text-2xl font-semibold text-gray-900">12</p>
-                            <p class="mt-1 text-xs text-gray-500">Connected accounts</p>
+                            <p class="text-sm text-gray-500">
+                                Mail Accounts
+                            </p>
+
+                            <p class="mt-2 text-2xl font-semibold text-gray-900">
+                                {{ $mailAccounts }}
+                            </p>
+
+                            <p class="mt-1 text-xs text-gray-500">
+                                Connected accounts
+                            </p>
                         </div>
 
                         <div class="bg-green-50 border border-green-100 rounded-lg p-4">
-                            <p class="text-sm text-gray-500">Contacts</p>
-                            <p class="mt-2 text-2xl font-semibold text-gray-900">1,248</p>
-                            <p class="mt-1 text-xs text-gray-500">Total contacts</p>
+                            <p class="text-sm text-gray-500">
+                                Contacts
+                            </p>
+
+                            <p class="mt-2 text-2xl font-semibold text-gray-900">
+                                {{ $contacts }}
+                            </p>
+
+                            <p class="mt-1 text-xs text-gray-500">
+                                Total contacts
+                            </p>
                         </div>
 
                         <div class="bg-orange-50 border border-orange-100 rounded-lg p-4">
-                            <p class="text-sm text-gray-500">Campaigns</p>
-                            <p class="mt-2 text-2xl font-semibold text-gray-900">24</p>
-                            <p class="mt-1 text-xs text-gray-500">Total campaigns</p>
+                            <p class="text-sm text-gray-500">
+                                Campaigns
+                            </p>
+
+                            <p class="mt-2 text-2xl font-semibold text-gray-900">
+                                {{ $campaigns }}
+                            </p>
+
+                            <p class="mt-1 text-xs text-gray-500">
+                                Total campaigns
+                            </p>
                         </div>
 
                         <div class="bg-purple-50 border border-purple-100 rounded-lg p-4">
-                            <p class="text-sm text-gray-500">Newsletters</p>
-                            <p class="mt-2 text-2xl font-semibold text-gray-900">18</p>
-                            <p class="mt-1 text-xs text-gray-500">Total newsletters</p>
+                            <p class="text-sm text-gray-500">
+                                Newsletters
+                            </p>
+
+                            <p class="mt-2 text-2xl font-semibold text-gray-900">
+                                {{ $newsletters }}
+                            </p>
+
+                            <p class="mt-1 text-xs text-gray-500">
+                                Total newsletters
+                            </p>
                         </div>
 
                         <div class="bg-red-50 border border-red-100 rounded-lg p-4">
-                            <p class="text-sm text-gray-500">Alerts</p>
-                            <p class="mt-2 text-2xl font-semibold text-gray-900">5</p>
-                            <p class="mt-1 text-xs text-gray-500">New alerts</p>
+                            <p class="text-sm text-gray-500">
+                                Alerts
+                            </p>
+
+                            <p class="mt-2 text-2xl font-semibold text-gray-900">
+                                {{ $failedMails }}
+                            </p>
+
+                            <p class="mt-1 text-xs text-gray-500">
+                                Failed emails
+                            </p>
                         </div>
 
                     </div>
 
-                    <!-- Email charts -->
+                    <!-- Charts -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-6">
 
-                        <!-- Emails sent -->
+                        <!-- Emails Sent -->
                         <div class="bg-white border border-gray-200 rounded-lg p-5">
 
-                            <h3 class="text-lg font-semibold text-gray-900">
-                                Emails Sent
-                            </h3>
+                            <div class="flex items-start justify-between">
 
-                            <p class="text-sm text-gray-500 mt-1">
-                                Emails sent across dates
-                            </p>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900">
+                                        Emails Sent
+                                    </h3>
 
-                            <div class="mt-5">
-                                <svg viewBox="0 0 600 250" class="w-full h-52">
+                                    <p class="text-sm text-gray-500 mt-1">
+                                        Emails sent over the selected 7 days
+                                    </p>
+                                </div>
 
-                                    <line x1="50" y1="30" x2="570" y2="30"
-                                          stroke="#e5e7eb"/>
+                                <div class="text-right">
+                                    <p class="text-xs text-gray-500">
+                                        Total in period
+                                    </p>
 
-                                    <line x1="50" y1="80" x2="570" y2="80"
-                                          stroke="#e5e7eb"/>
+                                    <p class="text-xl font-semibold text-gray-900">
+                                        {{ array_sum($emailCounts) }}
+                                    </p>
+                                </div>
 
-                                    <line x1="50" y1="130" x2="570" y2="130"
-                                          stroke="#e5e7eb"/>
+                            </div>
 
-                                    <line x1="50" y1="180" x2="570" y2="180"
-                                          stroke="#e5e7eb"/>
+                            <!-- Date Navigation -->
+                            <div class="flex items-center justify-between mt-5">
 
-                                    <text x="10" y="35" font-size="11" fill="#6b7280">800</text>
-                                    <text x="10" y="85" font-size="11" fill="#6b7280">600</text>
-                                    <text x="10" y="135" font-size="11" fill="#6b7280">400</text>
-                                    <text x="10" y="185" font-size="11" fill="#6b7280">200</text>
+                                <a
+                                    href="{{ route('dashboard', [
+                                        'end_date' => $endDate->copy()->subDays(7)->format('Y-m-d')
+                                    ]) }}"
+                                    class="px-3 py-2 text-sm border border-gray-200 rounded-md hover:bg-gray-50 text-gray-700"
+                                >
+                                    ← Previous 7 days
+                                </a>
 
-                                    <polyline
-                                        points="60,125 145,90 230,108 315,70 400,55 485,85 570,35"
-                                        fill="none"
-                                        stroke="#3b82f6"
-                                        stroke-width="3"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
+                                <span class="text-sm font-medium text-gray-600">
+                                    {{ $startDate->format('M d') }}
+                                    -
+                                    {{ $endDate->format('M d, Y') }}
+                                </span>
 
-                                    <circle cx="60" cy="125" r="4" fill="#3b82f6"/>
-                                    <circle cx="145" cy="90" r="4" fill="#3b82f6"/>
-                                    <circle cx="230" cy="108" r="4" fill="#3b82f6"/>
-                                    <circle cx="315" cy="70" r="4" fill="#3b82f6"/>
-                                    <circle cx="400" cy="55" r="4" fill="#3b82f6"/>
-                                    <circle cx="485" cy="85" r="4" fill="#3b82f6"/>
-                                    <circle cx="570" cy="35" r="4" fill="#3b82f6"/>
+                                @if($endDate->lt(now()->startOfDay()))
 
-                                    <text x="48" y="215" font-size="11" fill="#6b7280">Aug 6</text>
-                                    <text x="133" y="215" font-size="11" fill="#6b7280">Aug 7</text>
-                                    <text x="218" y="215" font-size="11" fill="#6b7280">Aug 8</text>
-                                    <text x="303" y="215" font-size="11" fill="#6b7280">Aug 9</text>
-                                    <text x="383" y="215" font-size="11" fill="#6b7280">Aug 10</text>
-                                    <text x="468" y="215" font-size="11" fill="#6b7280">Aug 11</text>
-                                    <text x="548" y="215" font-size="11" fill="#6b7280">Aug 12</text>
+                                    <a
+                                        href="{{ route('dashboard', [
+                                            'end_date' => $endDate->copy()->addDays(7)->format('Y-m-d')
+                                        ]) }}"
+                                        class="px-3 py-2 text-sm border border-gray-200 rounded-md hover:bg-gray-50 text-gray-700"
+                                    >
+                                        Next 7 days →
+                                    </a>
+
+                                @else
+
+                                    <span class="px-3 py-2 text-sm border border-gray-100 rounded-md text-gray-300">
+                                        Next 7 days →
+                                    </span>
+
+                                @endif
+
+                            </div>
+
+                            <!-- Chart -->
+                            <div class="mt-6 relative">
+
+                                @php
+                                    $chartWidth = 520;
+                                    $chartHeight = 210;
+
+                                    $leftPadding = 50;
+                                    $rightPadding = 15;
+                                    $topPadding = 20;
+                                    $bottomPadding = 40;
+
+                                    $usableWidth = $chartWidth - $leftPadding - $rightPadding;
+                                    $usableHeight = $chartHeight - $topPadding - $bottomPadding;
+
+                                    $pointCount = count($emailCounts);
+
+                                    $points = [];
+
+                                    foreach ($emailCounts as $index => $value) {
+
+                                        $x = $leftPadding;
+
+                                        if ($pointCount > 1) {
+                                            $x += $index * (
+                                                $usableWidth / ($pointCount - 1)
+                                            );
+                                        }
+
+                                        $y = $topPadding
+                                            + $usableHeight
+                                            - (($value / $yAxisMax) * $usableHeight);
+
+                                        $points[] = round($x, 2) . ',' . round($y, 2);
+                                    }
+
+                                    $pointsString = implode(' ', $points);
+                                    $gridSteps = 5;
+                                @endphp
+
+                                <div
+                                    id="chartTooltip"
+                                    class="hidden absolute z-20 bg-gray-900 text-white text-xs rounded-md px-3 py-2 shadow-lg pointer-events-none"
+                                >
+                                    <div id="tooltipDate"></div>
+                                    <div id="tooltipCount" class="font-semibold mt-1"></div>
+                                </div>
+
+                                <svg
+                                    id="emailChart"
+                                    viewBox="0 0 {{ $chartWidth }} {{ $chartHeight }}"
+                                    class="w-full h-64"
+                                    preserveAspectRatio="none"
+                                >
+
+                                    <!-- Horizontal grid -->
+                                    @for($i = 0; $i <= $gridSteps; $i++)
+
+                                        @php
+                                            $gridValue = round(
+                                                $yAxisMax - (
+                                                    $yAxisMax / $gridSteps
+                                                ) * $i
+                                            );
+
+                                            $gridY = $topPadding + (
+                                                $usableHeight / $gridSteps
+                                            ) * $i;
+                                        @endphp
+
+                                        <line
+                                            x1="{{ $leftPadding }}"
+                                            y1="{{ $gridY }}"
+                                            x2="{{ $chartWidth - $rightPadding }}"
+                                            y2="{{ $gridY }}"
+                                            stroke="#e5e7eb"
+                                        />
+
+                                        <text
+                                            x="5"
+                                            y="{{ $gridY + 4 }}"
+                                            font-size="11"
+                                            fill="#6b7280"
+                                        >
+                                            {{ $gridValue }}
+                                        </text>
+
+                                    @endfor
+
+                                    <!-- Line -->
+                                    @if($pointCount > 0)
+
+                                        <polyline
+                                            points="{{ $pointsString }}"
+                                            fill="none"
+                                            stroke="#3b82f6"
+                                            stroke-width="3"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+
+                                    @endif
+
+                                    <!-- Data points -->
+                                    @foreach($emailCounts as $index => $value)
+
+                                        @php
+                                            $x = $leftPadding;
+
+                                            if ($pointCount > 1) {
+                                                $x += $index * (
+                                                    $usableWidth / ($pointCount - 1)
+                                                );
+                                            }
+
+                                            $y = $topPadding
+                                                + $usableHeight
+                                                - (($value / $yAxisMax) * $usableHeight);
+                                        @endphp
+
+                                        <circle
+                                            class="email-chart-point cursor-pointer"
+                                            cx="{{ $x }}"
+                                            cy="{{ $y }}"
+                                            r="5"
+                                            fill="#3b82f6"
+                                            data-date="{{ $emailFullDates[$index] }}"
+                                            data-label="{{ $emailDates[$index] }}"
+                                            data-count="{{ $value }}"
+                                        />
+
+                                    @endforeach
+
+                                    <!-- Dates -->
+                                    @foreach($emailDates as $index => $date)
+
+                                        @php
+                                            $x = $leftPadding;
+
+                                            if ($pointCount > 1) {
+                                                $x += $index * (
+                                                    $usableWidth / ($pointCount - 1)
+                                                );
+                                            }
+                                        @endphp
+
+                                        <text
+                                            x="{{ $x }}"
+                                            y="{{ $chartHeight - 8 }}"
+                                            text-anchor="middle"
+                                            font-size="10"
+                                            fill="#6b7280"
+                                        >
+                                            {{ $date }}
+                                        </text>
+
+                                    @endforeach
 
                                 </svg>
+
                             </div>
+
+                            <p class="text-xs text-gray-400 mt-2 text-center">
+                                Hover over a point to view details. Click a point to view that date.
+                            </p>
+
                         </div>
 
-                        <!-- Email status -->
+                        <!-- Email Status -->
                         <div class="bg-white border border-gray-200 rounded-lg p-5">
 
                             <h3 class="text-lg font-semibold text-gray-900">
@@ -116,23 +333,56 @@
                             </h3>
 
                             <p class="text-sm text-gray-500 mt-1">
-                                Distribution of emails by state
+                                Current email distribution
                             </p>
+
+                            @php
+                                $totalEmails = $sentMails + $queuedMails + $failedMails;
+
+                                $sentPercentage = 0;
+                                $queuedPercentage = 0;
+                                $failedPercentage = 0;
+
+                                if ($totalEmails > 0) {
+                                    $sentPercentage = ($sentMails / $totalEmails) * 100;
+                                    $queuedPercentage = ($queuedMails / $totalEmails) * 100;
+                                    $failedPercentage = ($failedMails / $totalEmails) * 100;
+                                }
+                            @endphp
 
                             <div class="flex items-center justify-center gap-8 mt-6">
 
                                 <div class="relative w-36 h-36">
 
-                                    <div class="w-36 h-36 rounded-full"
-                                         style="background: conic-gradient(#22c55e 0deg 270deg, #3b82f6 270deg 310deg, #ef4444 310deg 360deg);">
-                                    </div>
+                                    @if($totalEmails > 0)
+
+                                        <div
+                                            class="w-36 h-36 rounded-full"
+                                            style="
+                                                background: conic-gradient(
+                                                    #22c55e 0% {{ $sentPercentage }}%,
+                                                    #3b82f6 {{ $sentPercentage }}% {{ $sentPercentage + $queuedPercentage }}%,
+                                                    #ef4444 {{ $sentPercentage + $queuedPercentage }}% 100%
+                                                );
+                                            "
+                                        ></div>
+
+                                    @else
+
+                                        <div class="w-36 h-36 rounded-full border-8 border-gray-200"></div>
+
+                                    @endif
 
                                     <div class="absolute inset-0 flex items-center justify-center">
+
                                         <div class="bg-white rounded-full w-20 h-20 flex items-center justify-center">
+
                                             <span class="text-lg font-semibold text-gray-800">
-                                                800
+                                                {{ $totalEmails }}
                                             </span>
+
                                         </div>
+
                                     </div>
 
                                 </div>
@@ -141,52 +391,154 @@
 
                                     <div class="flex items-center gap-2">
                                         <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                                        <span class="text-gray-600">Sent</span>
-                                        <span class="font-semibold text-gray-900">680</span>
+
+                                        <span class="text-gray-600">
+                                            Sent
+                                        </span>
+
+                                        <span class="font-semibold text-gray-900">
+                                            {{ $sentMails }}
+                                        </span>
                                     </div>
 
                                     <div class="flex items-center gap-2">
                                         <span class="w-3 h-3 rounded-full bg-blue-500"></span>
-                                        <span class="text-gray-600">Queued</span>
-                                        <span class="font-semibold text-gray-900">85</span>
+
+                                        <span class="text-gray-600">
+                                            Queued
+                                        </span>
+
+                                        <span class="font-semibold text-gray-900">
+                                            {{ $queuedMails }}
+                                        </span>
                                     </div>
 
                                     <div class="flex items-center gap-2">
                                         <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                                        <span class="text-gray-600">Failed</span>
-                                        <span class="font-semibold text-gray-900">35</span>
+
+                                        <span class="text-gray-600">
+                                            Failed
+                                        </span>
+
+                                        <span class="font-semibold text-gray-900">
+                                            {{ $failedMails }}
+                                        </span>
                                     </div>
 
-                                    <div class="border-t pt-2 mt-2">
-                                        <p class="text-xs text-gray-500 mb-1">
-                                            Failure codes
-                                        </p>
+                                    @if($failureCodes->count() > 0)
 
-                                        <div class="flex justify-between text-xs text-gray-500">
-                                            <span>400</span>
-                                            <span>18</span>
+                                        <div class="border-t pt-2 mt-2">
+
+                                            <p class="text-xs text-gray-500 mb-1">
+                                                Failure codes
+                                            </p>
+
+                                            @foreach($failureCodes as $failure)
+
+                                                <div class="flex justify-between text-xs text-gray-500">
+
+                                                    <span>
+                                                        {{ $failure->response_code }}
+                                                    </span>
+
+                                                    <span>
+                                                        {{ $failure->count }}
+                                                    </span>
+
+                                                </div>
+
+                                            @endforeach
+
                                         </div>
 
-                                        <div class="flex justify-between text-xs text-gray-500">
-                                            <span>401</span>
-                                            <span>9</span>
-                                        </div>
-
-                                        <div class="flex justify-between text-xs text-gray-500">
-                                            <span>500</span>
-                                            <span>8</span>
-                                        </div>
-                                    </div>
+                                    @endif
 
                                 </div>
 
                             </div>
+
                         </div>
 
                     </div>
 
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const points = document.querySelectorAll('.email-chart-point');
+            const tooltip = document.getElementById('chartTooltip');
+            const tooltipDate = document.getElementById('tooltipDate');
+            const tooltipCount = document.getElementById('tooltipCount');
+
+            points.forEach(function (point) {
+
+                point.addEventListener('mouseenter', function (event) {
+
+                    tooltipDate.textContent = point.dataset.label;
+                    tooltipCount.textContent =
+                        'Emails sent: ' + point.dataset.count;
+
+                    tooltip.classList.remove('hidden');
+
+                    point.setAttribute('r', '7');
+
+                });
+
+                point.addEventListener('mousemove', function (event) {
+
+                    const container = point.closest('.relative');
+                    const rect = container.getBoundingClientRect();
+
+                    let left = event.clientX - rect.left + 10;
+                    let top = event.clientY - rect.top - 55;
+
+                    if (left + tooltip.offsetWidth > rect.width) {
+                        left = rect.width - tooltip.offsetWidth - 10;
+                    }
+
+                    if (top < 0) {
+                        top = 10;
+                    }
+
+                    tooltip.style.left = left + 'px';
+                    tooltip.style.top = top + 'px';
+
+                });
+
+                point.addEventListener('mouseleave', function () {
+
+                    tooltip.classList.add('hidden');
+
+                    point.setAttribute('r', '5');
+
+                });
+
+                point.addEventListener('click', function () {
+
+                    const selectedDate = point.dataset.date;
+
+                    window.location.href =
+                        "{{ route('dashboard') }}" +
+                        "?end_date=" +
+                        encodeURIComponent(selectedDate);
+
+                });
+
+            });
+
+            // Refresh dashboard data every 30 seconds
+            setTimeout(function () {
+                window.location.reload();
+            }, 30000);
+
+        });
+    </script>
+
 </x-app-layout>

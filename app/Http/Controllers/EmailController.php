@@ -16,120 +16,162 @@ class EmailController extends Controller
     public function data(Request $request)
     {
         $status = $request->input('status', 'all');
+        $search = $request->input('search.value');
+        $start = (int) $request->input('start', 0);
+        $length = (int) $request->input('length', 10);
 
-        /*
-         * Sent emails
-         */
-        $sent = SentMail::query()
-            ->leftJoin('newsletters as n', 'sent_mails.newsletter_id', '=', 'n.id')
-            ->leftJoin('campaigns as c', 'n.campaign_id', '=', 'c.id')
-            ->leftJoin('contacts as ct', 'sent_mails.contact_id', '=', 'ct.id')
-            ->leftJoin(
-                'outbound_mail_accounts as oma',
-                'sent_mails.outbound_mail_account_id',
-                '=',
-                'oma.id'
-            )
-            ->select(
-                'sent_mails.subject',
-                'c.name as campaign_name',
-                'ct.email as recipient',
-                'oma.name as sender_mail_account',
-                'sent_mails.created_at as timestamp'
-            )
-            ->selectRaw("'sent' as email_status");
-
-        /*
-         * Queued and failed emails
-         *
-         * The outbound mail account is NOT selected here because
-         * the account is decided when the email is actually sent.
-         */
-        $queued = MailQueue::query()
-            ->leftJoin('newsletters as n', 'mail_queues.newsletter_id', '=', 'n.id')
-            ->leftJoin('campaigns as c', 'n.campaign_id', '=', 'c.id')
-            ->leftJoin('contacts as ct', 'mail_queues.contact_id', '=', 'ct.id')
-            ->where('mail_queues.status', 'Q')
-            ->whereNull('mail_queues.error')
-            ->select(
-                'mail_queues.subject',
-                'c.name as campaign_name',
-                'ct.email as recipient'
-            )
-            ->selectRaw("'Not assigned yet' as sender_mail_account")
-            ->selectRaw("mail_queues.created_at as timestamp")
-            ->selectRaw("'queued' as email_status");
-
-        $failed = MailQueue::query()
-            ->leftJoin('newsletters as n', 'mail_queues.newsletter_id', '=', 'n.id')
-            ->leftJoin('campaigns as c', 'n.campaign_id', '=', 'c.id')
-            ->leftJoin('contacts as ct', 'mail_queues.contact_id', '=', 'ct.id')
-            ->where('mail_queues.status', 'Q')
-            ->whereNotNull('mail_queues.error')
-            ->select(
-                'mail_queues.subject',
-                'c.name as campaign_name',
-                'ct.email as recipient'
-            )
-            ->selectRaw("'Not assigned yet' as sender_mail_account")
-            ->selectRaw("mail_queues.created_at as timestamp")
-            ->selectRaw("'failed' as email_status");
-
-        /*
-         * Select the required email source based on the filter.
-         */
         if ($status === 'sent') {
-            $query = $sent;
-        } elseif ($status === 'queued') {
-            $query = $queued;
-        } elseif ($status === 'failed') {
-            $query = $failed;
+            $query = SentMail::with([
+                'newsletter.campaign',
+                'contact',
+                'outbound_mail_account'
+            ]);
+
+            $this->applySearch($query, $search);
+
+            $recordsTotal = SentMail::count();
+            $recordsFiltered = $query->count();
+
+            $emails = $query
+                ->orderBy('created_at', 'desc')
+                ->offset($start)
+                ->limit($length)
+                ->get();
+
         } else {
-            $query = $sent
-                ->unionAll($queued)
-                ->unionAll($failed);
+            $query = MailQueue::with([
+                'newsletter.campaign',
+                'contact'
+            ]);
+
+            if ($status === 'queued') {
+                $query->where('status', 'Q')
+                    ->whereNull('error');
+            } elseif ($status === 'failed') {
+                $query->where('status', 'Q')
+                    ->whereNotNull('error');
+            }
+
+            $this->applySearch($query, $search);
+
+            if ($status === 'queued') {
+                $recordsTotal = MailQueue::where('status', 'Q')
+                    ->whereNull('error')
+                    ->count();
+            } elseif ($status === 'failed') {
+                $recordsTotal = MailQueue::where('status', 'Q')
+                    ->whereNotNull('error')
+                    ->count();
+            } else {
+                $recordsTotal = SentMail::count()
+                    + MailQueue::where('status', 'Q')->count();
+            }
+
+            $recordsFiltered = $query->count();
+
+            if ($status === 'all') {
+                $sentQuery = SentMail::with([
+                    'newsletter.campaign',
+                    'contact',
+                    'outbound_mail_account'
+                ]);
+
+                $queueQuery = MailQueue::with([
+                    'newsletter.campaign',
+                    'contact'
+                ])->where('status', 'Q');
+
+                $this->applySearch($sentQuery, $search);
+                $this->applySearch($queueQuery, $search);
+
+                $sentCount = $sentQuery->count();
+                $queueCount = $queueQuery->count();
+
+                $recordsTotal = SentMail::count()
+                    + MailQueue::where('status', 'Q')->count();
+
+                $recordsFiltered = $sentCount + $queueCount;
+
+                $emails = $sentQuery
+                    ->orderBy('created_at', 'desc')
+                    ->limit($start + $length)
+                    ->get()
+                    ->map(function ($email) {
+                        return $this->formatSentEmail($email);
+                    });
+
+                $queuedEmails = $queueQuery
+                    ->orderBy('created_at', 'desc')
+                    ->limit($start + $length)
+                    ->get()
+                    ->map(function ($email) {
+                        return $this->formatQueuedEmail($email);
+                    });
+
+                $emails = $emails
+                    ->concat($queuedEmails)
+                    ->sortByDesc('timestamp')
+                    ->slice($start, $length)
+                    ->values();
+            } else {
+                $emails = $emails->map(function ($email) {
+                    return $this->formatQueuedEmail($email);
+                });
+            }
         }
 
-        /*
-         * Total records before search.
-         */
-        $recordsTotal = $this->countQuery($query);
-
-        /*
-         * DataTables search.
-         */
-        $search = $request->input('search.value');
-
-        if (!empty($search)) {
-            $query->where(function ($q) use ($search) {
-                $q->where('subject', 'like', "%{$search}%")
-                    ->orWhere('campaign_name', 'like', "%{$search}%")
-                    ->orWhere('recipient', 'like', "%{$search}%")
-                    ->orWhere('sender_mail_account', 'like', "%{$search}%");
+        if ($status === 'sent') {
+            $emails = $emails->map(function ($email) {
+                return $this->formatSentEmail($email);
             });
         }
-
-        $recordsFiltered = $this->countQuery($query);
-
-        /*
-         * Latest emails first + server-side pagination.
-         */
-        $data = $query
-            ->orderBy('timestamp', 'desc')
-            ->offset((int) $request->input('start', 0))
-            ->limit((int) $request->input('length', 10))
-            ->get();
 
         return response()->json([
             'draw' => (int) $request->input('draw', 0),
             'recordsTotal' => $recordsTotal,
             'recordsFiltered' => $recordsFiltered,
-            'data' => $data,
+            'data' => $emails,
         ]);
     }
 
-    private function countQuery($query)
+    private function applySearch($query, $search)
     {
-        return $query->count();
+        if (empty($search)) {
+            return;
+        }
+
+        $query->where(function ($q) use ($search) {
+            $q->where('subject', 'like', "%{$search}%")
+                ->orWhereHas('newsletter', function ($newsletter) use ($search) {
+                    $newsletter->whereHas('campaign', function ($campaign) use ($search) {
+                        $campaign->where('name', 'like', "%{$search}%");
+                    });
+                })
+                ->orWhereHas('contact', function ($contact) use ($search) {
+                    $contact->where('email', 'like', "%{$search}%");
+                });
+        });
+    }
+
+    private function formatSentEmail($email)
+    {
+        return [
+            'subject' => $email->subject,
+            'campaign_name' => $email->newsletter->campaign->name ?? '',
+            'recipient' => $email->contact->email ?? '',
+            'sender_mail_account' => $email->outbound_mail_account->name ?? '',
+            'timestamp' => $email->created_at,
+        ];
+    }
+
+    private function formatQueuedEmail($email)
+    {
+        return [
+            'subject' => $email->subject,
+            'campaign_name' => $email->newsletter->campaign->name ?? '',
+            'recipient' => $email->contact->email ?? '',
+            'sender_mail_account' => 'Not assigned yet',
+            'timestamp' => $email->created_at,
+        ];
     }
 }

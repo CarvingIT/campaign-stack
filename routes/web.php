@@ -8,14 +8,15 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::get('/emails', [EmailController::class, 'list'])
     ->name('emails');

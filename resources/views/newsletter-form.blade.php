@@ -5,12 +5,12 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/jquery-ui.js"></script>
-<!--script src="https://tiny.cloud" referrerpolicy="origin"></script-->
-<!--script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/8/tinymce.min.js" referrerpolicy="origin"></script-->
-<script src="https://cdn.tiny.cloud/1/lgwysaytr4tfzhs9q2uspwfz9zqj4qfhlrclnl0pfhughvrg/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+<script src="/build/assets/tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
      selector: 'textarea#body_template', // Replace this CSS selector to match the placeholder element for TinyMCE
+     license_key: 'gpl', // Required for TinyMCE 7+
+     suffix: '.min',
      plugins: 'table lists link image code',
      toolbar: 'undo redo | blocks| bullist numlist checklist | code | table | fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | removeformat',
 
@@ -60,50 +60,61 @@
 				@csrf	
 <div class="overflow-hidden sm:rounded-md">
     <div class="px-4 py-5 bg-white sm:p-6 text-gray-900">
-       <div class="grid grid-cols-6 gap-6">
-        <div class="col-span-8 md:col-span-8">
-             <label class="block font-medium text-sm" for="body_template">Body Template</label>
-             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="body_template" name="body_template" type="text">{{ $newsletter->body_template }}</textarea>
-        </div>
-        <div class="col-span-4 md:col-span-4">
-             <label class="block font-medium text-sm" for="title">Title</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="title" name="title" type="text" value="{{ $newsletter->title }}" placeholder="Some announcement">
-        </div>
-        <div class="col-span-4 md:col-span-4">
-             <label class="block font-medium text-sm" for="tag_id">Tags</label>
-                @php
-                    $tags_array = explode(",",$newsletter->tag_ids);
-                @endphp
-                @foreach($tags as $tag)
-        	     <input class="form-input rounded-md shadow-sm mt-1 " id="tag_ids" name="tag_ids[]" type="checkbox" value="{{ $tag->id }}" @if(in_array($tag->id,$newsletter->newsletter_tags->pluck('tag_id')->toArray())) checked @endif>
-			{{ $tag->label }}&nbsp;
-                @endforeach
-        </div>
-        <div class="col-span-4 md:col-span-2">
-             <label class="block font-medium text-sm" for="subject_template">Subject Template</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="subject_template" name="subject_template" type="text" value="{{ $newsletter->subject_template }}" placeholder="New feature [[feature_name]]">
-        </div>
-        <div class="col-span-4 md:col-span-2">
-             <label class="block font-medium text-sm" for="campaign_id">Campaings</label>
-             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="campaign_id" name="campaign_id">
-                <option value="">Select Campaign</option>
-                @foreach($campaigns as $camp)
-                <option value="{{ $camp->id }}" @if($newsletter->campaign_id == $camp->id) selected @endif>{{ $camp->name }}</option>
-                @endforeach
-             </select>
-        </div>
-        <div class="col-span-4 md:col-span-2">
-             <label class="block font-medium text-sm" for="status">Status</label>
-             <select class="form-input rounded-md shadow-sm mt-1 block w-full" id="status" name="status">
-                <option value="">Select Status</option>
-                <option value="D" @if($newsletter->status == 'D') selected @endif>Draft</option>
-                <option value="N" @if($newsletter->status == 'N') selected @endif>New</option>
-                <option value="Q" @if($newsletter->status == 'Q') selected @endif>Queing</option>
-                <option value="S" @if($newsletter->status == 'S') selected @endif>Sent</option>
-             </select>
-        </div>
-       </div>
-    </div>
+       <div class="grid grid-cols-12 gap-6">
+
+        	<div class="col-span-8 md:col-span-8">		
+             		<label class="block font-medium text-sm" for="body_template">Body Template</label>
+             		<textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="body_template" name="body_template" type="text">{{ $newsletter->body_template }}</textarea>
+        	</div>
+		<div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+        		<div class="col-span-4 md:col-span-4">
+             			<label class="block font-medium text-sm" for="title">Title</label>
+             			<input class="form-input rounded-md shadow-sm mt-1 block w-full" id="title" name="title" type="text" value="{{ $newsletter->title }}" placeholder="Some announcement">
+        		</div>
+			<!-- Subject Template -->
+        		<div class="col-span-4 md:col-span-4">
+            			<label class="block font-medium text-sm" for="subject_template">Subject Template</label>
+            			<input class="form-input rounded-md shadow-sm mt-1 block w-full" id="subject_template" name="subject_template" type="text" value="{{ $newsletter->subject_template }}" placeholder="New feature [[feature_name]]">
+        		</div>
+
+        		<!-- Tags -->
+        		<div class="col-span-4 md:col-span-4">
+            			<label class="block font-medium text-sm mb-1" for="tag_id">Tags</label>
+            			@php
+                		$tags_array = explode(",", $newsletter->tag_ids);
+            			@endphp
+            			<div class="flex flex-wrap gap-4 mt-2">
+                		@foreach($tags as $tag)
+                    		<label class="inline-flex items-center space-x-2">
+                        		<input class="form-input rounded-md shadow-sm" id="tag_ids" name="tag_ids[]" type="checkbox" value="{{ $tag->id }}" @if(in_array($tag->id, $newsletter->newsletter_tags->pluck('tag_id')->toArray())) checked @endif>
+                        		<span>{{ $tag->label }}</span>
+                    		</label>
+                		@endforeach
+            			</div>
+        		</div>
+			<div class="col-span-4 md:col-span-4">
+             			<label class="block font-medium text-sm" for="campaign_id">Campaings</label>
+             			<select class="form-input rounded-md shadow-sm mt-1 block w-full" id="campaign_id" name="campaign_id">
+               			<option value="">Select Campaign</option>
+                		@foreach($campaigns as $camp)
+                				<option value="{{ $camp->id }}" @if($newsletter->campaign_id == $camp->id) selected @endif>{{ $camp->name }}</option>
+                		@endforeach
+             			</select>
+        		</div>
+        		<div class="col-span-4 md:col-span-4">
+             			<label class="block font-medium text-sm" for="status">Status</label>
+             			<select class="form-input rounded-md shadow-sm mt-1 block w-full" id="status" name="status">
+                			<option value="">Select Status</option>
+                			<option value="D" @if($newsletter->status == 'D') selected @endif>Draft</option>
+                			<option value="N" @if($newsletter->status == 'N') selected @endif>New</option>
+                			<option value="Q" @if($newsletter->status == 'Q') selected @endif>Queing</option>
+                			<option value="S" @if($newsletter->status == 'S') selected @endif>Sent</option>
+             			</select>
+        		</div>
+
+		</div> <!-- end of class="col-span-12 md:col-span-4 flex flex-col gap-2">
+	</div> <!-- grid grid-cols-12 gap-6 -->
+     </div><!-- px-4 py-5 -->
 
     <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
      <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled">
@@ -112,8 +123,8 @@
      <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled" onclick="window.history.back();">
     Cancel
      </button>
-   </div>
-          </div>
+   </div> <!-- end class="flex items-center justify-end px-4 py-3 text-right sm:px-6" -->
+</div> <!--class="overflow-hidden sm:rounded-md"-->
 				</form>
                         </div>
                 </div>
