@@ -114,9 +114,14 @@ class EmailController extends Controller
                     ->slice($start, $length)
                     ->values();
             } else {
-                $emails = $emails->map(function ($email) {
-                    return $this->formatQueuedEmail($email);
-                });
+                $emails = $query
+                    ->orderBy('created_at', 'desc')
+                    ->offset($start)
+                    ->limit($length)
+                    ->get()
+                    ->map(function ($email) {
+                        return $this->formatQueuedEmail($email);
+                    });
             }
         }
 
