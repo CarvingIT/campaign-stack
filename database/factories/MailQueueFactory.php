@@ -26,7 +26,6 @@ class MailQueueFactory extends Factory
             'sending_attempted_at' => null,
             'response_code' => null,
             'error' => null,
-            'outbound_mail_account_id' => null,
         ];
     }
 }

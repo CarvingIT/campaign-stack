@@ -41,14 +41,12 @@ class EmailTestSeeder extends Seeder
         MailQueue::factory()->count(20)->create([
             'newsletter_id' => $newsletters->random()->id,
             'contact_id' => $contacts->random()->id,
-            'outbound_mail_account_id' => $mailAccounts->random()->id,
         ]);
 
         // Create failed emails
         MailQueue::factory()->count(10)->create([
             'newsletter_id' => $newsletters->random()->id,
             'contact_id' => $contacts->random()->id,
-            'outbound_mail_account_id' => $mailAccounts->random()->id,
             'status' => 'Q',
             'attempt' => 1,
             'response_code' => 500,
