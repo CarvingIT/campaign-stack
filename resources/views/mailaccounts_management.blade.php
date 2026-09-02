@@ -91,18 +91,18 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
                 <div class="flex items-center space-x-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-[#FFC700] shadow-sm"></span>
-                    <h2 class="font-black text-2xl text-[#0B192C] dark:text-white leading-tight flex items-center gap-2.5">
-                        <i class="fas fa-server text-[#FFC700]"></i>
+                    <span class="w-2.5 h-2.5 rounded-full bg-zinc-900 dark:bg-zinc-100 shadow-2xs"></span>
+                    <h2 class="font-black text-2xl text-zinc-900 dark:text-white leading-tight flex items-center gap-2.5">
+                        <i class="fas fa-server text-zinc-800 dark:text-zinc-200"></i>
                         {{ __('Mail Accounts') }}
                     </h2>
                 </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1 pl-5">
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1 pl-5">
                     Configure SMTP servers and API providers used for sending outbound email campaigns.
                 </p>
             </div>
             <div>
-                <a href="/account-form/new" class="inline-flex items-center px-5 py-2.5 bg-[#FFC700] hover:bg-[#e6b800] text-[#0B192C] text-sm font-bold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 gap-2">
+                <a href="/account-form/new" class="inline-flex items-center px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-950 text-sm font-bold rounded-xl shadow-2xs hover:shadow transition-all duration-200 gap-2">
                     <i class="fas fa-plus text-xs"></i>
                     <span>Add Mail Account</span>
                 </a>
@@ -118,13 +118,13 @@
                 @if(Session::has('alert-' . $msg))
                     @php
                         $alertStyles = [
-                            'danger' => 'bg-red-50 text-red-900 border-red-200 dark:bg-red-950 dark:text-red-200 dark:border-red-800 icon-fa-exclamation-circle',
-                            'warning' => 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950 dark:text-amber-200 dark:border-amber-800 icon-fa-exclamation-triangle',
-                            'success' => 'bg-emerald-50 text-emerald-900 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-200 dark:border-emerald-800 icon-fa-check-circle',
-                            'info' => 'bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-950 dark:text-blue-200 dark:border-blue-800 icon-fa-info-circle',
+                            'danger' => 'bg-red-50 text-red-900 border-red-200 dark:bg-red-950/70 dark:text-red-200 dark:border-red-800/80 icon-fa-exclamation-circle',
+                            'warning' => 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950/70 dark:text-amber-200 dark:border-amber-800/80 icon-fa-exclamation-triangle',
+                            'success' => 'bg-emerald-50 text-emerald-900 border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-200 dark:border-emerald-800/80 icon-fa-check-circle',
+                            'info' => 'bg-zinc-100 text-zinc-900 border-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700 icon-fa-info-circle',
                         ];
                     @endphp
-                    <div class="p-4 rounded-xl border {{ $alertStyles[$msg] }} flex items-start gap-3 shadow-sm" role="alert">
+                    <div class="p-4 rounded-xl border {{ $alertStyles[$msg] }} flex items-start gap-3 shadow-2xs" role="alert">
                         <i class="fas {{ explode(' ', $alertStyles[$msg])[count(explode(' ', $alertStyles[$msg]))-1] }} text-lg mt-0.5"></i>
                         <div class="text-sm font-semibold">
                             {{ Session::get('alert-' . $msg) }}
@@ -135,62 +135,62 @@
 
             <!-- Metrics Overview Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white dark:bg-[#112238] p-5 rounded-2xl border border-gray-200 dark:border-[#1E3E62] shadow-sm flex items-center justify-between">
+                <div class="bg-white dark:bg-[#141417] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-2xs flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-300">Total Accounts</p>
-                        <h3 class="text-2xl font-black text-[#0B192C] dark:text-white mt-1">{{ count($accounts) }}</h3>
+                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total Accounts</p>
+                        <h3 class="text-2xl font-black text-zinc-900 dark:text-white mt-1">{{ count($accounts) }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-[#FFC700]/15 text-[#D9A700] dark:text-[#FFC700] border border-[#FFC700]/30 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-lg">
                         <i class="fas fa-mail-bulk"></i>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-[#112238] p-5 rounded-2xl border border-gray-200 dark:border-[#1E3E62] shadow-sm flex items-center justify-between">
+                <div class="bg-white dark:bg-[#141417] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-2xs flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-300">Active Senders</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Active Senders</p>
                         <h3 class="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">{{ $accounts->where('status', 1)->count() }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/70 flex items-center justify-center text-lg">
                         <i class="fas fa-check-circle"></i>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-[#112238] p-5 rounded-2xl border border-gray-200 dark:border-[#1E3E62] shadow-sm flex items-center justify-between">
+                <div class="bg-white dark:bg-[#141417] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-2xs flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-300">SMTP Servers</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">SMTP Servers</p>
                         <h3 class="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">{{ $accounts->filter(fn($a) => strtoupper($a->type) === 'SMTP')->count() }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/70 flex items-center justify-center text-lg">
                         <i class="fas fa-network-wired"></i>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-[#112238] p-5 rounded-2xl border border-gray-200 dark:border-[#1E3E62] shadow-sm flex items-center justify-between">
+                <div class="bg-white dark:bg-[#141417] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-2xs flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-300">API Providers</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">API Providers</p>
                         <h3 class="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">{{ $accounts->filter(fn($a) => strtoupper($a->type) === 'API')->count() }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-purple-50 dark:bg-purple-950/70 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800/70 flex items-center justify-center text-lg">
                         <i class="fas fa-code"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Guidance Banner Card -->
-            <div class="bg-gradient-to-r from-[#0B192C] via-[#1E3E62] to-[#0B192C] text-white rounded-2xl p-6 shadow-md border border-[#FFC700]/30 relative overflow-hidden">
+            <div class="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-white rounded-2xl p-6 shadow-sm border border-zinc-700/60 relative overflow-hidden">
                 <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl pointer-events-none">
-                    <i class="fas fa-paper-plane text-[#FFC700]"></i>
+                    <i class="fas fa-paper-plane text-zinc-400"></i>
                 </div>
                 <div class="flex items-start gap-4 relative z-10">
-                    <div class="w-10 h-10 rounded-xl bg-[#FFC700]/20 border border-[#FFC700]/40 flex items-center justify-center text-xl shrink-0 text-[#FFC700]">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-xl shrink-0 text-zinc-300">
                         <i class="fas fa-info-circle"></i>
                     </div>
                     <div class="space-y-1">
                         <h4 class="font-bold text-base text-white flex items-center gap-2">
                             What are Mail Accounts?
-                            <span class="w-2 h-2 rounded-full bg-[#FFC700]"></span>
+                            <span class="w-2 h-2 rounded-full bg-zinc-400"></span>
                         </h4>
-                        <p class="text-sm text-gray-200 leading-relaxed">
+                        <p class="text-sm text-zinc-300 leading-relaxed">
                             Mail accounts store your email dispatch configurations (SMTP servers or API credentials). Campaign Stack rotates active mail accounts to send outbound newsletters, ensuring high deliverability, domain safety, and rate-limit compliance.
                         </p>
                     </div>
@@ -198,23 +198,23 @@
             </div>
 
             <!-- Main Accounts List Container -->
-            <div class="bg-white dark:bg-[#112238] rounded-2xl shadow-sm border border-gray-200 dark:border-[#1E3E62] overflow-hidden">
+            <div class="bg-white dark:bg-[#141417] rounded-2xl shadow-2xs border border-zinc-200/80 dark:border-zinc-800 overflow-hidden">
                 
                 @if(count($accounts) > 0)
                     <!-- Top Toolbar & Search Bar -->
-                    <div class="p-5 border-b border-gray-100 dark:border-[#1E3E62] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-gray-50/50 dark:bg-[#0B192C]/60">
+                    <div class="p-5 border-b border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-zinc-50/60 dark:bg-[#09090B]/60">
                         <div class="relative flex-1 max-w-md">
-                            <i class="fas fa-search absolute left-3.5 top-3 text-gray-400 dark:text-gray-300 text-sm"></i>
+                            <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 dark:text-zinc-400 text-sm"></i>
                             <input type="text" id="accountSearchInput" placeholder="Search accounts by name, status, or connection type..." 
-                                   class="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#0B192C] border border-gray-300 dark:border-[#1E3E62] rounded-xl text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFC700] focus:border-[#FFC700] transition-all">
+                                   class="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-300 dark:border-zinc-800 rounded-xl text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-800 dark:focus:ring-zinc-200 focus:border-zinc-800 dark:focus:border-zinc-200 transition-all">
                         </div>
-                        <div class="text-xs font-semibold text-gray-600 dark:text-gray-300" id="accountCountDisplay">
+                        <div class="text-xs font-semibold text-zinc-600 dark:text-zinc-400" id="accountCountDisplay">
                             Showing {{ min(8, count($accounts)) }} of {{ count($accounts) }} mail accounts
                         </div>
                     </div>
 
                     <!-- Modern Card List Items -->
-                    <div id="accountsListContainer" class="divide-y divide-gray-100 dark:divide-[#1E3E62]">
+                    <div id="accountsListContainer" class="divide-y divide-zinc-100 dark:divide-zinc-800">
                         @foreach ($accounts as $index => $c)
                             @php
                                 $config_data = is_string($c->config) ? json_decode($c->config) : (object)[];
@@ -222,47 +222,47 @@
                                 $searchString = strtolower(($c->name ?? '') . ' ' . ($c->type ?? '') . ' ' . ($c->status == 1 ? 'active' : 'inactive') . ' ' . $host_info);
                             @endphp
 
-                            <div class="account-item p-5 hover:bg-gray-50/80 dark:hover:bg-[#1E3E62]/40 transition-all duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                            <div class="account-item p-5 hover:bg-zinc-50/80 dark:hover:bg-zinc-800/40 transition-all duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                                  data-search="{{ $searchString }}" data-index="{{ $index }}">
                                 
                                 <div class="flex items-start sm:items-center space-x-4">
-                                    <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-[#0B192C] border border-gray-200 dark:border-[#1E3E62] text-[#0B192C] dark:text-[#FFC700] flex items-center justify-center text-lg shrink-0">
+                                    <div class="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-[#09090B] border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center text-lg shrink-0">
                                         <i class="fas {{ strtoupper($c->type) === 'API' ? 'fa-code' : 'fa-network-wired' }}"></i>
                                     </div>
                                     <div>
                                         <div class="flex items-center space-x-2">
-                                            <a href="/account/{{ $c->id }}" class="font-bold text-base text-[#0B192C] dark:text-white hover:text-[#D9A700] dark:hover:text-[#FFC700] transition-colors">
+                                            <a href="/account/{{ $c->id }}" class="font-bold text-base text-zinc-900 dark:text-white hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
                                                 {{ $c->name ?? 'Unnamed Account' }}
                                             </a>
                                             @if($c->status == 1)
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-700">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-800/80">
                                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> Active
                                                 </span>
                                             @else
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-700">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800/80">
                                                     Inactive
                                                 </span>
                                             @endif
                                         </div>
                                         
-                                        <div class="flex items-center flex-wrap gap-x-4 gap-y-1 mt-1 text-xs text-gray-600 dark:text-gray-300">
+                                        <div class="flex items-center flex-wrap gap-x-4 gap-y-1 mt-1 text-xs text-zinc-600 dark:text-zinc-400">
                                             @if(strtoupper($c->type) === 'SMTP')
-                                                <span class="inline-flex items-center text-blue-700 dark:text-blue-300 font-semibold">
+                                                <span class="inline-flex items-center text-blue-700 dark:text-blue-400 font-semibold">
                                                     <i class="fas fa-network-wired mr-1 text-3xs"></i> SMTP
                                                 </span>
                                             @elseif(strtoupper($c->type) === 'API')
-                                                <span class="inline-flex items-center text-purple-700 dark:text-purple-300 font-semibold">
+                                                <span class="inline-flex items-center text-purple-700 dark:text-purple-400 font-semibold">
                                                     <i class="fas fa-code mr-1 text-3xs"></i> API
                                                 </span>
                                             @else
-                                                <span class="font-semibold text-gray-700 dark:text-gray-300">{{ $c->type }}</span>
+                                                <span class="font-semibold text-zinc-700 dark:text-zinc-300">{{ $c->type }}</span>
                                             @endif
 
                                             @if(!empty($host_info))
-                                                <span class="font-mono text-gray-500 dark:text-gray-300">| {{ $host_info }}</span>
+                                                <span class="font-mono text-zinc-500 dark:text-zinc-400">| {{ $host_info }}</span>
                                             @endif
 
-                                            <span class="text-gray-500 dark:text-gray-400">
+                                            <span class="text-zinc-500 dark:text-zinc-400">
                                                 | Updated {{ $c->updated_at ? \Carbon\Carbon::parse($c->updated_at)->diffForHumans() : 'N/A' }}
                                             </span>
                                         </div>
@@ -272,16 +272,16 @@
                                 <!-- Actions -->
                                 <div class="flex items-center space-x-2 self-end sm:self-center">
                                     <a href="/account/{{ $c->id }}" title="View Details" 
-                                       class="px-3 py-1.5 text-xs font-semibold text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-[#0B192C] hover:bg-gray-200 dark:hover:bg-[#1E3E62] border border-transparent dark:border-[#1E3E62] rounded-lg transition-colors flex items-center gap-1.5">
+                                       class="px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-zinc-100 dark:bg-[#09090B] hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-transparent dark:border-zinc-800 rounded-lg transition-colors flex items-center gap-1.5">
                                         <i class="fas fa-eye text-2xs"></i>
                                         <span>Details</span>
                                     </a>
                                     <a href="/account-form/{{ $c->id }}" title="Edit Account" 
-                                       class="p-2 text-gray-600 hover:text-[#0B192C] dark:text-gray-300 dark:hover:text-[#FFC700] hover:bg-amber-50 dark:hover:bg-[#1E3E62] rounded-lg transition-colors">
+                                       class="p-2 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
                                         <i class="fas fa-pencil-alt text-sm"></i>
                                     </a>
                                     <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($c->name ?? '') }}')" title="Delete Account" 
-                                            class="p-2 text-gray-600 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                            class="p-2 text-zinc-600 hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-zinc-800 rounded-lg transition-colors">
                                         <i class="fas fa-trash-alt text-sm"></i>
                                     </button>
                                 </div>
@@ -292,18 +292,18 @@
 
                     <!-- Search Empty State -->
                     <div id="emptySearchResults" class="hidden p-12 text-center">
-                        <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-[#0B192C] text-gray-400 dark:text-gray-300 flex items-center justify-center mx-auto mb-3 text-xl">
+                        <div class="w-12 h-12 rounded-full bg-zinc-100 dark:bg-[#09090B] text-zinc-400 dark:text-zinc-400 flex items-center justify-center mx-auto mb-3 text-xl">
                             <i class="fas fa-search"></i>
                         </div>
-                        <h4 class="text-base font-bold text-[#0B192C] dark:text-white">No matching accounts found</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-300 mt-1">Try adjusting your search criteria.</p>
+                        <h4 class="text-base font-bold text-zinc-900 dark:text-white">No matching accounts found</h4>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Try adjusting your search criteria.</p>
                     </div>
 
                     <!-- Progressive Load More Pagination Footer -->
                     @if(count($accounts) > 8)
-                        <div class="p-6 border-t border-gray-100 dark:border-[#1E3E62] text-center bg-gray-50/50 dark:bg-[#0B192C]/50">
+                        <div class="p-6 border-t border-zinc-100 dark:border-zinc-800 text-center bg-zinc-50/50 dark:bg-[#09090B]/50">
                             <button type="button" id="showMoreBtn" 
-                                    class="inline-flex items-center justify-center px-6 py-2.5 bg-white dark:bg-[#1E3E62] text-[#0B192C] dark:text-[#FFC700] font-bold text-sm rounded-xl border border-gray-300 dark:border-[#FFC700]/30 shadow-sm hover:bg-[#FFC700]/10 transition-all duration-200 gap-2">
+                                    class="inline-flex items-center justify-center px-6 py-2.5 bg-white dark:bg-[#141417] text-zinc-800 dark:text-zinc-200 font-bold text-sm rounded-xl border border-zinc-300 dark:border-zinc-800 shadow-2xs hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all duration-200 gap-2">
                                 <i class="fas fa-chevron-down text-xs"></i>
                                 <span id="remainingCountText">Show More Accounts</span>
                             </button>
@@ -312,14 +312,14 @@
 
                 @else
                     <div class="text-center py-14 px-4">
-                        <div class="w-16 h-16 bg-[#FFC700]/15 text-[#D9A700] dark:text-[#FFC700] rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl border border-[#FFC700]/30 shadow-sm">
+                        <div class="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl border border-zinc-200 dark:border-zinc-700 shadow-2xs">
                             <i class="fas fa-server"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-[#0B192C] dark:text-white">No Mail Accounts Configured</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 max-w-md mx-auto mt-2 mb-6 leading-relaxed">
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white">No Mail Accounts Configured</h3>
+                        <p class="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto mt-2 mb-6 leading-relaxed">
                             You need at least one active SMTP server or API mail account to start sending campaign emails.
                         </p>
-                        <a href="/account-form/new" class="inline-flex items-center px-5 py-3 bg-[#FFC700] hover:bg-[#e6b800] text-[#0B192C] text-sm font-bold rounded-xl shadow-md transition-all duration-200 gap-2">
+                        <a href="/account-form/new" class="inline-flex items-center px-5 py-3 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-950 text-sm font-bold rounded-xl shadow-2xs transition-all duration-200 gap-2">
                             <i class="fas fa-plus text-xs"></i>
                             <span>Add Your First Mail Account</span>
                         </a>
@@ -331,25 +331,25 @@
     </div>
 
     <!-- Reusable Delete Modal -->
-    <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-[#0B192C]/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-[#112238] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 dark:border-[#1E3E62] transform transition-all">
+    <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-zinc-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-[#141417] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-zinc-200 dark:border-zinc-800 transform transition-all">
             <div class="flex items-center space-x-3 text-red-600 dark:text-red-400 mb-3">
                 <div class="p-3 bg-red-100 dark:bg-red-950 rounded-full border border-red-200 dark:border-red-800">
                     <i class="fas fa-exclamation-triangle text-xl"></i>
                 </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Delete Mail Account</h3>
+                <h3 class="text-lg font-bold text-zinc-900 dark:text-white">Delete Mail Account</h3>
             </div>
-            <p class="text-sm text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Are you sure you want to delete <span id="deleteAccountName" class="font-bold text-gray-900 dark:text-white"></span>? This action cannot be undone and may affect active campaigns using this sender.
+            <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-6 leading-relaxed">
+                Are you sure you want to delete <span id="deleteAccountName" class="font-bold text-zinc-900 dark:text-white"></span>? This action cannot be undone and may affect active campaigns using this sender.
             </p>
             <form method="POST" action="/account/delete">
                 @csrf
                 <input type="hidden" name="account_id" id="modalAccountId">
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
                         Cancel
                     </button>
-                    <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 transition-colors shadow-sm">
+                    <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 transition-colors shadow-2xs">
                         Delete Account
                     </button>
                 </div>

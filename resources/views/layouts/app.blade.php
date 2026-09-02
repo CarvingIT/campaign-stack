@@ -16,11 +16,11 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('js')
     </head>
-    <body class="font-sans antialiased text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-[#0B192C]">
-        <div class="min-h-screen bg-gray-50 dark:bg-[#0B192C]">
+    <body class="font-sans antialiased text-zinc-900 dark:text-zinc-100 bg-[#FAFAFA] dark:bg-[#09090B]">
+        <div class="min-h-screen bg-[#FAFAFA] dark:bg-[#09090B]">
             @include('layouts.navigation')
 
-            <!-- Page Heading (Fluid Integrated Brand Header) -->
+            <!-- Page Heading (Fluid Integrated Header) -->
             @isset($header)
                 <div class="max-w-7xl mx-auto pt-6 pb-2 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
