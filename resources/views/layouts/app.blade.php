@@ -22,7 +22,7 @@
         </script>
 
         <style>
-            /* Smooth Top-Right View Transition */
+            /* Smooth Top-Right View Transition for Theme Switcher */
             ::view-transition-old(root),
             ::view-transition-new(root) {
                 animation: none;
@@ -46,7 +46,75 @@
                 filter: blur(40px);
                 transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out;
             }
+
+            /* Luxurious, Appreciable Apple Page Transition */
+            @keyframes appleHeaderMount {
+                0% {
+                    opacity: 0;
+                    transform: translate3d(0, 10px, 0) scale3d(0.992, 0.992, 1);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+                }
+            }
+
+            @keyframes appleContentMount {
+                0% {
+                    opacity: 0;
+                    transform: translate3d(0, 16px, 0) scale3d(0.988, 0.988, 1);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+                }
+            }
+
+            .page-header-mount {
+                animation: appleHeaderMount 0.46s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                will-change: opacity, transform;
+                transform-origin: 50% 0%;
+                backface-visibility: hidden;
+            }
+
+            .page-content-mount {
+                animation: appleContentMount 0.54s cubic-bezier(0.16, 1, 0.3, 1) 0.06s backwards;
+                will-change: opacity, transform;
+                transform-origin: 50% 0%;
+                backface-visibility: hidden;
+            }
+
+            /* Luxurious Icon Reveal Animation */
+            @keyframes iconReveal {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.82);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+
+            .fa, .fas, .far, .fab {
+                animation: iconReveal 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+                will-change: transform, opacity;
+                backface-visibility: hidden;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .page-header-mount,
+                .page-content-mount,
+                .fa, .fas, .far, .fab {
+                    animation: none !important;
+                    transform: none !important;
+                }
+            }
         </style>
+
+        <!-- Instant Icon Font Preload & Global Stylesheet -->
+        <link rel="preload" href="/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="stylesheet" href="/css/all.min.css" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -59,17 +127,20 @@
         <div class="min-h-screen bg-slate-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(254,243,199,0.35),rgba(255,255,255,0))] dark:bg-[#09090B]">
             @include('layouts.navigation')
 
-            <!-- Page Heading (Fluid Integrated Header) -->
-            @isset($header)
-                <div class="max-w-7xl mx-auto pt-6 pb-2 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            @endisset
+            <!-- High-End Staged Route Content Container -->
+            <div id="pageTransitionContainer">
+                <!-- Page Heading (Fluid Integrated Header) -->
+                @isset($header)
+                    <div class="max-w-7xl mx-auto pt-6 pb-2 px-4 sm:px-6 lg:px-8 page-header-mount">
+                        {{ $header }}
+                    </div>
+                @endisset
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                <!-- Page Content -->
+                <main class="page-content-mount">
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
 
         <!-- Top-Right Corner Sunrise / Twilight Ray Transition Handler -->
