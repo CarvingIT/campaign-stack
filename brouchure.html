@@ -6,42 +6,44 @@
     <title>CampaignStack | Corporate Tri-Fold Brochure | Carving IT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --gold: #F59E0B;
-            --gold-dark: #D97706;
             --gold-light: #FDE68A;
+            --gold-dark: #D97706;
             --gold-gradient: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+            --gold-glow: rgba(245, 158, 11, 0.25);
             
-            /* Dark Theme (Outside) */
-            --dark-bg: #070B16;
-            --dark-surface: #0E1526;
-            --dark-border: rgba(255, 255, 255, 0.09);
+            /* Dark Canvas */
+            --dark-bg: #060913;
+            --dark-surface: #0D1322;
+            --dark-card: rgba(15, 23, 42, 0.85);
+            --dark-border: rgba(255, 255, 255, 0.08);
             --dark-text: #F8FAFC;
             --dark-muted: #94A3B8;
 
-            /* Light Theme (Inside) */
-            --light-bg: #FCFDFE;
+            /* Light Canvas (Ultra-Clean Editorial) */
+            --light-bg: #FFFFFF;
             --light-surface: #F8FAFC;
             --light-border: #E2E8F0;
             --light-text: #090E1A;
-            --light-muted: #475569;
+            --light-muted: #334155;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body, html {
-            background-color: #1E293B;
+            background-color: #0F172A;
             font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 0 40px 0;
-            gap: 20px;
+            padding: 24px 0 48px 0;
+            gap: 24px;
         }
 
         /* Screen Control Toolbar */
@@ -50,11 +52,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #0B1120;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 10px 18px;
+            padding: 12px 20px;
             border-radius: 12px;
             color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             z-index: 100;
         }
 
@@ -62,13 +66,16 @@
             background: var(--gold-gradient);
             color: #080B11;
             border: none;
-            padding: 8px 18px;
+            padding: 9px 22px;
             border-radius: 8px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             font-family: inherit;
+            box-shadow: 0 4px 14px var(--gold-glow);
+            transition: transform 0.15s ease;
         }
+        .toolbar-btn:hover { transform: translateY(-1px); }
 
         /* EXACT A4 Landscape Sheets (297mm x 210mm) */
         .page {
@@ -77,7 +84,7 @@
             max-height: 210mm;
             min-height: 210mm;
             display: flex;
-            box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.85);
             overflow: hidden;
             position: relative;
             page-break-inside: avoid !important;
@@ -91,44 +98,45 @@
             break-after: avoid !important;
         }
 
-        /* OUTSIDE BACKGROUND: Deep Luxury Architectural Slate with Controlled Texture */
+        /* ========================================================================= */
+        /* SHEET 1: OUTSIDE SPREAD BACKGROUND (DESIGN MARVEL DARK)                   */
+        /* ========================================================================= */
         .page-outside {
             background-color: var(--dark-bg);
             background-image: 
-                radial-gradient(circle at 85% 45%, rgba(245, 158, 11, 0.07) 0%, transparent 45%),
-                radial-gradient(circle at 15% 25%, rgba(37, 99, 235, 0.07) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.012) 25%, transparent 25%),
-                linear-gradient(225deg, rgba(255, 255, 255, 0.012) 25%, transparent 25%),
-                linear-gradient(45deg, rgba(255, 255, 255, 0.012) 25%, transparent 25%),
-                linear-gradient(315deg, rgba(255, 255, 255, 0.012) 25%, transparent 25%);
+                radial-gradient(circle at 82% 45%, rgba(245, 158, 11, 0.10) 0%, transparent 45%),
+                radial-gradient(circle at 18% 25%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
+                linear-gradient(225deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
+                linear-gradient(45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
+                linear-gradient(315deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%);
             background-position: 0 0, 0 0, 16px 0, 16px 0, 0 0, 0 0;
             background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px, 32px 32px, 32px 32px;
             color: var(--dark-text);
         }
 
-        /* INSIDE BACKGROUND: Ultra-Crisp White with Whisper-Light Technical Grid */
+        /* ========================================================================= */
+        /* SHEET 2: INSIDE SPREAD BACKGROUND (DESIGN MARVEL LIGHT PANORAMIC)         */
+        /* ========================================================================= */
         .page-inside {
             background-color: var(--light-bg);
-            background-image: 
-                radial-gradient(#E2E8F0 1px, transparent 1px),
-                linear-gradient(180deg, rgba(245, 158, 11, 0.03) 0%, transparent 50px);
-            background-size: 16px 16px, 100% 100%;
+            background-image: linear-gradient(180deg, rgba(245, 158, 11, 0.025) 0%, transparent 70px);
             color: var(--light-text);
         }
 
-        /* Top Panoramic Gold Accent Wire for Print Unity */
+        /* Top Panoramic Architectural Gold Accent Wire */
         .page::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #F59E0B 0%, #EA580C 50%, #F59E0B 100%);
-            z-index: 10;
+            height: 3.5px;
+            background: linear-gradient(90deg, #F59E0B 0%, #EA580C 35%, #F59E0B 70%, #D97706 100%);
+            z-index: 20;
         }
 
-        /* Tri-Fold Panel (99mm exact) with Fold Crease Guide */
+        /* Tri-Fold Panel (99mm exact) */
         .panel {
             width: 99mm;
             height: 210mm;
@@ -142,48 +150,54 @@
             z-index: 1;
         }
 
-        .page-outside .panel {
-            border-right: 1px solid var(--dark-border);
-        }
-        .page-inside .panel {
-            border-right: 1px solid var(--light-border);
-        }
+        .page-outside .panel { border-right: 1px solid var(--dark-border); }
+        .page-inside .panel { border-right: 1px solid var(--light-border); }
         .panel:last-child { border-right: none; }
 
-        /* Fold Indicator Micro-Guides for Prepress Authenticity */
+        /* Authentic Prepress Score & Fold Indicators */
         .fold-guide {
             position: absolute;
             top: 4px;
             right: 0;
             font-family: 'JetBrains Mono', monospace;
             font-size: 7px;
-            color: rgba(255, 255, 255, 0.2);
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             transform: translateX(50%);
             pointer-events: none;
-            z-index: 15;
+            z-index: 25;
         }
-        .page-inside .fold-guide {
-            color: rgba(0, 0, 0, 0.2);
-        }
+        .page-outside .fold-guide { color: rgba(255, 255, 255, 0.22); }
+        .page-inside .fold-guide { color: rgba(0, 0, 0, 0.2); }
 
-        /* High-Legibility Typography System: Regular 400, SemiBold 600, Bold 700 */
+        /* Precision Corner Registration Marks */
+        .corner-mark {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+        }
+        .page-outside .corner-mark { border-color: rgba(245, 158, 11, 0.4); }
+        .page-inside .corner-mark { border-color: rgba(0, 0, 0, 0.2); }
+        .corner-tl { top: 6px; left: 6px; border-top: 1px solid; border-left: 1px solid; }
+        .corner-br { bottom: 6px; right: 6px; border-bottom: 1px solid; border-right: 1px solid; }
+
+        /* Typography Hierarchy (Standard Weights: Regular 400, SemiBold 600, Bold 700) */
         h1, h2, h3 {
             font-family: 'Bricolage Grotesque', sans-serif;
             letter-spacing: -0.03em;
-            line-height: 1.15;
+            line-height: 1.14;
             font-weight: 700;
         }
 
-        h1 { font-size: 29px; color: #FFFFFF; }
-        h2 { font-size: 24.5px; }
-        h3 { font-size: 15.5px; line-height: 1.25; letter-spacing: -0.02em; }
+        h1 { font-size: 29px; }
+        h2 { font-size: 24px; }
+        h3 { font-size: 15px; line-height: 1.25; letter-spacing: -0.02em; }
 
         .page-outside h2 { color: #FFFFFF; }
         .page-inside h2 { color: #090E1A; }
 
-        /* High-Contrast Readability Colors */
         p {
             font-size: 13px;
             font-weight: 400;
@@ -192,7 +206,7 @@
         }
 
         .page-outside p { color: #CBD5E1; }
-        .page-inside p { color: #475569; }
+        .page-inside p { color: #334155; }
 
         .lede {
             font-size: 13.5px;
@@ -202,22 +216,24 @@
         .page-outside .lede { color: #F1F5F9; }
         .page-inside .lede { color: #1E293B; }
 
+        /* Eyebrow Pill Badge */
         .eyebrow {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 600;
+            font-size: 9.5px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--gold);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
             margin-bottom: 4px;
         }
 
+        /* Number Callouts in JetBrains Mono */
         .editorial-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--gold);
             line-height: 1;
@@ -225,11 +241,11 @@
             shrink-0;
         }
 
-        /* Flowing Rows with Subtle Separation */
+        /* Flowing Rows */
         .editorial-row {
             display: flex;
             align-items: flex-start;
-            padding: 7.5px 0;
+            padding: 7px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
             position: relative;
             z-index: 1;
@@ -238,7 +254,7 @@
             border-bottom: 1px solid var(--dark-border);
         }
 
-        /* Micro-Icon Anchor Badge */
+        /* Icon Badge */
         .icon-badge {
             width: 28px;
             height: 28px;
@@ -252,6 +268,7 @@
             shrink-0;
         }
 
+        /* Panel Footer Baseline */
         .panel-footer {
             border-top: 1px solid rgba(0, 0, 0, 0.08);
             padding-top: 6px;
@@ -274,6 +291,7 @@
             color: var(--light-muted);
         }
 
+        /* Head-to-Head Comparison Ledger Table */
         .ledger-table {
             width: 100%;
             border-collapse: collapse;
@@ -299,16 +317,33 @@
             font-weight: 400;
         }
 
-        /* Precision Corner Marks */
-        .corner-mark {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-color: rgba(245, 158, 11, 0.35);
-            pointer-events: none;
+        /* Panoramic Pipeline Step Badge (Inside Spread) */
+        .pipeline-step {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
-        .corner-tl { top: 6px; left: 6px; border-top: 1px solid; border-left: 1px solid; }
-        .corner-br { bottom: 6px; right: 6px; border-bottom: 1px solid; border-right: 1px solid; }
+
+        /* Subtle Luxury Stamp */
+        .prepress-stamp {
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 4px;
+            padding: 3px 7px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 7.5px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-transform: uppercase;
+            display: inline-block;
+        }
 
         @media print {
             html, body { background: transparent !important; padding: 0 !important; margin: 0 !important; display: block !important; width: 297mm !important; }
@@ -322,10 +357,10 @@
 <body>
 
     <div class="toolbar">
-        <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
             <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack" style="height: 28px; width: auto;">
-            <span style="font-size: 11px; color: #94A3B8; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 10px;">
-                Maximized Print Readability &bull; Fold Crease Guides &bull; Exact 2-Page A4 Landscape (INR)
+            <span style="font-size: 11px; color: #94A3B8; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 12px;">
+                Design Marvel Edition &bull; Panoramic Architectural Continuity &bull; Exact 2-Page A4 Landscape (INR)
             </span>
         </div>
         <button type="button" onclick="window.print()" class="toolbar-btn">Print 2-Page PDF</button>
@@ -344,21 +379,26 @@
 
             <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
                 <div>
-                    <div class="eyebrow"><i class="fas fa-chart-line"></i> Market Reality</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <div class="eyebrow"><i class="fas fa-chart-line"></i> Market Reality</div>
+                        <span class="prepress-stamp">01 // THE AUDIT</span>
+                    </div>
                     <h2 style="margin-bottom: 4px;">What If Your Email Bill <span style="color: var(--gold);">Never Went Up?</span></h2>
                     <p class="lede">Legacy platforms punish business growth. The larger your audience gets, the higher your monthly bill, even for dormant contacts.</p>
                 </div>
 
-                <!-- Infographic Card -->
-                <div style="background: rgba(14, 21, 38, 0.8); border: 1px solid var(--dark-border); border-radius: 8px; padding: 8px 12px;">
-                    <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; margin-bottom: 4px;">
-                        <span style="color: #F87171;">LEGACY SAAS: EXPONENTIAL</span>
-                        <span style="color: var(--gold);">CAMPAIGNSTACK: FLAT</span>
+                <!-- Architectural Data Visualization Card -->
+                <div style="background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 8px; padding: 9px 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+                    <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 8.5px; font-weight: 700; margin-bottom: 5px;">
+                        <span style="color: #F87171;"><i class="fas fa-arrow-trend-up"></i> LEGACY SAAS: EXPONENTIAL</span>
+                        <span style="color: var(--gold);"><i class="fas fa-grip-lines"></i> CAMPAIGNSTACK: FLAT</span>
                     </div>
-                    <svg viewBox="0 0 250 25" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="0" y1="20" x2="250" y2="20" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
-                        <path d="M 10 18 Q 130 17 240 3" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-dasharray="3 3" />
-                        <line x1="10" y1="18" x2="240" y2="18" stroke="#F59E0B" stroke-width="3" />
+                    <svg viewBox="0 0 250 28" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="22" x2="250" y2="22" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                        <path d="M 10 20 Q 140 19 240 4" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-dasharray="3 3" />
+                        <line x1="10" y1="20" x2="240" y2="20" stroke="#F59E0B" stroke-width="3" />
+                        <circle cx="240" cy="4" r="3.5" fill="#EF4444" />
+                        <circle cx="240" cy="20" r="3.5" fill="#F59E0B" />
                     </svg>
                 </div>
 
@@ -388,8 +428,8 @@
                 </div>
 
                 <!-- ROI Strip -->
-                <div style="border-left: 3px solid var(--gold); padding: 7px 11px; background: rgba(245, 158, 11, 0.09); border-radius: 0 6px 6px 0;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--gold); font-weight: 600;">ANNUAL SAAS OVERHEAD SAVINGS</div>
+                <div style="border-left: 3.5px solid var(--gold); padding: 7px 11px; background: rgba(245, 158, 11, 0.08); border-radius: 0 6px 6px 0;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--gold); font-weight: 700;">ANNUAL SAAS OVERHEAD SAVINGS</div>
                     <div style="display: flex; justify-content: space-between; font-size: 12px; color: white; margin-top: 2px;">
                         <span>25k Contacts: <strong style="color: #34D399; font-weight: 600;">Save ~₹2,00,000 / yr</strong></span>
                         <span>100k Contacts: <strong style="color: #34D399; font-weight: 600;">Save ~₹7,00,000 / yr</strong></span>
@@ -409,14 +449,17 @@
 
             <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
                 <div>
-                    <div class="eyebrow"><i class="fas fa-sliders"></i> Dedicated Architecture</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <div class="eyebrow"><i class="fas fa-sliders"></i> Dedicated Architecture</div>
+                        <span class="prepress-stamp">02 // THE LEDGER</span>
+                    </div>
                     <h2 style="margin-bottom: 4px;">Take Full Control of Your Broadcasts</h2>
                     <p class="lede">Carving IT engineers deploy your private dispatch server, authenticate DNS, and configure redundant sending pipes.</p>
                 </div>
 
-                <!-- Elevated Comparative Matrix -->
-                <div style="background: linear-gradient(180deg, rgba(17, 24, 39, 0.85) 0%, rgba(10, 15, 29, 0.95) 100%); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 8px; padding: 9px 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--gold); margin-bottom: 3px; font-weight: 600;">MONTHLY COST FOR 100,000 CONTACTS</div>
+                <!-- Architectural TCO Financial Ledger -->
+                <div style="background: linear-gradient(180deg, rgba(17, 24, 39, 0.9) 0%, rgba(10, 15, 29, 0.98) 100%); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 8px; padding: 9px 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--gold); margin-bottom: 3px; font-weight: 700;">MONTHLY COST FOR 100,000 CONTACTS</div>
                     <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--dark-border); font-size: 11.5px;">
                         <span style="color: var(--dark-muted);">Mailchimp Standard</span>
                         <span style="color: #F87171; font-weight: 700;">₹62,000+/mo</span>
@@ -449,12 +492,12 @@
 
                 <!-- Credentials & Action -->
                 <div style="border-top: 1px solid var(--dark-border); padding-top: 7px;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--gold); font-weight: 600; margin-bottom: 3px;">CARVING IT PVT. LTD. &bull; PUNE, INDIA</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--gold); font-weight: 700; margin-bottom: 3px;">CARVING IT PVT. LTD. &bull; PUNE, INDIA</div>
                     <div style="font-size: 11px; color: #CBD5E1; line-height: 1.42; margin-bottom: 7px;">
                         <div>+91 9420121704 &bull; +91 8605789833</div>
                         <div>info@carvingit.com &bull; www.carvingit.com</div>
                     </div>
-                    <a href="mailto:info@carvingit.com" style="display: block; text-align: center; text-decoration: none; background: var(--gold-gradient); color: #080B11; font-weight: 700; font-size: 11.5px; padding: 8px 12px; border-radius: 6px; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
+                    <a href="mailto:info@carvingit.com" style="display: block; text-align: center; text-decoration: none; background: var(--gold-gradient); color: #080B11; font-weight: 700; font-size: 11.5px; padding: 8.5px 12px; border-radius: 6px; box-shadow: 0 4px 14px var(--gold-glow);">
                         Schedule Architecture Consultation &rarr;
                     </a>
                 </div>
@@ -472,16 +515,20 @@
 
             <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
                 <div>
-                    <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack Logo" style="height: 50px; width: auto; object-fit: contain; margin-bottom: 3px;">
-                    <div class="eyebrow" style="margin-top: 7px;"><i class="fas fa-paper-plane"></i> Enterprise Email Platform</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack Logo" style="height: 48px; width: auto; object-fit: contain;">
+                        <span class="prepress-stamp">BRIEF &bull; 2026</span>
+                    </div>
+                    <div class="eyebrow" style="margin-top: 6px;"><i class="fas fa-paper-plane"></i> Enterprise Email Platform</div>
                     <h1 style="margin-bottom: 5px;">Email Marketing Without the <span style="color: var(--gold);">Monthly Penalty.</span></h1>
                     <p style="font-size: 13px; line-height: 1.48;">Send high-converting newsletters to your entire audience without paying extra simply because your contact list grows.</p>
                 </div>
 
-                <!-- Centered Hero Visual with Soft Ambient Ground Glow -->
+                <!-- Centered Hero Visual with Orbital Ring Depth -->
                 <div style="text-align: center; margin: 2px 0; position: relative;">
-                    <div style="position: absolute; inset: 12% 12% 0% 12%; background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.16) 0%, transparent 68%); filter: blur(14px); pointer-events: none;"></div>
-                    <img src="public/i/macbook_pro_transparent.webp" alt="CampaignStack Dashboard" style="width: 100%; max-height: 74mm; object-fit: contain; filter: drop-shadow(0 16px 32px rgba(0,0,0,0.75)); position: relative; z-index: 1;">
+                    <!-- Subtle Tech Orbital Glow -->
+                    <div style="position: absolute; inset: 12% 10% 0% 10%; background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.18) 0%, transparent 70%); filter: blur(16px); pointer-events: none;"></div>
+                    <img src="public/i/macbook_pro_transparent.webp" alt="CampaignStack Dashboard" style="width: 100%; max-height: 74mm; object-fit: contain; filter: drop-shadow(0 16px 36px rgba(0,0,0,0.85)); position: relative; z-index: 1;">
                 </div>
 
                 <!-- 4 Value Points -->
@@ -510,8 +557,8 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- SHEET 2: INSIDE SPREAD (CRISP SWISS EDITORIAL)                            -->
-    <!-- Panels: [Panel 2: Narrative | Panel 3: Features | Panel 4: Proof]         -->
+    <!-- SHEET 2: INSIDE SPREAD (CRISP SWISS PANORAMIC ARCHITECTURE)               -->
+    <!-- Panels: [Panel 2: Audience | Panel 3: Relay Engine | Panel 4: Proof]      -->
     <!-- ========================================================================= -->
     <div class="page page-inside">
 
@@ -522,8 +569,13 @@
 
             <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
                 <div>
-                    <img src="public/i/opt1_pjs_bold_light.png" alt="CampaignStack Logo" style="height: 44px; width: auto; object-fit: contain; margin-bottom: 2px;">
-                    <div class="eyebrow" style="margin-top: 7px;"><i class="fas fa-compass"></i> Overview & Philosophy</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <img src="public/i/opt1_pjs_bold_light.png" alt="CampaignStack Logo" style="height: 42px; width: auto; object-fit: contain;">
+                        <span class="pipeline-step" style="background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A;">
+                            01 // SOVEREIGNTY
+                        </span>
+                    </div>
+                    <div class="eyebrow" style="margin-top: 6px;"><i class="fas fa-compass"></i> Overview & Philosophy</div>
                     <h2 style="margin-bottom: 3px;">Built for Businesses That <span style="color: #B45309;">Value Their Audience</span></h2>
                     <p class="lede">CampaignStack was developed by Carving IT to give founders and marketing teams total control, rock-solid reliability, and honest flat pricing.</p>
                 </div>
@@ -556,7 +608,7 @@
                 </div>
 
                 <!-- Pull Quote Accent with Subtle Watermark -->
-                <div style="border-left: 3.5px solid var(--gold); padding: 8px 12px; background: rgba(254, 243, 199, 0.5); border-radius: 0 6px 6px 0; position: relative; overflow: hidden;">
+                <div style="border-left: 3.5px solid var(--gold); padding: 8px 12px; background: #FFFBEB; border-radius: 0 6px 6px 0; position: relative; overflow: hidden;">
                     <span style="position: absolute; right: 4px; bottom: -12px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 55px; color: rgba(245, 158, 11, 0.12); line-height: 1; pointer-events: none;">“</span>
                     <p style="font-size: 12px; font-weight: 500; color: #92400E; line-height: 1.44; position: relative; z-index: 1;">
                         "Scale from 5,000 to 500,000 contacts without paying a single rupee more for list storage."
@@ -576,22 +628,21 @@
 
             <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
                 <div>
-                    <div style="height: 44px; display: flex; align-items: center;">
-                        <span style="font-size: 9.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; color: #1D4ED8; background: #EFF6FF; padding: 4px 8px; border-radius: 4px; border: 1px solid #DBEAFE;">
-                            High-Throughput Dispatch Engine
+                    <div style="height: 42px; display: flex; align-items: center; justify-content: space-between;">
+                        <span class="pipeline-step" style="background: #EFF6FF; color: #1D4ED8; border: 1px solid #DBEAFE;">
+                            02 // MULTI-RELAY DISPATCH
                         </span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #059669; font-weight: 700;">● HOT STANDBY</span>
                     </div>
-                    <div class="eyebrow" style="margin-top: 7px;"><i class="fas fa-bolt"></i> Core Capabilities</div>
+                    <div class="eyebrow" style="margin-top: 6px;"><i class="fas fa-bolt"></i> Core Capabilities</div>
                     <h2 style="margin-bottom: 3px;">Simple Tools for <span style="color: #2563EB;">Incredible Delivery</span></h2>
                     <p class="lede">Everything you need to send campaigns that actually land in customer inboxes, explained in plain English:</p>
                 </div>
 
-                <!-- 4 Flowing Features with Refined Two-Tone Micro-Badges -->
+                <!-- 4 Flowing Features -->
                 <div>
                     <div class="editorial-row">
-                        <div class="icon-badge" style="background: #FEF3C7; color: #D97706;">
-                            <i class="fas fa-arrows-split-up-and-left"></i>
-                        </div>
+                        <i class="fas fa-arrows-split-up-and-left text-amber-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
                         <div>
                             <h3 style="margin-bottom: 1px;">Smart Automatic Backup</h3>
                             <p style="font-size: 12px; line-height: 1.4;">If Server A gets busy or encounters an issue, Server B takes over instantly. Zero lost emails.</p>
@@ -599,9 +650,7 @@
                     </div>
 
                     <div class="editorial-row">
-                        <div class="icon-badge" style="background: #ECFDF5; color: #059669;">
-                            <i class="fas fa-clock"></i>
-                        </div>
+                        <i class="fas fa-clock text-emerald-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
                         <div>
                             <h3 style="margin-bottom: 1px;">Natural Paced Sending</h3>
                             <p style="font-size: 12px; line-height: 1.4;">We pace out your delivery with natural human delays so Gmail welcomes your email as friendly mail.</p>
@@ -609,9 +658,7 @@
                     </div>
 
                     <div class="editorial-row">
-                        <div class="icon-badge" style="background: #EFF6FF; color: #2563EB;">
-                            <i class="fas fa-envelope-circle-check"></i>
-                        </div>
+                        <i class="fas fa-envelope-circle-check text-blue-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
                         <div>
                             <h3 style="margin-bottom: 1px;">Clean Contact Verification</h3>
                             <p style="font-size: 12px; line-height: 1.4;">Checks for typos and dead inboxes before dispatching, protecting your domain sender score.</p>
@@ -619,9 +666,7 @@
                     </div>
 
                     <div class="editorial-row" style="border-bottom: none;">
-                        <div class="icon-badge" style="background: #F5F3FF; color: #7C3AED;">
-                            <i class="fas fa-sliders"></i>
-                        </div>
+                        <i class="fas fa-sliders text-purple-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
                         <div>
                             <h3 style="margin-bottom: 1px;">4-Step Studio Console</h3>
                             <p style="font-size: 12px; line-height: 1.4;">Pick your audience, choose your servers, select your sending speed, and watch it deliver live.</p>
@@ -629,9 +674,9 @@
                     </div>
                 </div>
 
-                <!-- Supported Gateways -->
+                <!-- Supported Gateways Matrix -->
                 <div style="border-top: 1px solid var(--light-border); padding-top: 6px;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--light-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 3px;">Supported Gateways</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--light-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 3px;">Active Gateway Ecosystem</div>
                     <div style="font-size: 11px; color: #334155; display: flex; flex-wrap: wrap; gap: 8px; font-weight: 600;">
                         <span>&bull; Amazon SES</span>
                         <span>&bull; Brevo</span>
@@ -644,7 +689,7 @@
             </div>
 
             <!-- Workflow Ribbon -->
-            <div class="panel-footer" style="background: rgba(241, 245, 249, 0.7); padding: 5px 8px; border-radius: 4px; border-top: none;">
+            <div class="panel-footer" style="background: #F1F5F9; padding: 5px 8px; border-radius: 4px; border-top: none;">
                 <span>01. Audience &rarr; 02. Relays &rarr; 03. Pacing &rarr; <strong style="color: #059669; font-weight: 700;">04. In-Box</strong></span>
             </div>
         </div>
@@ -655,12 +700,13 @@
 
             <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
                 <div>
-                    <div style="height: 44px; display: flex; align-items: center;">
-                        <span style="font-size: 9.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold-dark); background: #FEF3C7; padding: 4px 8px; border-radius: 4px; border: 1px solid #FDE68A;">
-                            Infrastructure Benchmarks
+                    <div style="height: 42px; display: flex; align-items: center; justify-content: space-between;">
+                        <span class="pipeline-step" style="background: #DCFCE7; color: #166534; border: 1px solid #BBF7D0;">
+                            03 // VERIFIED AUDIT
                         </span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #166534; font-weight: 700;">PROVEN RELIABILITY</span>
                     </div>
-                    <div class="eyebrow" style="margin-top: 7px;"><i class="fas fa-chart-pie"></i> Verified Capabilities</div>
+                    <div class="eyebrow" style="margin-top: 6px;"><i class="fas fa-chart-pie"></i> Verified Capabilities</div>
                     <h2 style="margin-bottom: 3px;">Engineered for <span style="color: #059669;">In-Box Precision</span></h2>
                     <p class="lede">Real technical benchmarks delivered by CampaignStack's multi-gateway dispatch core:</p>
                 </div>
@@ -685,7 +731,7 @@
                     </div>
                 </div>
 
-                <!-- Ledger Table -->
+                <!-- Head-to-Head Comparison Ledger Table -->
                 <table class="ledger-table">
                     <thead>
                         <tr>
@@ -719,7 +765,7 @@
                 </table>
 
                 <!-- White-Glove Support Box -->
-                <div style="border-left: 3px solid #059669; padding: 7px 11px; background: rgba(240, 253, 244, 0.7); border-radius: 0 6px 6px 0;">
+                <div style="border-left: 3px solid #059669; padding: 7px 11px; background: #F0FDF4; border-radius: 0 6px 6px 0;">
                     <div style="font-size: 12px; font-weight: 700; color: #166534; margin-bottom: 1px;">Full Setup Support Included</div>
                     <p style="font-size: 10.5px; color: #14532D; line-height: 1.4;">
                         Carving IT engineers configure DNS records, SPF/DKIM/DMARC authentication, and test broadcasts with you step-by-step.
