@@ -1,56 +1,194 @@
 @push('js')
 <link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" href="/css/jquery.dataTables.min.css" />
-<link rel="stylesheet" href="/css/jquery-ui.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/jquery.dataTables.min.js"></script>
-<script src="/js/jquery-ui.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.getElementById('contacts');
+        const fileNameDisplay = document.getElementById('selectedFileName');
+        const dropzone = document.getElementById('uploadDropzone');
+
+        if (fileInput && fileNameDisplay) {
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name + ' (' + Math.round(this.files[0].size / 1024) + ' KB)';
+                    fileNameDisplay.parentElement.classList.remove('hidden');
+                } else {
+                    fileNameDisplay.parentElement.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>
 @endpush
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Import Contacts') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-	        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-    			<div class="mt-6 text-gray-500">
-				<form name="import_contacts" enctype="multipart/form-data" action="/import-contacts" method="post">
-				@csrf	
-<div class="overflow-hidden sm:rounded-md">
-    <div class="px-4 py-5 bg-white sm:p-6 text-gray-900">
-       <div class="grid grid-cols-6 gap-6">
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="email">Upload CSV file (<a style="color:blue;" href="/i/sample-import.csv">Sample file</a>)</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="contacts" name="contacts" type="file" />
-        </div>
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="company">Tags</label>
-            @foreach($tags as $t)
-                <div>
-                <input name="tags[]" type="checkbox" value="{{ $t->id }}" /> {{ $t->label }}
-                </div>
-            @endforeach
-        </div>
-    </div>
-
-    <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-     <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled">
-    Save
-     </button>
-     <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled" onclick="window.history.back();">
-    Cancel
-     </button>
-   </div>
-          </div>
-				</form>
-                        </div>
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <nav class="flex text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1 space-x-2">
+                    <a href="/contacts" class="hover:text-zinc-900 dark:hover:text-amber-200 transition-colors">Contacts</a>
+                    <span>/</span>
+                    <span class="text-zinc-900 dark:text-white font-semibold">Bulk Import</span>
+                </nav>
+                <div class="flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80 dark:bg-amber-300/80 shadow-2xs"></span>
+                    <h2 class="font-black text-2xl text-zinc-900 dark:text-white leading-tight flex items-center gap-2.5">
+                        <i class="fas fa-file-import text-amber-500/80 dark:text-amber-300/80"></i>
+                        {{ __('Import Subscribers via CSV') }}
+                    </h2>
                 </div>
             </div>
+            <div>
+                <a href="/contacts" class="inline-flex items-center px-3.5 py-2 bg-slate-100 dark:bg-[#141417] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-slate-200 dark:border-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors gap-2">
+                    <i class="fas fa-arrow-left text-2xs"></i>
+                    <span>Back to Contacts</span>
+                </a>
+            </div>
+        </div>
+    </x-slot>
+
+    <div class="pb-8 pt-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <form name="import_contacts" enctype="multipart/form-data" action="/import-contacts" method="post">
+                @csrf
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+
+                    <!-- LEFT COLUMN: File Upload & Guidelines (Equal Height) -->
+                    <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 flex flex-col justify-between space-y-6">
+                        
+                        <div class="space-y-5">
+                            <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3.5 flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-2.5 py-1 rounded-lg bg-amber-50/80 text-amber-900 dark:bg-amber-950/30 dark:text-amber-200 font-bold text-2xs uppercase tracking-wider border border-amber-200/60 dark:border-amber-500/20">
+                                        Step 1
+                                    </span>
+                                    <div>
+                                        <h3 class="text-base font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                                            <i class="fas fa-upload text-amber-500/80 dark:text-amber-300/80"></i>
+                                            Select CSV File
+                                        </h3>
+                                        <p class="text-2xs text-zinc-500 dark:text-zinc-400">Upload your formatted contacts spreadsheet.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Styled Dropzone Card -->
+                            <div id="uploadDropzone" class="relative border-2 border-dashed border-slate-300 dark:border-zinc-700 rounded-2xl p-8 text-center hover:border-amber-400 dark:hover:border-amber-400 transition-colors bg-slate-50/60 dark:bg-[#09090B]/60 group">
+                                <div class="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-300 border border-amber-200/80 dark:border-amber-500/30 flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-105 transition-transform shadow-2xs">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-zinc-900 dark:text-white">Choose a CSV file to upload</h4>
+                                <p class="text-2xs text-zinc-500 dark:text-zinc-400 mt-1 mb-4">Supported formats: .csv, .txt (up to 10MB)</p>
+                                
+                                <input type="file" id="contacts" name="contacts" accept=".csv, .txt" required class="block w-full text-xs text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-zinc-900 file:text-white dark:file:bg-amber-100 dark:file:text-zinc-950 hover:file:bg-zinc-800 cursor-pointer">
+
+                                <div class="mt-3 hidden">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-2xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-800">
+                                        <i class="fas fa-check-circle mr-1.5 text-3xs"></i>
+                                        <span id="selectedFileName">File selected</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Format Specifications & Sample Download -->
+                            <div class="p-4 bg-slate-50/80 dark:bg-[#09090B]/60 rounded-xl border border-slate-200 dark:border-zinc-800 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-3xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="fas fa-table text-amber-500 text-3xs"></i>
+                                        Expected CSV Header Columns
+                                    </span>
+                                    <a href="/i/sample-import.csv" download class="inline-flex items-center gap-1 text-3xs font-bold text-amber-600 dark:text-amber-400 hover:underline">
+                                        <i class="fas fa-download text-3xs"></i> Download Sample CSV
+                                    </a>
+                                </div>
+                                <div class="flex flex-wrap gap-1.5 font-mono text-3xs text-zinc-600 dark:text-zinc-300">
+                                    <span class="px-2 py-1 bg-white dark:bg-[#141417] rounded border border-slate-200 dark:border-zinc-800">salutation</span>
+                                    <span class="px-2 py-1 bg-white dark:bg-[#141417] rounded border border-slate-200 dark:border-zinc-800 text-amber-700 dark:text-amber-300 font-bold">firstname</span>
+                                    <span class="px-2 py-1 bg-white dark:bg-[#141417] rounded border border-slate-200 dark:border-zinc-800">lastname</span>
+                                    <span class="px-2 py-1 bg-white dark:bg-[#141417] rounded border border-slate-200 dark:border-zinc-800 text-amber-700 dark:text-amber-300 font-bold">email</span>
+                                    <span class="px-2 py-1 bg-white dark:bg-[#141417] rounded border border-slate-200 dark:border-zinc-800">company</span>
+                                    <span class="px-2 py-1 bg-white dark:bg-[#141417] rounded border border-slate-200 dark:border-zinc-800">mobile</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Bar -->
+                        <div class="flex items-center justify-end space-x-3 pt-5 mt-6 border-t border-zinc-100 dark:border-zinc-800">
+                            <a href="/contacts" class="px-5 py-2.5 bg-slate-100 dark:bg-[#141417] hover:bg-slate-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-200 font-semibold text-xs rounded-xl border border-slate-200 dark:border-zinc-800 transition-colors">
+                                Cancel
+                            </a>
+                            <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 font-bold text-xs rounded-xl shadow-2xs hover:shadow transition-all gap-2">
+                                <i class="fas fa-file-import text-xs"></i>
+                                <span>Import Contacts</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN: Batch Tag Assignment (Equal Height) -->
+                    <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 flex flex-col justify-between space-y-6">
+                        
+                        <div class="space-y-5">
+                            <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3.5 flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-2.5 py-1 rounded-lg bg-amber-50/80 text-amber-900 dark:bg-amber-950/30 dark:text-amber-200 font-bold text-2xs uppercase tracking-wider border border-amber-200/60 dark:border-amber-500/20">
+                                        Step 2
+                                    </span>
+                                    <div>
+                                        <h3 class="text-base font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                                            <i class="fas fa-tags text-amber-500/80 dark:text-amber-300/80"></i>
+                                            Batch Tag Assignment
+                                        </h3>
+                                        <p class="text-2xs text-zinc-500 dark:text-zinc-400">Automatically attach selected tags to all imported subscribers.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tag Selector Grid -->
+                            <div>
+                                <label class="block font-semibold text-2xs text-zinc-700 dark:text-zinc-200 uppercase tracking-wider mb-2">
+                                    Choose Tags for this Import Batch
+                                </label>
+
+                                @if(count($tags) > 0)
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-72 overflow-y-auto p-1">
+                                        @foreach($tags as $t)
+                                            <label class="cursor-pointer relative flex items-center p-2.5 rounded-xl border transition-all text-xs font-semibold select-none group bg-slate-50 dark:bg-[#09090B] border-slate-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 has-[:checked]:bg-amber-50/80 has-[:checked]:border-amber-300 dark:has-[:checked]:bg-amber-950/40 dark:has-[:checked]:border-amber-500/40 dark:has-[:checked]:text-amber-200 has-[:checked]:text-amber-900 shadow-2xs">
+                                                <input type="checkbox" name="tags[]" value="{{ $t->id }}" class="rounded border-zinc-300 dark:border-zinc-700 text-amber-500 focus:ring-amber-400 mr-2">
+                                                <span class="truncate">{{ $t->label }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="p-5 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 text-center">
+                                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-2">No tags available for bulk assignment.</p>
+                                        <a href="/tag-form/new" class="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline inline-flex items-center gap-1">
+                                            <i class="fas fa-plus text-3xs"></i> Create a tag
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Guidance Note -->
+                            <div class="p-4 bg-amber-50/40 dark:bg-amber-950/20 rounded-xl border border-amber-200/50 dark:border-amber-500/20 text-2xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                <i class="fas fa-info-circle text-amber-500 mr-1"></i>
+                                <strong>Duplicate Check:</strong> Existing email addresses already present in your database will not be duplicated. Tags selected above will be appended to newly imported contacts.
+                            </div>
+                        </div>
+
+                        <!-- Symmetrical Bottom Status Note -->
+                        <div class="pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-3xs text-zinc-500 dark:text-zinc-400">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-shield-alt text-emerald-500"></i>
+                                Secure batch processing
+                            </span>
+                            <span class="font-mono text-zinc-400">CSV Parser</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
         </div>
     </div>
 </x-app-layout>
