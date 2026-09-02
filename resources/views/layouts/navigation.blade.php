@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2 group">
-                        <x-application-logo class="block h-8 w-auto fill-current text-zinc-900 dark:text-zinc-100 transition-transform group-hover:scale-105" />
+                        <x-application-logo class="block h-8 w-auto fill-current text-zinc-900 dark:text-amber-200 transition-transform group-hover:scale-105" />
                     </a>
                 </div>
 
@@ -41,7 +41,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-1.5 border border-zinc-200/80 dark:border-zinc-800 text-xs font-semibold rounded-full text-zinc-700 dark:text-zinc-200 bg-white/80 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 focus:outline-none backdrop-blur-sm transition-all gap-2 shadow-2xs">
-                            <div class="w-5 h-5 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center text-3xs font-extrabold">
+                            <div class="w-5 h-5 rounded-full bg-zinc-900 dark:bg-amber-100 text-white dark:text-zinc-950 flex items-center justify-center text-3xs font-extrabold">
                                 {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
                             </div>
                             <span>{{ Auth::user()->name }}</span>
@@ -110,7 +110,7 @@
 
         <div class="pt-4 pb-3 border-t border-zinc-200 dark:border-zinc-800 px-4">
             <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center font-bold text-xs">
+                <div class="w-8 h-8 rounded-full bg-zinc-900 dark:bg-amber-100 text-white dark:text-zinc-950 flex items-center justify-center font-bold text-xs">
                     {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
                 </div>
                 <div>

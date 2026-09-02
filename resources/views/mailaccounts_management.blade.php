@@ -91,9 +91,9 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
                 <div class="flex items-center space-x-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-zinc-900 dark:bg-zinc-100 shadow-2xs"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80 dark:bg-amber-300/80 shadow-2xs"></span>
                     <h2 class="font-black text-2xl text-zinc-900 dark:text-white leading-tight flex items-center gap-2.5">
-                        <i class="fas fa-server text-zinc-800 dark:text-zinc-200"></i>
+                        <i class="fas fa-server text-amber-500/80 dark:text-amber-300/80"></i>
                         {{ __('Mail Accounts') }}
                     </h2>
                 </div>
@@ -102,7 +102,7 @@
                 </p>
             </div>
             <div>
-                <a href="/account-form/new" class="inline-flex items-center px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-950 text-sm font-bold rounded-xl shadow-2xs hover:shadow transition-all duration-200 gap-2">
+                <a href="/account-form/new" class="inline-flex items-center px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-sm font-bold rounded-xl shadow-2xs hover:shadow transition-all duration-200 gap-2">
                     <i class="fas fa-plus text-xs"></i>
                     <span>Add Mail Account</span>
                 </a>
@@ -121,7 +121,7 @@
                             'danger' => 'bg-red-50 text-red-900 border-red-200 dark:bg-red-950/70 dark:text-red-200 dark:border-red-800/80 icon-fa-exclamation-circle',
                             'warning' => 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950/70 dark:text-amber-200 dark:border-amber-800/80 icon-fa-exclamation-triangle',
                             'success' => 'bg-emerald-50 text-emerald-900 border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-200 dark:border-emerald-800/80 icon-fa-check-circle',
-                            'info' => 'bg-zinc-100 text-zinc-900 border-zinc-300 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700 icon-fa-info-circle',
+                            'info' => 'bg-amber-50/60 text-amber-900 border-amber-200/60 dark:bg-amber-950/40 dark:text-amber-200 dark:border-amber-800/60 icon-fa-info-circle',
                         ];
                     @endphp
                     <div class="p-4 rounded-xl border {{ $alertStyles[$msg] }} flex items-start gap-3 shadow-2xs" role="alert">
@@ -140,7 +140,7 @@
                         <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total Accounts</p>
                         <h3 class="text-2xl font-black text-zinc-900 dark:text-white mt-1">{{ count($accounts) }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-amber-50/80 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-500/20 flex items-center justify-center text-lg">
                         <i class="fas fa-mail-bulk"></i>
                     </div>
                 </div>
@@ -177,18 +177,18 @@
             </div>
 
             <!-- Guidance Banner Card -->
-            <div class="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-white rounded-2xl p-6 shadow-sm border border-zinc-700/60 relative overflow-hidden">
+            <div class="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-white rounded-2xl p-6 shadow-sm border border-amber-500/20 relative overflow-hidden">
                 <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl pointer-events-none">
-                    <i class="fas fa-paper-plane text-zinc-400"></i>
+                    <i class="fas fa-paper-plane text-amber-300"></i>
                 </div>
                 <div class="flex items-start gap-4 relative z-10">
-                    <div class="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-xl shrink-0 text-zinc-300">
+                    <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-xl shrink-0 text-amber-300">
                         <i class="fas fa-info-circle"></i>
                     </div>
                     <div class="space-y-1">
                         <h4 class="font-bold text-base text-white flex items-center gap-2">
                             What are Mail Accounts?
-                            <span class="w-2 h-2 rounded-full bg-zinc-400"></span>
+                            <span class="w-2 h-2 rounded-full bg-amber-300"></span>
                         </h4>
                         <p class="text-sm text-zinc-300 leading-relaxed">
                             Mail accounts store your email dispatch configurations (SMTP servers or API credentials). Campaign Stack rotates active mail accounts to send outbound newsletters, ensuring high deliverability, domain safety, and rate-limit compliance.
@@ -206,7 +206,7 @@
                         <div class="relative flex-1 max-w-md">
                             <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 dark:text-zinc-400 text-sm"></i>
                             <input type="text" id="accountSearchInput" placeholder="Search accounts by name, status, or connection type..." 
-                                   class="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-300 dark:border-zinc-800 rounded-xl text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-800 dark:focus:ring-zinc-200 focus:border-zinc-800 dark:focus:border-zinc-200 transition-all">
+                                   class="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-300 dark:border-zinc-800 rounded-xl text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-300/80 focus:border-amber-300/80 transition-all">
                         </div>
                         <div class="text-xs font-semibold text-zinc-600 dark:text-zinc-400" id="accountCountDisplay">
                             Showing {{ min(8, count($accounts)) }} of {{ count($accounts) }} mail accounts
@@ -226,12 +226,12 @@
                                  data-search="{{ $searchString }}" data-index="{{ $index }}">
                                 
                                 <div class="flex items-start sm:items-center space-x-4">
-                                    <div class="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-[#09090B] border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center text-lg shrink-0">
+                                    <div class="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-[#09090B] border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-amber-200 flex items-center justify-center text-lg shrink-0">
                                         <i class="fas {{ strtoupper($c->type) === 'API' ? 'fa-code' : 'fa-network-wired' }}"></i>
                                     </div>
                                     <div>
                                         <div class="flex items-center space-x-2">
-                                            <a href="/account/{{ $c->id }}" class="font-bold text-base text-zinc-900 dark:text-white hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
+                                            <a href="/account/{{ $c->id }}" class="font-bold text-base text-zinc-900 dark:text-white hover:text-zinc-600 dark:hover:text-amber-200 transition-colors">
                                                 {{ $c->name ?? 'Unnamed Account' }}
                                             </a>
                                             @if($c->status == 1)
@@ -277,7 +277,7 @@
                                         <span>Details</span>
                                     </a>
                                     <a href="/account-form/{{ $c->id }}" title="Edit Account" 
-                                       class="p-2 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
+                                       class="p-2 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-amber-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
                                         <i class="fas fa-pencil-alt text-sm"></i>
                                     </a>
                                     <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($c->name ?? '') }}')" title="Delete Account" 
@@ -312,14 +312,14 @@
 
                 @else
                     <div class="text-center py-14 px-4">
-                        <div class="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl border border-zinc-200 dark:border-zinc-700 shadow-2xs">
+                        <div class="w-16 h-16 bg-amber-50/80 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl border border-amber-200/60 dark:border-amber-500/20 shadow-2xs">
                             <i class="fas fa-server"></i>
                         </div>
                         <h3 class="text-xl font-bold text-zinc-900 dark:text-white">No Mail Accounts Configured</h3>
                         <p class="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto mt-2 mb-6 leading-relaxed">
                             You need at least one active SMTP server or API mail account to start sending campaign emails.
                         </p>
-                        <a href="/account-form/new" class="inline-flex items-center px-5 py-3 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-950 text-sm font-bold rounded-xl shadow-2xs transition-all duration-200 gap-2">
+                        <a href="/account-form/new" class="inline-flex items-center px-5 py-3 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-sm font-bold rounded-xl shadow-2xs transition-all duration-200 gap-2">
                             <i class="fas fa-plus text-xs"></i>
                             <span>Add Your First Mail Account</span>
                         </a>
