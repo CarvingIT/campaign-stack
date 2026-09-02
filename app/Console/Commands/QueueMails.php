@@ -60,7 +60,7 @@ class QueueMails extends Command
 
                 $mailQueue->newsletter_id = $n->id;
                 $mailQueue->contact_id = $contact->id;
-                $mailQueue->status = 'N';
+                $mailQueue->status = 'Q';
                 $mailQueue->attempt = 0;
 
                 $mailQueue->subject = $templateHandler->process(

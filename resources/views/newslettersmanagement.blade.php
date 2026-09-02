@@ -122,8 +122,13 @@
                     Compose, schedule, target, and monitor email newsletter dispatches.
                 </p>
             </div>
-            <div>
-                <a href="/newsletter-form/new" class="inline-flex items-center px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-sm font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-200 gap-2">
+            <div class="flex items-center gap-2">
+                <a href="/dispatch" class="inline-flex items-center px-4 py-2.5 bg-amber-50 dark:bg-amber-950/50 hover:bg-amber-100 text-amber-900 dark:text-amber-200 border border-amber-300/80 dark:border-amber-500/30 text-xs font-bold rounded-xl shadow-2xs transition-all gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                    <i class="fas fa-layer-group text-xs"></i>
+                    <span>Dispatch Studio</span>
+                </a>
+                <a href="/newsletter-form/new" class="inline-flex items-center px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-xs font-bold rounded-xl shadow-2xs transition-all duration-200 gap-2">
                     <i class="fas fa-plus text-xs"></i>
                     <span>Create Newsletter</span>
                 </a>
@@ -368,6 +373,13 @@
                                         <!-- Actions -->
                                         <td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap">
                                             <div class="flex items-center justify-end space-x-1.5">
+                                                @if($n->status === 'N' || $n->status === 'D')
+                                                    <button type="button" onclick="queueSingleNewsletter({{ $n->id }}, '{{ addslashes($n->title ?? 'Broadcast') }}')" title="Queue this broadcast now"
+                                                            class="px-2.5 py-1 text-3xs font-bold rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-800 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800 flex items-center gap-1 transition-colors cursor-pointer">
+                                                        <i class="fas fa-layer-group text-3xs"></i>
+                                                        <span>Queue Now</span>
+                                                    </button>
+                                                @endif
                                                 <a href="/newsletter-form/{{ $n->id }}" title="Edit Newsletter" 
                                                    class="p-1.5 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-amber-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
                                                     <i class="fas fa-pencil-alt text-xs"></i>
@@ -447,9 +459,42 @@
                     </button>
                     <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 transition-colors shadow-2xs">
                         Delete Newsletter
-                    </button>
                 </div>
             </form>
         </div>
     </div>
+
+    <script>
+        function queueSingleNewsletter(id, title) {
+            if (typeof appendTerminalLog === 'function') {
+                appendTerminalLog(`[QUEUING] Initiating queue for "${title}"...`, 'info');
+            }
+
+            fetch(`/newsletter/${id}/queue-now`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    if (typeof appendTerminalLog === 'function') {
+                        appendTerminalLog(`[SUCCESS] ${data.message}`, 'success');
+                    }
+                    if (typeof refreshQueueMetrics === 'function') {
+                        refreshQueueMetrics();
+                    }
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Failed to queue broadcast.');
+                }
+            })
+            .catch(err => {
+                alert('Error: ' + err.message);
+            });
+        }
+    </script>
 </x-app-layout>

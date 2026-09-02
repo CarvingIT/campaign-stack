@@ -163,6 +163,30 @@
 
             </div>
 
+            <!-- Quick Dispatch Studio Launch Card -->
+            <div class="bg-white dark:bg-[#111113] p-5 rounded-2xl border border-amber-200/80 dark:border-amber-500/20 shadow-2xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-300 flex items-center justify-center text-lg border border-amber-200/60 dark:border-amber-500/30 shrink-0 shadow-2xs">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Broadcast Dispatch Studio</h3>
+                            <span class="px-2 py-0.5 rounded-full text-3xs font-extrabold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                                4-Stage Workflow Ready
+                            </span>
+                        </div>
+                        <p class="text-2xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                            Inspect your audience, toggle exclusions, preview personalized merge tags, and execute real-time batch transmission with full control.
+                        </p>
+                    </div>
+                </div>
+                <a href="/dispatch" class="inline-flex items-center justify-center px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-xs font-bold rounded-xl shadow-2xs transition-all gap-2 shrink-0">
+                    <span>Open Dispatch Studio</span>
+                    <i class="fas fa-arrow-right text-3xs"></i>
+                </a>
+            </div>
+
             <!-- Clean Pipeline Velocity Funnel (Subtle Light-Toned Bar) -->
             <div class="bg-white dark:bg-[#111113] p-4 rounded-xl border border-zinc-200/70 dark:border-zinc-800/80 shadow-2xs space-y-2.5">
                 <div class="flex items-center justify-between text-2xs text-zinc-400 dark:text-zinc-500 border-b border-zinc-100 dark:border-zinc-800/60 pb-2">

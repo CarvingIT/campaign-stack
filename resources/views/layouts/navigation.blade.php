@@ -30,6 +30,12 @@
                     <x-nav-link :href="route('newsletters')" :active="request()->routeIs('newsletters')">
                         {{ __('Newsletters') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('dispatch')" :active="request()->routeIs('dispatch')">
+                        <span class="flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                            {{ __('Dispatch Studio') }}
+                        </span>
+                    </x-nav-link>
                     <x-nav-link :href="route('emails')" :active="request()->routeIs('emails')">
                         {{ __('Emails') }}
                     </x-nav-link>
@@ -138,6 +144,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('newsletters')" :active="request()->routeIs('newsletters')">
                 {{ __('Newsletters') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dispatch')" :active="request()->routeIs('dispatch')">
+                {{ __('Dispatch Studio') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('emails')" :active="request()->routeIs('emails')">
                 {{ __('Emails') }}

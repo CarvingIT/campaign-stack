@@ -271,6 +271,11 @@
 
                                 <!-- Actions -->
                                 <div class="flex items-center space-x-2 self-end sm:self-center">
+                                    <button type="button" onclick="openTestModal({{ $c->id }}, '{{ addslashes($c->name ?? '') }}')" title="Test SMTP Connection"
+                                            class="px-3 py-1.5 text-xs font-semibold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-900/50 border border-amber-200/80 dark:border-amber-500/30 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
+                                        <i class="fas fa-bolt text-2xs"></i>
+                                        <span>Test</span>
+                                    </button>
                                     <a href="/account/{{ $c->id }}" title="View Details" 
                                        class="px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100 dark:bg-[#09090B] hover:bg-slate-200 dark:hover:bg-zinc-800 border border-transparent dark:border-zinc-800 rounded-lg transition-colors flex items-center gap-1.5">
                                         <i class="fas fa-eye text-2xs"></i>
@@ -330,6 +335,50 @@
         </div>
     </div>
 
+    <!-- SMTP Test Connection Modal -->
+    <div id="testModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-zinc-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-[#141417] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-zinc-800 transform transition-all space-y-4">
+            <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
+                <div class="flex items-center space-x-3 text-amber-600 dark:text-amber-300">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/40 flex items-center justify-center text-lg border border-amber-200/60 dark:border-amber-500/30">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-zinc-900 dark:text-white">Test Connection</h3>
+                        <p class="text-2xs text-zinc-500 dark:text-zinc-400" id="testModalAccountName"></p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeTestModal()" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200">
+                    <i class="fas fa-times text-sm"></i>
+                </button>
+            </div>
+
+            <div>
+                <label class="block font-semibold text-2xs text-zinc-700 dark:text-zinc-200 uppercase tracking-wider mb-1.5" for="testRecipientEmail">
+                    Send Verification Email To <span class="text-red-500">*</span>
+                </label>
+                <input type="email" id="testRecipientEmail" value="{{ Auth::user()->email ?? '' }}" placeholder="e.g. your-email@gmail.com" 
+                       class="w-full px-3.5 py-2.5 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white text-xs font-medium focus:ring-amber-300 focus:border-amber-300">
+                <p class="text-3xs text-zinc-500 dark:text-zinc-400 mt-1">
+                    An actual test message will be sent through this SMTP gateway to verify authentication and deliverability.
+                </p>
+            </div>
+
+            <!-- Result Feedback Box -->
+            <div id="testResultBox" class="hidden p-3.5 rounded-xl text-xs leading-snug"></div>
+
+            <div class="flex justify-end space-x-3 pt-2">
+                <button type="button" onclick="closeTestModal()" class="px-4 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 bg-slate-100 dark:bg-zinc-800 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors">
+                    Close
+                </button>
+                <button type="button" id="btnExecuteTest" onclick="executeSmtpTest()" class="inline-flex items-center px-4 py-2 text-xs font-bold text-white bg-zinc-900 hover:bg-zinc-800 dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 rounded-xl transition-all shadow-2xs gap-1.5">
+                    <i id="testIconSpinner" class="fas fa-paper-plane text-2xs"></i>
+                    <span>Send Test Email</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Reusable Delete Modal -->
     <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-zinc-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-[#141417] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-zinc-800 transform transition-all">
@@ -356,4 +405,73 @@
             </form>
         </div>
     </div>
+
+    <script>
+        let currentTestAccountId = null;
+
+        function openTestModal(accountId, accountName) {
+            currentTestAccountId = accountId;
+            document.getElementById('testModalAccountName').textContent = accountName;
+            const resBox = document.getElementById('testResultBox');
+            resBox.className = 'hidden';
+            resBox.innerHTML = '';
+            document.getElementById('testModal').classList.remove('hidden');
+        }
+
+        function closeTestModal() {
+            document.getElementById('testModal').classList.add('hidden');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+
+        function executeSmtpTest() {
+            const recipient = document.getElementById('testRecipientEmail').value.trim();
+            if (!recipient) {
+                alert('Please enter a recipient email address.');
+                return;
+            }
+
+            const btn = document.getElementById('btnExecuteTest');
+            const icon = document.getElementById('testIconSpinner');
+            const resBox = document.getElementById('testResultBox');
+
+            btn.disabled = true;
+            icon.className = 'fas fa-spinner fa-spin text-2xs';
+            resBox.className = 'p-3 bg-blue-50 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300 border border-blue-200 dark:border-blue-900 rounded-xl text-xs';
+            resBox.innerHTML = '<i class="fas fa-spinner fa-spin mr-1.5"></i> Connecting to SMTP server and transmitting verification email...';
+            resBox.classList.remove('hidden');
+
+            fetch('/mail-accounts/test-smtp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    account_id: currentTestAccountId,
+                    recipient: recipient
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    resBox.className = 'p-3.5 bg-emerald-50 text-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-800 rounded-xl text-xs font-medium space-y-1';
+                    resBox.innerHTML = `<div class="flex items-center gap-1.5 font-bold text-emerald-800 dark:text-emerald-300"><i class="fas fa-check-circle"></i> Verification Successful!</div><p>${data.message}</p>`;
+                } else {
+                    resBox.className = 'p-3.5 bg-red-50 text-red-900 dark:bg-red-950/50 dark:text-red-200 border border-red-300 dark:border-red-800 rounded-xl text-xs font-medium space-y-1';
+                    resBox.innerHTML = `<div class="flex items-center gap-1.5 font-bold text-red-800 dark:text-red-300"><i class="fas fa-exclamation-triangle"></i> Verification Failed</div><p class="font-mono text-2xs break-all">${data.message}</p>`;
+                }
+            })
+            .catch(err => {
+                resBox.className = 'p-3.5 bg-red-50 text-red-900 dark:bg-red-950/50 dark:text-red-200 border border-red-300 dark:border-red-800 rounded-xl text-xs font-medium';
+                resBox.innerHTML = `<i class="fas fa-exclamation-circle mr-1.5"></i> Network error: ${err.message}`;
+            })
+            .finally(() => {
+                btn.disabled = false;
+                icon.className = 'fas fa-paper-plane text-2xs';
+            });
+        }
+    </script>
 </x-app-layout>

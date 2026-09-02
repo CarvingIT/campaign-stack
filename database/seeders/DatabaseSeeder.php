@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -11,13 +10,19 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Seed the application's database with complete, Indian-localized test dataset.
      */
     public function run(): void
     {
-        $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(CampaignSeeder::class);
-        $this->call(TagSeeder::class);
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
+            OutboundMailAccountSeeder::class,
+            TagSeeder::class,
+            CampaignSeeder::class,
+            ContactSeeder::class,
+            ContactTagSeeder::class,
+            NewsletterSeeder::class,
+        ]);
     }
 }
