@@ -6,76 +6,67 @@
     <title>CampaignStack | Corporate Tri-Fold Brochure | Carving IT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --gold: #F59E0B;
-            --gold-light: #FDE68A;
             --gold-dark: #D97706;
             --gold-gradient: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
-            --gold-glow: rgba(245, 158, 11, 0.25);
             
-            /* Dark Canvas */
-            --dark-bg: #060913;
-            --dark-surface: #0D1322;
-            --dark-card: rgba(15, 23, 42, 0.85);
+            /* Reimagined Obsidian Dark */
+            --dark-bg: #090D16;
+            --dark-card: #101626;
             --dark-border: rgba(255, 255, 255, 0.08);
             --dark-text: #F8FAFC;
             --dark-muted: #94A3B8;
 
-            /* Light Canvas (Ultra-Clean Editorial) */
+            /* Reimagined Crisp Architectural Light */
             --light-bg: #FFFFFF;
             --light-surface: #F8FAFC;
-            --light-border: #E2E8F0;
-            --light-text: #090E1A;
-            --light-muted: #334155;
+            --light-border: #E5E7EB;
+            --light-text: #0B0F19;
+            --light-muted: #4B5563;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body, html {
-            background-color: #0F172A;
+            background-color: #1E293B;
             font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 24px 0 48px 0;
-            gap: 24px;
+            padding: 20px 0 40px 0;
+            gap: 20px;
         }
 
-        /* Screen Control Toolbar */
         .toolbar {
             width: 297mm;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(12px);
+            background: #0B0F19;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 12px 20px;
-            border-radius: 12px;
+            padding: 10px 18px;
+            border-radius: 10px;
             color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             z-index: 100;
         }
 
         .toolbar-btn {
             background: var(--gold-gradient);
-            color: #080B11;
+            color: #090D16;
             border: none;
-            padding: 9px 22px;
-            border-radius: 8px;
+            padding: 8px 20px;
+            border-radius: 6px;
             font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             font-family: inherit;
-            box-shadow: 0 4px 14px var(--gold-glow);
-            transition: transform 0.15s ease;
         }
-        .toolbar-btn:hover { transform: translateY(-1px); }
 
         /* EXACT A4 Landscape Sheets (297mm x 210mm) */
         .page {
@@ -84,7 +75,7 @@
             max-height: 210mm;
             min-height: 210mm;
             display: flex;
-            box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.85);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
             overflow: hidden;
             position: relative;
             page-break-inside: avoid !important;
@@ -98,251 +89,117 @@
             break-after: avoid !important;
         }
 
-        /* ========================================================================= */
-        /* SHEET 1: OUTSIDE SPREAD BACKGROUND (DESIGN MARVEL DARK)                   */
-        /* ========================================================================= */
+        /* Clean Sculptural Backgrounds (No busy textures or micro-dots) */
         .page-outside {
-            background-color: var(--dark-bg);
-            background-image: 
-                radial-gradient(circle at 82% 45%, rgba(245, 158, 11, 0.10) 0%, transparent 45%),
-                radial-gradient(circle at 18% 25%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
-                linear-gradient(225deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
-                linear-gradient(45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%),
-                linear-gradient(315deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%);
-            background-position: 0 0, 0 0, 16px 0, 16px 0, 0 0, 0 0;
-            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px, 32px 32px, 32px 32px;
+            background: radial-gradient(circle at 85% 45%, #141C30 0%, #090D16 65%);
             color: var(--dark-text);
         }
 
-        /* ========================================================================= */
-        /* SHEET 2: INSIDE SPREAD BACKGROUND (DESIGN MARVEL LIGHT PANORAMIC)         */
-        /* ========================================================================= */
         .page-inside {
-            background-color: var(--light-bg);
-            background-image: linear-gradient(180deg, rgba(245, 158, 11, 0.025) 0%, transparent 70px);
+            background: #FFFFFF;
             color: var(--light-text);
         }
 
-        /* Top Panoramic Architectural Gold Accent Wire */
-        .page::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3.5px;
-            background: linear-gradient(90deg, #F59E0B 0%, #EA580C 35%, #F59E0B 70%, #D97706 100%);
-            z-index: 20;
-        }
-
-        /* Tri-Fold Panel (99mm exact) */
+        /* 3 Tri-Fold Panels (99mm exact) */
         .panel {
             width: 99mm;
             height: 210mm;
-            padding: 10mm 9.5mm 8mm 9.5mm;
+            padding: 11mm 10mm 9mm 10mm;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            overflow: hidden;
             box-sizing: border-box;
-            z-index: 1;
         }
 
         .page-outside .panel { border-right: 1px solid var(--dark-border); }
         .page-inside .panel { border-right: 1px solid var(--light-border); }
         .panel:last-child { border-right: none; }
 
-        /* Authentic Prepress Score & Fold Indicators */
-        .fold-guide {
-            position: absolute;
-            top: 4px;
-            right: 0;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 7px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            transform: translateX(50%);
-            pointer-events: none;
-            z-index: 25;
-        }
-        .page-outside .fold-guide { color: rgba(255, 255, 255, 0.22); }
-        .page-inside .fold-guide { color: rgba(0, 0, 0, 0.2); }
-
-        /* Precision Corner Registration Marks */
-        .corner-mark {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            pointer-events: none;
-        }
-        .page-outside .corner-mark { border-color: rgba(245, 158, 11, 0.4); }
-        .page-inside .corner-mark { border-color: rgba(0, 0, 0, 0.2); }
-        .corner-tl { top: 6px; left: 6px; border-top: 1px solid; border-left: 1px solid; }
-        .corner-br { bottom: 6px; right: 6px; border-bottom: 1px solid; border-right: 1px solid; }
-
-        /* Typography Hierarchy (Standard Weights: Regular 400, SemiBold 600, Bold 700) */
+        /* Reimagined Modern Typography (Outfit + Plus Jakarta Sans) */
         h1, h2, h3 {
-            font-family: 'Bricolage Grotesque', sans-serif;
-            letter-spacing: -0.03em;
-            line-height: 1.14;
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.16;
             font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
-        h1 { font-size: 29px; }
-        h2 { font-size: 24px; }
-        h3 { font-size: 15px; line-height: 1.25; letter-spacing: -0.02em; }
+        h1 { font-size: 28px; }
+        h2 { font-size: 23.5px; }
+        h3 { font-size: 15px; }
 
-        .page-outside h2 { color: #FFFFFF; }
-        .page-inside h2 { color: #090E1A; }
+        .page-outside h1, .page-outside h2, .page-outside h3 { color: #FFFFFF; }
+        .page-inside h2, .page-inside h3 { color: var(--light-text); }
 
         p {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 400;
-            line-height: 1.46;
-            letter-spacing: -0.01em;
+            line-height: 1.48;
         }
+        .page-outside p { color: var(--dark-muted); }
+        .page-inside p { color: var(--light-muted); }
 
-        .page-outside p { color: #CBD5E1; }
-        .page-inside p { color: #334155; }
-
-        .lede {
-            font-size: 13.5px;
-            font-weight: 400;
-            line-height: 1.45;
-        }
-        .page-outside .lede { color: #F1F5F9; }
-        .page-inside .lede { color: #1E293B; }
-
-        /* Eyebrow Pill Badge */
-        .eyebrow {
-            font-family: 'JetBrains Mono', monospace;
+        .category-tag {
             font-size: 9.5px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             color: var(--gold);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
-        /* Number Callouts in JetBrains Mono */
-        .editorial-num {
-            font-family: 'JetBrains Mono', monospace;
+        .num-label {
+            font-family: 'Outfit', sans-serif;
             font-size: 20px;
             font-weight: 700;
             color: var(--gold);
             line-height: 1;
-            margin-right: 11px;
+            margin-right: 10px;
             shrink-0;
         }
 
-        /* Flowing Rows */
-        .editorial-row {
+        .row-item {
             display: flex;
             align-items: flex-start;
-            padding: 7px 0;
+            padding: 8px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            position: relative;
-            z-index: 1;
         }
-        .page-outside .editorial-row {
-            border-bottom: 1px solid var(--dark-border);
-        }
+        .page-outside .row-item { border-bottom: 1px solid var(--dark-border); }
 
-        /* Icon Badge */
-        .icon-badge {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            margin-right: 10px;
-            margin-top: 1px;
-            shrink-0;
-        }
-
-        /* Panel Footer Baseline */
         .panel-footer {
             border-top: 1px solid rgba(0, 0, 0, 0.08);
             padding-top: 6px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 9.5px;
-            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
             font-weight: 600;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
-            position: relative;
-            z-index: 1;
         }
-        .page-outside .panel-footer {
-            border-top: 1px solid var(--dark-border);
-            color: var(--dark-muted);
-        }
-        .page-inside .panel-footer {
-            color: var(--light-muted);
-        }
+        .page-outside .panel-footer { border-top: 1px solid var(--dark-border); color: var(--dark-muted); }
+        .page-inside .panel-footer { color: var(--light-muted); }
 
-        /* Head-to-Head Comparison Ledger Table */
         .ledger-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 11.5px;
-            margin: 2px 0;
-            position: relative;
-            z-index: 1;
+            margin: 4px 0;
         }
         .ledger-table th {
             text-align: left;
-            font-family: 'JetBrains Mono', monospace;
             font-size: 9px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--light-muted);
-            padding: 4px 6px;
+            padding: 5px 6px;
             border-bottom: 1px solid var(--light-border);
         }
         .ledger-table td {
-            padding: 4.5px 6px;
+            padding: 5px 6px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             font-weight: 400;
-        }
-
-        /* Panoramic Pipeline Step Badge (Inside Spread) */
-        .pipeline-step {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 8.5px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 4px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Subtle Luxury Stamp */
-        .prepress-stamp {
-            border: 1px solid rgba(245, 158, 11, 0.35);
-            border-radius: 4px;
-            padding: 3px 7px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 7.5px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--gold);
-            text-transform: uppercase;
-            display: inline-block;
         }
 
         @media print {
@@ -357,80 +214,72 @@
 <body>
 
     <div class="toolbar">
-        <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
             <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack" style="height: 28px; width: auto;">
-            <span style="font-size: 11px; color: #94A3B8; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 12px;">
-                Design Marvel Edition &bull; Panoramic Architectural Continuity &bull; Exact 2-Page A4 Landscape (INR)
+            <span style="font-size: 11px; color: #94A3B8; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 10px;">
+                Reimagined Minimalist Aesthetic &bull; Crisp Typography &bull; Exact 2-Page A4 Landscape (INR)
             </span>
         </div>
         <button type="button" onclick="window.print()" class="toolbar-btn">Print 2-Page PDF</button>
     </div>
 
     <!-- ========================================================================= -->
-    <!-- SHEET 1: OUTSIDE SPREAD (LUXURY MIDNIGHT SLATE)                           -->
+    <!-- SHEET 1: OUTSIDE SPREAD (LUXURY OBSIDIAN NAVY)                            -->
     <!-- Panels: [Panel 5: Flap | Panel 6: Back Cover | Panel 1: Front Cover]      -->
     <!-- ========================================================================= -->
     <div class="page page-outside">
 
         <!-- PANEL 5: FOLD-IN FLAP -->
         <div class="panel">
-            <div class="corner-mark corner-tl"></div>
-            <div class="fold-guide" style="top: 4px; right: 0;">FOLD &bull; CREASE</div>
-
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                        <div class="eyebrow"><i class="fas fa-chart-line"></i> Market Reality</div>
-                        <span class="prepress-stamp">01 // THE AUDIT</span>
-                    </div>
-                    <h2 style="margin-bottom: 4px;">What If Your Email Bill <span style="color: var(--gold);">Never Went Up?</span></h2>
-                    <p class="lede">Legacy platforms punish business growth. The larger your audience gets, the higher your monthly bill, even for dormant contacts.</p>
+                    <div class="category-tag">Market Reality</div>
+                    <h2 style="margin-bottom: 5px;">What If Your Email Bill <span style="color: var(--gold);">Never Went Up?</span></h2>
+                    <p style="color: #CBD5E1;">Legacy email platforms punish business growth. The larger your audience gets, the higher your monthly fee, even for inactive contacts.</p>
                 </div>
 
-                <!-- Architectural Data Visualization Card -->
-                <div style="background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 8px; padding: 9px 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
-                    <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 8.5px; font-weight: 700; margin-bottom: 5px;">
-                        <span style="color: #F87171;"><i class="fas fa-arrow-trend-up"></i> LEGACY SAAS: EXPONENTIAL</span>
-                        <span style="color: var(--gold);"><i class="fas fa-grip-lines"></i> CAMPAIGNSTACK: FLAT</span>
+                <!-- Clean Comparison Visual -->
+                <div style="background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 8px; padding: 10px 12px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 9px; font-weight: 700; margin-bottom: 5px;">
+                        <span style="color: #F87171;">LEGACY SAAS: EXPONENTIAL</span>
+                        <span style="color: var(--gold);">CAMPAIGNSTACK: FLAT</span>
                     </div>
-                    <svg viewBox="0 0 250 28" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="0" y1="22" x2="250" y2="22" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-                        <path d="M 10 20 Q 140 19 240 4" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-dasharray="3 3" />
-                        <line x1="10" y1="20" x2="240" y2="20" stroke="#F59E0B" stroke-width="3" />
-                        <circle cx="240" cy="4" r="3.5" fill="#EF4444" />
-                        <circle cx="240" cy="20" r="3.5" fill="#F59E0B" />
+                    <svg viewBox="0 0 250 26" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="20" x2="250" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                        <path d="M 10 18 Q 140 17 240 3" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-dasharray="3 3" />
+                        <line x1="10" y1="18" x2="240" y2="18" stroke="#F59E0B" stroke-width="3" />
                     </svg>
                 </div>
 
-                <!-- 3 Flowing Editorial Obstacles -->
+                <!-- 3 Editorial Points -->
                 <div>
-                    <div class="editorial-row">
-                        <div class="editorial-num">01</div>
+                    <div class="row-item">
+                        <div class="num-label">01</div>
                         <div>
-                            <h3 style="color: white; margin-bottom: 2px;">The Per-Contact Tax</h3>
+                            <h3 style="margin-bottom: 2px;">The Per-Contact Tax</h3>
                             <p style="line-height: 1.42;">Paying thousands monthly just to store customer contacts in someone else's closed database.</p>
                         </div>
                     </div>
-                    <div class="editorial-row">
-                        <div class="editorial-num">02</div>
+                    <div class="row-item">
+                        <div class="num-label">02</div>
                         <div>
-                            <h3 style="color: white; margin-bottom: 2px;">Single Provider Lockout</h3>
+                            <h3 style="margin-bottom: 2px;">Single Provider Lockout</h3>
                             <p style="line-height: 1.42;">When your single sending vendor has an outage or rate freeze, business communication halts completely.</p>
                         </div>
                     </div>
-                    <div class="editorial-row" style="border-bottom: none;">
-                        <div class="editorial-num">03</div>
+                    <div class="row-item" style="border-bottom: none;">
+                        <div class="num-label">03</div>
                         <div>
-                            <h3 style="color: white; margin-bottom: 2px;">The Spam Folder Trap</h3>
+                            <h3 style="margin-bottom: 2px;">The Spam Folder Trap</h3>
                             <p style="line-height: 1.42;">Burst sending thousands of emails in seconds triggers spam filters and permanently harms domain reputation.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- ROI Strip -->
-                <div style="border-left: 3.5px solid var(--gold); padding: 7px 11px; background: rgba(245, 158, 11, 0.08); border-radius: 0 6px 6px 0;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--gold); font-weight: 700;">ANNUAL SAAS OVERHEAD SAVINGS</div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: white; margin-top: 2px;">
+                <!-- Savings Banner -->
+                <div style="border-left: 3px solid var(--gold); padding: 7px 11px; background: rgba(245, 158, 11, 0.08); border-radius: 0 6px 6px 0;">
+                    <div style="font-size: 9px; color: var(--gold); font-weight: 700;">ANNUAL SAAS OVERHEAD SAVINGS</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: white; margin-top: 2px;">
                         <span>25k Contacts: <strong style="color: #34D399; font-weight: 600;">Save ~₹2,00,000 / yr</strong></span>
                         <span>100k Contacts: <strong style="color: #34D399; font-weight: 600;">Save ~₹7,00,000 / yr</strong></span>
                     </div>
@@ -445,21 +294,16 @@
 
         <!-- PANEL 6: BACK COVER -->
         <div class="panel">
-            <div class="fold-guide" style="top: 4px; right: 0;">FOLD &bull; CREASE</div>
-
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                        <div class="eyebrow"><i class="fas fa-sliders"></i> Dedicated Architecture</div>
-                        <span class="prepress-stamp">02 // THE LEDGER</span>
-                    </div>
-                    <h2 style="margin-bottom: 4px;">Take Full Control of Your Broadcasts</h2>
-                    <p class="lede">Carving IT engineers deploy your private dispatch server, authenticate DNS, and configure redundant sending pipes.</p>
+                    <div class="category-tag">Dedicated Architecture</div>
+                    <h2 style="margin-bottom: 5px;">Take Full Control of Your Broadcasts</h2>
+                    <p style="color: #CBD5E1;">Carving IT engineers deploy your private dispatch server, authenticate DNS, and configure redundant sending pipes.</p>
                 </div>
 
-                <!-- Architectural TCO Financial Ledger -->
-                <div style="background: linear-gradient(180deg, rgba(17, 24, 39, 0.9) 0%, rgba(10, 15, 29, 0.98) 100%); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 8px; padding: 9px 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--gold); margin-bottom: 3px; font-weight: 700;">MONTHLY COST FOR 100,000 CONTACTS</div>
+                <!-- Clean Pricing Card -->
+                <div style="background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 8px; padding: 10px 12px;">
+                    <div style="font-size: 9px; color: var(--gold); margin-bottom: 4px; font-weight: 700;">MONTHLY COST FOR 100,000 CONTACTS</div>
                     <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--dark-border); font-size: 11.5px;">
                         <span style="color: var(--dark-muted);">Mailchimp Standard</span>
                         <span style="color: #F87171; font-weight: 700;">₹62,000+/mo</span>
@@ -468,14 +312,14 @@
                         <span style="color: var(--dark-muted);">Klaviyo Enterprise</span>
                         <span style="color: #F87171; font-weight: 700;">₹90,000+/mo</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; padding: 5px 0 0 0; font-size: 12.5px;">
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0 0 0; font-size: 12px;">
                         <span style="color: var(--gold); font-weight: 700;">CampaignStack + SES</span>
                         <span style="color: #34D399; font-weight: 700;">Flat & Affordable (~₹800/send)</span>
                     </div>
                 </div>
 
-                <!-- 3 Guarantees -->
-                <div style="display: flex; flex-direction: column; gap: 5px;">
+                <!-- 3 Flowing Guarantees -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
                     <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #CBD5E1;">
                         <i class="fas fa-shield-halved text-amber-400"></i>
                         <span><strong style="font-weight: 600; color: white;">Data Sovereignty:</strong> Customer records stay inside your private SQL DB</span>
@@ -490,14 +334,14 @@
                     </div>
                 </div>
 
-                <!-- Credentials & Action -->
-                <div style="border-top: 1px solid var(--dark-border); padding-top: 7px;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--gold); font-weight: 700; margin-bottom: 3px;">CARVING IT PVT. LTD. &bull; PUNE, INDIA</div>
-                    <div style="font-size: 11px; color: #CBD5E1; line-height: 1.42; margin-bottom: 7px;">
+                <!-- Corporate Credentials & Action -->
+                <div style="border-top: 1px solid var(--dark-border); padding-top: 8px;">
+                    <div style="font-size: 9.5px; color: var(--gold); font-weight: 700; margin-bottom: 3px;">CARVING IT PVT. LTD. &bull; PUNE, INDIA</div>
+                    <div style="font-size: 11px; color: #CBD5E1; line-height: 1.42; margin-bottom: 8px;">
                         <div>+91 9420121704 &bull; +91 8605789833</div>
                         <div>info@carvingit.com &bull; www.carvingit.com</div>
                     </div>
-                    <a href="mailto:info@carvingit.com" style="display: block; text-align: center; text-decoration: none; background: var(--gold-gradient); color: #080B11; font-weight: 700; font-size: 11.5px; padding: 8.5px 12px; border-radius: 6px; box-shadow: 0 4px 14px var(--gold-glow);">
+                    <a href="mailto:info@carvingit.com" style="display: block; text-align: center; text-decoration: none; background: var(--gold-gradient); color: #090D16; font-weight: 700; font-size: 11.5px; padding: 8.5px 12px; border-radius: 6px;">
                         Schedule Architecture Consultation &rarr;
                     </a>
                 </div>
@@ -511,37 +355,30 @@
 
         <!-- PANEL 1: FRONT COVER -->
         <div class="panel">
-            <div class="corner-mark corner-br"></div>
-
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                        <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack Logo" style="height: 48px; width: auto; object-fit: contain;">
-                        <span class="prepress-stamp">BRIEF &bull; 2026</span>
-                    </div>
-                    <div class="eyebrow" style="margin-top: 6px;"><i class="fas fa-paper-plane"></i> Enterprise Email Platform</div>
-                    <h1 style="margin-bottom: 5px;">Email Marketing Without the <span style="color: var(--gold);">Monthly Penalty.</span></h1>
-                    <p style="font-size: 13px; line-height: 1.48;">Send high-converting newsletters to your entire audience without paying extra simply because your contact list grows.</p>
+                    <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack Logo" style="height: 48px; width: auto; object-fit: contain; margin-bottom: 4px;">
+                    <div class="category-tag" style="margin-top: 8px;">Enterprise Dispatch Platform</div>
+                    <h1 style="margin-bottom: 6px;">Email Marketing Without the <span style="color: var(--gold);">Monthly Penalty.</span></h1>
+                    <p style="font-size: 13px; color: #CBD5E1;">Send high-converting newsletters to your entire audience without paying extra simply because your contact list grows.</p>
                 </div>
 
-                <!-- Centered Hero Visual with Orbital Ring Depth -->
-                <div style="text-align: center; margin: 2px 0; position: relative;">
-                    <!-- Subtle Tech Orbital Glow -->
-                    <div style="position: absolute; inset: 12% 10% 0% 10%; background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.18) 0%, transparent 70%); filter: blur(16px); pointer-events: none;"></div>
-                    <img src="public/i/macbook_pro_transparent.webp" alt="CampaignStack Dashboard" style="width: 100%; max-height: 74mm; object-fit: contain; filter: drop-shadow(0 16px 36px rgba(0,0,0,0.85)); position: relative; z-index: 1;">
+                <!-- Clean Hero Image -->
+                <div style="text-align: center; margin: 2px 0;">
+                    <img src="public/i/macbook_pro_transparent.webp" alt="CampaignStack Dashboard" style="width: 100%; max-height: 75mm; object-fit: contain; filter: drop-shadow(0 16px 32px rgba(0,0,0,0.8));">
                 </div>
 
-                <!-- 4 Value Points -->
+                <!-- 3 Clear Value Points -->
                 <div style="display: flex; flex-direction: column; gap: 4px;">
-                    <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #E2E8F0;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #E2E8F0;">
                         <i class="fas fa-check-circle text-amber-400"></i>
                         <span><strong style="font-weight: 600;">Keep All Your Contacts:</strong> Flat server pricing with zero list penalties</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #E2E8F0;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #E2E8F0;">
                         <i class="fas fa-check-circle text-amber-400"></i>
                         <span><strong style="font-weight: 600;">Never Miss a Send:</strong> Multi-gateway standby failover protection</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #E2E8F0;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #E2E8F0;">
                         <i class="fas fa-check-circle text-amber-400"></i>
                         <span><strong style="font-weight: 600;">100% In-Box Delivery:</strong> Paced, human cadence prevents spam traps</span>
                     </div>
@@ -557,49 +394,41 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- SHEET 2: INSIDE SPREAD (CRISP SWISS PANORAMIC ARCHITECTURE)               -->
-    <!-- Panels: [Panel 2: Audience | Panel 3: Relay Engine | Panel 4: Proof]      -->
+    <!-- SHEET 2: INSIDE SPREAD (CRISP SWISS EDITORIAL)                            -->
+    <!-- Panels: [Panel 2: Overview | Panel 3: Capabilities | Panel 4: Proof]      -->
     <!-- ========================================================================= -->
     <div class="page page-inside">
 
         <!-- PANEL 2: PHILOSOPHY & AUDIENCE OWNERSHIP -->
         <div class="panel">
-            <div class="corner-mark corner-tl" style="border-color: rgba(0,0,0,0.15);"></div>
-            <div class="fold-guide" style="top: 4px; right: 0;">FOLD &bull; CREASE</div>
-
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                        <img src="public/i/opt1_pjs_bold_light.png" alt="CampaignStack Logo" style="height: 42px; width: auto; object-fit: contain;">
-                        <span class="pipeline-step" style="background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A;">
-                            01 // SOVEREIGNTY
-                        </span>
-                    </div>
-                    <div class="eyebrow" style="margin-top: 6px;"><i class="fas fa-compass"></i> Overview & Philosophy</div>
-                    <h2 style="margin-bottom: 3px;">Built for Businesses That <span style="color: #B45309;">Value Their Audience</span></h2>
-                    <p class="lede">CampaignStack was developed by Carving IT to give founders and marketing teams total control, rock-solid reliability, and honest flat pricing.</p>
+                    <img src="public/i/opt1_pjs_bold_light.png" alt="CampaignStack Logo" style="height: 42px; width: auto; object-fit: contain; margin-bottom: 2px;">
+                    <div class="category-tag" style="margin-top: 8px;">Overview & Mission</div>
+                    <h2 style="margin-bottom: 4px;">Built for Businesses That <span style="color: #B45309;">Value Their Audience</span></h2>
+                    <p>CampaignStack was developed by Carving IT to give founders and marketing teams total control, rock-solid reliability, and honest flat pricing.</p>
                 </div>
 
                 <!-- 3 Editorial Stories -->
                 <div>
-                    <div class="editorial-row">
-                        <div class="editorial-num">01</div>
+                    <div class="row-item">
+                        <div class="num-label">01</div>
                         <div>
                             <h3 style="margin-bottom: 2px;">You Own Your Audience</h3>
                             <p style="line-height: 1.42;">Your subscriber list stays safely in your private database. No third party ever mines, analyzes, or holds your contacts hostage.</p>
                         </div>
                     </div>
 
-                    <div class="editorial-row">
-                        <div class="editorial-num">02</div>
+                    <div class="row-item">
+                        <div class="num-label">02</div>
                         <div>
                             <h3 style="margin-bottom: 2px;">Total Provider Freedom</h3>
                             <p style="line-height: 1.42;">Connect the email infrastructure you already trust, including Amazon SES, Google Workspace, Brevo, and Microsoft 365, with zero vendor lock-in.</p>
                         </div>
                     </div>
 
-                    <div class="editorial-row" style="border-bottom: none;">
-                        <div class="editorial-num">03</div>
+                    <div class="row-item" style="border-bottom: none;">
+                        <div class="num-label">03</div>
                         <div>
                             <h3 style="margin-bottom: 2px;">Always-On Protection</h3>
                             <p style="line-height: 1.42;">Intelligent circuit breakers automatically route around slow or throttled relays so your critical marketing announcements always arrive on time.</p>
@@ -607,10 +436,9 @@
                     </div>
                 </div>
 
-                <!-- Pull Quote Accent with Subtle Watermark -->
-                <div style="border-left: 3.5px solid var(--gold); padding: 8px 12px; background: #FFFBEB; border-radius: 0 6px 6px 0; position: relative; overflow: hidden;">
-                    <span style="position: absolute; right: 4px; bottom: -12px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 55px; color: rgba(245, 158, 11, 0.12); line-height: 1; pointer-events: none;">“</span>
-                    <p style="font-size: 12px; font-weight: 500; color: #92400E; line-height: 1.44; position: relative; z-index: 1;">
+                <!-- Pull Quote Accent -->
+                <div style="border-left: 3.5px solid var(--gold); padding: 8px 12px; background: #FFFBEB; border-radius: 0 6px 6px 0;">
+                    <p style="font-size: 12px; font-weight: 600; color: #92400E; line-height: 1.44;">
                         "Scale from 5,000 to 500,000 contacts without paying a single rupee more for list storage."
                     </p>
                 </div>
@@ -624,24 +452,16 @@
 
         <!-- PANEL 3: CORE CAPABILITIES & WORKFLOW -->
         <div class="panel">
-            <div class="fold-guide" style="top: 4px; right: 0;">FOLD &bull; CREASE</div>
-
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="height: 42px; display: flex; align-items: center; justify-content: space-between;">
-                        <span class="pipeline-step" style="background: #EFF6FF; color: #1D4ED8; border: 1px solid #DBEAFE;">
-                            02 // MULTI-RELAY DISPATCH
-                        </span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #059669; font-weight: 700;">● HOT STANDBY</span>
-                    </div>
-                    <div class="eyebrow" style="margin-top: 6px;"><i class="fas fa-bolt"></i> Core Capabilities</div>
-                    <h2 style="margin-bottom: 3px;">Simple Tools for <span style="color: #2563EB;">Incredible Delivery</span></h2>
-                    <p class="lede">Everything you need to send campaigns that actually land in customer inboxes, explained in plain English:</p>
+                    <div class="category-tag">High-Throughput Dispatch Engine</div>
+                    <h2 style="margin-bottom: 4px;">Simple Tools for <span style="color: #2563EB;">Incredible Delivery</span></h2>
+                    <p>Everything you need to send campaigns that actually land in customer inboxes, explained in plain English:</p>
                 </div>
 
                 <!-- 4 Flowing Features -->
                 <div>
-                    <div class="editorial-row">
+                    <div class="row-item">
                         <i class="fas fa-arrows-split-up-and-left text-amber-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
                         <div>
                             <h3 style="margin-bottom: 1px;">Smart Automatic Backup</h3>
@@ -649,7 +469,7 @@
                         </div>
                     </div>
 
-                    <div class="editorial-row">
+                    <div class="row-item">
                         <i class="fas fa-clock text-emerald-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
                         <div>
                             <h3 style="margin-bottom: 1px;">Natural Paced Sending</h3>
@@ -657,7 +477,7 @@
                         </div>
                     </div>
 
-                    <div class="editorial-row">
+                    <div class="row-item">
                         <i class="fas fa-envelope-circle-check text-blue-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
                         <div>
                             <h3 style="margin-bottom: 1px;">Clean Contact Verification</h3>
@@ -665,7 +485,7 @@
                         </div>
                     </div>
 
-                    <div class="editorial-row" style="border-bottom: none;">
+                    <div class="row-item" style="border-bottom: none;">
                         <i class="fas fa-sliders text-purple-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
                         <div>
                             <h3 style="margin-bottom: 1px;">4-Step Studio Console</h3>
@@ -674,9 +494,9 @@
                     </div>
                 </div>
 
-                <!-- Supported Gateways Matrix -->
+                <!-- Supported Gateways -->
                 <div style="border-top: 1px solid var(--light-border); padding-top: 6px;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--light-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 3px;">Active Gateway Ecosystem</div>
+                    <div style="font-size: 9px; color: var(--light-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 3px;">Active Gateway Ecosystem</div>
                     <div style="font-size: 11px; color: #334155; display: flex; flex-wrap: wrap; gap: 8px; font-weight: 600;">
                         <span>&bull; Amazon SES</span>
                         <span>&bull; Brevo</span>
@@ -688,50 +508,41 @@
                 </div>
             </div>
 
-            <!-- Workflow Ribbon -->
-            <div class="panel-footer" style="background: #F1F5F9; padding: 5px 8px; border-radius: 4px; border-top: none;">
+            <div class="panel-footer" style="background: #F8FAFC; padding: 5px 8px; border-radius: 4px; border-top: none;">
                 <span>01. Audience &rarr; 02. Relays &rarr; 03. Pacing &rarr; <strong style="color: #059669; font-weight: 700;">04. In-Box</strong></span>
             </div>
         </div>
 
         <!-- PANEL 4: PROOF & ARCHITECTURE COMPARISON -->
         <div class="panel">
-            <div class="corner-mark corner-br" style="border-color: rgba(0,0,0,0.15);"></div>
-
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="height: 42px; display: flex; align-items: center; justify-content: space-between;">
-                        <span class="pipeline-step" style="background: #DCFCE7; color: #166534; border: 1px solid #BBF7D0;">
-                            03 // VERIFIED AUDIT
-                        </span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #166534; font-weight: 700;">PROVEN RELIABILITY</span>
-                    </div>
-                    <div class="eyebrow" style="margin-top: 6px;"><i class="fas fa-chart-pie"></i> Verified Capabilities</div>
-                    <h2 style="margin-bottom: 3px;">Engineered for <span style="color: #059669;">In-Box Precision</span></h2>
-                    <p class="lede">Real technical benchmarks delivered by CampaignStack's multi-gateway dispatch core:</p>
+                    <div class="category-tag">Infrastructure Benchmarks</div>
+                    <h2 style="margin-bottom: 4px;">Engineered for <span style="color: #059669;">In-Box Precision</span></h2>
+                    <p>Real technical benchmarks delivered by CampaignStack's multi-gateway dispatch core:</p>
                 </div>
 
                 <!-- 4 Performance Metric Stats -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 2px 0;">
                     <div style="border-bottom: 2px solid #059669; padding-bottom: 2px;">
-                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 25px; font-weight: 700; color: #059669;">99.4%</div>
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 25px; font-weight: 700; color: #059669;">99.4%</div>
                         <div style="font-size: 9.5px; color: var(--light-muted); font-weight: 600; text-transform: uppercase;">In-Box Delivery</div>
                     </div>
                     <div style="border-bottom: 2px solid #D97706; padding-bottom: 2px;">
-                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 25px; font-weight: 700; color: #D97706;">90%</div>
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 25px; font-weight: 700; color: #D97706;">90%</div>
                         <div style="font-size: 9.5px; color: var(--light-muted); font-weight: 600; text-transform: uppercase;">Cost Reduction</div>
                     </div>
                     <div style="border-bottom: 2px solid #2563EB; padding-bottom: 2px;">
-                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 25px; font-weight: 700; color: #2563EB;">24ms</div>
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 25px; font-weight: 700; color: #2563EB;">24ms</div>
                         <div style="font-size: 9.5px; color: var(--light-muted); font-weight: 600; text-transform: uppercase;">Failover Switch</div>
                     </div>
                     <div style="border-bottom: 2px solid #7C3AED; padding-bottom: 2px;">
-                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 25px; font-weight: 700; color: #7C3AED;">0</div>
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 25px; font-weight: 700; color: #7C3AED;">0</div>
                         <div style="font-size: 9.5px; color: var(--light-muted); font-weight: 600; text-transform: uppercase;">Dropped Messages</div>
                     </div>
                 </div>
 
-                <!-- Head-to-Head Comparison Ledger Table -->
+                <!-- Ledger Table -->
                 <table class="ledger-table">
                     <thead>
                         <tr>
