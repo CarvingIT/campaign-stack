@@ -5,8 +5,8 @@
             <div class="flex items-center space-x-6">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2 group">
-                        <x-application-logo class="block h-8 w-auto fill-current text-zinc-900 dark:text-amber-200 transition-transform group-hover:scale-105" />
+                    <a href="{{ route('dashboard') }}" class="flex items-center group">
+                        <x-application-logo class="h-8 w-auto transition-transform group-hover:scale-105" />
                     </a>
                 </div>
 
