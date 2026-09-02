@@ -102,7 +102,7 @@
                 </p>
             </div>
             <div>
-                <a href="/account-form/new" class="inline-flex items-center px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-sm font-bold rounded-xl shadow-2xs hover:shadow transition-all duration-200 gap-2">
+                <a href="/account-form/new" class="inline-flex items-center px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-sm font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-200 gap-2">
                     <i class="fas fa-plus text-xs"></i>
                     <span>Add Mail Account</span>
                 </a>
@@ -118,13 +118,13 @@
                 @if(Session::has('alert-' . $msg))
                     @php
                         $alertStyles = [
-                            'danger' => 'bg-red-50 text-red-900 border-red-200 dark:bg-red-950/70 dark:text-red-200 dark:border-red-800/80 icon-fa-exclamation-circle',
-                            'warning' => 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950/70 dark:text-amber-200 dark:border-amber-800/80 icon-fa-exclamation-triangle',
-                            'success' => 'bg-emerald-50 text-emerald-900 border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-200 dark:border-emerald-800/80 icon-fa-check-circle',
-                            'info' => 'bg-amber-50/60 text-amber-900 border-amber-200/60 dark:bg-amber-950/40 dark:text-amber-200 dark:border-amber-800/60 icon-fa-info-circle',
+                            'danger' => 'bg-red-50/90 text-red-900 border-red-200 dark:bg-red-950/70 dark:text-red-200 dark:border-red-800/80 icon-fa-exclamation-circle',
+                            'warning' => 'bg-amber-50/90 text-amber-900 border-amber-200 dark:bg-amber-950/70 dark:text-amber-200 dark:border-amber-800/80 icon-fa-exclamation-triangle',
+                            'success' => 'bg-emerald-50/90 text-emerald-900 border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-200 dark:border-emerald-800/80 icon-fa-check-circle',
+                            'info' => 'bg-amber-50/70 text-amber-900 border-amber-200/70 dark:bg-amber-950/40 dark:text-amber-200 dark:border-amber-800/60 icon-fa-info-circle',
                         ];
                     @endphp
-                    <div class="p-4 rounded-xl border {{ $alertStyles[$msg] }} flex items-start gap-3 shadow-2xs" role="alert">
+                    <div class="p-4 rounded-xl border {{ $alertStyles[$msg] }} flex items-start gap-3 shadow-2xs backdrop-blur-sm" role="alert">
                         <i class="fas {{ explode(' ', $alertStyles[$msg])[count(explode(' ', $alertStyles[$msg]))-1] }} text-lg mt-0.5"></i>
                         <div class="text-sm font-semibold">
                             {{ Session::get('alert-' . $msg) }}
@@ -133,51 +133,51 @@
                 @endif
             @endforeach
 
-            <!-- Metrics Overview Cards -->
+            <!-- Metrics Overview Cards (Light Mode Glass Gradient & Ambient Elevation) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white dark:bg-[#141417] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-2xs flex items-center justify-between">
+                <div class="bg-gradient-to-br from-white via-white to-slate-50/90 dark:from-[#141417] dark:to-[#141417] p-5 rounded-2xl border border-slate-200/90 dark:border-zinc-800 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs flex items-center justify-between transition-all duration-300 hover:border-amber-300/40">
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total Accounts</p>
                         <h3 class="text-2xl font-black text-zinc-900 dark:text-white mt-1">{{ count($accounts) }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-amber-50/80 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-500/20 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-amber-100/70 dark:bg-amber-950/30 text-amber-900 dark:text-amber-300 border border-amber-200/80 dark:border-amber-500/20 flex items-center justify-center text-lg shadow-2xs">
                         <i class="fas fa-mail-bulk"></i>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-[#141417] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-2xs flex items-center justify-between">
+                <div class="bg-gradient-to-br from-white via-white to-slate-50/90 dark:from-[#141417] dark:to-[#141417] p-5 rounded-2xl border border-slate-200/90 dark:border-zinc-800 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs flex items-center justify-between transition-all duration-300 hover:border-emerald-300/40">
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Active Senders</p>
                         <h3 class="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">{{ $accounts->where('status', 1)->count() }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/70 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/70 flex items-center justify-center text-lg shadow-2xs">
                         <i class="fas fa-check-circle"></i>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-[#141417] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-2xs flex items-center justify-between">
+                <div class="bg-gradient-to-br from-white via-white to-slate-50/90 dark:from-[#141417] dark:to-[#141417] p-5 rounded-2xl border border-slate-200/90 dark:border-zinc-800 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs flex items-center justify-between transition-all duration-300 hover:border-blue-300/40">
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">SMTP Servers</p>
                         <h3 class="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">{{ $accounts->filter(fn($a) => strtoupper($a->type) === 'SMTP')->count() }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/70 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/70 flex items-center justify-center text-lg shadow-2xs">
                         <i class="fas fa-network-wired"></i>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-[#141417] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-2xs flex items-center justify-between">
+                <div class="bg-gradient-to-br from-white via-white to-slate-50/90 dark:from-[#141417] dark:to-[#141417] p-5 rounded-2xl border border-slate-200/90 dark:border-zinc-800 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs flex items-center justify-between transition-all duration-300 hover:border-purple-300/40">
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">API Providers</p>
                         <h3 class="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">{{ $accounts->filter(fn($a) => strtoupper($a->type) === 'API')->count() }}</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-purple-50 dark:bg-purple-950/70 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800/70 flex items-center justify-center text-lg">
+                    <div class="w-11 h-11 rounded-xl bg-purple-50 dark:bg-purple-950/70 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800/70 flex items-center justify-center text-lg shadow-2xs">
                         <i class="fas fa-code"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Guidance Banner Card -->
-            <div class="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-white rounded-2xl p-6 shadow-sm border border-amber-500/20 relative overflow-hidden">
+            <div class="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-white rounded-2xl p-6 shadow-md border border-amber-500/20 relative overflow-hidden">
                 <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl pointer-events-none">
                     <i class="fas fa-paper-plane text-amber-300"></i>
                 </div>
@@ -197,12 +197,12 @@
                 </div>
             </div>
 
-            <!-- Main Accounts List Container -->
-            <div class="bg-white dark:bg-[#141417] rounded-2xl shadow-2xs border border-zinc-200/80 dark:border-zinc-800 overflow-hidden">
+            <!-- Main Accounts List Container (Glassmorphic Light Mode Elevation) -->
+            <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-200/90 dark:border-zinc-800 overflow-hidden">
                 
                 @if(count($accounts) > 0)
                     <!-- Top Toolbar & Search Bar -->
-                    <div class="p-5 border-b border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-zinc-50/60 dark:bg-[#09090B]/60">
+                    <div class="p-5 border-b border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-slate-50/80 dark:bg-[#09090B]/60">
                         <div class="relative flex-1 max-w-md">
                             <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 dark:text-zinc-400 text-sm"></i>
                             <input type="text" id="accountSearchInput" placeholder="Search accounts by name, status, or connection type..." 
@@ -222,11 +222,11 @@
                                 $searchString = strtolower(($c->name ?? '') . ' ' . ($c->type ?? '') . ' ' . ($c->status == 1 ? 'active' : 'inactive') . ' ' . $host_info);
                             @endphp
 
-                            <div class="account-item p-5 hover:bg-zinc-50/80 dark:hover:bg-zinc-800/40 transition-all duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                            <div class="account-item p-5 hover:bg-slate-50/90 dark:hover:bg-zinc-800/40 transition-all duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                                  data-search="{{ $searchString }}" data-index="{{ $index }}">
                                 
                                 <div class="flex items-start sm:items-center space-x-4">
-                                    <div class="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-[#09090B] border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-amber-200 flex items-center justify-center text-lg shrink-0">
+                                    <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-[#09090B] border border-slate-200 dark:border-zinc-800 text-zinc-800 dark:text-amber-200 flex items-center justify-center text-lg shrink-0">
                                         <i class="fas {{ strtoupper($c->type) === 'API' ? 'fa-code' : 'fa-network-wired' }}"></i>
                                     </div>
                                     <div>
@@ -272,12 +272,12 @@
                                 <!-- Actions -->
                                 <div class="flex items-center space-x-2 self-end sm:self-center">
                                     <a href="/account/{{ $c->id }}" title="View Details" 
-                                       class="px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-zinc-100 dark:bg-[#09090B] hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-transparent dark:border-zinc-800 rounded-lg transition-colors flex items-center gap-1.5">
+                                       class="px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100 dark:bg-[#09090B] hover:bg-slate-200 dark:hover:bg-zinc-800 border border-transparent dark:border-zinc-800 rounded-lg transition-colors flex items-center gap-1.5">
                                         <i class="fas fa-eye text-2xs"></i>
                                         <span>Details</span>
                                     </a>
                                     <a href="/account-form/{{ $c->id }}" title="Edit Account" 
-                                       class="p-2 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-amber-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
+                                       class="p-2 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-amber-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
                                         <i class="fas fa-pencil-alt text-sm"></i>
                                     </a>
                                     <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($c->name ?? '') }}')" title="Delete Account" 
@@ -292,7 +292,7 @@
 
                     <!-- Search Empty State -->
                     <div id="emptySearchResults" class="hidden p-12 text-center">
-                        <div class="w-12 h-12 rounded-full bg-zinc-100 dark:bg-[#09090B] text-zinc-400 dark:text-zinc-400 flex items-center justify-center mx-auto mb-3 text-xl">
+                        <div class="w-12 h-12 rounded-full bg-slate-100 dark:bg-[#09090B] text-zinc-400 dark:text-zinc-400 flex items-center justify-center mx-auto mb-3 text-xl">
                             <i class="fas fa-search"></i>
                         </div>
                         <h4 class="text-base font-bold text-zinc-900 dark:text-white">No matching accounts found</h4>
@@ -301,9 +301,9 @@
 
                     <!-- Progressive Load More Pagination Footer -->
                     @if(count($accounts) > 8)
-                        <div class="p-6 border-t border-zinc-100 dark:border-zinc-800 text-center bg-zinc-50/50 dark:bg-[#09090B]/50">
+                        <div class="p-6 border-t border-zinc-100 dark:border-zinc-800 text-center bg-slate-50/60 dark:bg-[#09090B]/50">
                             <button type="button" id="showMoreBtn" 
-                                    class="inline-flex items-center justify-center px-6 py-2.5 bg-white dark:bg-[#141417] text-zinc-800 dark:text-zinc-200 font-bold text-sm rounded-xl border border-zinc-300 dark:border-zinc-800 shadow-2xs hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all duration-200 gap-2">
+                                    class="inline-flex items-center justify-center px-6 py-2.5 bg-white dark:bg-[#141417] text-zinc-800 dark:text-zinc-200 font-bold text-sm rounded-xl border border-zinc-300 dark:border-zinc-800 shadow-2xs hover:bg-slate-50 dark:hover:bg-zinc-800 transition-all duration-200 gap-2">
                                 <i class="fas fa-chevron-down text-xs"></i>
                                 <span id="remainingCountText">Show More Accounts</span>
                             </button>
@@ -332,7 +332,7 @@
 
     <!-- Reusable Delete Modal -->
     <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-zinc-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-[#141417] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-zinc-200 dark:border-zinc-800 transform transition-all">
+        <div class="bg-white dark:bg-[#141417] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-zinc-800 transform transition-all">
             <div class="flex items-center space-x-3 text-red-600 dark:text-red-400 mb-3">
                 <div class="p-3 bg-red-100 dark:bg-red-950 rounded-full border border-red-200 dark:border-red-800">
                     <i class="fas fa-exclamation-triangle text-xl"></i>
@@ -346,7 +346,7 @@
                 @csrf
                 <input type="hidden" name="account_id" id="modalAccountId">
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
+                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300 bg-slate-100 dark:bg-zinc-800 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors">
                         Cancel
                     </button>
                     <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 transition-colors shadow-2xs">

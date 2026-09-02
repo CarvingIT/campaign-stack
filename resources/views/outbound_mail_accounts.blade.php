@@ -20,22 +20,22 @@
 
 		if (type === 'SMTP') {
 			smtpCard.classList.add('border-zinc-900', 'ring-2', 'ring-zinc-900/10', 'bg-zinc-100/80', 'dark:bg-amber-950/20', 'dark:border-amber-300/60');
-			smtpCard.classList.remove('border-zinc-200', 'dark:border-zinc-800', 'bg-white', 'dark:bg-[#141417]');
+			smtpCard.classList.remove('border-slate-200', 'dark:border-zinc-800', 'bg-white', 'dark:bg-[#141417]');
 			document.getElementById('smtpCheck').classList.remove('hidden');
 
 			apiCard.classList.remove('border-zinc-900', 'ring-2', 'ring-zinc-900/10', 'bg-zinc-100/80', 'dark:bg-amber-950/20', 'dark:border-amber-300/60');
-			apiCard.classList.add('border-zinc-200', 'dark:border-zinc-800', 'bg-white', 'dark:bg-[#141417]');
+			apiCard.classList.add('border-slate-200', 'dark:border-zinc-800', 'bg-white', 'dark:bg-[#141417]');
 			document.getElementById('apiCheck').classList.add('hidden');
 
 			smtpForm.style.display = 'block';
 			apiForm.style.display = 'none';
 		} else {
 			apiCard.classList.add('border-zinc-900', 'ring-2', 'ring-zinc-900/10', 'bg-zinc-100/80', 'dark:bg-amber-950/20', 'dark:border-amber-300/60');
-			apiCard.classList.remove('border-zinc-200', 'dark:border-zinc-800', 'bg-white', 'dark:bg-[#141417]');
+			apiCard.classList.remove('border-slate-200', 'dark:border-zinc-800', 'bg-white', 'dark:bg-[#141417]');
 			document.getElementById('apiCheck').classList.remove('hidden');
 
 			smtpCard.classList.remove('border-zinc-900', 'ring-2', 'ring-zinc-900/10', 'bg-zinc-100/80', 'dark:bg-amber-950/20', 'dark:border-amber-300/60');
-			smtpCard.classList.add('border-zinc-200', 'dark:border-zinc-800', 'bg-white', 'dark:bg-[#141417]');
+			smtpCard.classList.add('border-slate-200', 'dark:border-zinc-800', 'bg-white', 'dark:bg-[#141417]');
 			document.getElementById('smtpCheck').classList.add('hidden');
 
 			apiForm.style.display = 'block';
@@ -50,10 +50,10 @@
 
 		if (val === '1') {
 			btnActive.className = 'flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-zinc-900 text-white dark:bg-amber-100 dark:text-zinc-950 shadow-2xs transition-all';
-			btnInactive.className = 'flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-zinc-100 dark:bg-[#09090B] text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all';
+			btnInactive.className = 'flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-slate-100 dark:bg-[#09090B] text-zinc-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-all';
 		} else {
 			btnInactive.className = 'flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-amber-600 text-white shadow-2xs transition-all';
-			btnActive.className = 'flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-zinc-100 dark:bg-[#09090B] text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all';
+			btnActive.className = 'flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-slate-100 dark:bg-[#09090B] text-zinc-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-all';
 		}
 	}
 
@@ -76,7 +76,7 @@
 	function newMailAccount() {
 		var sopra = $('#line_item_new');
 		$(sopra).append(`
-			<div id="first${apiCount}" class="p-3 bg-zinc-50 dark:bg-[#09090B]/80 rounded-xl border border-zinc-200 dark:border-zinc-800 mb-3 relative group transition-all">
+			<div id="first${apiCount}" class="p-3 bg-slate-50 dark:bg-[#09090B]/80 rounded-xl border border-slate-200 dark:border-zinc-800 mb-3 relative group transition-all">
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
 					<div>
 						<label class="block font-semibold text-2xs text-zinc-700 dark:text-zinc-200 uppercase tracking-wider mb-1">Key / Label</label>
@@ -140,7 +140,7 @@
                 </div>
             </div>
             <div>
-                <a href="/mail-accounts" class="inline-flex items-center px-3.5 py-2 bg-zinc-100 dark:bg-[#141417] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors gap-2">
+                <a href="/mail-accounts" class="inline-flex items-center px-3.5 py-2 bg-slate-100 dark:bg-[#141417] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-slate-200 dark:border-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors gap-2">
                     <i class="fas fa-arrow-left text-2xs"></i>
                     <span>Back to Accounts</span>
                 </a>
@@ -161,7 +161,7 @@
                 @endphp
 
                 <!-- STEP 1: Sender Identity & Account Profile -->
-                <div class="bg-white dark:bg-[#141417] rounded-2xl p-6 shadow-2xs border border-zinc-200/80 dark:border-zinc-800 space-y-5">
+                <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 space-y-5">
                     <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3.5 flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <span class="px-2.5 py-1 rounded-lg bg-amber-50/80 text-amber-900 dark:bg-amber-950/30 dark:text-amber-200 font-bold text-2xs uppercase tracking-wider border border-amber-200/60 dark:border-amber-500/20">
@@ -197,14 +197,14 @@
                             <label class="block font-semibold text-2xs text-zinc-700 dark:text-zinc-200 uppercase tracking-wider mb-1.5">
                                 Sending Status <span class="text-red-500">*</span>
                             </label>
-                            <div class="flex items-center space-x-2 bg-zinc-50 dark:bg-[#09090B] p-1 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                            <div class="flex items-center space-x-2 bg-slate-50 dark:bg-[#09090B] p-1 rounded-xl border border-slate-200 dark:border-zinc-800">
                                 <button type="button" id="statusBtnActive" onclick="setStatusValue('1');" 
                                         class="flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-zinc-900 text-white dark:bg-amber-100 dark:text-zinc-950 shadow-2xs transition-all">
                                     <i class="fas fa-check-circle"></i>
                                     <span>Active (Ready)</span>
                                 </button>
                                 <button type="button" id="statusBtnInactive" onclick="setStatusValue('0');" 
-                                        class="flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-zinc-100 dark:bg-[#141417] text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all">
+                                        class="flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-slate-100 dark:bg-[#141417] text-zinc-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-all">
                                     <i class="fas fa-pause-circle"></i>
                                     <span>Paused (Disabled)</span>
                                 </button>
@@ -242,7 +242,7 @@
                 </div>
 
                 <!-- STEP 2: Connection Protocol Selection -->
-                <div class="bg-white dark:bg-[#141417] rounded-2xl p-6 shadow-2xs border border-zinc-200/80 dark:border-zinc-800 space-y-5">
+                <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 space-y-5">
                     <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3.5 flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <span class="px-2.5 py-1 rounded-lg bg-amber-50/80 text-amber-900 dark:bg-amber-950/30 dark:text-amber-200 font-bold text-2xs uppercase tracking-wider border border-amber-200/60 dark:border-amber-500/20">
@@ -295,7 +295,7 @@
                 </div>
 
                 <!-- STEP 3: Server Credentials & Security Settings -->
-                <div id="SMTP" class="content-div bg-white dark:bg-[#141417] rounded-2xl p-6 shadow-2xs border border-zinc-200/80 dark:border-zinc-800 space-y-5">
+                <div id="SMTP" class="content-div bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 space-y-5">
                     <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3.5 flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <span class="px-2.5 py-1 rounded-lg bg-amber-50/80 text-amber-900 dark:bg-amber-950/30 dark:text-amber-200 font-bold text-2xs uppercase tracking-wider border border-amber-200/60 dark:border-amber-500/20">
@@ -313,27 +313,27 @@
                     </div>
 
                     <!-- 1-Click Provider Presets bar -->
-                    <div class="bg-zinc-50 dark:bg-[#09090B]/80 p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 space-y-2">
+                    <div class="bg-slate-50/90 dark:bg-[#09090B]/80 p-3.5 rounded-xl border border-slate-200 dark:border-zinc-800 space-y-2">
                         <label class="block text-3xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">1-Click Provider Presets (Auto-fill Credentials)</label>
                         <div class="flex flex-wrap gap-2">
                             <button type="button" onclick="applyPreset('smtp.sendgrid.net', '587', 'TLS');" 
-                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
+                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fas fa-bolt text-amber-500 text-2xs"></i> SendGrid
                             </button>
                             <button type="button" onclick="applyPreset('smtp.gmail.com', '587', 'TLS');" 
-                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
+                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fab fa-google text-red-500 text-2xs"></i> Gmail / Google
                             </button>
                             <button type="button" onclick="applyPreset('email-smtp.us-east-1.amazonaws.com', '587', 'TLS');" 
-                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
+                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fab fa-aws text-amber-500 text-2xs"></i> Amazon SES
                             </button>
                             <button type="button" onclick="applyPreset('sandbox.smtp.mailtrap.io', '2525', 'TLS');" 
-                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
+                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fas fa-flask text-emerald-500 text-2xs"></i> Mailtrap
                             </button>
                             <button type="button" onclick="applyPreset('smtp.mailgun.org', '587', 'TLS');" 
-                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
+                                    class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fas fa-paper-plane text-purple-500 text-2xs"></i> Mailgun
                             </button>
                         </div>
@@ -420,7 +420,7 @@
                 </div>
 
                 <!-- API Parameters Panel -->
-                <div id="API" class="content-div bg-white dark:bg-[#141417] rounded-2xl p-6 shadow-2xs border border-zinc-200/80 dark:border-zinc-800 space-y-5" style="display: none;">
+                <div id="API" class="content-div bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 space-y-5" style="display: none;">
                     <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3.5 flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <span class="px-2.5 py-1 rounded-lg bg-amber-50/80 text-amber-900 dark:bg-amber-950/30 dark:text-amber-200 font-bold text-2xs uppercase tracking-wider border border-amber-200/60 dark:border-amber-500/20">
@@ -440,7 +440,7 @@
                     <div id="existing_api_items" class="space-y-3">
                         @if(strtoupper($account->type) == 'API' && is_array($config_array))
                             @foreach($config_array as $api_acc)
-                                <div class="api-attribute-item p-3.5 bg-zinc-50 dark:bg-[#09090B]/80 rounded-xl border border-zinc-200 dark:border-zinc-800 relative group">
+                                <div class="api-attribute-item p-3.5 bg-slate-50 dark:bg-[#09090B]/80 rounded-xl border border-slate-200 dark:border-zinc-800 relative group">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
                                         <div>
                                             <label class="block font-semibold text-2xs text-zinc-700 dark:text-zinc-200 uppercase tracking-wider mb-1">Key / Label</label>
@@ -473,7 +473,7 @@
 
                 <!-- Footer Action Buttons Bar -->
                 <div class="flex items-center justify-end space-x-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
-                    <a href="/mail-accounts" class="px-5 py-2.5 bg-zinc-100 dark:bg-[#141417] hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-200 font-semibold text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 transition-colors">
+                    <a href="/mail-accounts" class="px-5 py-2.5 bg-slate-100 dark:bg-[#141417] hover:bg-slate-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-200 font-semibold text-xs rounded-xl border border-slate-200 dark:border-zinc-800 transition-colors">
                         Cancel
                     </a>
                     <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 font-bold text-xs rounded-xl shadow-2xs transition-all gap-2">

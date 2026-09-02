@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="flex items-center space-x-3">
-                <a href="/mail-accounts" class="inline-flex items-center px-3.5 py-2 bg-zinc-100 dark:bg-[#141417] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors gap-2">
+                <a href="/mail-accounts" class="inline-flex items-center px-3.5 py-2 bg-slate-100 dark:bg-[#141417] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-slate-200 dark:border-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors gap-2">
                     <i class="fas fa-arrow-left text-2xs"></i>
                     <span>Back to Accounts</span>
                 </a>
@@ -41,7 +41,7 @@
             @endphp
 
             <!-- CARD 1: Sender Identity & Account Overview -->
-            <div class="bg-white dark:bg-[#141417] rounded-2xl p-6 shadow-2xs border border-zinc-200/80 dark:border-zinc-800 space-y-5">
+            <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 space-y-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-100 dark:border-zinc-800 pb-4">
                     <div class="flex items-center space-x-4">
                         <div class="w-12 h-12 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-500/20 flex items-center justify-center text-xl shrink-0">
@@ -78,14 +78,14 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block font-bold text-xs text-zinc-600 dark:text-zinc-400 uppercase tracking-wider mb-1">Default From Name</label>
-                            <div class="p-3 bg-zinc-50 dark:bg-[#09090B] rounded-xl border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white font-medium">
+                            <div class="p-3 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white font-medium">
                                 {{ $config->from_username ?? 'Not specified' }}
                             </div>
                         </div>
 
                         <div>
                             <label class="block font-bold text-xs text-zinc-600 dark:text-zinc-400 uppercase tracking-wider mb-1">Default From Email Address</label>
-                            <div class="p-3 bg-zinc-50 dark:bg-[#09090B] rounded-xl border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white font-medium">
+                            <div class="p-3 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white font-medium">
                                 {{ $config->from_address ?? 'Not specified' }}
                             </div>
                         </div>
@@ -94,7 +94,7 @@
             </div>
 
             <!-- CARD 2: Technical Configuration Settings -->
-            <div class="bg-white dark:bg-[#141417] rounded-2xl p-6 shadow-2xs border border-zinc-200/80 dark:border-zinc-800 space-y-5">
+            <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 space-y-5">
                 <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3 flex items-center justify-between">
                     <h4 class="text-base font-bold text-zinc-900 dark:text-white flex items-center gap-2">
                         <i class="fas fa-cogs text-amber-500/80 dark:text-amber-300/80"></i>
@@ -109,28 +109,28 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div>
                             <label class="block font-bold text-xs text-zinc-600 dark:text-zinc-400 uppercase tracking-wider mb-1">Server Host / IP</label>
-                            <div class="p-3 bg-zinc-50 dark:bg-[#09090B] rounded-xl border border-zinc-200 dark:border-zinc-800 font-mono text-xs text-zinc-900 dark:text-white">
+                            <div class="p-3 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 font-mono text-xs text-zinc-900 dark:text-white">
                                 {{ $config->ip_address ?? 'Not specified' }}
                             </div>
                         </div>
 
                         <div>
                             <label class="block font-bold text-xs text-zinc-600 dark:text-zinc-400 uppercase tracking-wider mb-1">Port</label>
-                            <div class="p-3 bg-zinc-50 dark:bg-[#09090B] rounded-xl border border-zinc-200 dark:border-zinc-800 font-mono text-xs text-zinc-900 dark:text-white">
+                            <div class="p-3 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 font-mono text-xs text-zinc-900 dark:text-white">
                                 {{ $config->port ?? 'Not specified' }}
                             </div>
                         </div>
 
                         <div>
                             <label class="block font-bold text-xs text-zinc-600 dark:text-zinc-400 uppercase tracking-wider mb-1">Username</label>
-                            <div class="p-3 bg-zinc-50 dark:bg-[#09090B] rounded-xl border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white">
+                            <div class="p-3 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white">
                                 {{ $config->username ?? 'Not specified' }}
                             </div>
                         </div>
 
                         <div>
                             <label class="block font-bold text-xs text-zinc-600 dark:text-zinc-400 uppercase tracking-wider mb-1">Encryption</label>
-                            <div class="p-3 bg-zinc-50 dark:bg-[#09090B] rounded-xl border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white">
+                            <div class="p-3 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white">
                                 {{ $config->encryption ?? 'None' }}
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                 @elseif(strtoupper($account->type) === 'API' && is_array($config))
                     <div class="space-y-3">
                         @foreach($config as $item)
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3.5 bg-zinc-50 dark:bg-[#09090B] rounded-xl border border-zinc-200 dark:border-zinc-800">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3.5 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800">
                                 <div>
                                     <span class="text-xs font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider block">Key / Label</span>
                                     <span class="text-xs font-mono text-zinc-900 dark:text-white">{{ $item->key ?? 'N/A' }}</span>
