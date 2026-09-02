@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="sticky top-0 z-50 backdrop-blur-md bg-amber-50/40 via-white/80 to-slate-50/70 dark:bg-zinc-900/20 dark:backdrop-blur-xl border-b border-amber-200/50 dark:border-amber-500/10 transition-all">
+<nav x-data="{ open: false }" class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-zinc-900/20 dark:backdrop-blur-xl border-b border-zinc-200/60 dark:border-amber-500/10 transition-all">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-14">
@@ -36,15 +36,34 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center">
+            <!-- Right Area: Theme Toggle + Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center space-x-2.5">
+                
+                <!-- Minimal Theme Toggle Button with Crisp SVG Icons -->
+                <button type="button" id="desktop-theme-toggle" onclick="window.toggleTheme(event)" title="Toggle Dark / Light Mode" aria-label="Toggle Dark / Light Mode"
+                        class="theme-toggle-btn inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs focus:outline-none">
+                    <!-- Light Mode (Moon Icon to switch to Dark) -->
+                    <span class="dark:hidden inline-flex items-center justify-center">
+                        <svg class="w-4 h-4 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </span>
+                    <!-- Dark Mode (Sun Icon to switch to Light) -->
+                    <span class="hidden dark:inline-flex items-center justify-center">
+                        <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </span>
+                </button>
+
+                <!-- Settings Dropdown -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-1.5 border border-amber-200/60 dark:border-zinc-800 text-xs font-semibold rounded-full text-zinc-700 dark:text-zinc-200 bg-white/90 dark:bg-zinc-900 hover:bg-amber-50/60 dark:hover:bg-zinc-800 focus:outline-none backdrop-blur-sm transition-all gap-2 shadow-2xs">
+                        <button class="inline-flex items-center px-3 py-1.5 border border-zinc-200/80 dark:border-zinc-800 text-xs font-semibold rounded-full text-zinc-700 dark:text-zinc-200 bg-white/90 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 focus:outline-none backdrop-blur-sm transition-all gap-2 shadow-2xs">
                             <div class="w-5 h-5 rounded-full bg-zinc-900 dark:bg-amber-100 text-white dark:text-zinc-950 flex items-center justify-center text-3xs font-extrabold">
                                 {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
                             </div>
-                            <span>{{ Auth::user()->name }}</span>
+                            <span>{{ Auth::user()->name ?? 'User' }}</span>
 
                             <div class="ms-0.5">
                                 <svg class="fill-current h-3.5 w-3.5 text-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -73,9 +92,23 @@
                 </x-dropdown>
             </div>
 
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-full text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-amber-50/60 dark:hover:bg-zinc-800 focus:outline-none transition duration-150 ease-in-out">
+            <!-- Mobile: Theme Toggle + Hamburger -->
+            <div class="-me-2 flex items-center space-x-1 sm:hidden">
+                <button type="button" onclick="window.toggleTheme(event)" title="Toggle Dark / Light Mode" aria-label="Toggle Dark / Light Mode"
+                        class="theme-toggle-btn inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs focus:outline-none">
+                    <span class="dark:hidden inline-flex items-center justify-center">
+                        <svg class="w-4 h-4 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </span>
+                    <span class="hidden dark:inline-flex items-center justify-center">
+                        <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </span>
+                </button>
+
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-full text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 focus:outline-none transition duration-150 ease-in-out">
                     <svg class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -86,7 +119,7 @@
     </div>
 
     <!-- Responsive Mobile Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white/95 dark:bg-[#09090B]/95 backdrop-blur-md border-b border-amber-200/50 dark:border-zinc-800">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white/95 dark:bg-[#09090B]/95 backdrop-blur-md border-b border-zinc-200/60 dark:border-zinc-800">
         <div class="pt-2 pb-3 space-y-1 px-4">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
@@ -111,14 +144,14 @@
             </x-responsive-nav-link>
         </div>
 
-        <div class="pt-4 pb-3 border-t border-amber-200/50 dark:border-zinc-800 px-4">
+        <div class="pt-4 pb-3 border-t border-zinc-200/60 dark:border-zinc-800 px-4">
             <div class="flex items-center space-x-3">
                 <div class="w-8 h-8 rounded-full bg-zinc-900 dark:bg-amber-100 text-white dark:text-zinc-950 flex items-center justify-center font-bold text-xs">
                     {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
                 </div>
                 <div>
-                    <div class="font-bold text-sm text-zinc-900 dark:text-white">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-xs text-zinc-500 dark:text-zinc-400">{{ Auth::user()->email }}</div>
+                    <div class="font-bold text-sm text-zinc-900 dark:text-white">{{ Auth::user()->name ?? 'User' }}</div>
+                    <div class="font-medium text-xs text-zinc-500 dark:text-zinc-400">{{ Auth::user()->email ?? '' }}</div>
                 </div>
             </div>
 
