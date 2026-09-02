@@ -193,21 +193,21 @@
             </div>
 
             <!-- Guidance Banner Card -->
-            <div class="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 text-white rounded-2xl p-6 shadow-md border border-amber-500/20 relative overflow-hidden">
-                <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl pointer-events-none">
-                    <i class="fas fa-paper-plane text-amber-300"></i>
+            <div class="relative overflow-hidden rounded-2xl border border-amber-200/80 dark:border-amber-500/20 bg-gradient-to-r from-amber-500/[0.08] via-amber-400/[0.03] to-amber-500/[0.06] dark:from-[#141417] dark:via-zinc-900/90 dark:to-[#141417] p-5 sm:p-6 shadow-[0_4px_20px_-4px_rgba(245,158,11,0.08)] dark:shadow-2xs backdrop-blur-sm transition-all duration-300">
+                <div class="absolute -right-6 -bottom-6 opacity-15 dark:opacity-10 text-9xl pointer-events-none transform -rotate-12 select-none">
+                    <i class="fas fa-paper-plane text-amber-500 dark:text-amber-300"></i>
                 </div>
-                <div class="flex items-start gap-4 relative z-10">
-                    <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-xl shrink-0 text-amber-300">
+                <div class="flex items-start gap-4 sm:gap-5 relative z-10">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-100/90 text-amber-800 border border-amber-200/90 dark:bg-amber-400/10 dark:text-amber-300 dark:border-amber-400/20 flex items-center justify-center text-lg shrink-0 shadow-2xs">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-base text-white flex items-center gap-2">
-                            Broadcast Workflows & Delivery Engine
-                            <span class="w-2 h-2 rounded-full bg-amber-300"></span>
+                    <div class="space-y-1 flex-1">
+                        <h4 class="font-bold text-base sm:text-lg text-zinc-900 dark:text-white flex items-center gap-2">
+                            Broadcast Workflows &amp; Delivery Engine
+                            <span class="w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-300"></span>
                         </h4>
-                        <p class="text-sm text-zinc-300 leading-relaxed">
-                            Draft rich HTML content, personalize subjects with merge tags (e.g. <code>[[firstname]]</code>), select target audience tags, and transition your broadcast from <strong>Draft</strong> to <strong>New</strong> to initiate delivery queueing.
+                        <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                            Draft rich HTML content, personalize subjects with merge tags (e.g. <code class="px-1.5 py-0.5 rounded bg-amber-100/80 dark:bg-zinc-800 text-amber-900 dark:text-amber-300 font-mono text-xs">[[firstname]]</code>), select target audience tags, and transition your broadcast from <strong>Draft</strong> to <strong>New</strong> to initiate delivery queueing.
                         </p>
                     </div>
                 </div>
