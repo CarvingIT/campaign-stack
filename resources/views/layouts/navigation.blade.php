@@ -106,6 +106,9 @@
             <x-responsive-nav-link :href="route('newsletters')" :active="request()->routeIs('newsletters')">
                 {{ __('Newsletters') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('emails')" :active="request()->routeIs('emails')">
+                {{ __('Emails') }}
+            </x-responsive-nav-link>
         </div>
 
         <div class="pt-4 pb-3 border-t border-amber-200/50 dark:border-zinc-800 px-4">
