@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Stack - Yellow & Blue Theme</title>
+    <style>
+        /* Typography */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --deep-blue: #0B192C;
+            --deep-blue-light: #1E3E62;
+            --yellow: #FFC700;
+            --yellow-glow: rgba(255, 199, 0, 0.2);
+            --white: #FFFFFF;
+            --off-white: #F8FAFC;
+            --text-gray: #475569;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            background-color: #d1d5db;
+            font-family: 'Roboto', sans-serif;
+            color: var(--deep-blue);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Completely invisible citations for production layout */
+        .sys-cite {
+            display: none !important;
+        }
+
+        /* A4 Landscape Container */
+        .page {
+            width: 297mm;
+            height: 210mm;
+            background: var(--white);
+            margin: 20px auto;
+            display: flex;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            position: relative;
+            page-break-after: always;
+        }
+
+        /* 3 Panels */
+        .panel {
+            width: 99mm;
+            height: 100%;
+            padding: 25mm 15mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Typography Styles */
+        h1,
+        h2,
+        h3,
+        h4,
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        h1 span {
+            color: var(--yellow);
+        }
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--deep-blue);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 4px;
+            background: var(--yellow);
+        }
+
+        h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--deep-blue-light);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+
+        /* Backgrounds & Vector Shapes */
+        .bg-dark {
+            background-color: var(--deep-blue);
+            color: var(--white);
+        }
+
+        .bg-dark h2 {
+            color: var(--white);
+        }
+
+        .bg-dark h3 {
+            color: var(--yellow);
+        }
+
+        .bg-dark p {
+            color: #CBD5E1;
+        }
+
+        .vector-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0 !important;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Elevate all text and content elements above background graphics */
+        .panel > *:not(.vector-bg) {
+            position: relative;
+            z-index: 10;
+        }
+
+        h1, h2, h3, h4, p, .feature-item, .step-block, .quote-container, .tagline {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* UI Elements */
+        .feature-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--yellow);
+            color: var(--deep-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .step-block {
+            background: var(--off-white);
+            border-left: 3px solid var(--yellow);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            right: 15px;
+            top: -10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 40px;
+            font-weight: 900;
+            color: rgba(255, 199, 0, 0.35);
+            line-height: 1;
+        }
+
+        .quote-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 8px;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--yellow);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: var(--deep-blue);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900;
+        }
+
+        .tagline {
+            display: inline-block;
+            background: var(--yellow);
+            color: var(--deep-blue);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 8px 16px;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        /* Print Override */
+        @media print {
+            body {
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PAGE 1: OUTSIDE -->
+    <div class="page">
+
+        <!-- Flap: Key Features (Left) -->
+        <div class="panel">
+            <h2>Key Features<span class="sys-cite">[cite: 1]</span></h2>
+            <div style="margin-top: 25px;">
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Mass email
+                        campaigns<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Subscriber
+                        management<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Advanced
+                        segmentation<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">
+                        Personalization engines<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Scheduling
+                        & Automation<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Delivery
+                        tracking<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Self-hosted
+                        deployment<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Custom
+                        HTML templates<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Real-time
+                        analytics & reports<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Bounce &
+                        spam tracking<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Unlimited
+                        list growth<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <p style="font-weight: 700; color: var(--deep-blue); font-size: 14px; padding-top: 2px;">Complete
+                        data privacy<span class="sys-cite">[cite: 1]</span></p>
+                </div>
+            </div>
+
+            <!-- Abstract Vector Graphic -->
+            <svg class="vector-bg" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="350" cy="700" r="150" fill="var(--off-white)" />
+                <path d="M-50,600 Q150,750 350,600" stroke="var(--yellow)" stroke-width="2" fill="none" opacity="0.4" />
+            </svg>
+        </div>
+
+        <!-- Back Cover (Middle) - Integrated CTA & Contact Info -->
+        <div class="panel bg-dark"
+            style="background-color: var(--deep-blue); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; position: relative;">
+
+            <!-- Abstract Vector Graphic -->
+            <svg class="vector-bg" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg" style="z-index: 0;">
+                <circle cx="200" cy="200" r="180" stroke="rgba(255,199,0,0.18)" stroke-width="2" fill="none" />
+                <circle cx="200" cy="200" r="130" stroke="var(--deep-blue-light)" stroke-width="20" opacity="0.4"
+                    fill="none" />
+                <path d="M 0 600 Q 200 500 400 650" stroke="var(--yellow)" stroke-width="2" fill="none" opacity="0.3" />
+                <rect x="40" y="40" width="320" height="720" stroke="rgba(255,255,255,0.05)" stroke-width="1"
+                    fill="none" />
+            </svg>
+
+            <!-- Main Content Container -->
+            <div style="z-index: 10; display: flex; flex-direction: column; height: 100%;">
+
+                <h2>The Cost Advantage<span class="sys-cite">[cite: 1]</span></h2>
+
+                <!-- Quote Box -->
+                <div class="quote-container" style="margin-top: 10px; margin-bottom: 20px; padding: 18px 20px;">
+                    <div class="quote-icon">"</div>
+                    <p style="font-size: 13.5px; font-style: italic; color: var(--white); line-height: 1.6;">
+                        Stop paying more simply because your mailing list grows. With Campaign Stack, your
+                        infrastructure costs remain flat.<span class="sys-cite">[cite: 1]</span>
+                    </p>
+                </div>
+
+                <!-- Call to Action Box -->
+                <div
+                    style="background: rgba(255, 255, 255, 0.04); border-left: 3px solid var(--yellow); padding: 16px 16px; border-radius: 0 6px 6px 0; margin-bottom: 20px;">
+                    <p
+                        style="font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: 0.5px;">
+                        READY TO SCALE?
+                    </p>
+                    <p style="font-size: 13px; color: #CBD5E1; line-height: 1.5; margin: 0;">
+                        To request a demo, contact:
+                    </p>
+                </div>
+
+                <!-- Contact Details List -->
+                <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+                    <!-- Email -->
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div
+                            style="width: 30px; height: 30px; background: var(--yellow-glow); border: 1px solid var(--yellow); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--yellow); flex-shrink: 0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                            </svg>
+                        </div>
+                        <a href="mailto:info@carvingit.com"
+                            style="font-family: 'Poppins', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--white); text-decoration: none;">
+                            info@carvingit.com
+                        </a>
+                    </div>
+
+                    <!-- Phone -->
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <div
+                            style="width: 30px; height: 30px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--white); flex-shrink: 0; margin-top: 2px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div
+                            style="font-family: 'Roboto', sans-serif; font-size: 13.5px; font-weight: 500; color: #CBD5E1; line-height: 1.5;">
+                            <div>+91 9420121704</div>
+                            <div>+91 8605789833</div>
+                        </div>
+                    </div>
+
+                    <!-- Website -->
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div
+                            style="width: 30px; height: 30px; background: var(--yellow-glow); border: 1px solid var(--yellow); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--yellow); flex-shrink: 0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"></path>
+                            </svg>
+                        </div>
+                        <a href="https://www.carvingit.com" target="_blank"
+                            style="font-family: 'Poppins', sans-serif; font-size: 13.5px; font-weight: 700; color: var(--yellow); text-decoration: none; letter-spacing: 0.5px;">
+                            www.carvingit.com<span class="sys-cite">[cite: 1]</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer Tagline & Company Branding -->
+                <div
+                    style="margin-top: auto; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                    <h3 style="color: var(--white); font-size: 15px; letter-spacing: 0.5px;">
+                        OWN YOUR STACK.<br><span style="color: var(--yellow);">SCALE WITHOUT LIMITS.</span><span
+                            class="sys-cite">[cite: 1]</span>
+                    </h3>
+                    <p
+                        style="font-family: 'Poppins'; font-weight: 800; font-size: 12px; color: var(--white); opacity: 0.9; letter-spacing: 2px; margin-top: 10px;">
+                        CARVING IT PVT. LTD.<span class="sys-cite">[cite: 1]</span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Front Cover (Right) -->
+        <div class="panel bg-dark" style="background-color: var(--deep-blue); overflow: hidden;">
+            <!-- Bold Vector Graphic for Cover -->
+            <svg class="vector-bg" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg" style="z-index: 0;">
+                <path d="M 400 0 L 0 800 L 400 800 Z" fill="var(--deep-blue-light)" opacity="0.5" />
+                <polygon points="400,300 100,800 400,800" fill="var(--yellow)" opacity="0.9" />
+                <circle cx="350" cy="150" r="60" stroke="var(--yellow)" stroke-width="8" fill="none" />
+                <circle cx="350" cy="150" r="40" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none" />
+            </svg>
+
+            <div style="z-index: 10; margin-top: 40px;">
+                <h1>CAMPAIGN<br><span>STACK</span><span class="sys-cite">[cite: 1]</span></h1>
+                <p
+                    style="font-family: 'Poppins'; font-size: 18px; color: var(--white); font-weight: 600; margin-top: 20px; line-height: 1.4;">
+                    Powerful email marketing on your own infrastructure.<span class="sys-cite">[cite: 1]</span>
+                </p>
+
+                <div class="tagline">
+                    YOUR DATA • YOUR CONTROL<span class="sys-cite">[cite: 1]</span>
+                </div>
+            </div>
+
+            <div style="z-index: 10; margin-top: auto; margin-bottom: 20px;">
+                <p
+                    style="font-family: 'Poppins'; font-size: 14px; font-weight: 900; color: var(--white); letter-spacing: 2px;">
+                    CARVING IT PVT. LTD.<span class="sys-cite">[cite: 1]</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2: INSIDE -->
+    <div class="page">
+
+        <!-- Inside Left: Why Campaign Stack? -->
+        <div class="panel">
+            <h2>Why Campaign Stack?<span class="sys-cite">[cite: 1]</span></h2>
+
+            <div style="margin-top: 20px;">
+                <div style="margin-bottom: 25px;">
+                    <h3>Control<span class="sys-cite">[cite: 1]</span></h3>
+                    <p>Keep subscriber data within your own environment and maintain absolute privacy.<span
+                            class="sys-cite">[cite: 1]</span></p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h3>Cost<span class="sys-cite">[cite: 1]</span></h3>
+                    <p>Eliminate per-subscriber fees and scale without financial penalties.<span class="sys-cite">[cite:
+                            1]</span></p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h3>SMTP Freedom<span class="sys-cite">[cite: 1]</span></h3>
+                    <p>Connect any existing SMTP account with total flexibility.<span class="sys-cite">[cite: 1]</span>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h3>Open Source<span class="sys-cite">[cite: 1]</span></h3>
+                    <p>Inspect, extend, and customize to fit your unique needs.<span class="sys-cite">[cite: 1]</span>
+                    </p>
+                </div>
+            </div>
+
+            <svg class="vector-bg" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+                <rect x="-50" y="600" width="200" height="200" fill="var(--off-white)" transform="rotate(45)" />
+            </svg>
+        </div>
+
+        <!-- Inside Middle: Workflow -->
+        <div class="panel">
+            <h2>Workflow<span class="sys-cite">[cite: 1]</span></h2>
+
+            <div style="margin-top: 20px;">
+                <div class="step-block">
+                    <div class="step-number">01</div>
+                    <h3>Contacts<span class="sys-cite">[cite: 1]</span></h3>
+                    <p>Import and manage mailing lists securely with granular segmentation.<span class="sys-cite">[cite:
+                            1]</span></p>
+                </div>
+
+                <div class="step-block">
+                    <div class="step-number">02</div>
+                    <h3>Campaigns<span class="sys-cite">[cite: 1]</span></h3>
+                    <p>Create, personalize, and schedule using powerful templates.<span class="sys-cite">[cite:
+                            1]</span></p>
+                </div>
+
+                <div class="step-block">
+                    <div class="step-number">03</div>
+                    <h3>Results<span class="sys-cite">[cite: 1]</span></h3>
+                    <p>Analyze real-time engagement and delivery performance metrics.<span class="sys-cite">[cite:
+                            1]</span></p>
+                </div>
+            </div>
+
+            <svg class="vector-bg" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 350 0 L 350 800" stroke="rgba(0,0,0,0.03)" stroke-width="2" stroke-dasharray="10 10"
+                    fill="none" />
+            </svg>
+        </div>
+
+        <!-- Inside Right: Visual / CTA -->
+        <div class="panel bg-dark" style="align-items: center; justify-content: center; text-align: center;">
+            <svg class="vector-bg" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg" style="z-index: 0;">
+                <circle cx="200" cy="400" r="180" stroke="var(--deep-blue-light)" stroke-width="40" fill="none" />
+                <circle cx="200" cy="400" r="240" stroke="rgba(255,199,0,0.15)" stroke-width="2" fill="none" />
+                <path d="M 50 400 L 350 400" stroke="var(--yellow)" stroke-width="2" stroke-dasharray="5 15"
+                    fill="none" />
+            </svg>
+
+            <div style="z-index: 10;">
+                <div style="width: 80px; height: 8px; background: var(--yellow); margin: 0 auto 30px auto;"></div>
+                <h1 style="font-size: 38px; line-height: 1.2;">
+                    POWERFUL<br>EMAIL<br>MARKETING
+                </h1>
+                <p
+                    style="font-family: 'Poppins'; font-size: 16px; color: var(--yellow); font-weight: 700; margin-top: 20px; letter-spacing: 2px;">
+                    GET STARTED
+                </p>
+                <p style="color: var(--white); font-weight: 700; font-size: 14px; margin-top: 5px;">
+                    www.carvingit.com<span class="sys-cite">[cite: 1]</span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
