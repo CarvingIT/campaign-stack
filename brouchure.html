@@ -6,43 +6,34 @@
     <title>CampaignStack | Corporate Tri-Fold Brochure | Carving IT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            /* Palette Derived Directly From opt1_pjs_bold_dark.png */
-            --gold-primary: #F59E0B;
-            --gold-deep: #D97706;
-            --gold-orange: #EA580C;
+            --gold: #F59E0B;
+            --gold-dark: #D97706;
             --gold-gradient: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
             
-            /* Dark Outside Theme */
-            --dark-bg: #090E1A;
-            --dark-card: #131B2E;
-            --dark-card-border: rgba(245, 158, 11, 0.28);
+            /* Dark Theme */
+            --dark-bg: #0B101E;
+            --dark-surface: #121929;
+            --dark-border: rgba(255, 255, 255, 0.08);
             --dark-text: #F8FAFC;
             --dark-muted: #94A3B8;
 
-            /* Light Inside Theme */
-            --light-bg: #F8FAFC;
-            --light-card: #FFFFFF;
-            --light-card-border: #E2E8F0;
+            /* Light Editorial Theme */
+            --light-bg: #FFFFFF;
+            --light-surface: #F8FAFC;
+            --light-border: #E2E8F0;
             --light-text: #0F172A;
             --light-muted: #475569;
-
-            --emerald: #10B981;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body, html {
             background-color: #334155;
-            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-            color: var(--light-text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
             display: flex;
@@ -52,7 +43,7 @@
             gap: 20px;
         }
 
-        /* Screen Control Toolbar (Hidden on Print) */
+        /* Screen Control Toolbar */
         .toolbar {
             width: 297mm;
             display: flex;
@@ -62,7 +53,6 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 10px 18px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
             color: white;
             z-index: 100;
         }
@@ -76,14 +66,10 @@
             font-size: 11px;
             font-weight: 800;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: inherit;
         }
 
-        /* EXACT A4 Landscape Container (297mm x 210mm) */
+        /* EXACT A4 Landscape Sheets (297mm x 210mm) */
         .page {
             width: 297mm;
             height: 210mm;
@@ -104,24 +90,14 @@
             break-after: avoid !important;
         }
 
-        /* Sheet 1: OUTSIDE (All Dark) */
-        .page-outside {
-            background: var(--dark-bg);
-            color: var(--dark-text);
-        }
+        .page-outside { background: var(--dark-bg); color: var(--dark-text); }
+        .page-inside { background: var(--light-bg); color: var(--light-text); }
 
-        /* Sheet 2: INSIDE (All Light) */
-        .page-inside {
-            background: var(--light-bg);
-            color: var(--light-text);
-        }
-
-        /* Individual Tri-Fold Panel (99mm exact) with Perfect Vertical Distribution */
+        /* Tri-Fold Panel (99mm exact) with Editorial Print Margin */
         .panel {
             width: 99mm;
             height: 210mm;
-            max-height: 210mm;
-            padding: 10mm 9mm 9mm 9mm;
+            padding: 11mm 9.5mm 9mm 9.5mm;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -130,758 +106,501 @@
             box-sizing: border-box;
         }
 
-        /* Vertical Stack that fills from very top to bottom without dead voids */
-        .panel-body {
-            flex: 1;
+        .page-outside .panel { border-right: 1px solid var(--dark-border); }
+        .page-inside .panel { border-right: 1px solid var(--light-border); }
+        .panel:last-child { border-right: none; }
+
+        /* Typography & Editorial Rhythm (Adobe Print Standard) */
+        h1 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 26px; line-height: 1.15; letter-spacing: -0.02em; }
+        h2 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 22px; line-height: 1.18; letter-spacing: -0.02em; }
+        h3 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; line-height: 1.25; }
+        p { font-size: 11px; line-height: 1.5; }
+        .page-outside p { color: var(--dark-muted); }
+        .page-inside p { color: var(--light-muted); }
+
+        .eyebrow {
+            font-size: 8.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gold);
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Fold dividers */
-        .page-outside .panel {
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .page-inside .panel {
-            border-right: 1px dashed #CBD5E1;
-        }
-        .panel:last-child {
-            border-right: none;
-        }
-
-        /* High-Legibility Typography Hierarchy */
-        h1 {
-            font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            font-size: 25px;
-        }
-
-        h2 {
-            font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            line-height: 1.18;
-            letter-spacing: -0.02em;
-            font-size: 21px;
-        }
-
-        h3, h4 {
-            font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
-            font-size: 13px;
-        }
-
-        p {
-            font-size: 11px;
-            line-height: 1.48;
-        }
-
-        .page-outside p {
-            color: #CBD5E1;
-        }
-        .page-inside p {
-            color: var(--light-muted);
-        }
-
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-flex;
             align-items: center;
-            gap: 5px;
-            padding: 4px 9px;
-            border-radius: 5px;
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            width: fit-content;
+            gap: 6px;
+            margin-bottom: 5px;
         }
 
-        .page-outside .badge-gold {
-            background: rgba(245, 158, 11, 0.18);
-            color: var(--gold-primary);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-        }
-
-        .page-inside .badge-gold {
-            background: #FEF3C7;
-            color: #B45309;
-            border: 1px solid #FCD34D;
-        }
-
-        /* Cards */
-        .card {
-            border-radius: 9px;
-            padding: 10px 12px;
-            box-sizing: border-box;
-        }
-
-        .page-outside .card {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-card-border);
-        }
-
-        .page-inside .card {
-            background: var(--light-card);
-            border: 1px solid var(--light-card-border);
-            box-shadow: 0 1.5px 4px rgba(0,0,0,0.03);
-        }
-
-        /* Tables */
-        .clean-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 9.5px;
-        }
-        .clean-table th {
-            text-align: left;
-            padding: 4px 6px;
+        .editorial-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 8px;
-            text-transform: uppercase;
-            color: var(--light-muted);
-            border-bottom: 1px solid var(--light-card-border);
-        }
-        .clean-table td {
-            padding: 5px 6px;
-            border-bottom: 1px solid rgba(0,0,0,0.04);
-            color: var(--light-text);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+            margin-right: 10px;
+            shrink-0;
         }
 
-        /* Subtle Vector Background Textures */
-        .vector-pattern-dark {
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(rgba(245, 158, 11, 0.06) 1px, transparent 1px);
-            background-size: 14px 14px;
-            pointer-events: none;
-            z-index: 0;
+        /* Seamless Editorial Blocks (No Boxy Cards) */
+        .editorial-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .page-outside .editorial-row {
+            border-bottom: 1px solid var(--dark-border);
         }
 
-        .vector-pattern-light {
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px);
-            background-size: 14px 14px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Bottom Anchor Rows */
-        .panel-footer-row {
+        .panel-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
             padding-top: 6px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: relative;
-            z-index: 1;
+            font-size: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .page-outside .panel-footer {
+            border-top: 1px solid var(--dark-border);
+            color: var(--dark-muted);
+        }
+        .page-inside .panel-footer {
+            color: var(--light-muted);
         }
 
-        .page-outside .panel-footer-row {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        /* Clean Editorial Ledger */
+        .ledger-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin: 6px 0;
+        }
+        .ledger-table th {
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--light-muted);
+            padding: 4px 6px;
+            border-bottom: 1px solid var(--light-border);
+        }
+        .ledger-table td {
+            padding: 5.5px 6px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .page-inside .panel-footer-row {
-            border-top: 1px solid var(--light-card-border);
+        /* Background Subtle Grid Texture */
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
         }
 
-        /* Strict Print Rules: Zero Extra Pages, Zero Overflow */
         @media print {
-            html, body {
-                background: transparent !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                display: block !important;
-                width: 297mm !important;
-                height: 420mm !important;
-            }
-            .toolbar {
-                display: none !important;
-            }
-            .page {
-                box-shadow: none !important;
-                margin: 0 !important;
-                width: 297mm !important;
-                height: 210mm !important;
-                max-height: 210mm !important;
-                min-height: 210mm !important;
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-                page-break-after: always !important;
-                break-after: page !important;
-            }
-            .page:last-child {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
-            @page {
-                size: 297mm 210mm;
-                margin: 0mm;
-            }
+            html, body { background: transparent !important; padding: 0 !important; margin: 0 !important; display: block !important; width: 297mm !important; }
+            .toolbar { display: none !important; }
+            .page { box-shadow: none !important; margin: 0 !important; width: 297mm !important; height: 210mm !important; max-height: 210mm !important; min-height: 210mm !important; page-break-inside: avoid !important; break-inside: avoid !important; page-break-after: always !important; break-after: page !important; }
+            .page:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            @page { size: 297mm 210mm; margin: 0mm; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Executive Screen Control Bar -->
     <div class="toolbar">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack" style="height: 30px; width: auto;">
+            <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack" style="height: 28px; width: auto;">
             <span style="font-size: 11px; color: #94A3B8; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 10px;">
-                Corporate Tri-Fold Brochure &bull; Exact 2-Page A4 Landscape (INR Pricing &bull; Perfectly Spaced &bull; No Em-Dashes)
+                Adobe Editorial Layout &bull; Organic Typography &bull; Exact 2-Page A4 Landscape (INR)
             </span>
         </div>
-        <button type="button" onclick="window.print()" class="toolbar-btn">
-            <i class="fas fa-print"></i> Print / Save 2-Page PDF
-        </button>
+        <button type="button" onclick="window.print()" class="toolbar-btn">Print 2-Page PDF</button>
     </div>
 
     <!-- ========================================================================= -->
-    <!-- SHEET 1: OUTSIDE SPREAD (ALL DARK THEME)                                  -->
+    <!-- SHEET 1: OUTSIDE SPREAD (LUXURY MIDNIGHT SLATE)                           -->
     <!-- Panels: [Panel 5: Flap | Panel 6: Back Cover | Panel 1: Front Cover]      -->
     <!-- ========================================================================= -->
     <div class="page page-outside">
 
-        <!-- --------------------------------------------------------------------- -->
-        <!-- OUTSIDE: PANEL 5 (FOLD-IN FLAP)                                       -->
-        <!-- --------------------------------------------------------------------- -->
+        <!-- PANEL 5: FOLD-IN FLAP -->
         <div class="panel">
-            <div class="vector-pattern-dark"></div>
-
-            <div class="panel-body">
-                <!-- Header Block -->
+            <div class="bg-grid"></div>
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <span class="badge badge-gold">
-                        <i class="fas fa-lightbulb"></i> The Deliverability Dilemma
-                    </span>
-                    <h2 style="color: white; margin-top: 6px; margin-bottom: 4px;">
-                        What If Your Email Bill Never Went Up?
-                    </h2>
-                    <p>
-                        Traditional email platforms punish business growth. The larger your list gets, the higher your monthly fee, even for inactive contacts.
-                    </p>
+                    <div class="eyebrow"><i class="fas fa-chart-line"></i> Market Reality</div>
+                    <h2 style="color: white; margin-bottom: 6px;">What If Your Email Bill Never Went Up?</h2>
+                    <p>Legacy email platforms punish business growth. The larger your audience gets, the higher your monthly fee, even for dormant contacts.</p>
                 </div>
 
-                <!-- Comparison Vector Graphic -->
-                <div class="card" style="padding: 7px 10px;">
-                    <div style="display: flex; justify-content: space-between; font-size: 8px; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-bottom: 3px;">
-                        <span style="color: #F87171;">LEGACY TOOLS: RISING BILL</span>
-                        <span style="color: var(--gold-primary);">CAMPAIGNSTACK: FLAT</span>
+                <!-- Seamless Editorial Infographic -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--dark-border); border-radius: 8px; padding: 10px 12px;">
+                    <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 8px; font-weight: 800; margin-bottom: 4px;">
+                        <span style="color: #F87171;">LEGACY SAAS: EXPONENTIAL</span>
+                        <span style="color: var(--gold);">CAMPAIGNSTACK: FLAT INFRASTRUCTURE</span>
                     </div>
-                    <svg viewBox="0 0 250 25" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="0" y1="20" x2="250" y2="20" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                    <svg viewBox="0 0 250 26" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="20" x2="250" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
                         <path d="M 10 18 Q 130 17 240 3" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-dasharray="3 3" />
                         <line x1="10" y1="18" x2="240" y2="18" stroke="#F59E0B" stroke-width="3" />
                     </svg>
                 </div>
 
-                <!-- 3 Business Pain Points -->
-                <div style="display: flex; flex-direction: column; gap: 6px;">
-                    <div class="card" style="border-left: 3.5px solid #EF4444;">
-                        <div style="font-weight: 800; font-size: 11.5px; color: #FCA5A5; margin-bottom: 2px;">1. The Subscriber Tax</div>
-                        <p style="line-height: 1.4;">Paying thousands monthly just to store customer contacts in someone else's closed database.</p>
+                <!-- 3 Flowing Editorial Obstacles -->
+                <div>
+                    <div class="editorial-row">
+                        <div class="editorial-num">01</div>
+                        <div>
+                            <h3 style="color: white; font-size: 12px; margin-bottom: 2px;">The Per-Contact Tax</h3>
+                            <p style="font-size: 10px; line-height: 1.4;">Paying thousands monthly just to store customer contacts in someone else's closed database.</p>
+                        </div>
                     </div>
-
-                    <div class="card" style="border-left: 3.5px solid var(--gold-primary);">
-                        <div style="font-weight: 800; font-size: 11.5px; color: #FCD34D; margin-bottom: 2px;">2. Single-Provider Lockout</div>
-                        <p style="line-height: 1.4;">When your single sending vendor has an outage or rate freeze, business outreach stops completely.</p>
+                    <div class="editorial-row">
+                        <div class="editorial-num">02</div>
+                        <div>
+                            <h3 style="color: white; font-size: 12px; margin-bottom: 2px;">Single Provider Lockout</h3>
+                            <p style="font-size: 10px; line-height: 1.4;">When your single sending vendor has an outage or rate freeze, business communication halts completely.</p>
+                        </div>
                     </div>
-
-                    <div class="card" style="border-left: 3.5px solid #60A5FA;">
-                        <div style="font-weight: 800; font-size: 11.5px; color: #93C5FD; margin-bottom: 2px;">3. Spam Folder Trap</div>
-                        <p style="line-height: 1.4;">Burst sending thousands of emails all at once triggers spam filters and damages your domain score.</p>
+                    <div class="editorial-row" style="border-bottom: none;">
+                        <div class="editorial-num">03</div>
+                        <div>
+                            <h3 style="color: white; font-size: 12px; margin-bottom: 2px;">The Spam Folder Trap</h3>
+                            <p style="font-size: 10px; line-height: 1.4;">Burst sending thousands of emails in seconds triggers spam filters and permanently harms domain reputation.</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Annual Savings Calculator Card (INR PRICING) -->
-                <div class="card" style="background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.35); padding: 8px 10px;">
-                    <div style="font-size: 8px; font-family: 'JetBrains Mono', monospace; color: var(--gold-primary); font-weight: 800; margin-bottom: 3px;">
-                        ANNUAL SAAS OVERHEAD SAVINGS (INR)
-                    </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: #E2E8F0; font-weight: 600;">
+                <!-- Subtle ROI Strip -->
+                <div style="border-left: 3px solid var(--gold); padding: 6px 10px; background: rgba(245, 158, 11, 0.06);">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--gold); font-weight: 700;">ANNUAL SAAS OVERHEAD SAVINGS</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: white; margin-top: 2px;">
                         <span>25k Contacts: <strong style="color: #34D399;">Save ~₹2,00,000 / yr</strong></span>
                         <span>100k Contacts: <strong style="color: #34D399;">Save ~₹7,00,000 / yr</strong></span>
                     </div>
                 </div>
-
-                <!-- Breakthrough Box -->
-                <div class="card" style="background: linear-gradient(135deg, #131C31 0%, #1A253E 100%); padding: 9px 12px; border-color: rgba(245, 158, 11, 0.35);">
-                    <div style="font-size: 11.5px; font-weight: 800; color: white; margin-bottom: 2px;">
-                        <i class="fas fa-sparkles text-amber-400"></i> The CampaignStack Breakthrough
-                    </div>
-                    <p style="line-height: 1.4;">
-                        Separate subscriber lists from delivery pipes. Connect Amazon SES, Google, or Brevo, and enjoy automatic backup with human-paced delivery.
-                    </p>
-                </div>
             </div>
 
-            <!-- Panel Bottom Status Line -->
-            <div class="panel-footer-row">
-                <span class="mono" style="font-size: 8px; color: var(--dark-muted); text-transform: uppercase;">
-                    DISPATCH SOVEREIGNTY
-                </span>
-                <span class="mono" style="font-size: 8px; font-weight: 700; color: #34D399;">100% PRIVATE DATABASE</span>
+            <div class="panel-footer">
+                <span>Dispatch Sovereignty</span>
+                <span style="color: #34D399;">100% Private Database</span>
             </div>
         </div>
 
-        <!-- --------------------------------------------------------------------- -->
-        <!-- OUTSIDE: PANEL 6 (BACK COVER)                                         -->
-        <!-- --------------------------------------------------------------------- -->
+        <!-- PANEL 6: BACK COVER -->
         <div class="panel">
-            <div class="vector-pattern-dark"></div>
-
-            <div class="panel-body">
-                <!-- Header Block -->
+            <div class="bg-grid"></div>
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <span class="badge badge-gold">
-                        <i class="fas fa-handshake"></i> Corporate Setup & Dispatch
-                    </span>
-                    <h2 style="color: white; margin-top: 6px; margin-bottom: 4px;">
-                        Ready to Take Full Control?
-                    </h2>
-                    <p>
-                        Our engineers configure your dedicated dispatch server, verify DNS records, and connect redundant relays.
-                    </p>
+                    <div class="eyebrow"><i class="fas fa-sliders"></i> Full Deployment</div>
+                    <h2 style="color: white; margin-bottom: 6px;">Take Full Control of Your Broadcasts</h2>
+                    <p>Carving IT engineers deploy your private dispatch server, authenticate DNS, and configure redundant sending pipes.</p>
                 </div>
 
-                <!-- Cost Comparison Card (INR PRICING) -->
-                <div class="card">
-                    <div style="font-size: 8px; font-family: 'JetBrains Mono', monospace; color: #94A3B8; font-weight: 800; margin-bottom: 4px;">
-                        MONTHLY COST (100,000 SUBSCRIBERS)
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 10px;">
-                        <span style="color: #94A3B8;">Mailchimp Standard</span>
+                <!-- Clean Comparative Matrix (No Box) -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--dark-border); border-radius: 8px; padding: 10px 12px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--dark-muted); margin-bottom: 4px; font-weight: 800;">MONTHLY COST FOR 100,000 CONTACTS</div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--dark-border); font-size: 10.5px;">
+                        <span style="color: var(--dark-muted);">Mailchimp Standard</span>
                         <span style="color: #F87171; font-weight: 800;">₹62,000+/mo</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 10px;">
-                        <span style="color: #94A3B8;">Klaviyo Enterprise</span>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--dark-border); font-size: 10.5px;">
+                        <span style="color: var(--dark-muted);">Klaviyo Enterprise</span>
                         <span style="color: #F87171; font-weight: 800;">₹90,000+/mo</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; font-size: 11px;">
-                        <span style="color: var(--gold-primary); font-weight: 800;"><i class="fas fa-check-circle"></i> CampaignStack</span>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0 0 0; font-size: 11px;">
+                        <span style="color: var(--gold); font-weight: 800;">CampaignStack + SES</span>
                         <span style="color: #34D399; font-weight: 800;">Flat & Affordable (~₹800/send)</span>
                     </div>
                 </div>
 
-                <!-- 4 Concrete Technical Guarantees -->
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                    <div style="display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: #CBD5E1;">
-                        <i class="fas fa-shield-check text-amber-400 text-xs"></i>
-                        <span><strong>100% Data Sovereignty:</strong> Customer records stay in your SQL database</span>
+                <!-- 4 Flowing Guarantees -->
+                <div style="display: flex; flex-direction: column; gap: 7px;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 10px; color: #CBD5E1;">
+                        <i class="fas fa-shield-halved text-amber-400"></i>
+                        <span><strong>Data Sovereignty:</strong> Customer records stay inside your private SQL DB</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: #CBD5E1;">
-                        <i class="fas fa-shield-check text-amber-400 text-xs"></i>
-                        <span><strong>Zero Contact Penalties:</strong> Store 50k or 500k contacts with flat server costs</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: #CBD5E1;">
-                        <i class="fas fa-shield-check text-amber-400 text-xs"></i>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 10px; color: #CBD5E1;">
+                        <i class="fas fa-bolt text-amber-400"></i>
                         <span><strong>Multi-Gateway Redundancy:</strong> SES, Brevo, Google, and M365 hot standby</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: #CBD5E1;">
-                        <i class="fas fa-shield-check text-amber-400 text-xs"></i>
-                        <span><strong>Domain Reputation Defense:</strong> 100% SPF, DKIM 2048-bit, and DMARC alignment</span>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 10px; color: #CBD5E1;">
+                        <i class="fas fa-check-double text-amber-400"></i>
+                        <span><strong>100% Sender Alignment:</strong> Strict SPF, DKIM 2048-bit, and DMARC setup</span>
                     </div>
                 </div>
 
-                <!-- Supported Relays Pills -->
-                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                    <span class="badge" style="background: rgba(255,255,255,0.06); color: #CBD5E1; font-size: 7.5px;"><i class="fab fa-aws text-amber-400"></i> Amazon SES</span>
-                    <span class="badge" style="background: rgba(255,255,255,0.06); color: #CBD5E1; font-size: 7.5px;"><i class="fas fa-paper-plane text-blue-400"></i> Brevo</span>
-                    <span class="badge" style="background: rgba(255,255,255,0.06); color: #CBD5E1; font-size: 7.5px;"><i class="fab fa-google text-red-400"></i> Google</span>
-                    <span class="badge" style="background: rgba(255,255,255,0.06); color: #CBD5E1; font-size: 7.5px;"><i class="fab fa-microsoft text-blue-500"></i> M365</span>
-                    <span class="badge" style="background: rgba(255,255,255,0.06); color: #CBD5E1; font-size: 7.5px;"><i class="fas fa-server text-emerald-400"></i> Postfix SMTP</span>
-                </div>
-
-                <!-- White-Glove Deployment Highlight -->
-                <div class="card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.28); padding: 7px 10px;">
-                    <div style="font-size: 9.5px; font-weight: 800; color: #34D399; margin-bottom: 2px;">
-                        <i class="fas fa-screwdriver-wrench"></i> Full Deployment by Carving IT Engineers
+                <!-- Corporate Credentials & Direct Action -->
+                <div style="border-top: 1px solid var(--dark-border); padding-top: 10px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--gold); font-weight: 800; margin-bottom: 3px;">CARVING IT PVT. LTD. &bull; PUNE, INDIA</div>
+                    <div style="font-size: 9.5px; color: #CBD5E1; line-height: 1.4; margin-bottom: 8px;">
+                        <div>+91 9420121704 &bull; +91 8605789833</div>
+                        <div>info@carvingit.com &bull; www.carvingit.com</div>
                     </div>
-                    <p style="font-size: 9px; line-height: 1.35; color: #E2E8F0;">
-                        We handle VPS configuration, DNS records, warm-up scheduling, and test dispatch with you side-by-side.
-                    </p>
+                    <a href="mailto:info@carvingit.com" style="display: block; text-align: center; text-decoration: none; background: var(--gold-gradient); color: #080B11; font-weight: 800; font-size: 10.5px; padding: 8px 12px; border-radius: 6px;">
+                        Schedule Architecture Consultation &rarr;
+                    </a>
                 </div>
-
-                <!-- Corporate Credentials Card -->
-                <div class="card" style="border: 1px solid rgba(255,255,255,0.12); padding: 7px 10px;">
-                    <div style="font-size: 8px; font-family: 'JetBrains Mono', monospace; color: var(--gold-primary); font-weight: 800; margin-bottom: 2px;">
-                        CARVING IT PVT. LTD. &bull; HEADQUARTERS
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 2.5px; font-size: 9.5px; color: #CBD5E1;">
-                        <div><i class="fas fa-envelope text-amber-400" style="width: 12px;"></i> info@carvingit.com</div>
-                        <div><i class="fas fa-phone text-amber-400" style="width: 12px;"></i> +91 9420121704 &bull; +91 8605789833</div>
-                        <div><i class="fas fa-globe text-amber-400" style="width: 12px;"></i> www.carvingit.com</div>
-                        <div><i class="fas fa-location-dot text-amber-400" style="width: 12px;"></i> Pune, Maharashtra, India</div>
-                    </div>
-                </div>
-
-                <!-- Call to Action Button -->
-                <a href="mailto:info@carvingit.com" style="text-decoration: none; background: var(--gold-gradient); color: #080B11; font-weight: 800; font-size: 10px; padding: 7px 12px; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <span>Schedule Free Architecture Consultation</span>
-                    <i class="fas fa-arrow-right text-xs"></i>
-                </a>
             </div>
 
-            <!-- Panel Bottom Status Line -->
-            <div class="panel-footer-row">
-                <span class="mono" style="font-size: 8px; color: var(--dark-muted); text-transform: uppercase;">
-                    ENTERPRISE ONBOARDING
-                </span>
-                <span class="mono" style="font-size: 8px; font-weight: 700; color: var(--gold-primary);">WHITE-GLOVE SETUP</span>
+            <div class="panel-footer">
+                <span>Enterprise Onboarding</span>
+                <span style="color: var(--gold);">White-Glove Setup</span>
             </div>
         </div>
 
-        <!-- --------------------------------------------------------------------- -->
-        <!-- OUTSIDE: PANEL 1 (FRONT COVER)                                        -->
-        <!-- --------------------------------------------------------------------- -->
+        <!-- PANEL 1: FRONT COVER -->
         <div class="panel">
-            <div class="vector-pattern-dark"></div>
-
-            <div class="panel-body">
-                <!-- Official Logo (BIG, BOLD, PROMINENT: 48px) -->
+            <div class="bg-grid"></div>
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack Logo" style="height: 48px; width: auto; object-fit: contain;">
+                    <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack Logo" style="height: 48px; width: auto; object-fit: contain; margin-bottom: 4px;">
+                    <div class="eyebrow" style="margin-top: 8px;"><i class="fas fa-paper-plane"></i> Enterprise Email Platform</div>
+                    <h1 style="color: white; margin-bottom: 6px;">Email Marketing Without the <span style="color: var(--gold);">Monthly Penalty.</span></h1>
+                    <p style="font-size: 12px; line-height: 1.5;">Send high-converting newsletters to your entire audience without paying extra simply because your contact list grows.</p>
                 </div>
 
-                <!-- Engaging Headline -->
-                <div>
-                    <span class="badge badge-gold" style="margin-bottom: 5px;">
-                        <i class="fas fa-paper-plane"></i> Dedicated Email Dispatch Platform
-                    </span>
-                    <h1 style="color: white; margin-bottom: 5px;">
-                        Email Marketing<br>Without the<br><span style="color: var(--gold-primary);">Monthly Penalty.</span>
-                    </h1>
-                    <p style="font-size: 11.5px; line-height: 1.48; color: #CBD5E1;">
-                        Send high-converting newsletters to your entire audience without paying extra simply because your contact list grows.
-                    </p>
+                <!-- Centered Hero Visual with Natural Drop Perspective -->
+                <div style="text-align: center; margin: 4px 0;">
+                    <img src="public/i/macbook_pro_transparent.webp" alt="CampaignStack Dashboard" style="width: 100%; max-height: 76mm; object-fit: contain; filter: drop-shadow(0 16px 32px rgba(0,0,0,0.7));">
                 </div>
 
-                <!-- Flagship MacBook Pro Mockup Graphic -->
-                <div style="text-align: center;">
-                    <img src="public/i/macbook_pro_transparent.webp" alt="CampaignStack Command Center" style="width: 100%; max-height: 75mm; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.65));">
-                </div>
-
-                <!-- 4 Value Bullets -->
-                <div style="display: flex; flex-direction: column; gap: 4.5px;">
-                    <div style="display: flex; align-items: center; gap: 7px; font-size: 10px; color: #E2E8F0;">
-                        <i class="fas fa-check-circle text-amber-400 text-sm"></i>
+                <!-- 4 Value Points -->
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 10.5px; color: #E2E8F0;">
+                        <i class="fas fa-check-circle text-amber-400"></i>
                         <span><strong>Keep All Your Contacts:</strong> Flat server pricing with zero list penalties</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 7px; font-size: 10px; color: #E2E8F0;">
-                        <i class="fas fa-check-circle text-amber-400 text-sm"></i>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 10.5px; color: #E2E8F0;">
+                        <i class="fas fa-check-circle text-amber-400"></i>
                         <span><strong>Never Miss a Send:</strong> Multi-gateway standby failover protection</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 7px; font-size: 10px; color: #E2E8F0;">
-                        <i class="fas fa-check-circle text-amber-400 text-sm"></i>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 10.5px; color: #E2E8F0;">
+                        <i class="fas fa-check-circle text-amber-400"></i>
                         <span><strong>100% In-Box Delivery:</strong> Paced, human cadence prevents spam traps</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 7px; font-size: 10px; color: #E2E8F0;">
-                        <i class="fas fa-check-circle text-amber-400 text-sm"></i>
-                        <span><strong>No Technical Hassle:</strong> Complete deployment & DNS setup by Carving IT</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Front Bottom Stamp -->
-            <div class="panel-footer-row">
-                <span class="mono" style="font-size: 8px; color: var(--dark-muted); text-transform: uppercase;">
-                    Simple &bull; Reliable &bull; Affordable
-                </span>
-                <span style="font-size: 9px; font-weight: 800; color: white;">CARVING IT</span>
+            <div class="panel-footer">
+                <span>Simple &bull; Reliable &bull; Affordable</span>
+                <span style="color: white;">CARVING IT</span>
             </div>
         </div>
 
     </div>
 
     <!-- ========================================================================= -->
-    <!-- SHEET 2: INSIDE SPREAD (ALL LIGHT THEME)                                  -->
-    <!-- Panels: [Panel 2: Overview | Panel 3: Features | Panel 4: Proof & Specs]  -->
+    <!-- SHEET 2: INSIDE SPREAD (CRISP SWISS EDITORIAL)                            -->
+    <!-- Panels: [Panel 2: Narrative | Panel 3: Features | Panel 4: Proof]         -->
     <!-- ========================================================================= -->
     <div class="page page-inside">
 
-        <!-- --------------------------------------------------------------------- -->
-        <!-- INSIDE: PANEL 2 (OVERVIEW / WHO WE ARE)                               -->
-        <!-- --------------------------------------------------------------------- -->
+        <!-- PANEL 2: PHILOSOPHY & AUDIENCE OWNERSHIP -->
         <div class="panel">
-            <div class="vector-pattern-light"></div>
-
-            <div class="panel-body">
-                <!-- Brand on Light (BIG, BOLD: 42px) -->
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <img src="public/i/opt1_pjs_bold_light.png" alt="CampaignStack" style="height: 42px; width: auto; object-fit: contain;">
+                    <img src="public/i/opt1_pjs_bold_light.png" alt="CampaignStack Logo" style="height: 42px; width: auto; object-fit: contain; margin-bottom: 2px;">
+                    <div class="eyebrow" style="margin-top: 8px;"><i class="fas fa-compass"></i> Overview & Philosophy</div>
+                    <h2 style="margin-bottom: 4px;">Built for Businesses That Value Their Audience</h2>
+                    <p>CampaignStack was developed by Carving IT to give founders and marketing teams total control, rock-solid reliability, and honest flat pricing.</p>
                 </div>
 
-                <!-- Unified Header Block -->
+                <!-- 3 Editorial Architectural Stories (No Boxy Cards) -->
                 <div>
-                    <span class="badge badge-gold">
-                        <i class="fas fa-compass"></i> Overview & Mission
-                    </span>
-                    <h2 style="color: var(--light-text); margin-top: 5px; margin-bottom: 3px;">
-                        Built for Businesses That Value Their Audience
-                    </h2>
-                    <p>
-                        CampaignStack was developed by Carving IT to give founders and marketing teams total control, rock-solid reliability, and honest flat pricing.
-                    </p>
-                </div>
-
-                <!-- 3 Generous, Substantive Pillar Cards -->
-                <div style="display: flex; flex-direction: column; gap: 7px;">
-                    <div class="card" style="padding: 11px 13px;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
-                            <i class="fas fa-lock text-amber-600 text-sm"></i>
-                            <span style="font-weight: 800; font-size: 12px; color: var(--light-text);">You Own Your Audience</span>
+                    <div class="editorial-row">
+                        <div class="editorial-num">01</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">You Own Your Audience</h3>
+                            <p style="font-size: 10.5px;">Your subscriber list stays safely in your private database. No third party ever mines, analyzes, or holds your contacts hostage.</p>
                         </div>
-                        <p style="font-size: 10.5px; line-height: 1.45;">Your contact list stays safely in your private SQL database. No third party ever mines, analyzes, or holds your contacts hostage.</p>
                     </div>
 
-                    <div class="card" style="padding: 11px 13px;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
-                            <i class="fas fa-plug text-emerald-600 text-sm"></i>
-                            <span style="font-weight: 800; font-size: 12px; color: var(--light-text);">Total Provider Freedom</span>
+                    <div class="editorial-row">
+                        <div class="editorial-num">02</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">Total Provider Freedom</h3>
+                            <p style="font-size: 10.5px;">Connect the email infrastructure you already trust, including Amazon SES, Google Workspace, Brevo, and Microsoft 365, with zero vendor lock-in.</p>
                         </div>
-                        <p style="font-size: 10.5px; line-height: 1.45;">Connect the email senders you trust, including Amazon SES, Google Workspace, Brevo, and Microsoft 365, with zero vendor lock-in.</p>
                     </div>
 
-                    <div class="card" style="padding: 11px 13px;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
-                            <i class="fas fa-shield-heart text-blue-600 text-sm"></i>
-                            <span style="font-weight: 800; font-size: 12px; color: var(--light-text);">Always-On Protection</span>
+                    <div class="editorial-row" style="border-bottom: none;">
+                        <div class="editorial-num">03</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">Always-On Protection</h3>
+                            <p style="font-size: 10.5px;">Intelligent circuit breakers automatically route around slow or throttled relays so your critical marketing announcements always arrive on time.</p>
                         </div>
-                        <p style="font-size: 10.5px; line-height: 1.45;">An intelligent safety net automatically routes around slow servers so your critical marketing newsletters always arrive on time.</p>
                     </div>
                 </div>
 
-                <!-- Callout Reassurance -->
-                <div style="background: #FFFFFF; border: 1px solid var(--light-card-border); border-left: 3.5px solid var(--gold-primary); padding: 8px 12px; border-radius: 0 7px 7px 0;">
-                    <p style="font-size: 10.5px; color: #334155; line-height: 1.45; font-weight: 500;">
+                <!-- Pull Quote Accent -->
+                <div style="border-left: 3px solid var(--gold); padding: 8px 12px; background: #FFFBEB;">
+                    <p style="font-size: 11px; font-weight: 600; color: #92400E; line-height: 1.4;">
                         "Scale from 5,000 to 500,000 contacts without paying a single rupee more for list storage."
                     </p>
                 </div>
             </div>
 
-            <!-- Bottom Pillar Badge -->
-            <div class="panel-footer-row">
-                <span class="mono" style="font-size: 8.5px; color: var(--light-muted); font-weight: 700;">DATA PRIVACY GUARANTEE</span>
-                <span class="badge" style="background: #DCFCE7; color: #166534; font-size: 8px;">100% PRIVATE</span>
+            <div class="panel-footer">
+                <span>Data Privacy Guarantee</span>
+                <span style="color: #166534;">100% Private & Sovereign</span>
             </div>
         </div>
 
-        <!-- --------------------------------------------------------------------- -->
-        <!-- INSIDE: PANEL 3 (CORE FEATURES & WORKFLOW)                            -->
-        <!-- --------------------------------------------------------------------- -->
+        <!-- PANEL 3: CORE CAPABILITIES & WORKFLOW -->
         <div class="panel">
-            <div class="vector-pattern-light"></div>
-
-            <div class="panel-body">
-                <!-- Symmetrical Spacer to align with Panel 2 Logo -->
-                <div style="height: 42px; display: flex; align-items: center;">
-                    <span class="badge" style="background: #EFF6FF; color: #1D4ED8; font-size: 8.5px; font-weight: 800;">
-                        <i class="fas fa-bolt"></i> HIGH-THROUGHPUT DISPATCH ENGINE
-                    </span>
-                </div>
-
-                <!-- Unified Header Block -->
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <span class="badge badge-gold">
-                        <i class="fas fa-star"></i> Core Capabilities
-                    </span>
-                    <h2 style="color: var(--light-text); margin-top: 5px; margin-bottom: 3px;">
-                        Simple Tools for Incredible Delivery
-                    </h2>
-                    <p>
-                        Everything you need to send campaigns that actually land in customer inboxes, explained in plain English:
-                    </p>
+                    <div style="height: 42px; display: flex; align-items: center;">
+                        <span style="font-size: 8.5px; font-weight: 800; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; color: #1D4ED8; background: #EFF6FF; padding: 4px 8px; border-radius: 4px;">
+                            High-Throughput Dispatch Engine
+                        </span>
+                    </div>
+                    <div class="eyebrow" style="margin-top: 8px;"><i class="fas fa-bolt"></i> Core Capabilities</div>
+                    <h2 style="margin-bottom: 4px;">Simple Tools for Incredible Delivery</h2>
+                    <p>Everything you need to send campaigns that actually land in customer inboxes, explained in plain English:</p>
                 </div>
 
-                <!-- 4 Feature Cards -->
-                <div style="display: flex; flex-direction: column; gap: 6.5px;">
-                    <div class="card" style="padding: 9px 11px;">
-                        <div style="display: flex; gap: 8px; align-items: flex-start;">
-                            <div style="width: 24px; height: 24px; border-radius: 6px; background: rgba(245, 158, 11, 0.15); color: #D97706; display: flex; align-items: center; justify-content: center; font-size: 11px; shrink-0; margin-top: 1px;">
-                                <i class="fas fa-arrows-split-up-and-left"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 11.5px; color: var(--light-text); margin-bottom: 1px;">Smart Automatic Backup</h4>
-                                <p style="font-size: 10px; line-height: 1.38;">If Server A gets busy or encounters an issue, Server B takes over instantly. Zero lost emails.</p>
-                            </div>
+                <!-- 4 Flowing Feature Rows -->
+                <div>
+                    <div class="editorial-row">
+                        <i class="fas fa-arrows-split-up-and-left text-amber-500" style="font-size: 14px; margin-right: 10px; margin-top: 2px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 1px; font-size: 12.5px;">Smart Automatic Backup</h3>
+                            <p style="font-size: 10px;">If Server A gets busy or encounters an issue, Server B takes over instantly. Zero lost emails.</p>
                         </div>
                     </div>
 
-                    <div class="card" style="padding: 9px 11px;">
-                        <div style="display: flex; gap: 8px; align-items: flex-start;">
-                            <div style="width: 24px; height: 24px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #059669; display: flex; align-items: center; justify-content: center; font-size: 11px; shrink-0; margin-top: 1px;">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 11.5px; color: var(--light-text); margin-bottom: 1px;">Natural Paced Sending</h4>
-                                <p style="font-size: 10px; line-height: 1.38;">We pace out your delivery with natural human delays so Gmail welcomes your email as friendly mail.</p>
-                            </div>
+                    <div class="editorial-row">
+                        <i class="fas fa-clock text-emerald-500" style="font-size: 14px; margin-right: 10px; margin-top: 2px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 1px; font-size: 12.5px;">Natural Paced Sending</h3>
+                            <p style="font-size: 10px;">We pace out your delivery with natural human delays so Gmail welcomes your email as friendly mail.</p>
                         </div>
                     </div>
 
-                    <div class="card" style="padding: 9px 11px;">
-                        <div style="display: flex; gap: 8px; align-items: flex-start;">
-                            <div style="width: 24px; height: 24px; border-radius: 6px; background: rgba(59, 130, 246, 0.15); color: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 11px; shrink-0; margin-top: 1px;">
-                                <i class="fas fa-envelope-circle-check"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 11.5px; color: var(--light-text); margin-bottom: 1px;">Clean Contact Verification</h4>
-                                <p style="font-size: 10px; line-height: 1.38;">Checks for typos and dead inboxes before dispatching, protecting your domain sender score.</p>
-                            </div>
+                    <div class="editorial-row">
+                        <i class="fas fa-envelope-circle-check text-blue-500" style="font-size: 14px; margin-right: 10px; margin-top: 2px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 1px; font-size: 12.5px;">Clean Contact Verification</h3>
+                            <p style="font-size: 10px;">Checks for typos and dead inboxes before dispatching, protecting your domain sender score.</p>
                         </div>
                     </div>
 
-                    <div class="card" style="padding: 9px 11px;">
-                        <div style="display: flex; gap: 8px; align-items: flex-start;">
-                            <div style="width: 24px; height: 24px; border-radius: 6px; background: rgba(139, 92, 246, 0.15); color: #7C3AED; display: flex; align-items: center; justify-content: center; font-size: 11px; shrink-0; margin-top: 1px;">
-                                <i class="fas fa-sliders"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 11.5px; color: var(--light-text); margin-bottom: 1px;">4-Step Studio Console</h4>
-                                <p style="font-size: 10px; line-height: 1.38;">Pick your audience, choose your servers, select your sending speed, and watch it deliver live.</p>
-                            </div>
+                    <div class="editorial-row" style="border-bottom: none;">
+                        <i class="fas fa-sliders text-purple-500" style="font-size: 14px; margin-right: 10px; margin-top: 2px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 1px; font-size: 12.5px;">4-Step Studio Console</h3>
+                            <p style="font-size: 10px;">Pick your audience, choose your servers, select your sending speed, and watch it deliver live.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Universal Relay Compatibility Grid -->
-                <div class="card" style="padding: 7px 10px;">
-                    <div style="font-size: 8px; font-family: 'JetBrains Mono', monospace; color: var(--light-muted); font-weight: 800; margin-bottom: 3px; text-transform: uppercase;">
-                        Supported Sending Gateways
-                    </div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                        <span class="badge" style="background: #F1F5F9; color: #334155; font-size: 7.5px;">Amazon SES</span>
-                        <span class="badge" style="background: #F1F5F9; color: #334155; font-size: 7.5px;">Brevo</span>
-                        <span class="badge" style="background: #F1F5F9; color: #334155; font-size: 7.5px;">Google Workspace</span>
-                        <span class="badge" style="background: #F1F5F9; color: #334155; font-size: 7.5px;">Microsoft 365</span>
-                        <span class="badge" style="background: #F1F5F9; color: #334155; font-size: 7.5px;">Postmark</span>
-                        <span class="badge" style="background: #F1F5F9; color: #334155; font-size: 7.5px;">Private SMTP</span>
+                <!-- Supported Relay Matrix Strip -->
+                <div style="border-top: 1px solid var(--light-border); padding-top: 8px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--light-muted); font-weight: 800; text-transform: uppercase; margin-bottom: 4px;">Supported Gateways</div>
+                    <div style="font-size: 9.5px; color: #334155; display: flex; flex-wrap: wrap; gap: 8px; font-weight: 600;">
+                        <span>&bull; Amazon SES</span>
+                        <span>&bull; Brevo</span>
+                        <span>&bull; Google</span>
+                        <span>&bull; M365</span>
+                        <span>&bull; Postmark</span>
+                        <span>&bull; Private SMTP</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Workflow Step Indicator -->
-            <div class="panel-footer-row" style="background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 9px; font-size: 8px; font-family: 'JetBrains Mono', monospace; color: var(--light-muted);">
-                <span>01. AUDIENCE</span>
-                <span>&rarr;</span>
-                <span>02. RELAYS</span>
-                <span>&rarr;</span>
-                <span>03. PACING</span>
-                <span>&rarr;</span>
-                <span style="color: #059669; font-weight: bold;">04. IN-BOX</span>
+            <!-- Workflow Ribbon -->
+            <div class="panel-footer" style="background: #F1F5F9; padding: 6px 8px; border-radius: 4px; border-top: none;">
+                <span>01. Audience &rarr; 02. Relays &rarr; 03. Pacing &rarr; <strong style="color: #059669;">04. In-Box</strong></span>
             </div>
         </div>
 
-        <!-- --------------------------------------------------------------------- -->
-        <!-- INSIDE: PANEL 4 (REAL PLATFORM SPECS & ZERO FAKE REVIEWS)              -->
-        <!-- --------------------------------------------------------------------- -->
+        <!-- PANEL 4: PROOF & ARCHITECTURE COMPARISON -->
         <div class="panel">
-            <div class="vector-pattern-light"></div>
-
-            <div class="panel-body">
-                <!-- Symmetrical Spacer to align with Panel 2 Logo -->
-                <div style="height: 42px; display: flex; align-items: center;">
-                    <span class="badge badge-gold" style="font-size: 8.5px;">
-                        <i class="fas fa-microchip"></i> INFRASTRUCTURE BENCHMARKS
-                    </span>
-                </div>
-
-                <!-- Unified Header Block -->
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <span class="badge badge-gold">
-                        <i class="fas fa-chart-pie"></i> Verified Capabilities
-                    </span>
-                    <h2 style="color: var(--light-text); margin-top: 5px; margin-bottom: 3px;">
-                        Engineered for High In-Box Precision
-                    </h2>
-                    <p>
-                        Real technical benchmarks delivered by CampaignStack's multi-gateway dispatch core:
-                    </p>
+                    <div style="height: 42px; display: flex; align-items: center;">
+                        <span style="font-size: 8.5px; font-weight: 800; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold-dark); background: #FEF3C7; padding: 4px 8px; border-radius: 4px;">
+                            Infrastructure Benchmarks
+                        </span>
+                    </div>
+                    <div class="eyebrow" style="margin-top: 8px;"><i class="fas fa-chart-pie"></i> Verified Capabilities</div>
+                    <h2 style="margin-bottom: 4px;">Engineered for High In-Box Precision</h2>
+                    <p>Real technical benchmarks delivered by CampaignStack's multi-gateway dispatch core:</p>
                 </div>
 
-                <!-- 4 Performance Metric Stats -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
-                    <div class="card" style="text-align: center; padding: 7px 4px;">
-                        <div class="mono" style="font-size: 19px; font-weight: 900; color: #059669;">99.4%</div>
-                        <div style="font-size: 8.5px; color: var(--light-muted); font-weight: 700; margin-top: 1px;">In-Box Delivery</div>
+                <!-- 4 Performance Metric Stats (Swiss Grid) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0;">
+                    <div style="border-bottom: 2px solid #059669; padding-bottom: 4px;">
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 900; color: #059669;">99.4%</div>
+                        <div style="font-size: 8.5px; color: var(--light-muted); font-weight: 700; text-transform: uppercase;">In-Box Delivery</div>
                     </div>
-                    <div class="card" style="text-align: center; padding: 7px 4px;">
-                        <div class="mono" style="font-size: 19px; font-weight: 900; color: #D97706;">90%</div>
-                        <div style="font-size: 8.5px; color: var(--light-muted); font-weight: 700; margin-top: 1px;">Cost Reduction</div>
+                    <div style="border-bottom: 2px solid #D97706; padding-bottom: 4px;">
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 900; color: #D97706;">90%</div>
+                        <div style="font-size: 8.5px; color: var(--light-muted); font-weight: 700; text-transform: uppercase;">Cost Reduction</div>
                     </div>
-                    <div class="card" style="text-align: center; padding: 7px 4px;">
-                        <div class="mono" style="font-size: 19px; font-weight: 900; color: #2563EB;">24ms</div>
-                        <div style="font-size: 8.5px; color: var(--light-muted); font-weight: 700; margin-top: 1px;">Failover Switch</div>
+                    <div style="border-bottom: 2px solid #2563EB; padding-bottom: 4px;">
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 900; color: #2563EB;">24ms</div>
+                        <div style="font-size: 8.5px; color: var(--light-muted); font-weight: 700; text-transform: uppercase;">Failover Switch</div>
                     </div>
-                    <div class="card" style="text-align: center; padding: 7px 4px;">
-                        <div class="mono" style="font-size: 19px; font-weight: 900; color: #7C3AED;">0</div>
-                        <div style="font-size: 8.5px; color: var(--light-muted); font-weight: 700; margin-top: 1px;">Dropped Messages</div>
+                    <div style="border-bottom: 2px solid #7C3AED; padding-bottom: 4px;">
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 900; color: #7C3AED;">0</div>
+                        <div style="font-size: 8.5px; color: var(--light-muted); font-weight: 700; text-transform: uppercase;">Dropped Messages</div>
                     </div>
                 </div>
 
-                <!-- Feature Comparison Table (INR PRICING & ZERO FAKE REVIEWS) -->
-                <div class="card" style="padding: 7px 10px;">
-                    <div style="font-size: 8px; font-family: 'JetBrains Mono', monospace; color: var(--light-muted); font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">
-                        Architecture vs. Legacy Platforms
-                    </div>
-                    <table class="clean-table">
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Legacy ESPs</th>
-                                <th>CampaignStack</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Contact Fee</strong></td>
-                                <td style="color: #EF4444;">Monthly per-lead tax</td>
-                                <td style="color: #059669; font-weight: bold;">₹0 Flat Unlimited</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Gateways</strong></td>
-                                <td style="color: #EF4444;">Single locked pipe</td>
-                                <td style="color: #059669; font-weight: bold;">Multi-relay failover</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Data Privacy</strong></td>
-                                <td style="color: #EF4444;">Shared on third-party</td>
-                                <td style="color: #059669; font-weight: bold;">100% Private Database</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Sending Pace</strong></td>
-                                <td style="color: #EF4444;">Unpaced burst spikes</td>
-                                <td style="color: #059669; font-weight: bold;">Algorithmic human jitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <!-- Architectural Ledger Table -->
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Capability</th>
+                            <th>Legacy ESPs</th>
+                            <th>CampaignStack</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Contact Fee</strong></td>
+                            <td style="color: #EF4444;">Monthly per-lead tax</td>
+                            <td style="color: #059669; font-weight: bold;">₹0 Flat Unlimited</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gateways</strong></td>
+                            <td style="color: #EF4444;">Single locked pipe</td>
+                            <td style="color: #059669; font-weight: bold;">Multi-relay failover</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Privacy</strong></td>
+                            <td style="color: #EF4444;">Shared on third-party</td>
+                            <td style="color: #059669; font-weight: bold;">100% Private Database</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sending Pace</strong></td>
+                            <td style="color: #EF4444;">Unpaced burst spikes</td>
+                            <td style="color: #059669; font-weight: bold;">Algorithmic human jitter</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                <!-- Closing Reassurance Box -->
-                <div style="background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 8px; padding: 7px 11px; text-align: center;">
-                    <h4 style="font-size: 11px; color: #B45309; margin-bottom: 2px;">
-                        <i class="fas fa-handshake"></i> Full Setup Support Included
-                    </h4>
-                    <p style="font-size: 9.5px; color: #78350F; line-height: 1.35;">
-                        No tech headaches. Our engineers at Carving IT handle the domain setup, server connection, and test sending with you step-by-step.
+                <!-- White-Glove Support Box -->
+                <div style="border-left: 3px solid #059669; padding: 7px 10px; background: #F0FDF4;">
+                    <div style="font-size: 11px; font-weight: 800; color: #166534; margin-bottom: 1px;">Full Setup Support Included</div>
+                    <p style="font-size: 9.5px; color: #14532D; line-height: 1.35;">
+                        Carving IT engineers configure DNS records, SPF/DKIM/DMARC authentication, and test broadcasts with you step-by-step.
                     </p>
                 </div>
             </div>
 
-            <!-- Bottom Pillar Badge -->
-            <div class="panel-footer-row">
-                <span class="mono" style="font-size: 8.5px; color: var(--light-muted); font-weight: 700;">ENTERPRISE RELIABILITY</span>
-                <span class="badge" style="background: #DCFCE7; color: #166534; font-size: 8px;">99.9% UPTIME</span>
+            <div class="panel-footer">
+                <span>Enterprise Reliability</span>
+                <span style="color: #059669;">99.9% Uptime</span>
             </div>
         </div>
 
