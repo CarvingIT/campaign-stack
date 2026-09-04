@@ -13,13 +13,39 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
 
-        <!-- Instant Flash-Free Theme Initializer -->
+        <!-- Instant Flash-Free Theme Initializer (Defaults to System Dark Mode if enabled) -->
         <script>
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            (function() {
+                const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const storedTheme = localStorage.getItem('theme');
+                const isExplicit = localStorage.getItem('theme_explicit') === 'true';
+
+                let useDark = false;
+                if (isExplicit) {
+                    useDark = storedTheme === 'dark';
+                } else {
+                    useDark = systemPrefersDark;
+                }
+
+                if (useDark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+
+                if (window.matchMedia) {
+                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                        if (localStorage.getItem('theme_explicit') !== 'true') {
+                            if (e.matches) {
+                                document.documentElement.classList.add('dark');
+                            } else {
+                                document.documentElement.classList.remove('dark');
+                            }
+                            window.dispatchEvent(new Event('theme-changed'));
+                        }
+                    });
+                }
+            })();
         </script>
 
         <style>
@@ -101,7 +127,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased text-zinc-900 dark:text-zinc-100 bg-slate-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(254,243,199,0.35),rgba(255,255,255,0))] dark:bg-[#09090B] min-h-screen flex flex-col justify-between selection:bg-amber-400 selection:text-zinc-950 transition-colors duration-300">
+    <body class="font-sans antialiased text-zinc-900 dark:text-zinc-100 bg-slate-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(254,243,199,0.35),rgba(255,255,255,0))] dark:bg-[#09090B] dark:bg-none min-h-screen flex flex-col justify-between selection:bg-amber-400 selection:text-zinc-950 transition-colors duration-300">
         <!-- Realistic Ambient Light Wave Element -->
         <div id="themeLightWave"></div>
 
@@ -196,6 +222,7 @@
                         document.documentElement.classList.remove('dark');
                         localStorage.setItem('theme', 'light');
                     }
+                    localStorage.setItem('theme_explicit', 'true');
                     window.dispatchEvent(new Event('theme-changed'));
                 };
 

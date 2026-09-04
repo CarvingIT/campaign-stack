@@ -9,7 +9,7 @@ use Session;
 class OutboundMailAccountController extends Controller
 {
     public function list(Request $req){
-        $accounts = OutboundMailAccount::all();
+        $accounts = OutboundMailAccount::orderBy('status', 'desc')->latest()->get();
         return view('mailaccounts_management',['accounts'=>$accounts]);
     }
 

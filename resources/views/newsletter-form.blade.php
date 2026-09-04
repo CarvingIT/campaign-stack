@@ -972,38 +972,38 @@ OUTPUT INSTRUCTIONS:
 
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <nav class="flex text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1 space-x-2">
-                    <a href="/newsletters" class="hover:text-zinc-900 dark:hover:text-amber-200 transition-colors">Newsletters</a>
+                <nav class="flex text-3xs font-semibold text-zinc-500 dark:text-zinc-400 mb-1 space-x-2 uppercase tracking-wider">
+                    <a href="/newsletters" class="hover:text-zinc-900 dark:hover:text-white transition-colors">Newsletters</a>
                     <span>/</span>
-                    <span class="text-zinc-900 dark:text-white font-semibold">
+                    <span class="text-amber-600 dark:text-amber-400">
                         {{ empty($newsletter->id) ? 'Create Broadcast' : 'Edit Broadcast' }}
                     </span>
                 </nav>
-                <div class="flex items-center space-x-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80 dark:bg-amber-300/80 shadow-2xs"></span>
-                    <h2 class="font-black text-2xl text-zinc-900 dark:text-white leading-tight flex items-center gap-2.5">
-                        <i class="fas {{ empty($newsletter->id) ? 'fa-pen-fancy' : 'fa-edit' }} text-amber-500/80 dark:text-amber-300/80"></i>
-                        {{ empty($newsletter->id) ? __('Compose Email Broadcast') : __('Edit Broadcast: ' . $newsletter->title) }}
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 dark:bg-amber-400 shadow-2xs"></span>
+                    <h2 class="font-extrabold text-2xl text-zinc-900 dark:text-white tracking-tight flex items-center gap-2.5">
+                        <i class="fas {{ empty($newsletter->id) ? 'fa-pen-fancy' : 'fa-pen-to-square' }} text-amber-500"></i>
+                        <span>{{ empty($newsletter->id) ? __('Compose Email Broadcast') : __('Edit Broadcast: ' . $newsletter->title) }}</span>
                     </h2>
                 </div>
             </div>
             
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 flex-wrap">
                 <!-- Choose from Pre-built Templates Button -->
-                <button type="button" onclick="openTemplateLibrary();" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-zinc-950 font-bold text-xs rounded-xl shadow-2xs transition-all gap-2 cursor-pointer">
-                    <i class="fas fa-layer-group text-xs"></i>
+                <button type="button" onclick="openTemplateLibrary();" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 font-bold text-xs rounded-xl shadow-md shadow-amber-500/15 hover:shadow-amber-500/25 hover:-translate-y-0.5 transition-all gap-2 cursor-pointer">
+                    <i class="fas fa-layer-group text-3xs"></i>
                     <span>Template Library</span>
                 </button>
 
                 <!-- Live Preview Button -->
-                <button type="button" onclick="openLivePreview();" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#141417] text-zinc-800 dark:text-zinc-200 text-xs font-bold rounded-xl border border-slate-200 dark:border-zinc-800 hover:bg-slate-50 transition-colors gap-2 shadow-2xs">
-                    <i class="fas fa-eye text-2xs text-amber-500"></i>
+                <button type="button" onclick="openLivePreview();" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#111114] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all gap-1.5 shadow-2xs cursor-pointer">
+                    <i class="fas fa-eye text-3xs text-amber-500"></i>
                     <span>Live Preview</span>
                 </button>
-                <a href="/newsletters" class="inline-flex items-center px-3.5 py-2 bg-slate-100 dark:bg-[#141417] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-slate-200 dark:border-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors gap-2">
-                    <i class="fas fa-arrow-left text-2xs"></i>
+                <a href="/newsletters" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#111114] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all gap-1.5 shadow-2xs">
+                    <i class="fas fa-arrow-left text-3xs"></i>
                     <span>Back</span>
                 </a>
             </div>

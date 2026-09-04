@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use App\Models\Contact;
 use Session;
 
 class TagController extends Controller
 {
     public function list(){
-        $tags = Tag::withCount('contactTags')->get();
-        return view('tagsmanagement',['tags'=>$tags]);
+        $tags = Tag::withCount('contactTags')->orderBy('contact_tags_count', 'desc')->get();
+        $totalContacts = Contact::count();
+        return view('tagsmanagement', [
+            'tags' => $tags,
+            'totalContacts' => $totalContacts,
+        ]);
     }
 
     public function addEditTag($tag_id){

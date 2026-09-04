@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/queue/status', [QueueManagerController::class, 'status'])->name('queue.status');
     Route::post('/queue/run-all', [QueueManagerController::class, 'queueAll'])->name('queue.run-all');
     Route::post('/queue/flush-all', [QueueManagerController::class, 'flushQueue'])->name('queue.flush-all');
+    Route::match(['get', 'post'], '/queue/flush-stream', [QueueManagerController::class, 'flushStream'])->name('queue.flush-stream');
     Route::post('/queue/retry-failed', [QueueManagerController::class, 'retryFailed'])->name('queue.retry-failed');
     Route::post('/queue/clear', [QueueManagerController::class, 'clearQueue'])->name('queue.clear');
 
@@ -77,6 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dispatch', [\App\Http\Controllers\DispatchStudioController::class, 'index'])->name('dispatch');
     Route::get('/dispatch/audience', [\App\Http\Controllers\DispatchStudioController::class, 'getAudience'])->name('dispatch.audience');
     Route::post('/dispatch/queue-custom', [\App\Http\Controllers\DispatchStudioController::class, 'queueCustom'])->name('dispatch.queue-custom');
+    Route::post('/dispatch/queue-custom-stream', [\App\Http\Controllers\DispatchStudioController::class, 'queueCustomStream'])->name('dispatch.queue-custom-stream');
     Route::post('/dispatch/update-contact', [\App\Http\Controllers\DispatchStudioController::class, 'updateContactQuick'])->name('dispatch.update-contact');
 });
 require __DIR__.'/auth.php';

@@ -12,7 +12,10 @@ use Illuminate\Support\Str;
 class NewsletterController extends Controller
 {
     public function list(){
-        $newsletters = Newsletter::withCount(['sent_mails','queued_mails'])->get();
+        $newsletters = Newsletter::withCount(['sent_mails','queued_mails'])
+            ->with(['campaign', 'newsletter_tags.tag'])
+            ->latest()
+            ->get();
         return view('newslettersmanagement',['newsletters'=>$newsletters]);
     }
 

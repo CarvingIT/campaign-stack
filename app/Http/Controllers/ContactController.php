@@ -9,9 +9,15 @@ use Session;
 
 class ContactController extends Controller
 {
-    public function list(){
-        $contacts = Contact::all();
-        return view('contactsmanagement',['contacts'=>$contacts]);
+    public function list(Request $request = null){
+        $contacts = Contact::with('contactTags.tag')->latest()->get();
+        $selectedTag = $request ? $request->query('tag') : null;
+        $allTags = Tag::withCount('contactTags')->orderBy('contact_tags_count', 'desc')->get();
+        return view('contactsmanagement', [
+            'contacts' => $contacts,
+            'selectedTag' => $selectedTag,
+            'allTags' => $allTags,
+        ]);
     }
 
     public function addEditContact($contact_id){

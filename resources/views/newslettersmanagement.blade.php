@@ -18,7 +18,7 @@
             let matchingRows = [];
 
             allRows.forEach(row => {
-                const searchData = row.getAttribute('data-search') || '';
+                const searchData = (row.getAttribute('data-search') || '').toLowerCase();
                 const rowStatus = row.getAttribute('data-status') || '';
 
                 const matchesQuery = (query === '' || searchData.includes(query));
@@ -32,9 +32,14 @@
             });
 
             if (query !== '' || selectedStatusFilter !== 'all') {
-                matchingRows.forEach(row => row.classList.remove('hidden'));
-                if (showMoreBtn) showMoreBtn.style.display = 'none';
-                if (countDisplay) countDisplay.textContent = `Found ${matchingRows.length} matching broadcast${matchingRows.length === 1 ? '' : 's'}`;
+                matchingRows.forEach((row, idx) => {
+                    if (idx < visibleCount) {
+                        row.classList.remove('hidden');
+                    } else {
+                        row.classList.add('hidden');
+                    }
+                });
+                if (countDisplay) countDisplay.textContent = `Showing ${Math.min(visibleCount, matchingRows.length)} of ${matchingRows.length} matching broadcasts`;
                 if (emptySearchResults) {
                     emptySearchResults.classList.toggle('hidden', matchingRows.length > 0);
                 }
@@ -54,15 +59,15 @@
                 if (countDisplay) {
                     countDisplay.textContent = `Showing ${currentlyShown} of ${total} newsletters`;
                 }
+            }
 
-                if (showMoreBtn) {
-                    if (currentlyShown >= total) {
-                        showMoreBtn.style.display = 'none';
-                    } else {
-                        showMoreBtn.style.display = 'inline-flex';
-                        const remaining = total - currentlyShown;
-                        document.getElementById('remainingCountText').textContent = `Show More (${remaining} remaining)`;
-                    }
+            if (showMoreBtn) {
+                if (matchingRows.length <= visibleCount) {
+                    showMoreBtn.style.display = 'none';
+                } else {
+                    showMoreBtn.style.display = 'inline-flex';
+                    const remaining = matchingRows.length - visibleCount;
+                    document.getElementById('remainingCountText').textContent = `Show More (${remaining} remaining)`;
                 }
             }
         }
@@ -75,19 +80,23 @@
         }
 
         if (searchInput) {
-            searchInput.addEventListener('input', updateListVisibility);
+            searchInput.addEventListener('input', function() {
+                visibleCount = pageSize;
+                updateListVisibility();
+            });
         }
 
         statusFilterButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 statusFilterButtons.forEach(b => {
-                    b.classList.remove('bg-zinc-900', 'text-white', 'dark:bg-amber-100', 'dark:text-zinc-950');
-                    b.classList.add('bg-white', 'dark:bg-[#141417]', 'text-zinc-700', 'dark:text-zinc-300');
+                    b.classList.remove('bg-zinc-900', 'text-white', 'dark:bg-white', 'dark:text-zinc-950', 'shadow-xs');
+                    b.classList.add('text-zinc-600', 'dark:text-zinc-400', 'hover:bg-zinc-100', 'dark:hover:bg-zinc-800');
                 });
-                this.classList.remove('bg-white', 'dark:bg-[#141417]', 'text-zinc-700', 'dark:text-zinc-300');
-                this.classList.add('bg-zinc-900', 'text-white', 'dark:bg-amber-100', 'dark:text-zinc-950');
+                this.classList.remove('text-zinc-600', 'dark:text-zinc-400', 'hover:bg-zinc-100', 'dark:hover:bg-zinc-800');
+                this.classList.add('bg-zinc-900', 'text-white', 'dark:bg-white', 'dark:text-zinc-950', 'shadow-xs');
 
                 selectedStatusFilter = this.getAttribute('data-status') || 'all';
+                visibleCount = pageSize;
                 updateListVisibility();
             });
         });
@@ -104,39 +113,70 @@
     function closeDeleteModal() {
         document.getElementById('deleteModal').classList.add('hidden');
     }
+
+    function queueSingleNewsletter(id, title) {
+        if (confirm(`Queue "${title}" for transmission right now?`)) {
+            fetch(`/newsletter/${id}/queue-now`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Failed to queue broadcast.');
+                }
+            })
+            .catch(err => {
+                alert('Error: ' + err.message);
+            });
+        }
+    }
 </script>
 @endpush
 
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <div class="flex items-center space-x-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80 dark:bg-amber-300/80 shadow-2xs"></span>
-                    <h2 class="font-black text-2xl text-zinc-900 dark:text-white leading-tight flex items-center gap-2.5">
-                        <i class="fas fa-paper-plane text-amber-500/80 dark:text-amber-300/80"></i>
-                        {{ __('Email Newsletters & Broadcasts') }}
+                <div class="flex items-center gap-2.5">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+                    </span>
+                    <h2 class="font-extrabold text-2xl text-zinc-900 dark:text-white tracking-tight flex items-center gap-2.5">
+                        <i class="fas fa-paper-plane text-amber-500"></i>
+                        <span>{{ __('Email Newsletters & Broadcasts') }}</span>
                     </h2>
+                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-3xs font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/80 uppercase">
+                        {{ count($newsletters) }} Total
+                    </span>
                 </div>
-                <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1 pl-5">
-                    Compose, schedule, target, and monitor email newsletter dispatches.
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 pl-5">
+                    Compose, schedule, personalize merge tags, and monitor broadcast dispatches.
                 </p>
             </div>
-            <div class="flex items-center gap-2">
-                <a href="/dispatch" class="inline-flex items-center px-4 py-2.5 bg-amber-50 dark:bg-amber-950/50 hover:bg-amber-100 text-amber-900 dark:text-amber-200 border border-amber-300/80 dark:border-amber-500/30 text-xs font-bold rounded-xl shadow-2xs transition-all gap-2">
+            
+            <div class="flex items-center gap-2.5">
+                <a href="/dispatch" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#111114] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all shadow-2xs gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                    <i class="fas fa-layer-group text-xs"></i>
+                    <i class="fas fa-layer-group text-3xs text-amber-500"></i>
                     <span>Dispatch Studio</span>
                 </a>
-                <a href="/newsletter-form/new" class="inline-flex items-center px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-xs font-bold rounded-xl shadow-2xs transition-all duration-200 gap-2">
-                    <i class="fas fa-plus text-xs"></i>
+                <a href="/newsletter-form/new" class="group inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 text-xs font-bold rounded-xl transition-all shadow-md shadow-amber-500/15 hover:shadow-amber-500/25 hover:-translate-y-0.5 gap-2">
+                    <i class="fas fa-plus text-3xs transition-transform group-hover:rotate-90"></i>
                     <span>Create Newsletter</span>
                 </a>
             </div>
         </div>
     </x-slot>
 
-    <div class="pb-8 pt-4">
+    <div class="pb-10 pt-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             <!-- Flash Notifications -->
@@ -144,15 +184,15 @@
                 @if(Session::has('alert-' . $msg))
                     @php
                         $alertStyles = [
-                            'danger' => 'bg-red-50/90 text-red-900 border-red-200 dark:bg-red-950/70 dark:text-red-200 dark:border-red-800/80 icon-fa-exclamation-circle',
-                            'warning' => 'bg-amber-50/90 text-amber-900 border-amber-200 dark:bg-amber-950/70 dark:text-amber-200 dark:border-amber-800/80 icon-fa-exclamation-triangle',
-                            'success' => 'bg-emerald-50/90 text-emerald-900 border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-200 dark:border-emerald-800/80 icon-fa-check-circle',
-                            'info' => 'bg-amber-50/70 text-amber-900 border-amber-200/70 dark:bg-amber-950/40 dark:text-amber-200 dark:border-amber-800/60 icon-fa-info-circle',
+                            'danger' => 'bg-rose-50 text-rose-900 border-rose-200 dark:bg-rose-950/60 dark:text-rose-200 dark:border-rose-900 icon-fa-circle-exclamation',
+                            'warning' => 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-900 icon-fa-triangle-exclamation',
+                            'success' => 'bg-emerald-50 text-emerald-900 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-200 dark:border-emerald-900 icon-fa-circle-check',
+                            'info' => 'bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-950/60 dark:text-blue-200 dark:border-blue-900 icon-fa-circle-info',
                         ];
                     @endphp
-                    <div class="p-4 rounded-xl border {{ $alertStyles[$msg] }} flex items-start gap-3 shadow-2xs backdrop-blur-sm" role="alert">
-                        <i class="fas {{ explode(' ', $alertStyles[$msg])[count(explode(' ', $alertStyles[$msg]))-1] }} text-lg mt-0.5"></i>
-                        <div class="text-sm font-semibold">
+                    <div class="p-3.5 rounded-xl border {{ $alertStyles[$msg] }} flex items-center gap-3 shadow-2xs backdrop-blur-sm" role="alert">
+                        <i class="fas {{ explode(' ', $alertStyles[$msg])[count(explode(' ', $alertStyles[$msg]))-1] }} text-sm"></i>
+                        <div class="text-xs font-semibold">
                             {{ Session::get('alert-' . $msg) }}
                         </div>
                     </div>
@@ -164,42 +204,94 @@
                 $totalNewsletters = count($newsletters);
                 $totalSent = $newsletters->sum('sent_mails_count');
                 $totalQueued = $newsletters->sum('queued_mails_count');
+                $readyCount = $newsletters->where('status', 'N')->count();
             @endphp
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="bg-gradient-to-br from-white via-white to-slate-50/90 dark:from-[#141417] dark:to-[#141417] p-5 rounded-2xl border border-slate-200/90 dark:border-zinc-800 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs flex items-center justify-between transition-all duration-300 hover:border-amber-300/40">
-                    <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total Broadcasts</p>
-                        <h3 class="text-2xl font-black text-zinc-900 dark:text-white mt-1">{{ $totalNewsletters }}</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Metric 1: Total Broadcasts -->
+                <div class="relative overflow-hidden group bg-white dark:bg-[#111114] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs hover:border-amber-500/40 dark:hover:border-amber-500/30 transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold tracking-wider text-zinc-500 dark:text-zinc-400 uppercase">
+                            Total Broadcasts
+                        </span>
+                        <div class="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs border border-amber-200/50 dark:border-amber-500/20 shadow-2xs">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-amber-100/70 dark:bg-amber-950/30 text-amber-900 dark:text-amber-300 border border-amber-200/80 dark:border-amber-500/20 flex items-center justify-center text-lg shadow-2xs">
-                        <i class="fas fa-newspaper"></i>
+                    <div class="mt-4">
+                        <div class="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
+                            {{ $totalNewsletters }}
+                        </div>
+                        <p class="text-3xs text-zinc-400 dark:text-zinc-500 mt-2">
+                            Created email broadcasts
+                        </p>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-white via-white to-slate-50/90 dark:from-[#141417] dark:to-[#141417] p-5 rounded-2xl border border-slate-200/90 dark:border-zinc-800 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs flex items-center justify-between transition-all duration-300 hover:border-emerald-300/40">
-                    <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Delivered Emails</p>
-                        <h3 class="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">{{ $totalSent }}</h3>
+                <!-- Metric 2: Delivered Messages -->
+                <div class="relative overflow-hidden group bg-white dark:bg-[#111114] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold tracking-wider text-zinc-500 dark:text-zinc-400 uppercase">
+                            Delivered Emails
+                        </span>
+                        <div class="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs border border-emerald-200/50 dark:border-emerald-500/20 shadow-2xs">
+                            <i class="fas fa-circle-check"></i>
+                        </div>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/70 flex items-center justify-center text-lg shadow-2xs">
-                        <i class="fas fa-check-double"></i>
+                    <div class="mt-4">
+                        <div class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">
+                            {{ number_format($totalSent) }}
+                        </div>
+                        <p class="text-3xs text-zinc-400 dark:text-zinc-500 mt-2">
+                            Successfully transmitted dispatches
+                        </p>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-white via-white to-slate-50/90 dark:from-[#141417] dark:to-[#141417] p-5 rounded-2xl border border-slate-200/90 dark:border-zinc-800 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs flex items-center justify-between transition-all duration-300 hover:border-blue-300/40">
-                    <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">In Queue / Pending</p>
-                        <h3 class="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">{{ $totalQueued }}</h3>
+                <!-- Metric 3: In Queue / Pending -->
+                <div class="relative overflow-hidden group bg-white dark:bg-[#111114] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs hover:border-blue-500/40 dark:hover:border-blue-500/30 transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold tracking-wider text-zinc-500 dark:text-zinc-400 uppercase">
+                            In Transmission Queue
+                        </span>
+                        <div class="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs border border-blue-200/50 dark:border-blue-500/20 shadow-2xs">
+                            <i class="fas fa-clock"></i>
+                        </div>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/70 flex items-center justify-center text-lg shadow-2xs">
-                        <i class="fas fa-clock"></i>
+                    <div class="mt-4">
+                        <div class="text-3xl font-extrabold text-blue-600 dark:text-blue-400 tracking-tight">
+                            {{ number_format($totalQueued) }}
+                        </div>
+                        <p class="text-3xs text-zinc-400 dark:text-zinc-500 mt-2">
+                            Awaiting socket delivery
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Metric 4: Ready to Broadcast -->
+                <div class="relative overflow-hidden group bg-white dark:bg-[#111114] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs hover:border-purple-500/40 dark:hover:border-purple-500/30 transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold tracking-wider text-zinc-500 dark:text-zinc-400 uppercase">
+                            Ready to Send
+                        </span>
+                        <div class="w-8 h-8 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs border border-purple-200/50 dark:border-purple-500/20 shadow-2xs">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="text-3xl font-extrabold text-purple-600 dark:text-purple-400 tracking-tight">
+                            {{ $readyCount }}
+                        </div>
+                        <p class="text-3xs text-zinc-400 dark:text-zinc-500 mt-2">
+                            Configured broadcasts in 'Ready' status
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Guidance Banner Card -->
-            <div class="relative overflow-hidden rounded-2xl border border-amber-200/80 dark:border-amber-500/20 bg-gradient-to-r from-amber-500/[0.08] via-amber-400/[0.03] to-amber-500/[0.06] dark:from-[#141417] dark:via-zinc-900/90 dark:to-[#141417] p-5 sm:p-6 shadow-[0_4px_20px_-4px_rgba(245,158,11,0.08)] dark:shadow-2xs backdrop-blur-sm transition-all duration-300">
-                <div class="absolute -right-6 -bottom-6 opacity-15 dark:opacity-10 text-9xl pointer-events-none transform -rotate-12 select-none">
+            <!-- Explanatory Guidance Banner Card -->
+            <div class="relative overflow-hidden rounded-2xl border border-amber-200/90 dark:border-amber-500/20 bg-gradient-to-r from-amber-500/[0.08] via-amber-400/[0.03] to-amber-500/[0.06] dark:from-[#111114] dark:via-zinc-900/80 dark:to-[#111114] p-5 sm:p-6 shadow-xs dark:shadow-2xs backdrop-blur-sm transition-all">
+                <div class="absolute -right-6 -bottom-6 opacity-10 dark:opacity-5 text-9xl pointer-events-none transform -rotate-12 select-none">
                     <i class="fas fa-paper-plane text-amber-500 dark:text-amber-300"></i>
                 </div>
                 <div class="flex items-start gap-4 sm:gap-5 relative z-10">
@@ -207,228 +299,221 @@
                         <i class="fas fa-bolt"></i>
                     </div>
                     <div class="space-y-1 flex-1">
-                        <h4 class="font-bold text-base sm:text-lg text-zinc-900 dark:text-white flex items-center gap-2">
-                            Broadcast Workflows &amp; Delivery Engine
+                        <h4 class="font-bold text-sm sm:text-base text-zinc-900 dark:text-white flex items-center gap-2">
+                            Broadcast Lifecycle & Delivery Engine
                             <span class="w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-300"></span>
                         </h4>
-                        <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                            Draft rich HTML content, personalize subjects with merge tags (e.g. <code class="px-1.5 py-0.5 rounded bg-amber-100/80 dark:bg-zinc-800 text-amber-900 dark:text-amber-300 font-mono text-xs">[[firstname]]</code>), select target audience tags, and transition your broadcast from <strong>Draft</strong> to <strong>New</strong> to initiate delivery queueing.
+                        <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                            Draft rich HTML content, personalize subject lines with merge tags (e.g. <code class="px-1.5 py-0.5 rounded bg-amber-100/80 dark:bg-zinc-800 text-amber-900 dark:text-amber-300 font-mono text-xs">[[firstname]]</code>), select audience target tags, and transition your broadcast to <strong>Ready / New</strong> to queue socket transmission.
                         </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Main Newsletters High-Density Table Container -->
-            <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-200/90 dark:border-zinc-800 overflow-hidden">
+            <!-- Main Newsletters Directory Card -->
+            <div class="bg-white dark:bg-[#111114] rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs overflow-hidden">
                 
                 @if(count($newsletters) > 0)
-                    <!-- Top Toolbar: Search Bar + 1-Click Status Filter -->
-                    <div class="p-5 border-b border-zinc-100 dark:border-zinc-800 space-y-4 bg-slate-50/80 dark:bg-[#09090B]/60">
+                    <!-- Top Toolbar & Filter Strip -->
+                    <div class="p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800/80 space-y-4 bg-zinc-50/50 dark:bg-zinc-900/30">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <!-- Search Bar -->
                             <div class="relative flex-1 max-w-md">
-                                <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 dark:text-zinc-400 text-sm"></i>
+                                <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 text-xs"></i>
                                 <input type="text" id="newsletterSearchInput" placeholder="Search broadcasts by title, campaign, or subject..." 
-                                       class="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-300 dark:border-zinc-800 rounded-xl text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-300/80 focus:border-amber-300/80 transition-all">
+                                       class="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs">
                             </div>
-                            <div class="text-xs font-semibold text-zinc-600 dark:text-zinc-400" id="newsletterCountDisplay">
+
+                            <div class="text-3xs font-mono text-zinc-400 dark:text-zinc-500" id="newsletterCountDisplay">
                                 Showing {{ min(15, count($newsletters)) }} of {{ count($newsletters) }} newsletters
                             </div>
                         </div>
 
-                        <!-- 1-Click Status Filter Buttons -->
-                        <div class="flex items-center gap-1.5 overflow-x-auto pt-1 pb-1">
-                            <span class="text-3xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider shrink-0 mr-1">
-                                <i class="fas fa-filter text-3xs mr-1 text-amber-500"></i> Status:
+                        <!-- 1-Click Status Filter Pills -->
+                        <div class="flex items-center gap-1.5 overflow-x-auto pt-1 pb-1 scrollbar-none">
+                            <span class="text-3xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
+                                <i class="fas fa-filter text-amber-500 text-4xs"></i> Status:
                             </span>
-                            <button type="button" data-status="all" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-bold transition-all bg-zinc-900 text-white dark:bg-amber-100 dark:text-zinc-950 shadow-2xs shrink-0">
+                            <button type="button" data-status="all" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 shadow-xs shrink-0">
                                 All ({{ count($newsletters) }})
                             </button>
-                            <button type="button" data-status="D" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-[#141417] text-zinc-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 shadow-2xs shrink-0 flex items-center gap-1.5">
+                            <button type="button" data-status="D" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 shrink-0 flex items-center gap-1.5">
                                 <span>Draft</span>
-                                <span class="text-3xs px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-zinc-800 text-zinc-500">{{ $newsletters->where('status', 'D')->count() }}</span>
+                                <span class="text-3xs px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">{{ $newsletters->where('status', 'D')->count() }}</span>
                             </button>
-                            <button type="button" data-status="N" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-[#141417] text-zinc-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 shadow-2xs shrink-0 flex items-center gap-1.5">
+                            <button type="button" data-status="N" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 shrink-0 flex items-center gap-1.5">
                                 <span>Ready / New</span>
-                                <span class="text-3xs px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-zinc-800 text-zinc-500">{{ $newsletters->where('status', 'N')->count() }}</span>
+                                <span class="text-3xs px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">{{ $newsletters->where('status', 'N')->count() }}</span>
                             </button>
-                            <button type="button" data-status="Q" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-[#141417] text-zinc-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 shadow-2xs shrink-0 flex items-center gap-1.5">
+                            <button type="button" data-status="Q" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 shrink-0 flex items-center gap-1.5">
                                 <span>Queuing</span>
-                                <span class="text-3xs px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-zinc-800 text-zinc-500">{{ $newsletters->where('status', 'Q')->count() }}</span>
+                                <span class="text-3xs px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">{{ $newsletters->where('status', 'Q')->count() }}</span>
                             </button>
-                            <button type="button" data-status="S" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-[#141417] text-zinc-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 shadow-2xs shrink-0 flex items-center gap-1.5">
+                            <button type="button" data-status="S" class="status-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 shrink-0 flex items-center gap-1.5">
                                 <span>Sent</span>
-                                <span class="text-3xs px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-zinc-800 text-zinc-500">{{ $newsletters->where('status', 'S')->count() }}</span>
+                                <span class="text-3xs px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">{{ $newsletters->where('status', 'S')->count() }}</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- High-Density Table Layout -->
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="border-b border-zinc-200/80 dark:border-zinc-800 bg-slate-100/60 dark:bg-[#09090B]/80 text-3xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                                    <th class="py-3.5 pl-6 pr-4">Newsletter & Campaign</th>
-                                    <th class="py-3.5 px-4">Subject Line</th>
-                                    <th class="py-3.5 px-4">Target Tags</th>
-                                    <th class="py-3.5 px-4">Delivery Stats</th>
-                                    <th class="py-3.5 px-4">Status</th>
-                                    <th class="py-3.5 pl-4 pr-6 text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="newslettersListContainer" class="divide-y divide-zinc-100 dark:divide-zinc-800 text-xs">
-                                @foreach ($newsletters as $index => $n)
-                                    @php
-                                        $tagLabels = [];
-                                        if ($n->newsletter_tags) {
-                                            foreach($n->newsletter_tags as $nt) {
-                                                if ($nt->tag) $tagLabels[] = $nt->tag->label;
-                                            }
-                                        }
-                                        $tagsString = implode(' ', $tagLabels);
-                                        $campaignName = $n->campaign->name ?? 'Unassigned Campaign';
-                                        $searchString = strtolower(($n->title ?? '') . ' ' . $campaignName . ' ' . ($n->subject_template ?? '') . ' ' . $tagsString);
-                                        
-                                        $statusConfig = [
-                                            'D' => ['label' => 'Draft', 'class' => 'bg-slate-100 text-slate-700 dark:bg-zinc-800 dark:text-zinc-300 border-slate-200 dark:border-zinc-700', 'icon' => 'fa-pencil-alt'],
-                                            'N' => ['label' => 'New / Ready', 'class' => 'bg-blue-50 text-blue-800 dark:bg-blue-950/70 dark:text-blue-300 border-blue-200 dark:border-blue-800', 'icon' => 'fa-sparkles'],
-                                            'Q' => ['label' => 'Queuing', 'class' => 'bg-amber-50 text-amber-900 dark:bg-amber-950/70 dark:text-amber-200 border-amber-200 dark:border-amber-800', 'icon' => 'fa-sync fa-spin'],
-                                            'S' => ['label' => 'Sent', 'class' => 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800', 'icon' => 'fa-check'],
-                                        ];
-                                        $currStatus = $statusConfig[$n->status] ?? ['label' => $n->status, 'class' => 'bg-slate-100 text-slate-700', 'icon' => 'fa-circle'];
-                                    @endphp
+                    <!-- Modern Responsive Broadcasts Deck (Zero Horizontal Scroll) -->
+                    <div id="newslettersListContainer" class="divide-y divide-zinc-100 dark:divide-zinc-800/70">
+                        @foreach ($newsletters as $index => $n)
+                            @php
+                                $tagLabels = [];
+                                if ($n->newsletter_tags) {
+                                    foreach($n->newsletter_tags as $nt) {
+                                        if ($nt->tag) $tagLabels[] = $nt->tag->label;
+                                    }
+                                }
+                                $tagsString = implode(' ', $tagLabels);
+                                $campaignName = $n->campaign->name ?? 'Unassigned Campaign';
+                                $searchString = strtolower(($n->title ?? '') . ' ' . $campaignName . ' ' . ($n->subject_template ?? '') . ' ' . $tagsString);
+                                
+                                $statusConfig = [
+                                    'D' => ['label' => 'Draft', 'class' => 'bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700', 'icon' => 'fa-pen'],
+                                    'N' => ['label' => 'Ready / New', 'class' => 'bg-blue-50 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800', 'icon' => 'fa-sparkles'],
+                                    'Q' => ['label' => 'Queuing', 'class' => 'bg-amber-50 text-amber-900 dark:bg-amber-950/60 dark:text-amber-200 border-amber-200 dark:border-amber-800', 'icon' => 'fa-arrows-rotate fa-spin'],
+                                    'S' => ['label' => 'Sent', 'class' => 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800', 'icon' => 'fa-check'],
+                                ];
+                                $currStatus = $statusConfig[$n->status] ?? ['label' => $n->status, 'class' => 'bg-zinc-100 text-zinc-600', 'icon' => 'fa-circle'];
+                            @endphp
 
-                                    <tr class="newsletter-row hover:bg-slate-50/90 dark:hover:bg-zinc-800/40 transition-colors group"
-                                        data-search="{{ $searchString }}" data-status="{{ $n->status }}" data-index="{{ $index }}">
-                                        
-                                        <!-- Title + Campaign -->
-                                        <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-9 h-9 rounded-xl bg-amber-50/80 dark:bg-amber-950/30 text-amber-700 dark:text-amber-200 border border-amber-200/60 dark:border-amber-500/20 flex items-center justify-center text-xs shrink-0 shadow-2xs">
-                                                    <i class="fas fa-paper-plane"></i>
-                                                </div>
-                                                <div>
-                                                    <a href="/newsletter-form/{{ $n->id }}" class="font-bold text-sm text-zinc-900 dark:text-white hover:text-zinc-600 dark:hover:text-amber-200 transition-colors block">
-                                                        {{ $n->title ?? 'Untitled Broadcast' }}
-                                                    </a>
-                                                    <div class="flex items-center space-x-2 mt-0.5">
-                                                        <span class="inline-flex items-center text-3xs font-semibold text-zinc-500 dark:text-zinc-400">
-                                                            <i class="fas fa-folder mr-1 text-3xs opacity-60"></i>
-                                                            {{ $campaignName }}
-                                                        </span>
-                                                        <span class="text-zinc-300 dark:text-zinc-700">•</span>
-                                                        <span class="text-3xs text-zinc-400">
-                                                            {{ $n->updated_at ? \Carbon\Carbon::parse($n->updated_at)->diffForHumans() : 'N/A' }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
+                            <div class="newsletter-row p-4 sm:p-5 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40 transition-colors flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+                                 data-search="{{ $searchString }}" data-status="{{ $n->status }}" data-index="{{ $index }}">
+                                
+                                <!-- Left Info Pod -->
+                                <div class="flex items-start space-x-3.5 min-w-0 flex-1">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300 border border-amber-500/20 flex items-center justify-center text-sm font-bold shrink-0 shadow-2xs mt-0.5 sm:mt-0">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </div>
 
-                                        <!-- Subject Line -->
-                                        <td class="py-3.5 px-4 whitespace-nowrap">
-                                            <div class="text-xs text-zinc-800 dark:text-zinc-200 max-w-xs truncate font-medium">
-                                                <i class="fas fa-envelope-open-text mr-1 text-3xs text-amber-500"></i>
-                                                {{ $n->subject_template ?? 'No subject specified' }}
-                                            </div>
-                                        </td>
+                                    <div class="min-w-0 flex-1 space-y-1.5">
+                                        <!-- Title + Status + Campaign -->
+                                        <div class="flex items-center flex-wrap gap-2">
+                                            <a href="/newsletter-form/{{ $n->id }}" class="font-bold text-sm text-zinc-900 dark:text-white hover:text-amber-600 dark:hover:text-amber-300 transition-colors">
+                                                {{ $n->title ?? 'Untitled Broadcast' }}
+                                            </a>
 
-                                        <!-- Target Tags -->
-                                        <td class="py-3.5 px-4">
-                                            @if(count($tagLabels) > 0)
-                                                <div class="flex flex-wrap items-center gap-1.5 max-w-xs">
+                                            <!-- Status Badge -->
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-3xs font-bold border {{ $currStatus['class'] }}">
+                                                <i class="fas {{ $currStatus['icon'] }} mr-1 text-4xs"></i>
+                                                {{ $currStatus['label'] }}
+                                            </span>
+
+                                            <!-- Campaign Pill -->
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-3xs font-medium bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 border border-zinc-200/80 dark:border-zinc-700/60">
+                                                <i class="fas fa-folder mr-1 text-4xs text-amber-500"></i>
+                                                {{ $campaignName }}
+                                            </span>
+                                        </div>
+
+                                        <!-- Subject Line Preview -->
+                                        <div class="text-xs text-zinc-600 dark:text-zinc-300 font-medium flex items-center gap-1.5 min-w-0">
+                                            <i class="fas fa-envelope-open-text text-amber-500 text-3xs shrink-0"></i>
+                                            <span class="truncate">{{ $n->subject_template ?? 'No subject specified' }}</span>
+                                        </div>
+
+                                        <!-- Target Tags & Updated Meta -->
+                                        <div class="flex items-center flex-wrap gap-x-3 gap-y-1 text-3xs text-zinc-500 dark:text-zinc-400">
+                                            <!-- Target Tags -->
+                                            <div class="flex items-center flex-wrap gap-1">
+                                                <span class="text-zinc-400 font-medium flex items-center gap-1">
+                                                    <i class="fas fa-tags text-4xs text-amber-500"></i> Audience:
+                                                </span>
+                                                @if(count($tagLabels) > 0)
                                                     @foreach($tagLabels as $tagLabel)
-                                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-3xs font-semibold bg-amber-50/90 text-amber-900 border border-amber-200/80 dark:bg-amber-950/40 dark:text-amber-200 dark:border-amber-500/30 whitespace-nowrap">
-                                                            <i class="fas fa-tag mr-1 text-3xs text-amber-600 dark:text-amber-300"></i>
+                                                        <span class="inline-flex items-center px-2 py-0.2 rounded-full text-3xs font-semibold bg-amber-50 text-amber-800 border border-amber-200/80 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-500/30">
                                                             {{ $tagLabel }}
                                                         </span>
                                                     @endforeach
-                                                </div>
-                                            @else
-                                                <span class="text-zinc-400 text-3xs italic">All contacts</span>
-                                            @endif
-                                        </td>
-
-                                        <!-- Delivery Stats (Sent / Queued) -->
-                                        <td class="py-3.5 px-4 whitespace-nowrap">
-                                            <div class="flex items-center space-x-2">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-3xs font-semibold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800" title="Sent Emails">
-                                                    <i class="fas fa-check mr-1 text-3xs"></i>
-                                                    {{ $n->sent_mails_count ?? 0 }}
-                                                </span>
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-3xs font-semibold bg-blue-50 text-blue-800 dark:bg-blue-950/70 dark:text-blue-300 border border-blue-200 dark:border-blue-800" title="Queued Emails">
-                                                    <i class="fas fa-clock mr-1 text-3xs"></i>
-                                                    {{ $n->queued_mails_count ?? 0 }}
-                                                </span>
-                                            </div>
-                                        </td>
-
-                                        <!-- Status Badge -->
-                                        <td class="py-3.5 px-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-3xs font-bold border {{ $currStatus['class'] }}">
-                                                <i class="fas {{ $currStatus['icon'] }} mr-1.5 text-3xs"></i>
-                                                {{ $currStatus['label'] }}
-                                            </span>
-                                        </td>
-
-                                        <!-- Actions -->
-                                        <td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap">
-                                            <div class="flex items-center justify-end space-x-1.5">
-                                                @if($n->status === 'N' || $n->status === 'D')
-                                                    <button type="button" onclick="queueSingleNewsletter({{ $n->id }}, '{{ addslashes($n->title ?? 'Broadcast') }}')" title="Queue this broadcast now"
-                                                            class="px-2.5 py-1 text-3xs font-bold rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-800 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800 flex items-center gap-1 transition-colors cursor-pointer">
-                                                        <i class="fas fa-layer-group text-3xs"></i>
-                                                        <span>Queue Now</span>
-                                                    </button>
+                                                @else
+                                                    <span class="text-zinc-400 italic">All contacts</span>
                                                 @endif
-                                                <a href="/newsletter-form/{{ $n->id }}" title="Edit Newsletter" 
-                                                   class="p-1.5 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-amber-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
-                                                    <i class="fas fa-pencil-alt text-xs"></i>
-                                                </a>
-                                                <button type="button" onclick="confirmDelete({{ $n->id }}, '{{ addslashes($n->title ?? 'Untitled Broadcast') }}')" title="Delete Newsletter" 
-                                                        class="p-1.5 text-zinc-600 hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-zinc-800 rounded-lg transition-colors">
-                                                    <i class="fas fa-trash-alt text-xs"></i>
-                                                </button>
                                             </div>
-                                        </td>
 
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                            <span class="text-zinc-300 dark:text-zinc-700">•</span>
+
+                                            <!-- Updated Time -->
+                                            <span class="flex items-center gap-1 text-zinc-400">
+                                                <i class="fas fa-clock text-4xs"></i>
+                                                Updated {{ $n->updated_at ? \Carbon\Carbon::parse($n->updated_at)->diffForHumans(null, true) : 'N/A' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right Stats & Actions Pod -->
+                                <div class="flex items-center flex-wrap sm:flex-nowrap gap-3 self-end lg:self-center shrink-0 w-full lg:w-auto justify-between lg:justify-end border-t lg:border-t-0 pt-3 lg:pt-0 border-zinc-100 dark:border-zinc-800/80">
+                                    <!-- Delivery Stats -->
+                                    <div class="flex items-center gap-2">
+                                        <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200/70 dark:border-emerald-800/80 text-emerald-800 dark:text-emerald-300" title="Delivered Dispatches">
+                                            <i class="fas fa-circle-check text-4xs text-emerald-600 dark:text-emerald-400"></i>
+                                            <span class="text-3xs font-bold">{{ number_format($n->sent_mails_count ?? 0) }} sent</span>
+                                        </div>
+                                        <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/50 border border-blue-200/70 dark:border-blue-800/80 text-blue-800 dark:text-blue-300" title="Queued Dispatches">
+                                            <i class="fas fa-clock text-4xs text-blue-600 dark:text-blue-400"></i>
+                                            <span class="text-3xs font-bold">{{ number_format($n->queued_mails_count ?? 0) }} queued</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="flex items-center gap-1.5 shrink-0">
+                                        @if($n->status === 'N' || $n->status === 'D')
+                                            <button type="button" onclick="queueSingleNewsletter({{ $n->id }}, '{{ addslashes($n->title ?? 'Broadcast') }}')" title="Queue this broadcast now"
+                                                    class="px-3 py-1.5 text-3xs font-bold rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 transition-all shadow-2xs hover:shadow-xs flex items-center gap-1 cursor-pointer">
+                                                <i class="fas fa-paper-plane text-3xs"></i>
+                                                <span>Queue</span>
+                                            </button>
+                                        @endif
+                                        <a href="/newsletter-form/{{ $n->id }}" title="Edit Newsletter" 
+                                           class="px-2.5 py-1.5 text-3xs font-semibold text-zinc-700 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl transition-colors flex items-center gap-1">
+                                            <i class="fas fa-pen text-3xs text-zinc-400"></i>
+                                            <span class="hidden sm:inline">Edit</span>
+                                        </a>
+                                        <button type="button" onclick="confirmDelete({{ $n->id }}, '{{ addslashes($n->title ?? 'Untitled Broadcast') }}')" title="Delete Newsletter" 
+                                                class="p-1.5 text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors">
+                                            <i class="fas fa-trash-can text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        @endforeach
                     </div>
 
                     <!-- Search Empty State -->
                     <div id="emptySearchResults" class="hidden p-12 text-center">
-                        <div class="w-12 h-12 rounded-full bg-slate-100 dark:bg-[#09090B] text-zinc-400 dark:text-zinc-400 flex items-center justify-center mx-auto mb-3 text-xl">
+                        <div class="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 flex items-center justify-center mx-auto mb-3 text-lg">
                             <i class="fas fa-search"></i>
                         </div>
-                        <h4 class="text-base font-bold text-zinc-900 dark:text-white">No matching newsletters found</h4>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Try adjusting your search criteria or status filter.</p>
+                        <h4 class="text-sm font-bold text-zinc-900 dark:text-white">No matching newsletters found</h4>
+                        <p class="text-xs text-zinc-400 dark:text-zinc-500 mt-1">Try adjusting your search criteria or status filter.</p>
                     </div>
 
                     <!-- Progressive Load More Pagination Footer -->
                     @if(count($newsletters) > 15)
-                        <div class="p-6 border-t border-zinc-100 dark:border-zinc-800 text-center bg-slate-50/60 dark:bg-[#09090B]/50">
+                        <div class="p-4 border-t border-zinc-100 dark:border-zinc-800/80 text-center bg-zinc-50/50 dark:bg-zinc-900/30">
                             <button type="button" id="showMoreBtn" 
-                                    class="inline-flex items-center justify-center px-6 py-2.5 bg-white dark:bg-[#141417] text-zinc-800 dark:text-zinc-200 font-bold text-sm rounded-xl border border-zinc-300 dark:border-zinc-800 shadow-2xs hover:bg-slate-50 dark:hover:bg-zinc-800 transition-all duration-200 gap-2">
-                                <i class="fas fa-chevron-down text-xs"></i>
+                                    class="inline-flex items-center justify-center px-5 py-2 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-xs rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-2xs hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all gap-2">
+                                <i class="fas fa-chevron-down text-3xs"></i>
                                 <span id="remainingCountText">Show More Newsletters</span>
                             </button>
                         </div>
                     @endif
 
                 @else
-                    <div class="text-center py-14 px-4">
-                        <div class="w-16 h-16 bg-amber-50/80 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl border border-amber-200/60 dark:border-amber-500/20 shadow-2xs">
+                    <div class="text-center py-16 px-4">
+                        <div class="w-14 h-14 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl border border-amber-200/60 dark:border-amber-500/20 shadow-2xs">
                             <i class="fas fa-paper-plane"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white">No Newsletters Created Yet</h3>
-                        <p class="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto mt-2 mb-6 leading-relaxed">
-                            Create your first email broadcast message with personalized merge tags and rich HTML content.
+                        <h3 class="text-lg font-bold text-zinc-900 dark:text-white">No Newsletters Created Yet</h3>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto mt-1 mb-5 leading-relaxed">
+                            Create your first email broadcast message with personalized merge tags, rich HTML layouts, and audience tag filters.
                         </p>
-                        <a href="/newsletter-form/new" class="inline-flex items-center px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-100 dark:hover:bg-amber-50 dark:text-zinc-950 text-sm font-bold rounded-xl shadow-2xs transition-all duration-200 gap-2">
-                            <i class="fas fa-plus text-xs"></i>
-                            <span>Create Your First Newsletter</span>
+                        <a href="/newsletter-form/new" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 text-xs font-bold rounded-xl shadow-md transition-all gap-2">
+                            <i class="fas fa-plus text-3xs"></i>
+                            <span>Create First Newsletter</span>
                         </a>
                     </div>
                 @endif
@@ -438,63 +523,33 @@
     </div>
 
     <!-- Reusable Delete Modal -->
-    <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-zinc-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-[#141417] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-zinc-800 transform transition-all">
-            <div class="flex items-center space-x-3 text-red-600 dark:text-red-400 mb-3">
-                <div class="p-3 bg-red-100 dark:bg-red-950 rounded-full border border-red-200 dark:border-red-800">
-                    <i class="fas fa-exclamation-triangle text-xl"></i>
+    <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-zinc-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-[#141417] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-zinc-200 dark:border-zinc-800 transform transition-all space-y-4">
+            <div class="flex items-center space-x-3 text-rose-600 dark:text-rose-400">
+                <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 flex items-center justify-center text-base border border-rose-200 dark:border-rose-900">
+                    <i class="fas fa-triangle-exclamation"></i>
                 </div>
-                <h3 class="text-lg font-bold text-zinc-900 dark:text-white">Delete Newsletter</h3>
+                <div>
+                    <h3 class="text-base font-bold text-zinc-900 dark:text-white">Delete Newsletter</h3>
+                    <p class="text-3xs text-zinc-400">Remove broadcast message</p>
+                </div>
             </div>
-            <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-6 leading-relaxed">
+            <p class="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
                 Are you sure you want to delete <span id="deleteNewsletterTitle" class="font-bold text-zinc-900 dark:text-white"></span>? 
-                This action cannot be undone and will delete associated broadcast history.
+                This will permanently remove the broadcast draft and delivery history.
             </p>
             <form method="POST" action="/newsletter/delete">
                 @csrf
                 <input type="hidden" name="newsletter_id" id="modalNewsletterId">
-                <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300 bg-slate-100 dark:bg-zinc-800 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors">
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
                         Cancel
                     </button>
-                    <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 transition-colors shadow-2xs">
+                    <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 rounded-xl transition-colors shadow-2xs">
                         Delete Newsletter
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-
-    <script>
-        function queueSingleNewsletter(id, title) {
-            if (typeof appendTerminalLog === 'function') {
-                appendTerminalLog(`[QUEUING] Initiating queue for "${title}"...`, 'info');
-            }
-
-            fetch(`/newsletter/${id}/queue-now`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    if (typeof appendTerminalLog === 'function') {
-                        appendTerminalLog(`[SUCCESS] ${data.message}`, 'success');
-                    }
-                    if (typeof refreshQueueMetrics === 'function') {
-                        refreshQueueMetrics();
-                    }
-                    alert(data.message);
-                    window.location.reload();
-                } else {
-                    alert(data.message || 'Failed to queue broadcast.');
-                }
-            })
-            .catch(err => {
-                alert('Error: ' + err.message);
-            });
-        }
-    </script>
 </x-app-layout>

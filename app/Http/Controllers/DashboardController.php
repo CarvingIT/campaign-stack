@@ -18,8 +18,8 @@ class DashboardController extends Controller
     {
         // Outbound Mail Accounts
         $mailAccounts = OutboundMailAccount::count();
-        $mailAccountList = OutboundMailAccount::latest()->take(4)->get();
-        $activeMailAccounts = OutboundMailAccount::where('active_after', '<=', now())->count();
+        $mailAccountList = OutboundMailAccount::orderBy('status', 'desc')->latest()->take(5)->get();
+        $activeMailAccounts = OutboundMailAccount::where('status', 1)->count();
 
         // Contacts & Tags
         $contacts = Contact::count();
