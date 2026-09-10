@@ -242,14 +242,14 @@
             </div>
 
             <!-- High-Impact Mission Control / Dispatch Studio Hub Banner -->
-            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/[0.08] via-amber-400/[0.03] to-amber-500/[0.09] dark:from-zinc-900 dark:via-zinc-950 dark:to-[#0c0c0e] p-6 sm:p-7 border border-amber-200/90 dark:border-amber-500/20 shadow-xs dark:shadow-xl">
+            <div class="relative overflow-hidden rounded-2xl bg-white dark:bg-[#111114] bg-gradient-to-br from-amber-500/[0.03] via-transparent to-amber-500/[0.04] dark:from-zinc-900 dark:via-zinc-950 dark:to-[#0c0c0e] p-6 sm:p-7 border border-zinc-200/80 dark:border-zinc-800/80 hover:border-amber-500/30 dark:hover:border-amber-500/30 transition-all duration-200 shadow-xs dark:shadow-xl">
                 <!-- Background Ambient Lights -->
-                <div class="absolute top-0 right-0 w-96 h-96 bg-amber-400/20 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -bottom-10 left-1/3 w-64 h-64 bg-amber-300/20 dark:bg-amber-400/5 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="absolute top-0 right-0 w-96 h-96 bg-amber-400/[0.05] dark:bg-amber-500/[0.03] rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-10 left-1/3 w-64 h-64 bg-amber-300/[0.03] dark:bg-amber-400/[0.015] rounded-full blur-3xl pointer-events-none"></div>
 
                 <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                     <div class="space-y-2.5 max-w-2xl">
-                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-amber-100/90 dark:bg-amber-500/15 border border-amber-300/80 dark:border-amber-500/30 text-amber-900 dark:text-amber-300 text-3xs font-bold uppercase tracking-wider shadow-2xs">
+                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-500/15 border border-amber-200/60 dark:border-amber-500/30 text-amber-800 dark:text-amber-300 text-3xs font-bold uppercase tracking-wider shadow-2xs">
                             <i class="fas fa-bolt text-amber-600 dark:text-amber-400"></i>
                             Dedicated Transmission Deck
                         </div>
@@ -261,15 +261,15 @@
                         </p>
                         <!-- 4-Stage Stepper Pill Strip -->
                         <div class="pt-2 flex flex-wrap items-center gap-2 text-3xs font-medium text-zinc-600 dark:text-zinc-300">
-                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-700 dark:text-zinc-300 shadow-2xs">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-50/80 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-700 dark:text-zinc-300 shadow-2xs">
                                 <i class="fas fa-filter text-amber-500 dark:text-amber-400"></i> 1. Select Tags
                             </span>
                             <span class="text-zinc-300 dark:text-zinc-600 font-bold">→</span>
-                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-700 dark:text-zinc-300 shadow-2xs">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-50/80 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-700 dark:text-zinc-300 shadow-2xs">
                                 <i class="fas fa-user-xmark text-amber-500 dark:text-amber-400"></i> 2. Exclude Unsubs
                             </span>
                             <span class="text-zinc-300 dark:text-zinc-600 font-bold">→</span>
-                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-700 dark:text-zinc-300 shadow-2xs">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-50/80 dark:bg-zinc-800/80 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-700 dark:text-zinc-300 shadow-2xs">
                                 <i class="fas fa-code text-amber-500 dark:text-amber-400"></i> 3. Preview Tags
                             </span>
                             <span class="text-zinc-300 dark:text-zinc-600 font-bold">→</span>
@@ -465,9 +465,25 @@
 
                             <svg id="emailChart" viewBox="0 0 {{ $chartWidth }} {{ $chartHeight }}" class="w-full h-48 overflow-visible" preserveAspectRatio="none">
                                 <defs>
+                                    <style>
+                                        .dark .chart-curve-stop-top {
+                                            stop-opacity: 0.08 !important;
+                                        }
+                                        .dark .chart-curve-stop-mid {
+                                            stop-opacity: 0.02 !important;
+                                        }
+                                    </style>
+                                    <!-- Light mode gradient -->
                                     <linearGradient id="curveGradientFill" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.32"/>
-                                        <stop offset="45%" stop-color="#f59e0b" stop-opacity="0.10"/>
+                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.32" class="chart-curve-stop-top"/>
+                                        <stop offset="45%" stop-color="#f59e0b" stop-opacity="0.10" class="chart-curve-stop-mid"/>
+                                        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
+                                    </linearGradient>
+
+                                    <!-- Lower density gradient specifically for dark mode -->
+                                    <linearGradient id="curveGradientFillDark" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.08"/>
+                                        <stop offset="45%" stop-color="#f59e0b" stop-opacity="0.02"/>
                                         <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
                                     </linearGradient>
 
@@ -496,9 +512,10 @@
                                 <!-- Interactive Vertical Tracking Guide Line -->
                                 <line id="chartGuideLine" x1="0" y1="{{ $topPadding }}" x2="0" y2="{{ $groundY }}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2 2" opacity="0" class="transition-opacity duration-150 pointer-events-none" />
 
-                                <!-- Smooth Shaded Area -->
+                                <!-- Smooth Shaded Area (Lower Density in Dark Mode) -->
                                 @if($pointCount > 0)
-                                    <path d="{{ $areaPathD }}" fill="url(#curveGradientFill)" />
+                                    <path d="{{ $areaPathD }}" fill="url(#curveGradientFill)" class="dark:hidden" />
+                                    <path d="{{ $areaPathD }}" fill="url(#curveGradientFillDark)" class="hidden dark:block" />
                                     <path d="{{ $pathD }}" fill="none" stroke="url(#strokeGradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                 @endif
 
