@@ -7,7 +7,8 @@
 
         <title>{{ config('app.name', 'Campaign Stack') }}</title>
 
-        <link rel="icon" type="image/x-icon" href="/i/campaign-stack-100.png">
+        <link rel="icon" type="image/png" href="/i/campaignstack-icon.png">
+        <link rel="apple-touch-icon" href="/i/campaignstack-icon.png">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800|plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
@@ -30,6 +31,21 @@
                     document.documentElement.classList.add('dark');
                 } else {
                     document.documentElement.classList.remove('dark');
+                }
+
+                // Instant Flash-Free Navigation Layout Initializer
+                const storedLayout = localStorage.getItem('nav_layout') || 'horizontal';
+                if (storedLayout === 'vertical') {
+                    document.documentElement.classList.add('layout-vertical');
+                } else {
+                    document.documentElement.classList.remove('layout-vertical');
+                }
+
+                // Instant Flash-Free Sidebar Minimized Initializer
+                if (localStorage.getItem('sidebar_minimized') === 'true') {
+                    document.documentElement.classList.add('sidebar-minimized');
+                } else {
+                    document.documentElement.classList.remove('sidebar-minimized');
                 }
 
                 if (window.matchMedia) {
@@ -174,6 +190,124 @@
                     transform: none !important;
                 }
             }
+
+            /* Navigation Layout Modes: Horizontal (Top Nav) vs Vertical (SaaS Sidebar) */
+            .layout-vertical #horizontalNav {
+                display: none !important;
+            }
+            .layout-vertical #verticalNavContainer {
+                display: block !important;
+            }
+            .layout-vertical #pageTransitionContainer {
+                padding-top: 3.5rem;
+                transition: padding-left 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            @media (min-width: 1024px) {
+                .layout-vertical #pageTransitionContainer {
+                    padding-left: 16rem;
+                }
+                .layout-vertical.sidebar-minimized #pageTransitionContainer {
+                    padding-left: 4.5rem;
+                }
+                .layout-vertical #verticalSidebar {
+                    width: 16rem;
+                    transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                .layout-vertical.sidebar-minimized #verticalSidebar {
+                    width: 4.5rem;
+                }
+                .layout-vertical #verticalNavContainer header {
+                    left: 16rem;
+                    transition: left 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                .layout-vertical.sidebar-minimized #verticalNavContainer header {
+                    left: 4.5rem;
+                }
+            }
+
+            /* Minimized (Icon-Only) Sidebar Elements */
+            .layout-vertical.sidebar-minimized .sidebar-label,
+            .layout-vertical.sidebar-minimized .sidebar-category-title,
+            .layout-vertical.sidebar-minimized .sidebar-badge,
+            .layout-vertical.sidebar-minimized .sidebar-full-logo,
+            .layout-vertical.sidebar-minimized .sidebar-user-details,
+            .layout-vertical.sidebar-minimized .sidebar-broadcast-text,
+            .layout-vertical.sidebar-minimized .sidebar-prefs-title,
+            .layout-vertical.sidebar-minimized .sidebar-status-card {
+                display: none !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-min-logo,
+            .layout-vertical.sidebar-minimized .sidebar-min-status {
+                display: block !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-link {
+                justify-content: center !important;
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-broadcast-btn {
+                width: 2.5rem !important;
+                height: 2.5rem !important;
+                padding: 0 !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                border-radius: 0.75rem !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-user-dock {
+                justify-content: center !important;
+                padding: 0.35rem !important;
+                width: 2.5rem !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-prefs-bar {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 0.4rem !important;
+                padding: 0 !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-prefs-buttons {
+                flex-direction: column !important;
+                gap: 0.4rem !important;
+                margin: 0 auto !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-prefs-buttons button {
+                width: 2.25rem !important;
+                height: 2.25rem !important;
+                margin: 0 auto !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-header {
+                justify-content: center !important;
+                padding-left: 0.25rem !important;
+                padding-right: 0.25rem !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-toggle-btn {
+                position: absolute !important;
+                right: -0.875rem !important;
+                top: 0.875rem !important;
+                z-index: 60 !important;
+                background-color: #ffffff !important;
+                border: 1px solid rgba(228, 228, 231, 0.9) !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+            }
+            .dark .layout-vertical.sidebar-minimized .sidebar-toggle-btn {
+                background-color: #18181b !important;
+                border: 1px solid rgba(63, 63, 70, 0.8) !important;
+            }
+
+            /* Directional Arrow Logic as per UI/UX Standards */
+            .sidebar-collapse-icon {
+                display: inline-block !important;
+            }
+            .sidebar-expand-icon {
+                display: none !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-collapse-icon {
+                display: none !important;
+            }
+            .layout-vertical.sidebar-minimized .sidebar-expand-icon {
+                display: inline-block !important;
+            }
         </style>
 
         <!-- Instant Icon Font Preload & Global Stylesheet -->
@@ -190,6 +324,7 @@
 
         <div class="min-h-screen bg-slate-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(254,243,199,0.35),rgba(255,255,255,0))] dark:bg-[#09090B] dark:bg-none">
             @include('layouts.navigation')
+            @include('layouts.sidebar')
 
             <!-- High-End Staged Route Content Container -->
             <div id="pageTransitionContainer">
@@ -287,6 +422,35 @@
                         performToggle();
                     }, 200);
                 }
+            };
+
+            // Global Navigation Layout Switcher Handler
+            window.toggleNavLayout = function () {
+                const isVertical = document.documentElement.classList.contains('layout-vertical');
+                const nextLayout = isVertical ? 'horizontal' : 'vertical';
+
+                if (nextLayout === 'vertical') {
+                    document.documentElement.classList.add('layout-vertical');
+                    localStorage.setItem('nav_layout', 'vertical');
+                } else {
+                    document.documentElement.classList.remove('layout-vertical');
+                    localStorage.setItem('nav_layout', 'horizontal');
+                }
+
+                window.dispatchEvent(new Event('layout-changed'));
+            };
+
+            // Global Sidebar Minimize Toggle Handler
+            window.toggleSidebarMinimize = function () {
+                const isMinimized = document.documentElement.classList.contains('sidebar-minimized');
+                if (isMinimized) {
+                    document.documentElement.classList.remove('sidebar-minimized');
+                    localStorage.setItem('sidebar_minimized', 'false');
+                } else {
+                    document.documentElement.classList.add('sidebar-minimized');
+                    localStorage.setItem('sidebar_minimized', 'true');
+                }
+                window.dispatchEvent(new Event('sidebar-toggled'));
             };
         </script>
     </body>

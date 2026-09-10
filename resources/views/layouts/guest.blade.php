@@ -7,7 +7,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Campaign Stack') }}</title>
-        <link rel="icon" type="image/x-icon" href="/i/campaign-stack-100.png">
+        <link rel="icon" type="image/png" href="/i/campaignstack-icon.png">
+        <link rel="apple-touch-icon" href="/i/campaignstack-icon.png">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

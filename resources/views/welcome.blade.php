@@ -8,7 +8,8 @@
         <title>{{ config('app.name', 'CampaignStack') }} | High-Volume Multi-Provider Email Infrastructure</title>
         <meta name="description" content="Orchestrate customer broadcasts across multiple email gateways with intelligent failover, algorithmic dispatch pacing, and guaranteed inbox delivery.">
 
-        <link rel="icon" type="image/x-icon" href="/i/campaign-stack-100.png">
+        <link rel="icon" type="image/png" href="/i/campaignstack-icon.png">
+        <link rel="apple-touch-icon" href="/i/campaignstack-icon.png">
 
         <!-- Fonts: Plus Jakarta Sans & Figtree -->
         <link rel="preconnect" href="https://fonts.googleapis.com">

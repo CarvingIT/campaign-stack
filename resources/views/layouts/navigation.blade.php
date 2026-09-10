@@ -1,17 +1,17 @@
-<nav x-data="{ open: false }" class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-zinc-900/20 dark:backdrop-blur-xl border-b border-zinc-200/60 dark:border-amber-500/10 transition-all">
+<nav id="horizontalNav" x-data="{ open: false }" class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-zinc-900/90 dark:backdrop-blur-xl border-b border-zinc-200/80 dark:border-zinc-800/80 transition-all">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-14">
-            <div class="flex items-center space-x-6">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center group">
-                        <x-application-logo class="h-8 w-auto transition-transform group-hover:scale-105" />
-                    </a>
-                </div>
+            <!-- Left: Logo -->
+            <div class="shrink-0 flex items-center">
+                <a href="{{ route('dashboard') }}" class="flex items-center group">
+                    <x-application-logo class="h-8 w-auto transition-transform group-hover:scale-105" />
+                </a>
+            </div>
 
-                <!-- Navigation Links (Fluid Warm Mesh Capsule Bar) -->
-                <div class="hidden sm:flex items-center space-x-1 bg-white/90 dark:bg-zinc-900 p-1 rounded-full border border-amber-200/60 dark:border-zinc-800 shadow-2xs backdrop-blur-sm">
+            <!-- Center: Navigation Links (Sleek SaaS Segmented Capsule) -->
+            <div class="hidden md:flex flex-1 justify-center items-center px-4">
+                <div class="flex items-center gap-0.5 bg-zinc-100/80 dark:bg-zinc-800/60 p-1 rounded-full border border-zinc-200/70 dark:border-zinc-700/60 shadow-2xs backdrop-blur-sm">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -31,9 +31,9 @@
                         {{ __('Newsletters') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dispatch')" :active="request()->routeIs('dispatch')">
-                        <span class="flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                            {{ __('Dispatch Studio') }}
+                        <span class="inline-flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0"></span>
+                            <span>{{ __('Dispatch Studio') }}</span>
                         </span>
                     </x-nav-link>
                     <x-nav-link :href="route('emails')" :active="request()->routeIs('emails')">
@@ -42,9 +42,15 @@
                 </div>
             </div>
 
-            <!-- Right Area: Theme Toggle + Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center space-x-2.5">
+            <!-- Right Area: Theme Toggle + Layout Switcher + Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center space-x-2 shrink-0">
                 
+                <!-- Layout Switcher Button (Switch to Vertical Sidebar Nav) -->
+                <button type="button" id="desktop-layout-toggle" onclick="window.toggleNavLayout()" title="Switch to Sidebar Navigation Layout" aria-label="Switch to Sidebar Navigation Layout"
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs focus:outline-none">
+                    <i class="fas fa-bars-staggered text-3xs text-amber-500 dark:text-amber-400"></i>
+                </button>
+
                 <!-- Minimal Theme Toggle Button with Crisp SVG Icons -->
                 <button type="button" id="desktop-theme-toggle" onclick="window.toggleTheme(event)" title="Toggle Dark / Light Mode" aria-label="Toggle Dark / Light Mode"
                         class="theme-toggle-btn inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs focus:outline-none">
@@ -98,8 +104,14 @@
                 </x-dropdown>
             </div>
 
-            <!-- Mobile: Theme Toggle + Hamburger -->
-            <div class="-me-2 flex items-center space-x-1 sm:hidden">
+            <!-- Mobile: Theme Toggle + Layout Switcher + Hamburger -->
+            <div class="-me-2 flex items-center space-x-1.5 sm:hidden">
+                <!-- Mobile Layout Switcher -->
+                <button type="button" onclick="window.toggleNavLayout()" title="Switch to Sidebar Navigation Layout" aria-label="Switch to Sidebar Navigation Layout"
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs focus:outline-none">
+                    <i class="fas fa-bars-staggered text-3xs text-amber-500 dark:text-amber-400"></i>
+                </button>
+
                 <button type="button" onclick="window.toggleTheme(event)" title="Toggle Dark / Light Mode" aria-label="Toggle Dark / Light Mode"
                         class="theme-toggle-btn inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs focus:outline-none">
                     <span class="dark:hidden inline-flex items-center justify-center">
