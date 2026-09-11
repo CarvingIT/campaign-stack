@@ -1,223 +1,1628 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'CampaignStack') }} | High-Volume Multi-Provider Email Infrastructure</title>
+        <meta name="description" content="Orchestrate customer broadcasts across multiple email gateways with intelligent failover, algorithmic dispatch pacing, and guaranteed inbox delivery.">
 
-        @fonts
+        <link rel="icon" type="image/png" href="/i/campaignstack-icon.png">
+        <link rel="apple-touch-icon" href="/i/campaignstack-icon.png">
 
-        <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @else
-            <style>
-                /*! tailwindcss v4.0.7 | MIT License | https://tailwindcss.com */ @layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0;--tw-rotate-x:initial;--tw-rotate-y:initial;--tw-rotate-z:initial;--tw-skew-x:initial;--tw-skew-y:initial;--tw-space-x-reverse:0;--tw-border-style:solid;--tw-leading:initial;--tw-font-weight:initial;--tw-tracking:initial;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-blur:initial;--tw-brightness:initial;--tw-contrast:initial;--tw-grayscale:initial;--tw-hue-rotate:initial;--tw-invert:initial;--tw-opacity:initial;--tw-saturate:initial;--tw-sepia:initial;--tw-drop-shadow:initial;--tw-drop-shadow-color:initial;--tw-drop-shadow-alpha:100%;--tw-drop-shadow-size:initial;--tw-duration:initial;--tw-ease:initial;--tw-content:""}}}@layer theme{:root,:host{--font-sans:"Instrument Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";--font-serif:ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;--font-mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;--color-red-50:oklch(97.1% .013 17.38);--color-red-100:oklch(93.6% .032 17.717);--color-red-200:oklch(88.5% .062 18.334);--color-red-300:oklch(80.8% .114 19.571);--color-red-400:oklch(70.4% .191 22.216);--color-red-500:oklch(63.7% .237 25.331);--color-red-600:oklch(57.7% .245 27.325);--color-red-700:oklch(50.5% .213 27.518);--color-red-800:oklch(44.4% .177 26.899);--color-red-900:oklch(39.6% .141 25.723);--color-red-950:oklch(25.8% .092 26.042);--color-orange-50:oklch(98% .016 73.684);--color-orange-100:oklch(95.4% .038 75.164);--color-orange-200:oklch(90.1% .076 70.697);--color-orange-300:oklch(83.7% .128 66.29);--color-orange-400:oklch(75% .183 55.934);--color-orange-500:oklch(70.5% .213 47.604);--color-orange-600:oklch(64.6% .222 41.116);--color-orange-700:oklch(55.3% .195 38.402);--color-orange-800:oklch(47% .157 37.304);--color-orange-900:oklch(40.8% .123 38.172);--color-orange-950:oklch(26.6% .079 36.259);--color-amber-50:oklch(98.7% .022 95.277);--color-amber-100:oklch(96.2% .059 95.617);--color-amber-200:oklch(92.4% .12 95.746);--color-amber-300:oklch(87.9% .169 91.605);--color-amber-400:oklch(82.8% .189 84.429);--color-amber-500:oklch(76.9% .188 70.08);--color-amber-600:oklch(66.6% .179 58.318);--color-amber-700:oklch(55.5% .163 48.998);--color-amber-800:oklch(47.3% .137 46.201);--color-amber-900:oklch(41.4% .112 45.904);--color-amber-950:oklch(27.9% .077 45.635);--color-yellow-50:oklch(98.7% .026 102.212);--color-yellow-100:oklch(97.3% .071 103.193);--color-yellow-200:oklch(94.5% .129 101.54);--color-yellow-300:oklch(90.5% .182 98.111);--color-yellow-400:oklch(85.2% .199 91.936);--color-yellow-500:oklch(79.5% .184 86.047);--color-yellow-600:oklch(68.1% .162 75.834);--color-yellow-700:oklch(55.4% .135 66.442);--color-yellow-800:oklch(47.6% .114 61.907);--color-yellow-900:oklch(42.1% .095 57.708);--color-yellow-950:oklch(28.6% .066 53.813);--color-lime-50:oklch(98.6% .031 120.757);--color-lime-100:oklch(96.7% .067 122.328);--color-lime-200:oklch(93.8% .127 124.321);--color-lime-300:oklch(89.7% .196 126.665);--color-lime-400:oklch(84.1% .238 128.85);--color-lime-500:oklch(76.8% .233 130.85);--color-lime-600:oklch(64.8% .2 131.684);--color-lime-700:oklch(53.2% .157 131.589);--color-lime-800:oklch(45.3% .124 130.933);--color-lime-900:oklch(40.5% .101 131.063);--color-lime-950:oklch(27.4% .072 132.109);--color-green-50:oklch(98.2% .018 155.826);--color-green-100:oklch(96.2% .044 156.743);--color-green-200:oklch(92.5% .084 155.995);--color-green-300:oklch(87.1% .15 154.449);--color-green-400:oklch(79.2% .209 151.711);--color-green-500:oklch(72.3% .219 149.579);--color-green-600:oklch(62.7% .194 149.214);--color-green-700:oklch(52.7% .154 150.069);--color-green-800:oklch(44.8% .119 151.328);--color-green-900:oklch(39.3% .095 152.535);--color-green-950:oklch(26.6% .065 152.934);--color-emerald-50:oklch(97.9% .021 166.113);--color-emerald-100:oklch(95% .052 163.051);--color-emerald-200:oklch(90.5% .093 164.15);--color-emerald-300:oklch(84.5% .143 164.978);--color-emerald-400:oklch(76.5% .177 163.223);--color-emerald-500:oklch(69.6% .17 162.48);--color-emerald-600:oklch(59.6% .145 163.225);--color-emerald-700:oklch(50.8% .118 165.612);--color-emerald-800:oklch(43.2% .095 166.913);--color-emerald-900:oklch(37.8% .077 168.94);--color-emerald-950:oklch(26.2% .051 172.552);--color-teal-50:oklch(98.4% .014 180.72);--color-teal-100:oklch(95.3% .051 180.801);--color-teal-200:oklch(91% .096 180.426);--color-teal-300:oklch(85.5% .138 181.071);--color-teal-400:oklch(77.7% .152 181.912);--color-teal-500:oklch(70.4% .14 182.503);--color-teal-600:oklch(60% .118 184.704);--color-teal-700:oklch(51.1% .096 186.391);--color-teal-800:oklch(43.7% .078 188.216);--color-teal-900:oklch(38.6% .063 188.416);--color-teal-950:oklch(27.7% .046 192.524);--color-cyan-50:oklch(98.4% .019 200.873);--color-cyan-100:oklch(95.6% .045 203.388);--color-cyan-200:oklch(91.7% .08 205.041);--color-cyan-300:oklch(86.5% .127 207.078);--color-cyan-400:oklch(78.9% .154 211.53);--color-cyan-500:oklch(71.5% .143 215.221);--color-cyan-600:oklch(60.9% .126 221.723);--color-cyan-700:oklch(52% .105 223.128);--color-cyan-800:oklch(45% .085 224.283);--color-cyan-900:oklch(39.8% .07 227.392);--color-cyan-950:oklch(30.2% .056 229.695);--color-sky-50:oklch(97.7% .013 236.62);--color-sky-100:oklch(95.1% .026 236.824);--color-sky-200:oklch(90.1% .058 230.902);--color-sky-300:oklch(82.8% .111 230.318);--color-sky-400:oklch(74.6% .16 232.661);--color-sky-500:oklch(68.5% .169 237.323);--color-sky-600:oklch(58.8% .158 241.966);--color-sky-700:oklch(50% .134 242.749);--color-sky-800:oklch(44.3% .11 240.79);--color-sky-900:oklch(39.1% .09 240.876);--color-sky-950:oklch(29.3% .066 243.157);--color-blue-50:oklch(97% .014 254.604);--color-blue-100:oklch(93.2% .032 255.585);--color-blue-200:oklch(88.2% .059 254.128);--color-blue-300:oklch(80.9% .105 251.813);--color-blue-400:oklch(70.7% .165 254.624);--color-blue-500:oklch(62.3% .214 259.815);--color-blue-600:oklch(54.6% .245 262.881);--color-blue-700:oklch(48.8% .243 264.376);--color-blue-800:oklch(42.4% .199 265.638);--color-blue-900:oklch(37.9% .146 265.522);--color-blue-950:oklch(28.2% .091 267.935);--color-indigo-50:oklch(96.2% .018 272.314);--color-indigo-100:oklch(93% .034 272.788);--color-indigo-200:oklch(87% .065 274.039);--color-indigo-300:oklch(78.5% .115 274.713);--color-indigo-400:oklch(67.3% .182 276.935);--color-indigo-500:oklch(58.5% .233 277.117);--color-indigo-600:oklch(51.1% .262 276.966);--color-indigo-700:oklch(45.7% .24 277.023);--color-indigo-800:oklch(39.8% .195 277.366);--color-indigo-900:oklch(35.9% .144 278.697);--color-indigo-950:oklch(25.7% .09 281.288);--color-violet-50:oklch(96.9% .016 293.756);--color-violet-100:oklch(94.3% .029 294.588);--color-violet-200:oklch(89.4% .057 293.283);--color-violet-300:oklch(81.1% .111 293.571);--color-violet-400:oklch(70.2% .183 293.541);--color-violet-500:oklch(60.6% .25 292.717);--color-violet-600:oklch(54.1% .281 293.009);--color-violet-700:oklch(49.1% .27 292.581);--color-violet-800:oklch(43.2% .232 292.759);--color-violet-900:oklch(38% .189 293.745);--color-violet-950:oklch(28.3% .141 291.089);--color-purple-50:oklch(97.7% .014 308.299);--color-purple-100:oklch(94.6% .033 307.174);--color-purple-200:oklch(90.2% .063 306.703);--color-purple-300:oklch(82.7% .119 306.383);--color-purple-400:oklch(71.4% .203 305.504);--color-purple-500:oklch(62.7% .265 303.9);--color-purple-600:oklch(55.8% .288 302.321);--color-purple-700:oklch(49.6% .265 301.924);--color-purple-800:oklch(43.8% .218 303.724);--color-purple-900:oklch(38.1% .176 304.987);--color-purple-950:oklch(29.1% .149 302.717);--color-fuchsia-50:oklch(97.7% .017 320.058);--color-fuchsia-100:oklch(95.2% .037 318.852);--color-fuchsia-200:oklch(90.3% .076 319.62);--color-fuchsia-300:oklch(83.3% .145 321.434);--color-fuchsia-400:oklch(74% .238 322.16);--color-fuchsia-500:oklch(66.7% .295 322.15);--color-fuchsia-600:oklch(59.1% .293 322.896);--color-fuchsia-700:oklch(51.8% .253 323.949);--color-fuchsia-800:oklch(45.2% .211 324.591);--color-fuchsia-900:oklch(40.1% .17 325.612);--color-fuchsia-950:oklch(29.3% .136 325.661);--color-pink-50:oklch(97.1% .014 343.198);--color-pink-100:oklch(94.8% .028 342.258);--color-pink-200:oklch(89.9% .061 343.231);--color-pink-300:oklch(82.3% .12 346.018);--color-pink-400:oklch(71.8% .202 349.761);--color-pink-500:oklch(65.6% .241 354.308);--color-pink-600:oklch(59.2% .249 .584);--color-pink-700:oklch(52.5% .223 3.958);--color-pink-800:oklch(45.9% .187 3.815);--color-pink-900:oklch(40.8% .153 2.432);--color-pink-950:oklch(28.4% .109 3.907);--color-rose-50:oklch(96.9% .015 12.422);--color-rose-100:oklch(94.1% .03 12.58);--color-rose-200:oklch(89.2% .058 10.001);--color-rose-300:oklch(81% .117 11.638);--color-rose-400:oklch(71.2% .194 13.428);--color-rose-500:oklch(64.5% .246 16.439);--color-rose-600:oklch(58.6% .253 17.585);--color-rose-700:oklch(51.4% .222 16.935);--color-rose-800:oklch(45.5% .188 13.697);--color-rose-900:oklch(41% .159 10.272);--color-rose-950:oklch(27.1% .105 12.094);--color-slate-50:oklch(98.4% .003 247.858);--color-slate-100:oklch(96.8% .007 247.896);--color-slate-200:oklch(92.9% .013 255.508);--color-slate-300:oklch(86.9% .022 252.894);--color-slate-400:oklch(70.4% .04 256.788);--color-slate-500:oklch(55.4% .046 257.417);--color-slate-600:oklch(44.6% .043 257.281);--color-slate-700:oklch(37.2% .044 257.287);--color-slate-800:oklch(27.9% .041 260.031);--color-slate-900:oklch(20.8% .042 265.755);--color-slate-950:oklch(12.9% .042 264.695);--color-gray-50:oklch(98.5% .002 247.839);--color-gray-100:oklch(96.7% .003 264.542);--color-gray-200:oklch(92.8% .006 264.531);--color-gray-300:oklch(87.2% .01 258.338);--color-gray-400:oklch(70.7% .022 261.325);--color-gray-500:oklch(55.1% .027 264.364);--color-gray-600:oklch(44.6% .03 256.802);--color-gray-700:oklch(37.3% .034 259.733);--color-gray-800:oklch(27.8% .033 256.848);--color-gray-900:oklch(21% .034 264.665);--color-gray-950:oklch(13% .028 261.692);--color-zinc-50:oklch(98.5% 0 0);--color-zinc-100:oklch(96.7% .001 286.375);--color-zinc-200:oklch(92% .004 286.32);--color-zinc-300:oklch(87.1% .006 286.286);--color-zinc-400:oklch(70.5% .015 286.067);--color-zinc-500:oklch(55.2% .016 285.938);--color-zinc-600:oklch(44.2% .017 285.786);--color-zinc-700:oklch(37% .013 285.805);--color-zinc-800:oklch(27.4% .006 286.033);--color-zinc-900:oklch(21% .006 285.885);--color-zinc-950:oklch(14.1% .005 285.823);--color-neutral-50:oklch(98.5% 0 0);--color-neutral-100:oklch(97% 0 0);--color-neutral-200:oklch(92.2% 0 0);--color-neutral-300:oklch(87% 0 0);--color-neutral-400:oklch(70.8% 0 0);--color-neutral-500:oklch(55.6% 0 0);--color-neutral-600:oklch(43.9% 0 0);--color-neutral-700:oklch(37.1% 0 0);--color-neutral-800:oklch(26.9% 0 0);--color-neutral-900:oklch(20.5% 0 0);--color-neutral-950:oklch(14.5% 0 0);--color-stone-50:oklch(98.5% .001 106.423);--color-stone-100:oklch(97% .001 106.424);--color-stone-200:oklch(92.3% .003 48.717);--color-stone-300:oklch(86.9% .005 56.366);--color-stone-400:oklch(70.9% .01 56.259);--color-stone-500:oklch(55.3% .013 58.071);--color-stone-600:oklch(44.4% .011 73.639);--color-stone-700:oklch(37.4% .01 67.558);--color-stone-800:oklch(26.8% .007 34.298);--color-stone-900:oklch(21.6% .006 56.043);--color-stone-950:oklch(14.7% .004 49.25);--color-black:#000;--color-white:#fff;--spacing:.25rem;--breakpoint-sm:40rem;--breakpoint-md:48rem;--breakpoint-lg:64rem;--breakpoint-xl:80rem;--breakpoint-2xl:96rem;--container-3xs:16rem;--container-2xs:18rem;--container-xs:20rem;--container-sm:24rem;--container-md:28rem;--container-lg:32rem;--container-xl:36rem;--container-2xl:42rem;--container-3xl:48rem;--container-4xl:56rem;--container-5xl:64rem;--container-6xl:72rem;--container-7xl:80rem;--text-xs:.75rem;--text-xs--line-height:calc(1 / .75);--text-sm:.875rem;--text-sm--line-height:calc(1.25 / .875);--text-base:1rem;--text-base--line-height: 1.5 ;--text-lg:1.125rem;--text-lg--line-height:calc(1.75 / 1.125);--text-xl:1.25rem;--text-xl--line-height:calc(1.75 / 1.25);--text-2xl:1.5rem;--text-2xl--line-height:calc(2 / 1.5);--text-3xl:1.875rem;--text-3xl--line-height: 1.2 ;--text-4xl:2.25rem;--text-4xl--line-height:calc(2.5 / 2.25);--text-5xl:3rem;--text-5xl--line-height:1;--text-6xl:3.75rem;--text-6xl--line-height:1;--text-7xl:4.5rem;--text-7xl--line-height:1;--text-8xl:6rem;--text-8xl--line-height:1;--text-9xl:8rem;--text-9xl--line-height:1;--font-weight-thin:100;--font-weight-extralight:200;--font-weight-light:300;--font-weight-normal:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-weight-extrabold:800;--font-weight-black:900;--tracking-tighter:-.05em;--tracking-tight:-.025em;--tracking-normal:0em;--tracking-wide:.025em;--tracking-wider:.05em;--tracking-widest:.1em;--leading-tight:1.25;--leading-snug:1.375;--leading-normal:1.5;--leading-relaxed:1.625;--leading-loose:2;--radius-xs:.125rem;--radius-sm:.25rem;--radius-md:.375rem;--radius-lg:.5rem;--radius-xl:.75rem;--radius-2xl:1rem;--radius-3xl:1.5rem;--radius-4xl:2rem;--shadow-2xs:0 1px #0000000d;--shadow-xs:0 1px 2px 0 #0000000d;--shadow-sm:0 1px 3px 0 #0000001a, 0 1px 2px -1px #0000001a;--shadow-md:0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a;--shadow-lg:0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;--shadow-xl:0 20px 25px -5px #0000001a, 0 8px 10px -6px #0000001a;--shadow-2xl:0 25px 50px -12px #00000040;--inset-shadow-2xs:inset 0 1px #0000000d;--inset-shadow-xs:inset 0 1px 1px #0000000d;--inset-shadow-sm:inset 0 2px 4px #0000000d;--drop-shadow-xs:0 1px 1px #0000000d;--drop-shadow-sm:0 1px 2px #00000026;--drop-shadow-md:0 3px 3px #0000001f;--drop-shadow-lg:0 4px 4px #00000026;--drop-shadow-xl:0 9px 7px #0000001a;--drop-shadow-2xl:0 25px 25px #00000026;--ease-in:cubic-bezier(.4, 0, 1, 1);--ease-out:cubic-bezier(0, 0, .2, 1);--ease-in-out:cubic-bezier(.4, 0, .2, 1);--animate-spin:spin 1s linear infinite;--animate-ping:ping 1s cubic-bezier(0, 0, .2, 1) infinite;--animate-pulse:pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;--animate-bounce:bounce 1s infinite;--blur-xs:4px;--blur-sm:8px;--blur-md:12px;--blur-lg:16px;--blur-xl:24px;--blur-2xl:40px;--blur-3xl:64px;--perspective-dramatic:100px;--perspective-near:300px;--perspective-normal:500px;--perspective-midrange:800px;--perspective-distant:1200px;--aspect-video:16 / 9;--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4, 0, .2, 1);--default-font-family:var(--font-sans);--default-mono-font-family:var(--font-mono)}}@layer base{*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}::file-selector-button{box-sizing:border-box;border:0 solid;margin:0;padding:0}html,:host{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--default-font-family,ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");font-feature-settings:var(--default-font-feature-settings,normal);font-variation-settings:var(--default-font-variation-settings,normal);-webkit-tap-highlight-color:transparent}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,samp,pre{font-family:var(--default-mono-font-family,ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);font-feature-settings:var(--default-mono-font-feature-settings,normal);font-variation-settings:var(--default-mono-font-variation-settings,normal);font-size:1em}small{font-size:80%}sub,sup{vertical-align:baseline;font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}ol,ul,menu{list-style:none}img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}img,video{max-width:100%;height:auto}button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}::file-selector-button{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::file-selector-button{margin-inline-end:4px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab,red,red)){::placeholder{color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-datetime-edit{padding-block:0}::-webkit-datetime-edit-year-field{padding-block:0}::-webkit-datetime-edit-month-field{padding-block:0}::-webkit-datetime-edit-day-field{padding-block:0}::-webkit-datetime-edit-hour-field{padding-block:0}::-webkit-datetime-edit-minute-field{padding-block:0}::-webkit-datetime-edit-second-field{padding-block:0}::-webkit-datetime-edit-millisecond-field{padding-block:0}::-webkit-datetime-edit-meridiem-field{padding-block:0}::-webkit-calendar-picker-indicator{line-height:1}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){appearance:button}::file-selector-button{appearance:button}::-webkit-inner-spin-button{height:auto}::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}}@layer components;@layer utilities{.absolute{position:absolute}.fixed{position:fixed}.relative{position:relative}.static{position:static}.inset-0{inset:calc(var(--spacing) * 0)}.start{inset-inline-start:var(--spacing)}.top-0{top:calc(var(--spacing) * 0)}.right-0{right:calc(var(--spacing) * 0)}.container{width:100%}@media(min-width:40rem){.container{max-width:40rem}}@media(min-width:48rem){.container{max-width:48rem}}@media(min-width:64rem){.container{max-width:64rem}}@media(min-width:80rem){.container{max-width:80rem}}@media(min-width:96rem){.container{max-width:96rem}}.mx-auto{margin-inline:auto}.-mt-\[6\.6rem\]{margin-top:-6.6rem}.-mt-px{margin-top:-1px}.mt-2{margin-top:calc(var(--spacing) * 2)}.mt-4{margin-top:calc(var(--spacing) * 4)}.mt-6{margin-top:calc(var(--spacing) * 6)}.mt-8{margin-top:calc(var(--spacing) * 8)}.mr-2{margin-right:calc(var(--spacing) * 2)}.-mb-px{margin-bottom:-1px}.mb-1{margin-bottom:calc(var(--spacing) * 1)}.mb-2{margin-bottom:calc(var(--spacing) * 2)}.mb-4{margin-bottom:calc(var(--spacing) * 4)}.mb-6{margin-bottom:calc(var(--spacing) * 6)}.-ml-8{margin-left:calc(var(--spacing) * -8)}.-ml-px{margin-left:-1px}.ml-1{margin-left:calc(var(--spacing) * 1)}.ml-2{margin-left:calc(var(--spacing) * 2)}.ml-4{margin-left:calc(var(--spacing) * 4)}.ml-12{margin-left:calc(var(--spacing) * 12)}.contents{display:contents}.flex{display:flex}.grid{display:grid}.hidden{display:none}.inline-block{display:inline-block}.inline-flex{display:inline-flex}.table{display:table}.aspect-\[335\/364\]{aspect-ratio:335/364}.h-1{height:calc(var(--spacing) * 1)}.h-1\.5{height:calc(var(--spacing) * 1.5)}.h-2{height:calc(var(--spacing) * 2)}.h-2\.5{height:calc(var(--spacing) * 2.5)}.h-3{height:calc(var(--spacing) * 3)}.h-3\.5{height:calc(var(--spacing) * 3.5)}.h-5{height:calc(var(--spacing) * 5)}.h-8{height:calc(var(--spacing) * 8)}.h-14{height:calc(var(--spacing) * 14)}.h-14\.5{height:calc(var(--spacing) * 14.5)}.h-16{height:calc(var(--spacing) * 16)}.min-h-screen{min-height:100vh}.w-1{width:calc(var(--spacing) * 1)}.w-1\.5{width:calc(var(--spacing) * 1.5)}.w-2{width:calc(var(--spacing) * 2)}.w-2\.5{width:calc(var(--spacing) * 2.5)}.w-3{width:calc(var(--spacing) * 3)}.w-3\.5{width:calc(var(--spacing) * 3.5)}.w-5{width:calc(var(--spacing) * 5)}.w-8{width:calc(var(--spacing) * 8)}.w-\[438px\]{width:438px}.w-auto{width:auto}.w-full{width:100%}.max-w-6xl{max-width:var(--container-6xl)}.max-w-\[335px\]{max-width:335px}.max-w-none{max-width:none}.max-w-xl{max-width:var(--container-xl)}.flex-1{flex:1}.shrink-0{flex-shrink:0}.translate-y-0{--tw-translate-y:calc(var(--spacing) * 0);translate:var(--tw-translate-x) var(--tw-translate-y)}.transform{transform:var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)}.cursor-default{cursor:default}.cursor-not-allowed{cursor:not-allowed}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-col-reverse{flex-direction:column-reverse}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.justify-end{justify-content:flex-end}.justify-items-center{justify-items:center}.gap-2{gap:calc(var(--spacing) * 2)}.gap-3{gap:calc(var(--spacing) * 3)}.gap-4{gap:calc(var(--spacing) * 4)}:where(.space-x-1>:not(:last-child)){--tw-space-x-reverse:0;margin-inline-start:calc(calc(var(--spacing) * 1) * var(--tw-space-x-reverse));margin-inline-end:calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-x-reverse)))}.overflow-hidden{overflow:hidden}.rounded-full{border-radius:3.40282e38px}.rounded-md{border-radius:var(--radius-md)}.rounded-sm{border-radius:var(--radius-sm)}.rounded-t-lg{border-top-left-radius:var(--radius-lg);border-top-right-radius:var(--radius-lg)}.rounded-l-md{border-top-left-radius:var(--radius-md);border-bottom-left-radius:var(--radius-md)}.rounded-r-md{border-top-right-radius:var(--radius-md);border-bottom-right-radius:var(--radius-md)}.rounded-br-lg{border-bottom-right-radius:var(--radius-lg)}.rounded-bl-lg{border-bottom-left-radius:var(--radius-lg)}.border{border-style:var(--tw-border-style);border-width:1px}.border-t{border-top-style:var(--tw-border-style);border-top-width:1px}.border-r{border-right-style:var(--tw-border-style);border-right-width:1px}.border-\[\#19140035\]{border-color:#19140035}.border-\[\#e3e3e0\]{border-color:#e3e3e0}.border-black{border-color:var(--color-black)}.border-gray-200{border-color:var(--color-gray-200)}.border-gray-300{border-color:var(--color-gray-300)}.border-gray-400{border-color:var(--color-gray-400)}.border-transparent{border-color:#0000}.bg-\[\#1b1b18\]{background-color:#1b1b18}.bg-\[\#FDFDFC\]{background-color:#fdfdfc}.bg-\[\#dbdbd7\]{background-color:#dbdbd7}.bg-\[\#fff2f2\]{background-color:#fff2f2}.bg-gray-100{background-color:var(--color-gray-100)}.bg-gray-200{background-color:var(--color-gray-200)}.bg-white{background-color:var(--color-white)}.p-6{padding:calc(var(--spacing) * 6)}.px-2{padding-inline:calc(var(--spacing) * 2)}.px-4{padding-inline:calc(var(--spacing) * 4)}.px-5{padding-inline:calc(var(--spacing) * 5)}.px-6{padding-inline:calc(var(--spacing) * 6)}.py-1{padding-block:calc(var(--spacing) * 1)}.py-1\.5{padding-block:calc(var(--spacing) * 1.5)}.py-2{padding-block:calc(var(--spacing) * 2)}.py-4{padding-block:calc(var(--spacing) * 4)}.pt-8{padding-top:calc(var(--spacing) * 8)}.pb-6{padding-bottom:calc(var(--spacing) * 6)}.pb-12{padding-bottom:calc(var(--spacing) * 12)}.text-center{text-align:center}.text-lg{font-size:var(--text-lg);line-height:var(--tw-leading,var(--text-lg--line-height))}.text-sm{font-size:var(--text-sm);line-height:var(--tw-leading,var(--text-sm--line-height))}.text-\[13px\]{font-size:13px}.leading-5{--tw-leading:calc(var(--spacing) * 5);line-height:calc(var(--spacing) * 5)}.leading-7{--tw-leading:calc(var(--spacing) * 7);line-height:calc(var(--spacing) * 7)}.leading-\[20px\]{--tw-leading:20px;line-height:20px}.leading-normal{--tw-leading:var(--leading-normal);line-height:var(--leading-normal)}.font-medium{--tw-font-weight:var(--font-weight-medium);font-weight:var(--font-weight-medium)}.font-semibold{--tw-font-weight:var(--font-weight-semibold);font-weight:var(--font-weight-semibold)}.tracking-wider{--tw-tracking:var(--tracking-wider);letter-spacing:var(--tracking-wider)}.text-\[\#1B1B18\],.text-\[\#1b1b18\]{color:#1b1b18}.text-\[\#706f6c\]{color:#706f6c}.text-\[\#F3BEC7\]{color:#f3bec7}.text-\[\#F8B803\]{color:#f8b803}.text-\[\#F53003\],.text-\[\#f53003\]{color:#f53003}.text-gray-200{color:var(--color-gray-200)}.text-gray-300{color:var(--color-gray-300)}.text-gray-400{color:var(--color-gray-400)}.text-gray-500{color:var(--color-gray-500)}.text-gray-600{color:var(--color-gray-600)}.text-gray-700{color:var(--color-gray-700)}.text-gray-800{color:var(--color-gray-800)}.text-gray-900{color:var(--color-gray-900)}.text-white{color:var(--color-white)}.uppercase{text-transform:uppercase}.underline{text-decoration-line:underline}.underline-offset-4{text-underline-offset:4px}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-100{opacity:1}.mix-blend-color{mix-blend-mode:color}.mix-blend-darken{mix-blend-mode:darken}.mix-blend-hard-light{mix-blend-mode:hard-light}.mix-blend-multiply{mix-blend-mode:multiply}.shadow{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a), 0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-\[0px_0px_1px_0px_rgba\(0\,0\,0\,0\.03\)\,0px_1px_2px_0px_rgba\(0\,0\,0\,0\.06\)\]{--tw-shadow:0px 0px 1px 0px var(--tw-shadow-color,#00000008), 0px 1px 2px 0px var(--tw-shadow-color,#0000000f);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-\[inset_0px_0px_0px_1px_rgba\(26\,26\,0\,0\.16\)\]{--tw-shadow:inset 0px 0px 0px 1px var(--tw-shadow-color,#1a1a0029);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a), 0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ring-gray-300{--tw-ring-color:var(--color-gray-300)}.filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.transition{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to,opacity,box-shadow,transform,translate,scale,rotate,filter,-webkit-backdrop-filter,backdrop-filter,display,content-visibility,overlay,pointer-events;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.transition-all{transition-property:all;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.transition-opacity{transition-property:opacity;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.delay-200{transition-delay:.2s}.delay-300{transition-delay:.3s}.delay-400{transition-delay:.4s}.duration-150{--tw-duration:.15s;transition-duration:.15s}.duration-750{--tw-duration:.75s;transition-duration:.75s}.ease-in-out{--tw-ease:var(--ease-in-out);transition-timing-function:var(--ease-in-out)}.\[--stroke-color\:\#1B1B18\]{--stroke-color:#1b1b18}.not-has-\[nav\]\:hidden:not(:has(:is(nav))){display:none}.before\:absolute:before{content:var(--tw-content);position:absolute}.before\:top-0:before{content:var(--tw-content);top:calc(var(--spacing) * 0)}.before\:top-1\/2:before{content:var(--tw-content);top:50%}.before\:bottom-0:before{content:var(--tw-content);bottom:calc(var(--spacing) * 0)}.before\:bottom-1\/2:before{content:var(--tw-content);bottom:50%}.before\:left-\[0\.4rem\]:before{content:var(--tw-content);left:.4rem}.before\:border-l:before{content:var(--tw-content);border-left-style:var(--tw-border-style);border-left-width:1px}.before\:border-\[\#e3e3e0\]:before{content:var(--tw-content);border-color:#e3e3e0}@media(hover:hover){.hover\:border-\[\#1915014a\]:hover{border-color:#1915014a}.hover\:border-\[\#19140035\]:hover{border-color:#19140035}.hover\:border-black:hover{border-color:var(--color-black)}.hover\:bg-black:hover{background-color:var(--color-black)}.hover\:bg-gray-100:hover{background-color:var(--color-gray-100)}.hover\:text-gray-400:hover{color:var(--color-gray-400)}.hover\:text-gray-700:hover{color:var(--color-gray-700)}}.focus\:border-blue-300:focus{border-color:var(--color-blue-300)}.focus\:ring:focus{--tw-ring-shadow:var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color,currentcolor);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.focus\:outline-none:focus{--tw-outline-style:none;outline-style:none}.active\:bg-gray-100:active{background-color:var(--color-gray-100)}.active\:text-gray-500:active{color:var(--color-gray-500)}.active\:text-gray-700:active{color:var(--color-gray-700)}.active\:text-gray-800:active{color:var(--color-gray-800)}@media(min-width:40rem){.sm\:flex{display:flex}.sm\:hidden{display:none}.sm\:flex-1{flex:1}.sm\:items-center{align-items:center}.sm\:justify-between{justify-content:space-between}.sm\:justify-start{justify-content:flex-start}.sm\:gap-2{gap:calc(var(--spacing) * 2)}.sm\:px-6{padding-inline:calc(var(--spacing) * 6)}.sm\:pt-0{padding-top:calc(var(--spacing) * 0)}}@media(min-width:64rem){.lg\:mt-10{margin-top:calc(var(--spacing) * 10)}.lg\:mb-0{margin-bottom:calc(var(--spacing) * 0)}.lg\:mb-6{margin-bottom:calc(var(--spacing) * 6)}.lg\:-ml-px{margin-left:-1px}.lg\:ml-0{margin-left:calc(var(--spacing) * 0)}.lg\:block{display:block}.lg\:aspect-auto{aspect-ratio:auto}.lg\:w-\[438px\]{width:438px}.lg\:max-w-4xl{max-width:var(--container-4xl)}.lg\:grow{flex-grow:1}.lg\:flex-row{flex-direction:row}.lg\:justify-center{justify-content:center}.lg\:rounded-t-none{border-top-left-radius:0;border-top-right-radius:0}.lg\:rounded-tl-lg{border-top-left-radius:var(--radius-lg)}.lg\:rounded-r-lg{border-top-right-radius:var(--radius-lg);border-bottom-right-radius:var(--radius-lg)}.lg\:rounded-br-none{border-bottom-right-radius:0}.lg\:p-8{padding:calc(var(--spacing) * 8)}.lg\:p-20{padding:calc(var(--spacing) * 20)}.lg\:px-8{padding-inline:calc(var(--spacing) * 8)}.lg\:pb-10{padding-bottom:calc(var(--spacing) * 10)}}.rtl\:flex-row-reverse:where(:dir(rtl),[dir=rtl],[dir=rtl] *){flex-direction:row-reverse}@media(prefers-color-scheme:dark){.dark\:border-\[\#3E3E3A\]{border-color:#3e3e3a}.dark\:border-\[\#eeeeec\]{border-color:#eeeeec}.dark\:border-gray-600{border-color:var(--color-gray-600)}.dark\:bg-\[\#0a0a0a\]{background-color:#0a0a0a}.dark\:bg-\[\#1D0002\]{background-color:#1d0002}.dark\:bg-\[\#3E3E3A\]{background-color:#3e3e3a}.dark\:bg-\[\#161615\]{background-color:#161615}.dark\:bg-\[\#eeeeec\]{background-color:#eeeeec}.dark\:bg-gray-700{background-color:var(--color-gray-700)}.dark\:bg-gray-800{background-color:var(--color-gray-800)}.dark\:bg-gray-900{background-color:var(--color-gray-900)}.dark\:text-\[\#1C1C1A\]{color:#1c1c1a}.dark\:text-\[\#4B0600\]{color:#4b0600}.dark\:text-\[\#391800\]{color:#391800}.dark\:text-\[\#733000\]{color:#733000}.dark\:text-\[\#A1A09A\]{color:#a1a09a}.dark\:text-\[\#EDEDEC\]{color:#ededec}.dark\:text-\[\#F61500\]{color:#f61500}.dark\:text-\[\#FF4433\]{color:#f43}.dark\:text-black{color:var(--color-black)}.dark\:text-gray-200{color:var(--color-gray-200)}.dark\:text-gray-300{color:var(--color-gray-300)}.dark\:text-gray-400{color:var(--color-gray-400)}.dark\:text-gray-600{color:var(--color-gray-600)}.dark\:mix-blend-hard-light{mix-blend-mode:hard-light}.dark\:mix-blend-normal{mix-blend-mode:normal}.dark\:shadow-\[inset_0px_0px_0px_1px_\#fffaed2d\]{--tw-shadow:inset 0px 0px 0px 1px var(--tw-shadow-color,#fffaed2d);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.dark\:\[--stroke-color\:\#FF750F\]{--stroke-color:#ff750f}.dark\:before\:border-\[\#3E3E3A\]:before{content:var(--tw-content);border-color:#3e3e3a}@media(hover:hover){.dark\:hover\:border-\[\#3E3E3A\]:hover{border-color:#3e3e3a}.dark\:hover\:border-\[\#62605b\]:hover{border-color:#62605b}.dark\:hover\:border-white:hover{border-color:var(--color-white)}.dark\:hover\:bg-gray-900:hover{background-color:var(--color-gray-900)}.dark\:hover\:bg-white:hover{background-color:var(--color-white)}.dark\:hover\:text-gray-200:hover{color:var(--color-gray-200)}.dark\:hover\:text-gray-300:hover{color:var(--color-gray-300)}}.dark\:focus\:border-blue-700:focus{border-color:var(--color-blue-700)}.dark\:focus\:border-blue-800:focus{border-color:var(--color-blue-800)}.dark\:active\:bg-gray-700:active{background-color:var(--color-gray-700)}.dark\:active\:text-gray-300:active{color:var(--color-gray-300)}}@starting-style{.starting\:opacity-0{opacity:0}}@media(prefers-reduced-motion:no-preference){@starting-style{.motion-safe\:starting\:-translate-x-\[26px\]{--tw-translate-x: -26px ;translate:var(--tw-translate-x) var(--tw-translate-y)}}@starting-style{.motion-safe\:starting\:-translate-x-\[51px\]{--tw-translate-x: -51px ;translate:var(--tw-translate-x) var(--tw-translate-y)}}@starting-style{.motion-safe\:starting\:-translate-x-\[78px\]{--tw-translate-x: -78px ;translate:var(--tw-translate-x) var(--tw-translate-y)}}@starting-style{.motion-safe\:starting\:-translate-x-\[102px\]{--tw-translate-x: -102px ;translate:var(--tw-translate-x) var(--tw-translate-y)}}@starting-style{.motion-safe\:starting\:translate-y-6{--tw-translate-y:calc(var(--spacing) * 6);translate:var(--tw-translate-x) var(--tw-translate-y)}}}}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}@property --tw-rotate-x{syntax:"*";inherits:false}@property --tw-rotate-y{syntax:"*";inherits:false}@property --tw-rotate-z{syntax:"*";inherits:false}@property --tw-skew-x{syntax:"*";inherits:false}@property --tw-skew-y{syntax:"*";inherits:false}@property --tw-space-x-reverse{syntax:"*";inherits:false;initial-value:0}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-leading{syntax:"*";inherits:false}@property --tw-font-weight{syntax:"*";inherits:false}@property --tw-tracking{syntax:"*";inherits:false}@property --tw-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:"*";inherits:false}@property --tw-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:"*";inherits:false}@property --tw-inset-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:"*";inherits:false}@property --tw-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:"*";inherits:false}@property --tw-inset-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:"*";inherits:false}@property --tw-ring-offset-width{syntax:"<length>";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:"*";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-blur{syntax:"*";inherits:false}@property --tw-brightness{syntax:"*";inherits:false}@property --tw-contrast{syntax:"*";inherits:false}@property --tw-grayscale{syntax:"*";inherits:false}@property --tw-hue-rotate{syntax:"*";inherits:false}@property --tw-invert{syntax:"*";inherits:false}@property --tw-opacity{syntax:"*";inherits:false}@property --tw-saturate{syntax:"*";inherits:false}@property --tw-sepia{syntax:"*";inherits:false}@property --tw-drop-shadow{syntax:"*";inherits:false}@property --tw-drop-shadow-color{syntax:"*";inherits:false}@property --tw-drop-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-drop-shadow-size{syntax:"*";inherits:false}@property --tw-duration{syntax:"*";inherits:false}@property --tw-ease{syntax:"*";inherits:false}@property --tw-content{syntax:"*";inherits:false;initial-value:""}@keyframes spin{to{transform:rotate(360deg)}}@keyframes ping{75%,to{opacity:0;transform:scale(2)}}@keyframes pulse{50%{opacity:.5}}@keyframes bounce{0%,to{animation-timing-function:cubic-bezier(.8,0,1,1);transform:translateY(-25%)}50%{animation-timing-function:cubic-bezier(0,0,.2,1);transform:none}}
-            </style>
-        @endif
+        <!-- Fonts: Plus Jakarta Sans & Figtree -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800,900&display=swap" rel="stylesheet" />
+
+        <!-- Instant Flash-Free Theme Initializer -->
+        <script>
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+
+        <style>
+            /* Systematic Professional Typography Scale */
+            body {
+                font-family: 'Plus Jakarta Sans', 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                letter-spacing: -0.012em;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            h1, h2, h3, h4 {
+                letter-spacing: -0.03em;
+                font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+            }
+            .text-2xs { font-size: 0.6875rem; line-height: 1rem; }
+            .text-3xs { font-size: 0.625rem; line-height: 0.875rem; }
+
+            /* View Transitions */
+            ::view-transition-old(root),
+            ::view-transition-new(root) {
+                animation: none;
+                mix-blend-mode: normal;
+            }
+            ::view-transition-old(root) { z-index: 1; }
+            ::view-transition-new(root) { z-index: 999999; }
+
+            /* Realistic Ray Wave */
+            #themeLightWave {
+                position: fixed;
+                pointer-events: none;
+                z-index: 999998;
+                opacity: 0;
+                transform: scale(0);
+                border-radius: 50%;
+                filter: blur(40px);
+                transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out;
+            }
+
+            /* Scrollbar */
+            ::-webkit-scrollbar { width: 6px; height: 6px; }
+            ::-webkit-scrollbar-track { background: transparent; }
+            ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 9999px; }
+            .dark ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); }
+
+            /* Seamless Moving Infinite Precision Grid */
+            @keyframes movingGrid {
+                0% { background-position: 0 0; }
+                100% { background-position: 32px 32px; }
+            }
+            .saas-grid-pattern {
+                background-image: linear-gradient(to right, rgba(148, 163, 184, 0.09) 1px, transparent 1px),
+                                  linear-gradient(to bottom, rgba(148, 163, 184, 0.09) 1px, transparent 1px);
+                background-size: 32px 32px;
+                animation: movingGrid 7s linear infinite;
+                mask-image: radial-gradient(ellipse 80% 60% at 50% 15%, #000 60%, transparent 100%);
+                -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 15%, #000 60%, transparent 100%);
+                will-change: background-position;
+            }
+            .dark .saas-grid-pattern {
+                background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                                  linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            }
+
+            /* Shimmer Effect */
+            @keyframes shimmerFlow {
+                0% { background-position: -200% 0; }
+                100% { background-position: 200% 0; }
+            }
+            .shimmer-pill {
+                background: linear-gradient(90deg, rgba(251, 191, 36, 0.1) 0%, rgba(251, 191, 36, 0.25) 50%, rgba(251, 191, 36, 0.1) 100%);
+                background-size: 200% 100%;
+                animation: shimmerFlow 3.5s infinite linear;
+            }
+
+            /* Fluid Shimmering Text Gradient (Immersive Animated Headline) */
+            @keyframes textGradientFlow {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+            .shimmering-title-gradient {
+                background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 30%, #fef08a 52%, #f59e0b 78%, #d97706 100%);
+                background-size: 240% auto;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: textGradientFlow 5.5s ease-in-out infinite;
+                display: inline-block;
+            }
+
+            /* Cinematic Hero Staged Entrance with Deep 3D Spatial Zoom */
+            @keyframes heroEntrance {
+                0% {
+                    opacity: 0;
+                    transform: perspective(1200px) translate3d(0, 36px, -70px) scale(0.91);
+                    filter: blur(6px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: perspective(1200px) translate3d(0, 0, 0) scale(1);
+                    filter: blur(0px);
+                }
+            }
+            .hero-reveal-1 {
+                animation: heroEntrance 1.05s cubic-bezier(0.19, 1, 0.22, 1) 0.03s both;
+            }
+            .hero-reveal-2 {
+                animation: heroEntrance 1.15s cubic-bezier(0.19, 1, 0.22, 1) 0.12s both;
+            }
+            .hero-reveal-3 {
+                animation: heroEntrance 1.15s cubic-bezier(0.19, 1, 0.22, 1) 0.22s both;
+            }
+            .hero-reveal-4 {
+                animation: heroEntrance 1.15s cubic-bezier(0.19, 1, 0.22, 1) 0.32s both;
+            }
+            .hero-reveal-5 {
+                animation: heroEntrance 1.15s cubic-bezier(0.19, 1, 0.22, 1) 0.42s both;
+            }
+
+            /* Scroll Depth Zoom Container */
+            #hero-text-container {
+                will-change: transform, opacity;
+                transform-origin: center top;
+                transform-style: preserve-3d;
+            }
+
+            /* Infinite Horizontal Relay Carousel */
+            @keyframes infiniteMarquee {
+                0% { transform: translate3d(0, 0, 0); }
+                100% { transform: translate3d(-50%, 0, 0); }
+            }
+            .marquee-track {
+                display: flex;
+                width: max-content;
+                animation: infiniteMarquee 42s linear infinite;
+                will-change: transform;
+            }
+            .marquee-track:hover {
+                animation-play-state: paused;
+            }
+            .marquee-mask {
+                mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+                -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+            }
+
+            /* 3D Curved Orbital Horizon Relay Cards */
+            .relay-orbital-card {
+                transform-style: preserve-3d;
+                will-change: transform, opacity;
+                backface-visibility: hidden;
+            }
+
+            /* Clean FAQ Accordion */
+            summary::-webkit-details-marker {
+                display: none;
+            }
+            details[open] summary ~ * {
+                animation: faqSweep 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            @keyframes faqSweep {
+                0% { opacity: 0; transform: translateY(-6px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+
+            /* Sleek Studio Display Mockup */
+            .studio-display-frame {
+                transform-style: preserve-3d;
+                will-change: transform;
+                box-shadow: 0 20px 50px -15px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.06);
+            }
+            .dark .studio-display-frame {
+                box-shadow: 0 30px 80px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.08);
+            }
+
+            /* Cursor Spotlight Follower */
+            .mouse-spotlight {
+                pointer-events: none;
+                position: absolute;
+                width: 350px;
+                height: 350px;
+                background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 70%);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                z-index: 1;
+            }
+
+            /* Card Mouse Tracking Highlight */
+            .interactive-card {
+                position: relative;
+                overflow: hidden;
+            }
+            .interactive-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(251, 191, 36, 0.08), transparent 70%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+            }
+            .interactive-card:hover::before {
+                opacity: 1;
+            }
+
+            /* Modern, High-Performance Native CSS Animations (Zero-Lag, 120fps) */
+            .reveal-on-scroll {
+                opacity: 0;
+                transform: translateY(22px);
+                transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+                will-change: opacity, transform;
+            }
+            .reveal-on-scroll.is-revealed {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Lightweight Ambient Badge Floating (Pure CSS, 0 JS) */
+            @keyframes badgeFloatLeft {
+                0%, 100% { transform: translateY(0px) rotate(-3deg); }
+                50% { transform: translateY(-5px) rotate(-2.5deg); }
+            }
+            @keyframes badgeFloatRight {
+                0%, 100% { transform: translateY(0px) rotate(3deg); }
+                50% { transform: translateY(-5px) rotate(3.5deg); }
+            }
+            .animate-float-badge-left {
+                animation: badgeFloatLeft 4.5s ease-in-out infinite;
+            }
+            .animate-float-badge-right {
+                animation: badgeFloatRight 4.5s ease-in-out 1.2s infinite;
+            }
+        </style>
+
+        <!-- Icon Font -->
+        <link rel="preload" href="/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="stylesheet" href="/css/all.min.css" />
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-            @if (Route::has('login'))
-                <nav class="flex items-center justify-end gap-4">
-                    @auth
-                        <a
-                            href="{{ url('/dashboard') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                        >
-                            Dashboard
-                        </a>
-                    @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
-                        >
-                            Log in
-                        </a>
+    <body class="font-sans antialiased text-zinc-900 dark:text-zinc-100 bg-slate-50 dark:bg-[#09090B] min-h-screen selection:bg-amber-400 selection:text-zinc-950 transition-colors duration-300 overflow-x-hidden">
+        <!-- Realistic Ambient Light Wave Element -->
+        <div id="themeLightWave"></div>
 
-                        @if (Route::has('register'))
-                            <a
-                                href="{{ route('register') }}"
-                                class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                                Register
-                            </a>
-                        @endif
-                    @endauth
-                </nav>
-            @endif
-        </header>
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-                <div class="text-[13px] leading-[20px] flex-1 p-6 pb-6 lg:p-20 lg:pb-10 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
-                    <h1 class="mb-1 font-medium">Let's get started</h1>
-                    <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">With so many options available to you,<br /> we suggest you start with the following:</p>
-                    <ul class="flex flex-col mb-4 lg:mb-6">
-                        <li class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:top-1/2 before:bottom-0 before:left-[0.4rem] before:absolute">
-                            <span class="relative py-1 bg-white dark:bg-[#161615]">
-                                <span class="flex items-center justify-center rounded-full bg-[#FDFDFC] dark:bg-[#161615] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] w-3.5 h-3.5 border dark:border-[#3E3E3A] border-[#e3e3e0]">
-                                    <span class="rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A] w-1.5 h-1.5"></span>
-                                </span>
-                            </span>
-                            <span>
-                                Read the
-                                <a href="https://laravel.com/docs" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                                    <span>Documentation</span>
-                                    <svg
-                                        width="10"
-                                        height="11"
-                                        viewBox="0 0 10 11"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="w-2.5 h-2.5"
-                                    >
-                                        <path
-                                            d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-                                            stroke="currentColor"
-                                            stroke-linecap="square"
-                                        />
-                                    </svg>
-                                </a>
-                            </span>
-                        </li>
-                        <li class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:bottom-1/2 before:top-0 before:left-[0.4rem] before:absolute">
-                            <span class="relative py-1 bg-white dark:bg-[#161615]">
-                                <span class="flex items-center justify-center rounded-full bg-[#FDFDFC] dark:bg-[#161615] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] w-3.5 h-3.5 border dark:border-[#3E3E3A] border-[#e3e3e0]">
-                                    <span class="rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A] w-1.5 h-1.5"></span>
-                                </span>
-                            </span>
-                            <span>
-                                Watch video tutorials at
-                                <a href="https://laracasts.com" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                                    <span>Laracasts</span>
-                                    <svg
-                                        width="10"
-                                        height="11"
-                                        viewBox="0 0 10 11"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="w-2.5 h-2.5"
-                                    >
-                                        <path
-                                            d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-                                            stroke="currentColor"
-                                            stroke-linecap="square"
-                                        />
-                                    </svg>
-                                </a>
-                            </span>
-                        </li>
-                    </ul>
-                    <ul class="flex gap-3 text-sm leading-normal">
-                        <li>
-                            <a href="https://cloud.laravel.com" target="_blank" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white text-sm leading-normal">
-                                Deploy now
-                            </a>
-                        </li>
-                    </ul>
-
-                    <p class="mt-6 lg:mt-10 text-[#706f6c] dark:text-[#A1A09A]">
-                        v{{ app()->version() }}
-                        <a href="https://github.com/laravel/framework/blob/13.x/CHANGELOG.md" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                            <span>View changelog</span>
-                            <svg
-                                width="10"
-                                height="11"
-                                viewBox="0 0 10 11"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-2.5 h-2.5"
-                            >
-                                <path
-                                    d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-                                    stroke="currentColor"
-                                    stroke-linecap="square"
-                                />
-                            </svg>
-                        </a>
-                    </p>
-                </div>
-                <div class="bg-[#fff2f2] dark:bg-[#1D0002] relative lg:-ml-px -mb-px lg:mb-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg aspect-[335/364] lg:aspect-auto w-full lg:w-[438px] shrink-0 overflow-hidden">
-                    {{-- Laravel Logo --}}
-                    <svg class="w-full text-[#F53003] dark:text-[#F61500] transition-all translate-y-0 opacity-100 max-w-none duration-750 starting:opacity-0 motion-safe:starting:translate-y-6" viewBox="0 0 438 104" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.2036 -3H0V102.197H49.5189V86.7187H17.2036V-3Z" fill="currentColor" />
-                        <path d="M110.256 41.6337C108.061 38.1275 104.945 35.3731 100.905 33.3681C96.8667 31.3647 92.8016 30.3618 88.7131 30.3618C83.4247 30.3618 78.5885 31.3389 74.201 33.2923C69.8111 35.2456 66.0474 37.928 62.9059 41.3333C59.7643 44.7401 57.3198 48.6726 55.5754 53.1293C53.8287 57.589 52.9572 62.274 52.9572 67.1813C52.9572 72.1925 53.8287 76.8995 55.5754 81.3069C57.3191 85.7173 59.7636 89.6241 62.9059 93.0293C66.0474 96.4361 69.8119 99.1155 74.201 101.069C78.5885 103.022 83.4247 103.999 88.7131 103.999C92.8016 103.999 96.8667 102.997 100.905 100.994C104.945 98.9911 108.061 96.2359 110.256 92.7282V102.195H126.563V32.1642H110.256V41.6337ZM108.76 75.7472C107.762 78.4531 106.366 80.8078 104.572 82.8112C102.776 84.8161 100.606 86.4183 98.0637 87.6206C95.5202 88.823 92.7004 89.4238 89.6103 89.4238C86.5178 89.4238 83.7252 88.823 81.2324 87.6206C78.7388 86.4183 76.5949 84.8161 74.7998 82.8112C73.004 80.8078 71.6319 78.4531 70.6856 75.7472C69.7356 73.0421 69.2644 70.1868 69.2644 67.1821C69.2644 64.1758 69.7356 61.3205 70.6856 58.6154C71.6319 55.9102 73.004 53.5571 74.7998 51.5522C76.5949 49.5495 78.738 47.9451 81.2324 46.7427C83.7252 45.5404 86.5178 44.9396 89.6103 44.9396C92.7012 44.9396 95.5202 45.5404 98.0637 46.7427C100.606 47.9451 102.776 49.5487 104.572 51.5522C106.367 53.5571 107.762 55.9102 108.76 58.6154C109.756 61.3205 110.256 64.1758 110.256 67.1821C110.256 70.1868 109.756 73.0421 108.76 75.7472Z" fill="currentColor" />
-                        <path d="M242.805 41.6337C240.611 38.1275 237.494 35.3731 233.455 33.3681C229.416 31.3647 225.351 30.3618 221.262 30.3618C215.974 30.3618 211.138 31.3389 206.75 33.2923C202.36 35.2456 198.597 37.928 195.455 41.3333C192.314 44.7401 189.869 48.6726 188.125 53.1293C186.378 57.589 185.507 62.274 185.507 67.1813C185.507 72.1925 186.378 76.8995 188.125 81.3069C189.868 85.7173 192.313 89.6241 195.455 93.0293C198.597 96.4361 202.361 99.1155 206.75 101.069C211.138 103.022 215.974 103.999 221.262 103.999C225.351 103.999 229.416 102.997 233.455 100.994C237.494 98.9911 240.611 96.2359 242.805 92.7282V102.195H259.112V32.1642H242.805V41.6337ZM241.31 75.7472C240.312 78.4531 238.916 80.8078 237.122 82.8112C235.326 84.8161 233.156 86.4183 230.614 87.6206C228.07 88.823 225.251 89.4238 222.16 89.4238C219.068 89.4238 216.275 88.823 213.782 87.6206C211.289 86.4183 209.145 84.8161 207.35 82.8112C205.554 80.8078 204.182 78.4531 203.236 75.7472C202.286 73.0421 201.814 70.1868 201.814 67.1821C201.814 64.1758 202.286 61.3205 203.236 58.6154C204.182 55.9102 205.554 53.5571 207.35 51.5522C209.145 49.5495 211.288 47.9451 213.782 46.7427C216.275 45.5404 219.068 44.9396 222.16 44.9396C225.251 44.9396 228.07 45.5404 230.614 46.7427C233.156 47.9451 235.326 49.5487 237.122 51.5522C238.917 53.5571 240.312 55.9102 241.31 58.6154C242.306 61.3205 242.806 64.1758 242.806 67.1821C242.805 70.1868 242.305 73.0421 241.31 75.7472Z" fill="currentColor" />
-                        <path d="M438 -3H421.694V102.197H438V-3Z" fill="currentColor" />
-                        <path d="M139.43 102.197H155.735V48.2834H183.712V32.1665H139.43V102.197Z" fill="currentColor" />
-                        <path d="M324.49 32.1665L303.995 85.794L283.498 32.1665H266.983L293.748 102.197H314.242L341.006 32.1665H324.49Z" fill="currentColor" />
-                        <path d="M376.571 30.3656C356.603 30.3656 340.797 46.8497 340.797 67.1828C340.797 89.6597 356.094 104 378.661 104C391.29 104 399.354 99.1488 409.206 88.5848L398.189 80.0226C398.183 80.031 389.874 90.9895 377.468 90.9895C363.048 90.9895 356.977 79.3111 356.977 73.269H411.075C413.917 50.1328 398.775 30.3656 376.571 30.3656ZM357.02 61.0967C357.145 59.7487 359.023 43.3761 376.442 43.3761C393.861 43.3761 395.978 59.7464 396.099 61.0967H357.02Z" fill="currentColor" />
-                    </svg>
-
-                    {{-- 13 --}}
-                    <svg class="w-[438px] max-w-none relative -mt-[6.6rem] -ml-8 lg:ml-0 [--stroke-color:#1B1B18] dark:[--stroke-color:#FF750F]" viewBox="0 0 440 392" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g class="mix-blend-darken dark:mix-blend-normal transition-all delay-300 opacity-100 duration-750 starting:opacity-0 text-[#1B1B18] dark:text-black">
-                            <mask id="path-1-mask" maskUnits="userSpaceOnUse" x="-0.328613" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="-0.328613" y="103" width="338" height="299"/>
-                                <path d="M234.936 400.8C204.136 400.8 178.936 392.4 159.336 375.6C140.136 358.8 130.536 337 130.536 310.2H200.736C200.736 318.2 203.736 324.8 209.736 330C215.736 335.2 223.736 337.8 233.736 337.8C243.336 337.8 251.136 335 257.136 329.4C263.536 323.8 266.736 316.6 266.736 307.8C266.736 299.8 263.936 293.2 258.336 288C252.736 282.8 245.536 280.2 236.736 280.2H199.536V218.4H236.736C243.536 218.4 249.336 216 254.136 211.2C258.936 206.4 261.336 200.4 261.336 193.2C261.336 184.8 258.736 178.2 253.536 173.4C248.336 168.6 241.736 166.2 233.736 166.2C226.536 166.2 220.336 168.4 215.136 172.8C210.336 177.2 207.936 182.8 207.936 189.6H141.336C141.336 164.8 150.136 144.6 167.736 129C185.336 113 207.936 105 235.536 105C263.136 105 285.536 112.2 302.736 126.6C320.336 141 329.136 160 329.136 183.6C329.136 200.8 324.536 214.8 315.336 225.6C306.136 236 294.336 243.2 279.936 247.2C297.136 252 310.736 260.2 320.736 271.8C331.136 283.4 336.336 298 336.336 315.6C336.336 340.4 326.936 360.8 308.136 376.8C289.336 392.8 264.936 400.8 234.936 400.8Z"/>
-                                <path d="M26.8714 167.6H1.67139V105.2H94.6714V400.2H26.8714V167.6Z"/>
-                            </mask>
-                            <path d="M234.936 400.8C204.136 400.8 178.936 392.4 159.336 375.6C140.136 358.8 130.536 337 130.536 310.2H200.736C200.736 318.2 203.736 324.8 209.736 330C215.736 335.2 223.736 337.8 233.736 337.8C243.336 337.8 251.136 335 257.136 329.4C263.536 323.8 266.736 316.6 266.736 307.8C266.736 299.8 263.936 293.2 258.336 288C252.736 282.8 245.536 280.2 236.736 280.2H199.536V218.4H236.736C243.536 218.4 249.336 216 254.136 211.2C258.936 206.4 261.336 200.4 261.336 193.2C261.336 184.8 258.736 178.2 253.536 173.4C248.336 168.6 241.736 166.2 233.736 166.2C226.536 166.2 220.336 168.4 215.136 172.8C210.336 177.2 207.936 182.8 207.936 189.6H141.336C141.336 164.8 150.136 144.6 167.736 129C185.336 113 207.936 105 235.536 105C263.136 105 285.536 112.2 302.736 126.6C320.336 141 329.136 160 329.136 183.6C329.136 200.8 324.536 214.8 315.336 225.6C306.136 236 294.336 243.2 279.936 247.2C297.136 252 310.736 260.2 320.736 271.8C331.136 283.4 336.336 298 336.336 315.6C336.336 340.4 326.936 360.8 308.136 376.8C289.336 392.8 264.936 400.8 234.936 400.8Z" fill="currentColor"/>
-                            <path d="M26.8714 167.6H1.67139V105.2H94.6714V400.2H26.8714V167.6Z" fill="currentColor"/>
-                            <path d="M234.936 400.8C204.136 400.8 178.936 392.4 159.336 375.6C140.136 358.8 130.536 337 130.536 310.2H200.736C200.736 318.2 203.736 324.8 209.736 330C215.736 335.2 223.736 337.8 233.736 337.8C243.336 337.8 251.136 335 257.136 329.4C263.536 323.8 266.736 316.6 266.736 307.8C266.736 299.8 263.936 293.2 258.336 288C252.736 282.8 245.536 280.2 236.736 280.2H199.536V218.4H236.736C243.536 218.4 249.336 216 254.136 211.2C258.936 206.4 261.336 200.4 261.336 193.2C261.336 184.8 258.736 178.2 253.536 173.4C248.336 168.6 241.736 166.2 233.736 166.2C226.536 166.2 220.336 168.4 215.136 172.8C210.336 177.2 207.936 182.8 207.936 189.6H141.336C141.336 164.8 150.136 144.6 167.736 129C185.336 113 207.936 105 235.536 105C263.136 105 285.536 112.2 302.736 126.6C320.336 141 329.136 160 329.136 183.6C329.136 200.8 324.536 214.8 315.336 225.6C306.136 236 294.336 243.2 279.936 247.2C297.136 252 310.736 260.2 320.736 271.8C331.136 283.4 336.336 298 336.336 315.6C336.336 340.4 326.936 360.8 308.136 376.8C289.336 392.8 264.936 400.8 234.936 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-1-mask)"/>
-                            <path d="M26.8714 167.6H1.67139V105.2H94.6714V400.2H26.8714V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-1-mask)"/>
-                        </g>
-
-                        <g class="transition-all delay-400 opacity-100 duration-750 starting:opacity-0 motion-safe:starting:-translate-x-[26px] text-[#F3BEC7] dark:text-[#4B0600]">
-                            <mask id="path-2-mask" maskUnits="userSpaceOnUse" x="25.3357" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="25.3357" y="103" width="338" height="299"/>
-                                <path d="M260.6 400.8C229.8 400.8 204.6 392.4 185 375.6C165.8 358.8 156.2 337 156.2 310.2H226.4C226.4 318.2 229.4 324.8 235.4 330C241.4 335.2 249.4 337.8 259.4 337.8C269 337.8 276.8 335 282.8 329.4C289.2 323.8 292.4 316.6 292.4 307.8C292.4 299.8 289.6 293.2 284 288C278.4 282.8 271.2 280.2 262.4 280.2H225.2V218.4H262.4C269.2 218.4 275 216 279.8 211.2C284.6 206.4 287 200.4 287 193.2C287 184.8 284.4 178.2 279.2 173.4C274 168.6 267.4 166.2 259.4 166.2C252.2 166.2 246 168.4 240.8 172.8C236 177.2 233.6 182.8 233.6 189.6H167C167 164.8 175.8 144.6 193.4 129C211 113 233.6 105 261.2 105C288.8 105 311.2 112.2 328.4 126.6C346 141 354.8 160 354.8 183.6C354.8 200.8 350.2 214.8 341 225.6C331.8 236 320 243.2 305.6 247.2C322.8 252 336.4 260.2 346.4 271.8C356.8 283.4 362 298 362 315.6C362 340.4 352.6 360.8 333.8 376.8C315 392.8 290.6 400.8 260.6 400.8Z"/>
-                                <path d="M52.5357 167.6H27.3357V105.2H120.336V400.2H52.5357V167.6Z"/>
-                            </mask>
-                            <path d="M260.6 400.8C229.8 400.8 204.6 392.4 185 375.6C165.8 358.8 156.2 337 156.2 310.2H226.4C226.4 318.2 229.4 324.8 235.4 330C241.4 335.2 249.4 337.8 259.4 337.8C269 337.8 276.8 335 282.8 329.4C289.2 323.8 292.4 316.6 292.4 307.8C292.4 299.8 289.6 293.2 284 288C278.4 282.8 271.2 280.2 262.4 280.2H225.2V218.4H262.4C269.2 218.4 275 216 279.8 211.2C284.6 206.4 287 200.4 287 193.2C287 184.8 284.4 178.2 279.2 173.4C274 168.6 267.4 166.2 259.4 166.2C252.2 166.2 246 168.4 240.8 172.8C236 177.2 233.6 182.8 233.6 189.6H167C167 164.8 175.8 144.6 193.4 129C211 113 233.6 105 261.2 105C288.8 105 311.2 112.2 328.4 126.6C346 141 354.8 160 354.8 183.6C354.8 200.8 350.2 214.8 341 225.6C331.8 236 320 243.2 305.6 247.2C322.8 252 336.4 260.2 346.4 271.8C356.8 283.4 362 298 362 315.6C362 340.4 352.6 360.8 333.8 376.8C315 392.8 290.6 400.8 260.6 400.8Z" fill="currentColor"/>
-                            <path d="M52.5357 167.6H27.3357V105.2H120.336V400.2H52.5357V167.6Z" fill="currentColor"/>
-                            <path d="M260.6 400.8C229.8 400.8 204.6 392.4 185 375.6C165.8 358.8 156.2 337 156.2 310.2H226.4C226.4 318.2 229.4 324.8 235.4 330C241.4 335.2 249.4 337.8 259.4 337.8C269 337.8 276.8 335 282.8 329.4C289.2 323.8 292.4 316.6 292.4 307.8C292.4 299.8 289.6 293.2 284 288C278.4 282.8 271.2 280.2 262.4 280.2H225.2V218.4H262.4C269.2 218.4 275 216 279.8 211.2C284.6 206.4 287 200.4 287 193.2C287 184.8 284.4 178.2 279.2 173.4C274 168.6 267.4 166.2 259.4 166.2C252.2 166.2 246 168.4 240.8 172.8C236 177.2 233.6 182.8 233.6 189.6H167C167 164.8 175.8 144.6 193.4 129C211 113 233.6 105 261.2 105C288.8 105 311.2 112.2 328.4 126.6C346 141 354.8 160 354.8 183.6C354.8 200.8 350.2 214.8 341 225.6C331.8 236 320 243.2 305.6 247.2C322.8 252 336.4 260.2 346.4 271.8C356.8 283.4 362 298 362 315.6C362 340.4 352.6 360.8 333.8 376.8C315 392.8 290.6 400.8 260.6 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-2-mask)"/>
-                            <path d="M52.5357 167.6H27.3357V105.2H120.336V400.2H52.5357V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-2-mask)"/>
-                        </g>
-                        
-                        <g class="mix-blend-color dark:mix-blend-hard-light transition-all delay-400 opacity-100 duration-750 starting:opacity-0 motion-safe:starting:-translate-x-[51px] text-[#F8B803] dark:text-[#391800]">
-                            <mask id="path-3-mask" maskUnits="userSpaceOnUse" x="51" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="51" y="103" width="338" height="299"/>
-                                <path d="M286.264 400.8C255.464 400.8 230.264 392.4 210.664 375.6C191.464 358.8 181.864 337 181.864 310.2H252.064C252.064 318.2 255.064 324.8 261.064 330C267.064 335.2 275.064 337.8 285.064 337.8C294.664 337.8 302.464 335 308.464 329.4C314.864 323.8 318.064 316.6 318.064 307.8C318.064 299.8 315.264 293.2 309.664 288C304.064 282.8 296.864 280.2 288.064 280.2H250.864V218.4H288.064C294.864 218.4 300.664 216 305.464 211.2C310.264 206.4 312.664 200.4 312.664 193.2C312.664 184.8 310.064 178.2 304.864 173.4C299.664 168.6 293.064 166.2 285.064 166.2C277.864 166.2 271.664 168.4 266.464 172.8C261.664 177.2 259.264 182.8 259.264 189.6H192.664C192.664 164.8 201.464 144.6 219.064 129C236.664 113 259.264 105 286.864 105C314.464 105 336.864 112.2 354.064 126.6C371.664 141 380.464 160 380.464 183.6C380.464 200.8 375.864 214.8 366.664 225.6C357.464 236 345.664 243.2 331.264 247.2C348.464 252 362.064 260.2 372.064 271.8C382.464 283.4 387.664 298 387.664 315.6C387.664 340.4 378.264 360.8 359.464 376.8C340.664 392.8 316.264 400.8 286.264 400.8Z"/>
-                                <path d="M78.2 167.6H53V105.2H146V400.2H78.2V167.6Z"/>
-                            </mask>
-                            <path d="M286.264 400.8C255.464 400.8 230.264 392.4 210.664 375.6C191.464 358.8 181.864 337 181.864 310.2H252.064C252.064 318.2 255.064 324.8 261.064 330C267.064 335.2 275.064 337.8 285.064 337.8C294.664 337.8 302.464 335 308.464 329.4C314.864 323.8 318.064 316.6 318.064 307.8C318.064 299.8 315.264 293.2 309.664 288C304.064 282.8 296.864 280.2 288.064 280.2H250.864V218.4H288.064C294.864 218.4 300.664 216 305.464 211.2C310.264 206.4 312.664 200.4 312.664 193.2C312.664 184.8 310.064 178.2 304.864 173.4C299.664 168.6 293.064 166.2 285.064 166.2C277.864 166.2 271.664 168.4 266.464 172.8C261.664 177.2 259.264 182.8 259.264 189.6H192.664C192.664 164.8 201.464 144.6 219.064 129C236.664 113 259.264 105 286.864 105C314.464 105 336.864 112.2 354.064 126.6C371.664 141 380.464 160 380.464 183.6C380.464 200.8 375.864 214.8 366.664 225.6C357.464 236 345.664 243.2 331.264 247.2C348.464 252 362.064 260.2 372.064 271.8C382.464 283.4 387.664 298 387.664 315.6C387.664 340.4 378.264 360.8 359.464 376.8C340.664 392.8 316.264 400.8 286.264 400.8Z" fill="currentColor"/>
-                            <path d="M78.2 167.6H53V105.2H146V400.2H78.2V167.6Z" fill="currentColor"/>
-                            <path d="M286.264 400.8C255.464 400.8 230.264 392.4 210.664 375.6C191.464 358.8 181.864 337 181.864 310.2H252.064C252.064 318.2 255.064 324.8 261.064 330C267.064 335.2 275.064 337.8 285.064 337.8C294.664 337.8 302.464 335 308.464 329.4C314.864 323.8 318.064 316.6 318.064 307.8C318.064 299.8 315.264 293.2 309.664 288C304.064 282.8 296.864 280.2 288.064 280.2H250.864V218.4H288.064C294.864 218.4 300.664 216 305.464 211.2C310.264 206.4 312.664 200.4 312.664 193.2C312.664 184.8 310.064 178.2 304.864 173.4C299.664 168.6 293.064 166.2 285.064 166.2C277.864 166.2 271.664 168.4 266.464 172.8C261.664 177.2 259.264 182.8 259.264 189.6H192.664C192.664 164.8 201.464 144.6 219.064 129C236.664 113 259.264 105 286.864 105C314.464 105 336.864 112.2 354.064 126.6C371.664 141 380.464 160 380.464 183.6C380.464 200.8 375.864 214.8 366.664 225.6C357.464 236 345.664 243.2 331.264 247.2C348.464 252 362.064 260.2 372.064 271.8C382.464 283.4 387.664 298 387.664 315.6C387.664 340.4 378.264 360.8 359.464 376.8C340.664 392.8 316.264 400.8 286.264 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-3-mask)"/>
-                            <path d="M78.2 167.6H53V105.2H146V400.2H78.2V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-3-mask)"/>
-                        </g>
-                        
-                        <g class="mix-blend-multiply dark:mix-blend-normal transition-all delay-400 opacity-100 duration-750 starting:opacity-0 motion-safe:starting:-translate-x-[78px] text-[#F3BEC7] dark:text-[#733000]">
-                            <mask id="path-4-mask" maskUnits="userSpaceOnUse" x="76.6643" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="76.6643" y="103" width="338" height="299"/>
-                                <path d="M311.929 400.8C281.129 400.8 255.929 392.4 236.329 375.6C217.129 358.8 207.529 337 207.529 310.2H277.729C277.729 318.2 280.729 324.8 286.729 330C292.729 335.2 300.729 337.8 310.729 337.8C320.329 337.8 328.129 335 334.129 329.4C340.529 323.8 343.729 316.6 343.729 307.8C343.729 299.8 340.929 293.2 335.329 288C329.729 282.8 322.529 280.2 313.729 280.2H276.529V218.4H313.729C320.529 218.4 326.329 216 331.129 211.2C335.929 206.4 338.329 200.4 338.329 193.2C338.329 184.8 335.729 178.2 330.529 173.4C325.329 168.6 318.729 166.2 310.729 166.2C303.529 166.2 297.329 168.4 292.129 172.8C287.329 177.2 284.929 182.8 284.929 189.6H218.329C218.329 164.8 227.129 144.6 244.729 129C262.329 113 284.929 105 312.529 105C340.129 105 362.529 112.2 379.729 126.6C397.329 141 406.129 160 406.129 183.6C406.129 200.8 401.529 214.8 392.329 225.6C383.129 236 371.329 243.2 356.929 247.2C374.129 252 387.729 260.2 397.729 271.8C408.129 283.4 413.329 298 413.329 315.6C413.329 340.4 403.929 360.8 385.129 376.8C366.329 392.8 341.929 400.8 311.929 400.8Z"/>
-                                <path d="M103.864 167.6H78.6643V105.2H171.664V400.2H103.864V167.6Z"/>
-                            </mask>
-                            <path d="M311.929 400.8C281.129 400.8 255.929 392.4 236.329 375.6C217.129 358.8 207.529 337 207.529 310.2H277.729C277.729 318.2 280.729 324.8 286.729 330C292.729 335.2 300.729 337.8 310.729 337.8C320.329 337.8 328.129 335 334.129 329.4C340.529 323.8 343.729 316.6 343.729 307.8C343.729 299.8 340.929 293.2 335.329 288C329.729 282.8 322.529 280.2 313.729 280.2H276.529V218.4H313.729C320.529 218.4 326.329 216 331.129 211.2C335.929 206.4 338.329 200.4 338.329 193.2C338.329 184.8 335.729 178.2 330.529 173.4C325.329 168.6 318.729 166.2 310.729 166.2C303.529 166.2 297.329 168.4 292.129 172.8C287.329 177.2 284.929 182.8 284.929 189.6H218.329C218.329 164.8 227.129 144.6 244.729 129C262.329 113 284.929 105 312.529 105C340.129 105 362.529 112.2 379.729 126.6C397.329 141 406.129 160 406.129 183.6C406.129 200.8 401.529 214.8 392.329 225.6C383.129 236 371.329 243.2 356.929 247.2C374.129 252 387.729 260.2 397.729 271.8C408.129 283.4 413.329 298 413.329 315.6C413.329 340.4 403.929 360.8 385.129 376.8C366.329 392.8 341.929 400.8 311.929 400.8Z" fill="currentColor"/>
-                            <path d="M103.864 167.6H78.6643V105.2H171.664V400.2H103.864V167.6Z" fill="currentColor"/>
-                            <path d="M311.929 400.8C281.129 400.8 255.929 392.4 236.329 375.6C217.129 358.8 207.529 337 207.529 310.2H277.729C277.729 318.2 280.729 324.8 286.729 330C292.729 335.2 300.729 337.8 310.729 337.8C320.329 337.8 328.129 335 334.129 329.4C340.529 323.8 343.729 316.6 343.729 307.8C343.729 299.8 340.929 293.2 335.329 288C329.729 282.8 322.529 280.2 313.729 280.2H276.529V218.4H313.729C320.529 218.4 326.329 216 331.129 211.2C335.929 206.4 338.329 200.4 338.329 193.2C338.329 184.8 335.729 178.2 330.529 173.4C325.329 168.6 318.729 166.2 310.729 166.2C303.529 166.2 297.329 168.4 292.129 172.8C287.329 177.2 284.929 182.8 284.929 189.6H218.329C218.329 164.8 227.129 144.6 244.729 129C262.329 113 284.929 105 312.529 105C340.129 105 362.529 112.2 379.729 126.6C397.329 141 406.129 160 406.129 183.6C406.129 200.8 401.529 214.8 392.329 225.6C383.129 236 371.329 243.2 356.929 247.2C374.129 252 387.729 260.2 397.729 271.8C408.129 283.4 413.329 298 413.329 315.6C413.329 340.4 403.929 360.8 385.129 376.8C366.329 392.8 341.929 400.8 311.929 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-4-mask)"/>
-                            <path d="M103.864 167.6H78.6643V105.2H171.664V400.2H103.864V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-4-mask)"/>
-                        </g>
-                        
-                        <g class="mix-blend-hard-light transition-all delay-400 opacity-100 duration-750 starting:opacity-0 motion-safe:starting:-translate-x-[102px] text-[#F3BEC7] dark:text-[#4B0600]">
-                            <mask id="path-5-mask" maskUnits="userSpaceOnUse" x="102.329" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="102.329" y="103" width="338" height="299"/>
-                                <path d="M337.593 400.8C306.793 400.8 281.593 392.4 261.993 375.6C242.793 358.8 233.193 337 233.193 310.2H303.393C303.393 318.2 306.393 324.8 312.393 330C318.393 335.2 326.393 337.8 336.393 337.8C345.993 337.8 353.793 335 359.793 329.4C366.193 323.8 369.393 316.6 369.393 307.8C369.393 299.8 366.593 293.2 360.993 288C355.393 282.8 348.193 280.2 339.393 280.2H302.193V218.4H339.393C346.193 218.4 351.993 216 356.793 211.2C361.593 206.4 363.993 200.4 363.993 193.2C363.993 184.8 361.393 178.2 356.193 173.4C350.993 168.6 344.393 166.2 336.393 166.2C329.193 166.2 322.993 168.4 317.793 172.8C312.993 177.2 310.593 182.8 310.593 189.6H243.993C243.993 164.8 252.793 144.6 270.393 129C287.993 113 310.593 105 338.193 105C365.793 105 388.193 112.2 405.393 126.6C422.993 141 431.793 160 431.793 183.6C431.793 200.8 427.193 214.8 417.993 225.6C408.793 236 396.993 243.2 382.593 247.2C399.793 252 413.393 260.2 423.393 271.8C433.793 283.4 438.993 298 438.993 315.6C438.993 340.4 429.593 360.8 410.793 376.8C391.993 392.8 367.593 400.8 337.593 400.8Z"/>
-                                <path d="M129.529 167.6H104.329V105.2H197.329V400.2H129.529V167.6Z"/>
-                            </mask>
-                            <path d="M337.593 400.8C306.793 400.8 281.593 392.4 261.993 375.6C242.793 358.8 233.193 337 233.193 310.2H303.393C303.393 318.2 306.393 324.8 312.393 330C318.393 335.2 326.393 337.8 336.393 337.8C345.993 337.8 353.793 335 359.793 329.4C366.193 323.8 369.393 316.6 369.393 307.8C369.393 299.8 366.593 293.2 360.993 288C355.393 282.8 348.193 280.2 339.393 280.2H302.193V218.4H339.393C346.193 218.4 351.993 216 356.793 211.2C361.593 206.4 363.993 200.4 363.993 193.2C363.993 184.8 361.393 178.2 356.193 173.4C350.993 168.6 344.393 166.2 336.393 166.2C329.193 166.2 322.993 168.4 317.793 172.8C312.993 177.2 310.593 182.8 310.593 189.6H243.993C243.993 164.8 252.793 144.6 270.393 129C287.993 113 310.593 105 338.193 105C365.793 105 388.193 112.2 405.393 126.6C422.993 141 431.793 160 431.793 183.6C431.793 200.8 427.193 214.8 417.993 225.6C408.793 236 396.993 243.2 382.593 247.2C399.793 252 413.393 260.2 423.393 271.8C433.793 283.4 438.993 298 438.993 315.6C438.993 340.4 429.593 360.8 410.793 376.8C391.993 392.8 367.593 400.8 337.593 400.8Z" fill="currentColor"/>
-                            <path d="M129.529 167.6H104.329V105.2H197.329V400.2H129.529V167.6Z" fill="currentColor"/>
-                            <path d="M337.593 400.8C306.793 400.8 281.593 392.4 261.993 375.6C242.793 358.8 233.193 337 233.193 310.2H303.393C303.393 318.2 306.393 324.8 312.393 330C318.393 335.2 326.393 337.8 336.393 337.8C345.993 337.8 353.793 335 359.793 329.4C366.193 323.8 369.393 316.6 369.393 307.8C369.393 299.8 366.593 293.2 360.993 288C355.393 282.8 348.193 280.2 339.393 280.2H302.193V218.4H339.393C346.193 218.4 351.993 216 356.793 211.2C361.593 206.4 363.993 200.4 363.993 193.2C363.993 184.8 361.393 178.2 356.193 173.4C350.993 168.6 344.393 166.2 336.393 166.2C329.193 166.2 322.993 168.4 317.793 172.8C312.993 177.2 310.593 182.8 310.593 189.6H243.993C243.993 164.8 252.793 144.6 270.393 129C287.993 113 310.593 105 338.193 105C365.793 105 388.193 112.2 405.393 126.6C422.993 141 431.793 160 431.793 183.6C431.793 200.8 427.193 214.8 417.993 225.6C408.793 236 396.993 243.2 382.593 247.2C399.793 252 413.393 260.2 423.393 271.8C433.793 283.4 438.993 298 438.993 315.6C438.993 340.4 429.593 360.8 410.793 376.8C391.993 392.8 367.593 400.8 337.593 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-5-mask)"/>
-                            <path d="M129.529 167.6H104.329V105.2H197.329V400.2H129.529V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-5-mask)"/>
-                        </g>
-                    </svg>
-                    <div class="absolute inset-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]"></div>
-                </div>
-            </main>
+        <!-- Ambient Background Grid & Glows -->
+        <div class="fixed inset-0 pointer-events-none z-0">
+            <div class="absolute inset-0 saas-grid-pattern"></div>
+            <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[550px] bg-gradient-to-b from-amber-400/18 via-amber-500/5 to-transparent rounded-full blur-3xl dark:from-amber-500/12 pointer-events-none"></div>
+            <div class="absolute top-[40%] -left-64 w-[450px] h-[450px] bg-amber-400/8 dark:bg-amber-500/5 rounded-full blur-3xl"></div>
+            <div class="absolute top-[65%] -right-64 w-[450px] h-[450px] bg-orange-400/8 dark:bg-amber-500/5 rounded-full blur-3xl"></div>
         </div>
 
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
+        <!-- Sticky Blended Navbar -->
+        <header id="mainNav" class="sticky top-0 z-50 backdrop-blur-xl bg-slate-50/80 dark:bg-[#09090B]/80 border-b border-zinc-200/50 dark:border-zinc-800/40 transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16 sm:h-18">
+                    <!-- Brand Logo -->
+                    <div class="flex items-center gap-8">
+                        <a href="/" class="flex items-center gap-3 group focus:outline-none">
+                            <x-application-logo class="h-8 sm:h-9 w-auto transition-transform group-hover:scale-105" />
+                        </a>
+
+                        <!-- Navigation Links -->
+                        <nav class="hidden md:flex items-center gap-1 text-xs font-semibold text-zinc-600 dark:text-zinc-300">
+                            <a href="#hero-mockup" class="px-3.5 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100/70 dark:hover:bg-zinc-800/60 transition-colors">
+                                Showcase
+                            </a>
+                            <a href="#failover-sim" class="px-3.5 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100/70 dark:hover:bg-zinc-800/60 transition-colors">
+                                Failover
+                            </a>
+                            <a href="#features" class="px-3.5 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100/70 dark:hover:bg-zinc-800/60 transition-colors">
+                                Capabilities
+                            </a>
+                            <a href="#studio-deepdive" class="px-3.5 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100/70 dark:hover:bg-zinc-800/60 transition-colors">
+                                Studio
+                            </a>
+                            <a href="#faq" class="px-3.5 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100/70 dark:hover:bg-zinc-800/60 transition-colors">
+                                FAQ
+                            </a>
+                        </nav>
+                    </div>
+
+                    <!-- Right CTAs & Theme Toggle -->
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="window.toggleTheme(event)" title="Toggle Dark / Light Mode" aria-label="Toggle Dark / Light Mode"
+                                class="inline-flex items-center justify-center w-8 h-8 rounded-xl border border-zinc-200/80 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs focus:outline-none">
+                            <span class="dark:hidden inline-flex items-center justify-center">
+                                <svg class="w-3.5 h-3.5 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                </svg>
+                            </span>
+                            <span class="hidden dark:inline-flex items-center justify-center">
+                                <svg class="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </span>
+                        </button>
+
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="inline-flex items-center px-3.5 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-400 dark:hover:bg-amber-300 dark:text-zinc-950 text-xs font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-200 gap-1.5">
+                                <i class="fas fa-gauge text-3xs"></i>
+                                <span>Console</span>
+                            </a>
+                        @else
+                            <a href="{{ route('login') }}" class="text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white px-3 py-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                                Sign In
+                            </a>
+
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="inline-flex items-center px-3.5 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-400 dark:hover:bg-amber-300 dark:text-zinc-950 text-xs font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-200 gap-1">
+                                    <span>Get Started</span>
+                                    <i class="fas fa-arrow-right text-3xs"></i>
+                                </a>
+                            @endif
+                        @endauth
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="relative z-10">
+
+            <!-- REFINED SAAS HERO SECTION -->
+            <section class="pt-8 sm:pt-14 pb-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+                <div id="hero-text-container">
+                    <!-- Clean Engineered Announcement Pill (Staged Entrance 1) -->
+                    <div class="hero-reveal-1 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/80 shadow-2xs mb-6">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="text-zinc-700 dark:text-zinc-300">Multi-Provider Email Relay</span>
+                        <span class="text-zinc-400">/</span>
+                        <span class="text-amber-600 dark:text-amber-400 font-semibold">Automatic Backup Failover</span>
+                    </div>
+
+                    <!-- Clean, Powerful Headline (Staged Entrance 2 with Depth Zoom) -->
+                    <div class="hero-reveal-2 max-w-4xl mx-auto">
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-zinc-900 dark:text-white leading-[1.15]">
+                            Send high-volume emails with
+                            <span class="inline-flex items-center align-middle gap-1.5 px-3 py-1 my-1 rounded-xl bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 font-mono text-[0.82em] font-extrabold tracking-normal shadow-xs">
+                                <i class="fas fa-shield-check text-xs"></i> 100% uptime
+                            </span>
+                            and zero provider lock-in.
+                        </h1>
+                    </div>
+
+                    <!-- Subtitle (Staged Entrance 3) -->
+                    <p class="hero-reveal-3 mt-5 text-sm sm:text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal">
+                        Connect Amazon SES, Brevo, Google Workspace, or your own server. If one provider hits a daily limit or slows down, CampaignStack automatically switches to your backup in milliseconds so your emails always land in the primary inbox.
+                    </p>
+
+                    <!-- CTA Cluster (Staged Entrance 4) -->
+                    <div class="hero-reveal-4 mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-400 dark:hover:bg-amber-300 dark:text-zinc-950 text-xs sm:text-sm font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 gap-2">
+                                <span>Open Dispatch Console</span>
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        @else
+                            <a href="{{ route('login') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-amber-400 dark:hover:bg-amber-300 dark:text-zinc-950 text-xs sm:text-sm font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 gap-2">
+                                <span>Get Started Free</span>
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        @endauth
+
+                        <a href="#failover-sim" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 text-xs sm:text-sm font-semibold rounded-xl shadow-2xs hover:shadow-xs transition-all duration-200 gap-2">
+                            <i class="fas fa-play-circle text-amber-500"></i>
+                            <span>See How Failover Works</span>
+                        </a>
+                    </div>
+
+                    <!-- Plain-English Micro Trust Badges (Staged Entrance 5) -->
+                    <div class="hero-reveal-5 mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                        <span class="flex items-center gap-1.5"><i class="fas fa-rotate text-amber-500"></i> Auto-switches to backup in 8ms</span>
+                        <span class="flex items-center gap-1.5"><i class="fas fa-shield-check text-emerald-500"></i> Safe pacing protects sender score</span>
+                        <span class="flex items-center gap-1.5"><i class="fas fa-lock text-blue-500"></i> 100% Data privacy and control</span>
+                        <span class="flex items-center gap-1.5"><i class="fas fa-check text-zinc-400"></i> Free setup, no credit card required</span>
+                    </div>
+                </div>
+
+                <!-- APPLE PRO DISPLAY / STUDIO MONITOR HERO SHOWCASE (100% SOFTWARE FOCUS) -->
+                <div id="hero-mockup" class="mt-8 relative mx-auto max-w-6xl text-center [perspective:1400px]">
+
+                    <!-- Left 3D Floating Telemetry Pill (Desktop, Pure CSS Float) -->
+                    <div class="hidden lg:flex items-center gap-2.5 absolute left-2 xl:left-4 top-1/4 -translate-y-1/2 px-3.5 py-2.5 rounded-2xl bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md border border-zinc-200/80 dark:border-zinc-800/80 shadow-xl text-left animate-float-badge-left hover:rotate-0 transition-all duration-300 z-30 group">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xs">
+                            <i class="fas fa-shield-check"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1.5 text-2xs font-bold text-zinc-900 dark:text-white">
+                                <span>99.98% Deliverability</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            </div>
+                            <p class="text-3xs text-zinc-500 font-mono">Zero IP Quota Stalls</p>
+                        </div>
+                    </div>
+
+                    <!-- Right 3D Floating Failover Pill (Desktop, Pure CSS Float) -->
+                    <div class="hidden lg:flex items-center gap-2.5 absolute right-2 xl:right-4 top-1/3 -translate-y-1/2 px-3.5 py-2.5 rounded-2xl bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md border border-zinc-200/80 dark:border-zinc-800/80 shadow-xl text-left animate-float-badge-right hover:rotate-0 transition-all duration-300 z-30 group">
+                        <div class="w-8 h-8 rounded-xl bg-amber-500/10 dark:bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400 text-xs">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1.5 text-2xs font-bold text-zinc-900 dark:text-white">
+                                <span>8ms Auto-Failover</span>
+                                <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-500 text-3xs font-mono font-bold">ACTIVE</span>
+                            </div>
+                            <p class="text-3xs text-zinc-500 font-mono">5 Relays Load-Balanced</p>
+                        </div>
+                    </div>
+
+                    <!-- Module Tab Switcher Above Monitor -->
+                    <div class="flex items-center justify-center flex-wrap gap-2 mb-4 relative z-20">
+                        <button type="button" onclick="switchMockupTab('dashboard')" id="tabBtn-dashboard" class="px-3.5 py-1.5 rounded-lg text-2xs font-bold transition-all bg-amber-500 text-zinc-950 shadow-xs">
+                            <i class="fas fa-chart-line mr-1"></i> Command Center
+                        </button>
+                        <button type="button" onclick="switchMockupTab('dispatch')" id="tabBtn-dispatch" class="px-3.5 py-1.5 rounded-lg text-2xs font-bold transition-all bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 hover:border-amber-400">
+                            <i class="fas fa-paper-plane mr-1 text-amber-500"></i> Dispatch Studio
+                        </button>
+                        <button type="button" onclick="switchMockupTab('accounts')" id="tabBtn-accounts" class="px-3.5 py-1.5 rounded-lg text-2xs font-bold transition-all bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 hover:border-amber-400">
+                            <i class="fas fa-server mr-1 text-blue-500"></i> Relay Matrix
+                        </button>
+                        <button type="button" onclick="switchMockupTab('audience')" id="tabBtn-audience" class="px-3.5 py-1.5 rounded-lg text-2xs font-bold transition-all bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 hover:border-amber-400">
+                            <i class="fas fa-users mr-1 text-emerald-500"></i> Audience Tags
+                        </button>
+                    </div>
+
+                    <!-- 3D Tilting Apple Studio Display Desktop Monitor Frame -->
+                    <div id="interactiveHeroMockup" class="studio-display-frame relative transition-all duration-300 mx-auto max-w-4xl text-left [transform-style:preserve-3d]">
+                        <!-- Spotlight Hover Tracking Glow -->
+                        <div id="mouseFollowerGlow" class="mouse-spotlight"></div>
+
+                        <!-- Monitor Screen Bezel (Apple Studio Display / Pro Display XDR) -->
+                        <div class="rounded-[20px] sm:rounded-[24px] border-[8px] sm:border-[10px] border-[#18181f] dark:border-[#22222b] bg-[#0c0c10] relative overflow-hidden shadow-[0_25px_65px_-12px_rgba(0,0,0,0.65)] ring-1 ring-white/10 z-10">
+                            <!-- FaceTime HD Camera Dot & Sensor -->
+                            <div class="absolute top-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-30 pointer-events-none">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#050508] border border-white/20"></span>
+                                <span class="w-1 h-1 rounded-full bg-emerald-400/80 animate-pulse"></span>
+                            </div>
+
+                            <!-- In-App Browser Titlebar -->
+                            <div class="px-4 py-2.5 bg-slate-100/90 dark:bg-zinc-900/90 border-b border-zinc-200/80 dark:border-zinc-800/80 flex items-center justify-between relative z-10">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-red-400/90 inline-block"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-400/90 inline-block"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-green-400/90 inline-block"></span>
+                                    </div>
+                                    <span id="mockupUrlBar" class="text-3xs font-mono text-zinc-500">app.campaignstack.io/dashboard</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span id="mockupStatusText" class="text-3xs font-bold text-emerald-600 dark:text-emerald-400">5 Gateways Active</span>
+                                </div>
+                            </div>
+
+                            <!-- Retina Screen Surface -->
+                            <div class="bg-white dark:bg-[#101014] text-zinc-900 dark:text-zinc-100 p-2 sm:p-2.5 relative z-10 overflow-hidden">
+                                <!-- Screen 1: Command Center (Real High-Res Screenshot, 100% Readable) -->
+                                <div id="screen-dashboard" class="mockup-tab-panel">
+                                    <div class="relative rounded-xl overflow-hidden border border-zinc-200/60 dark:border-zinc-800/80 shadow-sm group">
+                                        <img src="/i/dashboard_screenshot.png" alt="CampaignStack Command Center Dashboard" class="w-full h-auto object-cover object-top select-none transition-transform duration-500 group-hover:scale-[1.01]" />
+                                        <div class="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-lg bg-zinc-900/85 text-white text-3xs backdrop-blur-md font-mono border border-white/10 shadow-lg flex items-center gap-1.5">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                            <span>Live Platform Telemetry • Arjun Sharma</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Screen 2: Dispatch Studio -->
+                                <div id="screen-dispatch" class="mockup-tab-panel hidden p-4 sm:p-5 space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                                                <h4 class="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">Active Queue: Product Launch Broadcast (#NL-042)</h4>
+                                            </div>
+                                            <p class="text-3xs text-zinc-500 mt-0.5">14,391 of 18,450 Delivered • Paced at 120 msgs/min</p>
+                                        </div>
+                                        <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-3xs font-bold">
+                                            <i class="fas fa-check-circle mr-1"></i> 0 Stalls
+                                        </span>
+                                    </div>
+
+                                    <!-- Progress Bar -->
+                                    <div class="w-full h-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full w-[78%] transition-all"></div>
+                                    </div>
+
+                                    <!-- Relays Status Compact Strip -->
+                                    <div class="grid grid-cols-3 gap-3 pt-1">
+                                        <div class="p-3 rounded-xl border border-emerald-300 dark:border-emerald-800/60 bg-emerald-50/40 dark:bg-emerald-950/20">
+                                            <div class="flex justify-between items-center text-3xs font-bold">
+                                                <span>Brevo Relay</span>
+                                                <span class="text-emerald-600">300/300 Cap</span>
+                                            </div>
+                                            <p class="text-3xs text-amber-600 font-semibold mt-0.5">Auto-Rollover Complete</p>
+                                        </div>
+
+                                        <div class="p-3 rounded-xl border border-amber-300 dark:border-amber-800/80 bg-amber-50/40 dark:bg-amber-950/20 ring-1 ring-amber-400/40">
+                                            <div class="flex justify-between items-center text-3xs font-bold">
+                                                <span>Scaleway TEM</span>
+                                                <span class="text-amber-600">Sending Now</span>
+                                            </div>
+                                            <p class="text-3xs text-emerald-600 font-semibold mt-0.5">Latency: 118ms</p>
+                                        </div>
+
+                                        <div class="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40">
+                                            <div class="flex justify-between items-center text-3xs font-bold">
+                                                <span>Amazon SES</span>
+                                                <span class="text-zinc-400">Standby</span>
+                                            </div>
+                                            <p class="text-3xs text-zinc-500 mt-0.5">High Volume Ready</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Micro Event Stream -->
+                                    <div class="p-3 rounded-xl bg-zinc-900 text-zinc-300 font-mono text-3xs space-y-1 overflow-hidden">
+                                        <div class="text-zinc-500">[00:32:11] 250 OK: Delivery verified to priya.nair@corp.in</div>
+                                        <div class="text-emerald-400">[00:32:12] ENGINE: Pacing delay 300ms observed. Zero bounce flags.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Screen 3: Relay Matrix -->
+                                <div id="screen-accounts" class="mockup-tab-panel hidden p-4 sm:p-5 space-y-3">
+                                    <div class="flex items-center justify-between text-xs font-bold">
+                                        <span>Mail Relays & Multi-SMTP Gateways</span>
+                                        <span class="text-3xs text-emerald-600">All Handshakes Validated</span>
+                                    </div>
+                                    <div class="space-y-2 text-2xs">
+                                        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-server text-amber-500 text-xs"></i>
+                                                <span class="font-bold">Amazon SES Mumbai</span>
+                                            </div>
+                                            <span class="text-emerald-600 font-bold text-3xs">142ms • TLS 587</span>
+                                        </div>
+                                        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-paper-plane text-blue-500 text-xs"></i>
+                                                <span class="font-bold">Brevo Primary Relay</span>
+                                            </div>
+                                            <span class="text-emerald-600 font-bold text-3xs">98ms • TLS 587</span>
+                                        </div>
+                                        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <i class="fab fa-google text-red-500 text-xs"></i>
+                                                <span class="font-bold">Google Workspace Relay</span>
+                                            </div>
+                                            <span class="text-emerald-600 font-bold text-3xs">112ms • SSL 465</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Screen 4: Audience Tags -->
+                                <div id="screen-audience" class="mockup-tab-panel hidden p-4 sm:p-5 space-y-3">
+                                    <div class="flex items-center justify-between text-xs font-bold">
+                                        <span>Audience Tags & Segmentation</span>
+                                        <span class="text-3xs text-zinc-500">24,500 Total Contacts</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2.5 py-1 rounded-md bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 text-3xs font-bold">VIP Buyers (4,120)</span>
+                                        <span class="px-2.5 py-1 rounded-md bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 text-3xs font-bold">Bangalore Founders (2,890)</span>
+                                        <span class="px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 text-3xs font-bold">Festive Shoppers (11,400)</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-3xs space-y-1.5">
+                                        <div class="flex justify-between text-zinc-600 dark:text-zinc-400">
+                                            <span>Rajesh Mehta (mehta-logistics.in)</span>
+                                            <span class="text-amber-600 font-bold">VIP Buyer</span>
+                                        </div>
+                                        <div class="flex justify-between text-zinc-600 dark:text-zinc-400">
+                                            <span>Pooja Deshmukh (fintechcloud.co)</span>
+                                            <span class="text-blue-600 font-bold">B2B Lead</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Apple Studio Display Milled Aluminum Stand -->
+                        <div class="relative z-0">
+                            <!-- Stand Neck -->
+                            <div class="w-20 sm:w-28 h-9 sm:h-12 bg-gradient-to-b from-[#b8bac4] to-[#9294a0] dark:from-[#32323e] dark:to-[#1e1e26] mx-auto shadow-md relative -mt-1 rounded-b-sm border-x border-black/10 dark:border-white/10">
+                                <!-- Cable Management Ring -->
+                                <div class="w-4 sm:w-5 h-4 sm:h-5 rounded-full bg-[#121218] dark:bg-[#0c0c10] mx-auto top-2.5 sm:top-3.5 relative border border-black/20 dark:border-white/15 shadow-inner"></div>
+                            </div>
+
+                            <!-- Flat Aluminum Desk Foot -->
+                            <div class="w-44 sm:w-60 h-2.5 sm:h-3.5 bg-gradient-to-r from-[#b0b2be] via-[#d0d2dd] to-[#b0b2be] dark:from-[#202028] dark:via-[#353542] dark:to-[#202028] rounded-b-md mx-auto shadow-xl border-t border-white/40 dark:border-white/10 relative"></div>
+
+                            <!-- Soft Desk Contact Shadow -->
+                            <div class="w-52 sm:w-72 h-3.5 bg-black/20 dark:bg-black/60 blur-md mx-auto rounded-full mt-0.5"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FULL-BLEED DEDICATED RELAY ECOSYSTEM CAROUSEL (100% Edge-to-Edge with 3D Horizon Arc) -->
+            <section id="orbital-relay-section" class="w-full py-16 border-y border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden relative">
+                <!-- Deep Cosmic Horizon & Gravitational Core (The Axis it revolves around) -->
+                <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                    <!-- Subtle Horizon Axis Beam -->
+                    <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-gradient-to-r from-transparent via-amber-500/25 dark:via-amber-400/20 to-transparent"></div>
+                    <!-- Central Gravitational Core Ambient Glow -->
+                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[110px] bg-amber-500/[0.04] dark:bg-amber-400/[0.03] blur-3xl rounded-full"></div>
+                    <!-- Left Void Vignette -->
+                    <div class="absolute left-0 inset-y-0 w-24 sm:w-36 bg-gradient-to-r from-white dark:from-[#0c0c0e] to-transparent z-20 pointer-events-none"></div>
+                    <!-- Right Void Vignette -->
+                    <div class="absolute right-0 inset-y-0 w-24 sm:w-36 bg-gradient-to-l from-white dark:from-[#0c0c0e] to-transparent z-20 pointer-events-none"></div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 text-center mb-7 relative z-10">
+                    <p class="text-3xs uppercase tracking-widest font-extrabold text-zinc-400 dark:text-zinc-500">
+                        POWERED BY INDUSTRY-STANDARD RELAYS & PROTOCOLS
+                    </p>
+                </div>
+                
+                <div id="orbital-relay-stage" class="w-full marquee-mask relative overflow-hidden py-4 [perspective:1200px] [transform-style:preserve-3d]">
+                    <div class="marquee-track gap-5 sm:gap-6 [transform-style:preserve-3d]">
+                        @php
+                        $relays = [
+                            ['name' => 'Amazon SES', 'icon' => 'fab fa-aws', 'color' => 'text-amber-500 bg-amber-500/10'],
+                            ['name' => 'Brevo', 'icon' => 'fas fa-paper-plane', 'color' => 'text-blue-500 bg-blue-500/10'],
+                            ['name' => 'Google Workspace', 'icon' => 'fab fa-google', 'color' => 'text-red-500 bg-red-500/10'],
+                            ['name' => 'Microsoft 365', 'icon' => 'fab fa-microsoft', 'color' => 'text-blue-600 bg-blue-600/10'],
+                            ['name' => 'Postmark', 'icon' => 'fas fa-bolt-lightning', 'color' => 'text-yellow-500 bg-yellow-500/10'],
+                            ['name' => 'Mailgun', 'icon' => 'fas fa-fire', 'color' => 'text-red-600 bg-red-600/10'],
+                            ['name' => 'Scaleway', 'icon' => 'fas fa-cloud', 'color' => 'text-purple-500 bg-purple-500/10'],
+                            ['name' => 'SendGrid', 'icon' => 'fas fa-envelope-open-text', 'color' => 'text-blue-400 bg-blue-400/10'],
+                            ['name' => 'Resend', 'icon' => 'fas fa-cube', 'color' => 'text-zinc-800 dark:text-zinc-200 bg-zinc-200 dark:bg-zinc-800'],
+                            ['name' => 'ZeptoMail', 'icon' => 'fas fa-shield-halved', 'color' => 'text-amber-500 bg-amber-500/10'],
+                            ['name' => 'Private SMTP', 'icon' => 'fas fa-server', 'color' => 'text-emerald-500 bg-emerald-500/10'],
+                        ];
+                        $allRelays = array_merge($relays, $relays);
+                        @endphp
+
+                        @foreach($allRelays as $relay)
+                            <div class="relay-orbital-card flex items-center gap-3 px-5 py-3 rounded-2xl bg-white dark:bg-[#141418] border border-zinc-200/90 dark:border-zinc-800/90 shadow-xs hover:border-amber-400/60 transition-all shrink-0 cursor-default group">
+                                <div class="w-10 h-10 rounded-xl {{ $relay['color'] }} flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="{{ $relay['icon'] }}"></i>
+                                </div>
+                                <span class="text-sm font-bold text-zinc-900 dark:text-white whitespace-nowrap">{{ $relay['name'] }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+            <!-- INTERACTIVE FAILOVER SIMULATOR (#failover-sim) -->
+            <section id="failover-sim" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 gsap-reveal">
+                <div class="rounded-3xl p-6 sm:p-8 bg-white/90 dark:bg-[#121215]/90 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-lg relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-5 mb-6">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md text-3xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                                <i class="fas fa-bolt"></i> Interactive Failover Simulator
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-black text-zinc-900 dark:text-white mt-1">
+                                Watch Intelligent Failover Protect Your Broadcast
+                            </h3>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400">
+                                If an email provider hits quota or experiences latency, CampaignStack auto-reroutes traffic in milliseconds.
+                            </p>
+                        </div>
+
+                        <!-- Switch -->
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-semibold text-zinc-600 dark:text-zinc-300">Simulate Server Outage:</span>
+                            <button id="simToggleBtn" onclick="toggleSimFailover()" type="button" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-zinc-300 dark:bg-zinc-700 transition-colors duration-200 ease-in-out focus:outline-none">
+                                <span id="simToggleThumb" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Flow Visualizer -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+                        <div class="lg:col-span-3 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 text-center">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 mx-auto flex items-center justify-center text-base mb-2">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <h4 class="text-xs font-bold text-zinc-900 dark:text-white">Customer Queue</h4>
+                            <p class="text-3xs text-zinc-500">15,000 Contacts</p>
+                            <div class="mt-2 inline-flex items-center gap-1 text-3xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                <span>Pacing: Active</span>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-1 hidden lg:flex justify-center text-zinc-400 text-sm">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+
+                        <div class="lg:col-span-4 space-y-2">
+                            <div id="simGatewayA" class="p-3 rounded-xl border transition-all duration-300 border-emerald-400 bg-emerald-50/50 dark:bg-emerald-950/20 flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-xs">A</div>
+                                    <div>
+                                        <p class="text-xs font-bold text-zinc-900 dark:text-white">Relay A: Brevo</p>
+                                        <p id="simStatusA" class="text-3xs text-emerald-600 dark:text-emerald-400">Status: Healthy • Active Route</p>
+                                    </div>
+                                </div>
+                                <span id="simBadgeA" class="text-3xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded">PRIMARY</span>
+                            </div>
+
+                            <div id="simGatewayB" class="p-3 rounded-xl border transition-all duration-300 border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40 flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold text-xs">B</div>
+                                    <div>
+                                        <p class="text-xs font-bold text-zinc-900 dark:text-white">Relay B: AWS SES</p>
+                                        <p id="simStatusB" class="text-3xs text-zinc-500">Status: Standby • Armed</p>
+                                    </div>
+                                </div>
+                                <span id="simBadgeB" class="text-3xs font-bold text-zinc-500 bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 rounded">STANDBY</span>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-1 hidden lg:flex justify-center text-zinc-400 text-sm">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+
+                        <div class="lg:col-span-3 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 text-center">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 mx-auto flex items-center justify-center text-base mb-2">
+                                <i class="fas fa-inbox"></i>
+                            </div>
+                            <h4 class="text-xs font-bold text-zinc-900 dark:text-white">Customer Inboxes</h4>
+                            <p id="simDeliveryReport" class="text-3xs text-emerald-600 dark:text-emerald-400 font-semibold">100% Delivered • 0 Lost Emails</p>
+                            <div class="mt-2 inline-flex items-center gap-1 text-3xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded">
+                                <i class="fas fa-shield-check"></i>
+                                <span>Zero Broadcast Disruption</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CORE CAPABILITIES (#features) WITH BIDIRECTIONAL SCROLL & MOUSE HOVER -->
+            <section id="features" class="py-16 sm:py-20 border-t border-zinc-200/60 dark:border-zinc-800/60">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-14 gsap-reveal">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Core Architecture</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white mt-2">
+                            Engineered for Total Reliability & Inbox Placement
+                        </h2>
+                        <p class="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                            Traditional platforms hold your list hostage. CampaignStack gives you full independence and bulletproof delivery.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="interactive-card gsap-reveal p-6 sm:p-8 rounded-2xl bg-white/90 dark:bg-[#141417]/90 border border-slate-200/90 dark:border-zinc-800/90 shadow-sm hover:border-amber-400/60 hover:-translate-y-1 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-lg mb-4">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-zinc-900 dark:text-white">Multi-Gateway Automatic Failover</h3>
+                            <p class="mt-2.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                Connect multiple gateways. If one provider slows down or reaches a daily cap, CampaignStack seamlessly rolls over to your backup server without interrupting your broadcast.
+                            </p>
+                            <div class="mt-5 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs">
+                                <span class="font-semibold text-amber-600 dark:text-amber-400">Zero dropped emails</span>
+                                <span class="text-zinc-400 font-mono">Auto-circuit breaker</span>
+                            </div>
+                        </div>
+
+                        <div class="interactive-card gsap-reveal p-6 sm:p-8 rounded-2xl bg-white/90 dark:bg-[#141417]/90 border border-slate-200/90 dark:border-zinc-800/90 shadow-sm hover:border-emerald-400/60 hover:-translate-y-1 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-lg mb-4">
+                                <i class="fas fa-gauge-high"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-zinc-900 dark:text-white">Reputation Pacing Dial</h3>
+                            <p class="mt-2.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                Avoid the "Promotions" and "Spam" tabs. Send messages spaced with calibrated delay intervals to mirror authentic sender patterns and protect domain trust.
+                            </p>
+                            <div class="mt-5 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs">
+                                <span class="font-semibold text-emerald-600 dark:text-emerald-400">Custom rate limits</span>
+                                <span class="text-zinc-400 font-mono">Spam tab avoidance</span>
+                            </div>
+                        </div>
+
+                        <div class="interactive-card gsap-reveal p-6 sm:p-8 rounded-2xl bg-white/90 dark:bg-[#141417]/90 border border-slate-200/90 dark:border-zinc-800/90 shadow-sm hover:border-blue-400/60 hover:-translate-y-1 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-lg mb-4">
+                                <i class="fas fa-users-viewfinder"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-zinc-900 dark:text-white">Audience Tagging & Segmentation</h3>
+                            <p class="mt-2.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                Organize contacts with flexible tag taxonomies. Filter your subscribers dynamically per broadcast without duplicating contact lists or paying extra per subscriber.
+                            </p>
+                            <div class="mt-5 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs">
+                                <span class="font-semibold text-blue-600 dark:text-blue-400">Smart exclusions</span>
+                                <span class="text-zinc-400 font-mono">Zero contact tax</span>
+                            </div>
+                        </div>
+
+                        <div class="interactive-card gsap-reveal p-6 sm:p-8 rounded-2xl bg-white/90 dark:bg-[#141417]/90 border border-slate-200/90 dark:border-zinc-800/90 shadow-sm hover:border-purple-400/60 hover:-translate-y-1 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-lg mb-4">
+                                <i class="fas fa-terminal"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-zinc-900 dark:text-white">Real-Time Telemetry & Inspector</h3>
+                            <p class="mt-2.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                Complete transparency into every message. Audit worker logs, SMTP handshake codes, retry queues, and open/click telemetry directly in your console.
+                            </p>
+                            <div class="mt-5 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-xs">
+                                <span class="font-semibold text-purple-600 dark:text-purple-400">Audit handshake logs</span>
+                                <span class="text-zinc-400 font-mono">Instant queue retries</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4-STAGE STUDIO WORKFLOW (#studio-deepdive) -->
+            <section id="studio-deepdive" class="py-16 sm:py-20 bg-zinc-100/60 dark:bg-[#0d0d10] border-t border-zinc-200/60 dark:border-zinc-800/60">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Section Header (Clear & Intuitive) -->
+                    <div class="text-center max-w-2xl mx-auto mb-12 gsap-reveal">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Step-by-Step Workflow</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white mt-2">
+                            How High-Volume Sending Works in 4 Simple Steps
+                        </h2>
+                        <p class="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                            CampaignStack's Dispatch Studio guides you from contact selection to delivery verification, ensuring you never make accidental sending mistakes.
+                        </p>
+                    </div>
+
+                    <!-- Interactive Split Studio UI (Symmetric Height Alignment) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                        <!-- Left Steps Navigation (5 cols) -->
+                        <div class="lg:col-span-5 flex flex-col justify-between gap-3 h-full">
+                            <!-- Step 1 Tab -->
+                            <button type="button" onclick="selectStudioStep(1)" id="studio-step-btn-1" class="w-full flex-1 text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 bg-amber-500/10 border-amber-400 dark:bg-amber-400/10 dark:border-amber-400/50 shadow-xs flex items-start gap-3.5 group cursor-pointer ring-1 ring-amber-400/40">
+                                <span id="studio-step-num-1" class="w-7 h-7 shrink-0 rounded-lg bg-amber-500 text-zinc-950 font-black flex items-center justify-center text-xs shadow-xs">1</span>
+                                <div>
+                                    <h4 class="text-base font-bold text-zinc-900 dark:text-white group-hover:text-amber-500 transition-colors">1. Pick Your Audience</h4>
+                                    <p class="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Filter contacts with custom tags, review subscriber counts, and automatically exclude unsubscribes.</p>
+                                </div>
+                            </button>
+
+                            <!-- Step 2 Tab -->
+                            <button type="button" onclick="selectStudioStep(2)" id="studio-step-btn-2" class="w-full flex-1 text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 bg-white dark:bg-zinc-900/80 border-zinc-200 dark:border-zinc-800 shadow-2xs hover:border-zinc-300 dark:hover:border-zinc-700 flex items-start gap-3.5 group cursor-pointer">
+                                <span id="studio-step-num-2" class="w-7 h-7 shrink-0 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-black flex items-center justify-center text-xs">2</span>
+                                <div>
+                                    <h4 class="text-base font-bold text-zinc-900 dark:text-white group-hover:text-amber-500 transition-colors">2. Assign Email Relays</h4>
+                                    <p class="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Choose which provider sends first (e.g. Amazon SES) and set your automatic backup relay (e.g. Brevo).</p>
+                                </div>
+                            </button>
+
+                            <!-- Step 3 Tab -->
+                            <button type="button" onclick="selectStudioStep(3)" id="studio-step-btn-3" class="w-full flex-1 text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 bg-white dark:bg-zinc-900/80 border-zinc-200 dark:border-zinc-800 shadow-2xs hover:border-zinc-300 dark:hover:border-zinc-700 flex items-start gap-3.5 group cursor-pointer">
+                                <span id="studio-step-num-3" class="w-7 h-7 shrink-0 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-black flex items-center justify-center text-xs">3</span>
+                                <div>
+                                    <h4 class="text-base font-bold text-zinc-900 dark:text-white group-hover:text-amber-500 transition-colors">3. Set Sending Speed</h4>
+                                    <p class="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Adjust pacing delays between emails so you mirror authentic human sending and protect inbox placement.</p>
+                                </div>
+                            </button>
+
+                            <!-- Step 4 Tab -->
+                            <button type="button" onclick="selectStudioStep(4)" id="studio-step-btn-4" class="w-full flex-1 text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 bg-white dark:bg-zinc-900/80 border-zinc-200 dark:border-zinc-800 shadow-2xs hover:border-zinc-300 dark:hover:border-zinc-700 flex items-start gap-3.5 group cursor-pointer">
+                                <span id="studio-step-num-4" class="w-7 h-7 shrink-0 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-black flex items-center justify-center text-xs">4</span>
+                                <div>
+                                    <h4 class="text-base font-bold text-zinc-900 dark:text-white group-hover:text-amber-500 transition-colors">4. Launch & Monitor Live</h4>
+                                    <p class="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Watch queue workers deliver in real time with live progress gauges, pause buttons, and error counters.</p>
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Right Interactive Live Preview Card (7 cols, Symmetrical Height) -->
+                        <div class="lg:col-span-7 rounded-3xl p-6 sm:p-8 bg-white dark:bg-[#121216] border border-zinc-200/90 dark:border-zinc-800/90 shadow-xl relative flex flex-col justify-between h-full">
+                            <!-- In-Preview Header -->
+                            <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/80 pb-4 mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-zinc-900 dark:text-white">Studio Preview</span>
+                                </div>
+                                <span id="studio-preview-step-badge" class="px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300">Stage 1 of 4</span>
+                            </div>
+
+                            <!-- Screen 1: Audience Selection Preview (Rich & Animated) -->
+                            <div id="studio-step-preview-1" class="flex-1 flex flex-col justify-center space-y-3.5 py-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                        <h5 class="text-sm font-bold text-zinc-900 dark:text-white">Audience Segmentation Engine</h5>
+                                    </div>
+                                    <span class="text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">18,450 Ready</span>
+                                </div>
+
+                                <!-- Filter Search Simulation Bar -->
+                                <div class="relative">
+                                    <div class="w-full bg-zinc-100 dark:bg-zinc-800/70 border border-zinc-200/80 dark:border-zinc-700/60 rounded-xl py-2 px-3 text-xs flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400 font-mono">
+                                            <i class="fas fa-filter text-amber-500 text-2xs"></i>
+                                            <span>active_tags: <strong class="text-zinc-800 dark:text-zinc-200">vip, tech, founders</strong></span>
+                                        </div>
+                                        <span class="text-2xs font-semibold font-mono text-zinc-400">0 unsubscribes filtered</span>
+                                    </div>
+                                </div>
+
+                                <!-- Active Filter Chips with live glow -->
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                                        <i class="fas fa-check text-2xs"></i> VIP Buyers (4,120)
+                                    </span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-blue-500/15 border border-blue-500/30 text-blue-700 dark:text-blue-300 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                                        <i class="fas fa-check text-2xs"></i> Active Founders (2,890)
+                                    </span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                                        <i class="fas fa-check text-2xs"></i> Newsletter (11,440)
+                                    </span>
+                                </div>
+
+                                <!-- Live Streamed Verified Contact Feed -->
+                                <div class="rounded-xl border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/60 dark:bg-zinc-900/40 p-2.5 space-y-1.5 text-xs font-mono">
+                                    <div class="flex items-center justify-between text-zinc-600 dark:text-zinc-400">
+                                        <span class="truncate max-w-[200px] flex items-center gap-1.5"><i class="fas fa-envelope text-2xs text-amber-500"></i> ankit.s@payflow.in</span>
+                                        <span class="text-emerald-600 dark:text-emerald-400 font-semibold text-2xs">MX Validated • 0.4ms</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-zinc-600 dark:text-zinc-400">
+                                        <span class="truncate max-w-[200px] flex items-center gap-1.5"><i class="fas fa-envelope text-2xs text-amber-500"></i> priya@saascart.io</span>
+                                        <span class="text-emerald-600 dark:text-emerald-400 font-semibold text-2xs">Primary Score 99.8%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screen 2: Relay Allocation Preview (Rich & Animated) -->
+                            <div id="studio-step-preview-2" class="hidden flex-1 flex flex-col justify-center space-y-3 py-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
+                                        <h5 class="text-sm font-bold text-zinc-900 dark:text-white">Active Multi-Relay Route Map</h5>
+                                    </div>
+                                    <span class="text-xs font-mono font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">Circuit Breaker: Armed</span>
+                                </div>
+
+                                <!-- Priority 1 Gateway -->
+                                <div class="p-3.5 rounded-xl border border-emerald-400/60 bg-emerald-50/50 dark:bg-emerald-950/20 flex items-center justify-between shadow-2xs">
+                                    <div class="flex items-center gap-3">
+                                        <span class="px-2 py-0.5 rounded text-xs font-bold font-mono bg-emerald-500 text-white">ROUTE 1</span>
+                                        <div>
+                                            <p class="text-xs font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
+                                                <span>Amazon SES (Mumbai)</span>
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                            </p>
+                                            <p class="text-2xs text-zinc-500 font-mono">Quota: 85,210 / 100,000 • 24ms TLS Latency</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono">PRIMARY</span>
+                                </div>
+
+                                <!-- Priority 2 Backup Gateway -->
+                                <div class="p-3.5 rounded-xl border border-amber-400/50 bg-amber-50/40 dark:bg-amber-950/20 flex items-center justify-between shadow-2xs">
+                                    <div class="flex items-center gap-3">
+                                        <span class="px-2 py-0.5 rounded text-xs font-bold font-mono bg-amber-500 text-zinc-950">ROUTE 2</span>
+                                        <div>
+                                            <p class="text-xs font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
+                                                <span>Brevo Dedicated Relay</span>
+                                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                                            </p>
+                                            <p class="text-2xs text-zinc-500 font-mono">Standby • Triggers if Route 1 throttles (8ms)</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-bold text-amber-600 dark:text-amber-400 font-mono">STANDBY</span>
+                                </div>
+
+                                <div class="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800/60 flex items-center justify-between text-2xs font-mono text-zinc-500">
+                                    <span>Failover Trigger: Rate Limit / 429 Error</span>
+                                    <span class="text-emerald-600 dark:text-emerald-400 font-bold">0 Dropped Emails Guaranteed</span>
+                                </div>
+                            </div>
+
+                            <!-- Screen 3: Cadence & Pacing Preview (Rich & Animated) -->
+                            <div id="studio-step-preview-3" class="hidden flex-1 flex flex-col justify-center space-y-3.5 py-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                                        <h5 class="text-sm font-bold text-zinc-900 dark:text-white">Reputation Pacing & Delay Dial</h5>
+                                    </div>
+                                    <span id="pacing-risk-badge" class="text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">Risk: 0.0% Optimal</span>
+                                </div>
+
+                                <!-- Interactive Speed Presets -->
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button type="button" onclick="setPacingSpeed(60, 'Conservative (60/min)', 1000, '3h 12m', '0.0% Safe', 'w-1/3')" class="p-2 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-amber-400 text-left transition-all cursor-pointer group">
+                                        <p class="text-2xs text-zinc-400">Warm-up</p>
+                                        <p class="text-xs font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-amber-500 font-mono">60 / min</p>
+                                    </button>
+                                    <button type="button" onclick="setPacingSpeed(120, 'Balanced (120/min)', 500, '2h 34m', '0.0% Optimal', 'w-2/3')" class="p-2 rounded-xl border border-amber-400 bg-amber-500/10 dark:bg-amber-400/10 text-left transition-all cursor-pointer group">
+                                        <p class="text-2xs text-amber-600 dark:text-amber-400 font-semibold">Recommended</p>
+                                        <p class="text-xs font-bold text-zinc-900 dark:text-white font-mono">120 / min</p>
+                                    </button>
+                                    <button type="button" onclick="setPacingSpeed(300, 'High Volume (300/min)', 200, '1h 01m', '0.1% Monitored', 'w-full')" class="p-2 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-amber-400 text-left transition-all cursor-pointer group">
+                                        <p class="text-2xs text-zinc-400">Turbo</p>
+                                        <p class="text-xs font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-amber-500 font-mono">300 / min</p>
+                                    </button>
+                                </div>
+
+                                <div class="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2">
+                                    <div class="flex justify-between items-center text-xs">
+                                        <span class="font-semibold text-zinc-700 dark:text-zinc-300">Paced Transmission Cadence:</span>
+                                        <span id="pacing-speed-text" class="font-mono font-bold text-amber-600 dark:text-amber-400 text-sm">120 emails / minute</span>
+                                    </div>
+                                    <div class="w-full h-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                                        <div id="pacing-bar-fill" class="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full w-2/3 transition-all duration-300"></div>
+                                    </div>
+                                    <div class="flex justify-between text-2xs text-zinc-500 font-mono pt-0.5">
+                                        <span id="pacing-delay-text">500ms delay between emails</span>
+                                        <span id="pacing-time-text">Estimated time: ~2h 34m</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screen 4: Live Delivery Progress Preview (Rich & Animated Ticker) -->
+                            <div id="studio-step-preview-4" class="hidden flex-1 flex flex-col justify-center space-y-3.5 py-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="relative flex h-2.5 w-2.5">
+                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                        </span>
+                                        <h5 class="text-sm font-bold text-zinc-900 dark:text-white">Live Broadcast Telemetry</h5>
+                                    </div>
+                                    <span class="text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                                        <i class="fas fa-bolt text-2xs"></i> 18 msgs/sec
+                                    </span>
+                                </div>
+
+                                <!-- Dynamic Progress Meter -->
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between text-xs font-mono">
+                                        <span id="live-progress-count" class="text-zinc-600 dark:text-zinc-300 font-semibold">14,391 of 18,450 Delivered</span>
+                                        <span id="live-progress-percent" class="font-bold text-emerald-600 dark:text-emerald-400">78% Complete</span>
+                                    </div>
+                                    <div class="w-full h-3 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden p-0.5 border border-zinc-200/50 dark:border-zinc-700/50">
+                                        <div id="live-progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-emerald-400 rounded-full w-[78%] transition-all duration-500 shadow-sm"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Real-time SMTP Handshake Console Stream -->
+                                <div class="p-3 rounded-xl bg-zinc-950 text-zinc-300 font-mono text-2xs space-y-1 border border-zinc-800 shadow-inner">
+                                    <div class="flex items-center justify-between text-zinc-500 pb-1 border-b border-zinc-800/80">
+                                        <span>SMTP WORKER CONSOLE</span>
+                                        <span class="text-emerald-400">0 ERRORS</span>
+                                    </div>
+                                    <div class="text-zinc-400 truncate">[01:20:45] 250 OK: id=CS-82910 delivered to founder@fintechcloud.in (22ms)</div>
+                                    <div class="text-emerald-400 truncate">[01:20:46] WORKER #3: Throttle delay 500ms observed • In-box guaranteed</div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Next / Prev Controls -->
+                            <div class="pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between">
+                                <button type="button" onclick="prevStudioStep()" class="px-3.5 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer">
+                                    &larr; Previous Stage
+                                </button>
+                                <button type="button" onclick="nextStudioStep()" class="px-4 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer">
+                                    <span>Next Stage</span>
+                                    <i class="fas fa-arrow-right text-2xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section (#faq) -->
+            <section id="faq" class="py-16 sm:py-20 border-t border-zinc-200/60 dark:border-zinc-800/60">
+                <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-14 gsap-reveal">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Clear Answers</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white mt-2">Frequently Asked Questions</h2>
+                        <p class="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">Everything you need to know about CampaignStack's dispatch architecture.</p>
+                    </div>
+
+                    <div class="space-y-3.5">
+                        @php
+                        $faqs = [
+                            [
+                                'q' => 'Do I need coding or technical skills to use CampaignStack?',
+                                'a' => 'Not at all. Setting up a mail account is as simple as entering your SMTP credentials (host, port, username, password) or connecting via API. Import contacts via CSV, compose your message, and hit send.',
+                                'open' => true,
+                            ],
+                            [
+                                'q' => 'What is multi-gateway failover and why does it matter?',
+                                'a' => 'Most businesses rely on a single email provider. If that provider experiences an outage, reaches a daily sending cap, or flags an account, your entire business communication halts. With CampaignStack, you connect backup gateways. If server A has an issue, CampaignStack automatically reroutes traffic through server B in milliseconds with zero dropped emails.',
+                                'open' => false,
+                            ],
+                            [
+                                'q' => 'How does algorithmic pacing protect my domain reputation?',
+                                'a' => 'Blasting thousands of emails simultaneously alerts spam filters and hurts deliverability. CampaignStack paces each email with natural, configurable delays (e.g. 500ms), ensuring high inbox placement and protecting your domain sender score.',
+                                'open' => false,
+                            ],
+                            [
+                                'q' => 'Can I send from my company\'s custom domain?',
+                                'a' => 'Absolutely. You can send using any verified sender address on your domain (e.g. newsletter@yourbusiness.com). You retain 100% brand authenticity, DKIM alignment, and SPF compliance.',
+                                'open' => false,
+                            ],
+                            [
+                                'q' => 'How much does it cost compared to Mailchimp or Klaviyo?',
+                                'a' => 'Traditional tools charge high monthly fees per contact. CampaignStack allows you to plug in generous free and low-cost relays (like Amazon SES at $0.10 per 1,000 emails or Brevo\'s free tier), typically reducing email infrastructure bills by 80% to 90%.',
+                                'open' => false,
+                            ],
+                        ];
+                        @endphp
+
+                        @foreach($faqs as $faq)
+                            <details name="faq-accordion" {{ $faq['open'] ? 'open' : '' }} class="group rounded-2xl bg-white dark:bg-[#141417] border border-zinc-200/80 dark:border-zinc-800/80 transition-all duration-200 hover:border-amber-400/50 open:border-amber-400/60 open:shadow-xs overflow-hidden">
+                                <summary class="list-none flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none font-bold text-sm sm:text-base text-zinc-900 dark:text-white transition-colors">
+                                    <span>{{ $faq['q'] }}</span>
+                                    <span class="w-7 h-7 rounded-lg bg-zinc-100 dark:bg-zinc-800/90 flex items-center justify-center shrink-0 ml-4 group-open:bg-amber-500 group-open:text-zinc-950 transition-colors">
+                                        <i class="fas fa-chevron-down text-2xs transition-transform duration-300 group-open:rotate-180"></i>
+                                    </span>
+                                </summary>
+                                <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed border-t border-zinc-100 dark:border-zinc-800/60 pt-4">
+                                    {{ $faq['a'] }}
+                                </div>
+                            </details>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom CTA Banner -->
+            <section class="py-16 sm:py-20 border-t border-zinc-200/60 dark:border-zinc-800/60">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="relative rounded-3xl p-8 sm:p-14 bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-950 text-white overflow-hidden shadow-2xl border border-zinc-800 text-center">
+                        <div class="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <div class="relative z-10 max-w-xl mx-auto space-y-5">
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                                Ready to take full control of your email dispatch?
+                            </h2>
+                            <p class="text-sm sm:text-base text-zinc-300 leading-relaxed max-w-lg mx-auto">
+                                Join businesses orchestrating their outbound email infrastructure with high delivery rates and zero vendor lock-in.
+                            </p>
+                            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                                @auth
+                                    <a href="{{ route('dashboard') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 bg-amber-400 hover:bg-amber-300 text-zinc-950 text-sm font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 gap-2">
+                                        <span>Open Dispatch Console</span>
+                                        <i class="fas fa-arrow-right text-xs"></i>
+                                    </a>
+                                @else
+                                    <a href="{{ route('login') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 bg-amber-400 hover:bg-amber-300 text-zinc-950 text-sm font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 gap-2">
+                                        <span>Launch Dispatch Console</span>
+                                        <i class="fas fa-arrow-right text-xs"></i>
+                                    </a>
+                                @endauth
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-zinc-200/70 dark:border-zinc-800/80 bg-white/60 dark:bg-[#09090B]/60 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="space-y-3 md:col-span-2">
+                        <a href="/" class="flex items-center gap-3">
+                            <x-application-logo class="h-7 w-auto" />
+                        </a>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed">
+                            CampaignStack is an intelligent outbound email orchestration platform offering multi-gateway routing, automatic failover, and paced dispatch for growing businesses.
+                        </p>
+                        <div class="flex items-center gap-2 text-2xs text-emerald-600 dark:text-emerald-400">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span>All Dispatch Workers & Telemetry Operational</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-white">Platform</p>
+                        <ul class="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-400">
+                            <li><a href="#hero-mockup" class="hover:text-amber-500 transition-colors">Showcase</a></li>
+                            <li><a href="#failover-sim" class="hover:text-amber-500 transition-colors">Failover Engine</a></li>
+                            <li><a href="#features" class="hover:text-amber-500 transition-colors">Capabilities</a></li>
+                            <li><a href="#studio-deepdive" class="hover:text-amber-500 transition-colors">Studio Workflow</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-white">Console</p>
+                        <ul class="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-400">
+                            <li><a href="{{ route('login') }}" class="hover:text-amber-500 transition-colors">Sign In</a></li>
+                            @if (Route::has('register'))
+                                <li><a href="{{ route('register') }}" class="hover:text-amber-500 transition-colors">Register Operator</a></li>
+                            @endif
+                            <li><a href="#faq" class="hover:text-amber-500 transition-colors">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-zinc-200/60 dark:border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-zinc-500">
+                    <p>&copy; {{ date('Y') }} CampaignStack. All rights reserved.</p>
+                    <p class="flex items-center gap-1.5">
+                        <i class="fas fa-shield-alt text-amber-500/80"></i>
+                        <span>High-Throughput Dispatch Infrastructure</span>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- INTERACTIVE SCRIPTS: 3D MOUSE PARALLAX, SPOTLIGHT & BIDIRECTIONAL SCROLL -->
+        <script>
+            // 0. Deep Spatial Scroll Camera Engine (Silky LERP Inertia, 120fps)
+            const heroTextContainer = document.getElementById('hero-text-container');
+            const heroDisplayMockup = document.getElementById('hero-mockup');
+            const leftFloatBadge = document.querySelector('.animate-float-badge-left');
+            const rightFloatBadge = document.querySelector('.animate-float-badge-right');
+
+            let targetScrollY = window.scrollY;
+            let currentScrollY = window.scrollY;
+            let isScrollLoopRunning = false;
+
+            function lerp(start, end, factor) {
+                return start + (end - start) * factor;
+            }
+
+            function updateSpatialCamera() {
+                // Smooth damped inertia (factor 0.085 provides buttery Apple-like deceleration)
+                currentScrollY = lerp(currentScrollY, targetScrollY, 0.085);
+
+                if (currentScrollY <= 800) {
+                    const y = currentScrollY;
+
+                    // Deep optical receding camera for hero text
+                    if (heroTextContainer) {
+                        const textScale = Math.max(0.86, 1 - y * 0.00028);
+                        const textTranslateY = y * 0.22;
+                        const textTranslateZ = -y * 0.75;
+                        const textRotateX = Math.min(6, y * 0.009);
+                        const textOpacity = Math.max(0, 1 - y * 0.0019);
+
+                        heroTextContainer.style.transform = `perspective(1200px) translate3d(0, ${textTranslateY.toFixed(2)}px, ${textTranslateZ.toFixed(2)}px) rotateX(${textRotateX.toFixed(2)}deg) scale(${textScale.toFixed(4)})`;
+                        heroTextContainer.style.opacity = textOpacity.toFixed(3);
+                    }
+
+                    // Deep spatial rising zoom for Apple Studio Monitor
+                    if (heroDisplayMockup) {
+                        const mScale = Math.min(1.04, 0.96 + y * 0.00014);
+                        const mTranslateY = Math.max(-20, -y * 0.08);
+                        const mRotateX = Math.max(0, 3.5 - y * 0.007);
+
+                        heroDisplayMockup.style.transform = `perspective(1400px) translate3d(0, ${mTranslateY.toFixed(2)}px, 0) scale(${mScale.toFixed(4)}) rotateX(${mRotateX.toFixed(2)}deg)`;
+                    }
+
+                    // Layered Parallax on Side Telemetry Badges
+                    if (leftFloatBadge) {
+                        leftFloatBadge.style.transform = `translate3d(0, ${(-y * 0.16).toFixed(1)}px, 0)`;
+                    }
+                    if (rightFloatBadge) {
+                        rightFloatBadge.style.transform = `translate3d(0, ${(y * 0.12).toFixed(1)}px, 0)`;
+                    }
+                }
+
+                // Continue loop while moving, pause when idle
+                if (Math.abs(targetScrollY - currentScrollY) > 0.05) {
+                    requestAnimationFrame(updateSpatialCamera);
+                } else {
+                    currentScrollY = targetScrollY;
+                    isScrollLoopRunning = false;
+                }
+            }
+
+            window.addEventListener('scroll', () => {
+                targetScrollY = window.scrollY;
+                if (!isScrollLoopRunning) {
+                    isScrollLoopRunning = true;
+                    requestAnimationFrame(updateSpatialCamera);
+                }
+            }, { passive: true });
+
+            // Initialize camera position on first render
+            updateSpatialCamera();
+
+            // 1. Mockup Tab Switcher
+            const tabs = ['dashboard', 'dispatch', 'accounts', 'audience'];
+            const tabMeta = {
+                dashboard: { url: 'app.campaignstack.io/dashboard', status: '5 Gateways Active' },
+                dispatch: { url: 'app.campaignstack.io/dispatch-studio', status: 'Live Dispatch: 120 msgs/min' },
+                accounts: { url: 'app.campaignstack.io/mail-accounts', status: '4 Relays Armed & Validated' },
+                audience: { url: 'app.campaignstack.io/contacts', status: '24,500 Contacts Synced' }
+            };
+
+            function switchMockupTab(activeTab) {
+                tabs.forEach(tab => {
+                    const screen = document.getElementById(`screen-${tab}`);
+                    const btn = document.getElementById(`tabBtn-${tab}`);
+                    if (!screen || !btn) return;
+
+                    if (tab === activeTab) {
+                        screen.classList.remove('hidden');
+                        btn.className = "px-3.5 py-1.5 rounded-lg text-2xs font-bold transition-all bg-amber-500 text-zinc-950 shadow-xs";
+                    } else {
+                        screen.classList.add('hidden');
+                        btn.className = "px-3.5 py-1.5 rounded-lg text-2xs font-bold transition-all bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 hover:border-amber-400";
+                    }
+                });
+
+                const urlBar = document.getElementById('mockupUrlBar');
+                const statusText = document.getElementById('mockupStatusText');
+                if (urlBar && tabMeta[activeTab]) urlBar.textContent = tabMeta[activeTab].url;
+                if (statusText && tabMeta[activeTab]) statusText.textContent = tabMeta[activeTab].status;
+            }
+
+            // 1.5. Dispatch Studio Interactive Stepper
+            let currentStudioStep = 1;
+            function selectStudioStep(step) {
+                currentStudioStep = step;
+                const badge = document.getElementById('studio-preview-step-badge');
+                if (badge) badge.textContent = `Stage ${step} of 4`;
+
+                [1, 2, 3, 4].forEach(i => {
+                    const btn = document.getElementById(`studio-step-btn-${i}`);
+                    const num = document.getElementById(`studio-step-num-${i}`);
+                    const preview = document.getElementById(`studio-step-preview-${i}`);
+                    if (!btn || !preview) return;
+
+                    if (i === step) {
+                        btn.className = "w-full flex-1 text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 bg-amber-500/10 border-amber-400 dark:bg-amber-400/10 dark:border-amber-400/50 shadow-xs flex items-start gap-3.5 group cursor-pointer ring-1 ring-amber-400/40";
+                        if (num) num.className = "w-7 h-7 shrink-0 rounded-lg bg-amber-500 text-zinc-950 font-black flex items-center justify-center text-xs shadow-xs";
+                        preview.classList.remove('hidden');
+                    } else {
+                        btn.className = "w-full flex-1 text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 bg-white dark:bg-zinc-900/80 border-zinc-200 dark:border-zinc-800 shadow-2xs hover:border-zinc-300 dark:hover:border-zinc-700 flex items-start gap-3.5 group cursor-pointer";
+                        if (num) num.className = "w-7 h-7 shrink-0 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-black flex items-center justify-center text-xs";
+                        preview.classList.add('hidden');
+                    }
+                });
+            }
+
+            function nextStudioStep() {
+                const next = currentStudioStep >= 4 ? 1 : currentStudioStep + 1;
+                selectStudioStep(next);
+            }
+
+            function prevStudioStep() {
+                const prev = currentStudioStep <= 1 ? 4 : currentStudioStep - 1;
+                selectStudioStep(prev);
+            }
+
+            // Pacing Speed Interactive Presets
+            function setPacingSpeed(speed, title, delayMs, estTime, riskBadge, barWidth) {
+                const speedText = document.getElementById('pacing-speed-text');
+                const delayText = document.getElementById('pacing-delay-text');
+                const timeText = document.getElementById('pacing-time-text');
+                const barFill = document.getElementById('pacing-bar-fill');
+                const risk = document.getElementById('pacing-risk-badge');
+
+                if (speedText) speedText.textContent = `${speed} emails / minute`;
+                if (delayText) delayText.textContent = `${delayMs}ms delay between emails`;
+                if (timeText) timeText.textContent = `Estimated time: ~${estTime}`;
+                if (risk) risk.textContent = `Risk: ${riskBadge}`;
+                if (barFill) {
+                    barFill.className = `h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full transition-all duration-300 ${barWidth}`;
+                }
+            }
+
+            // Screen 4 Live Delivery Ticker (Alive & Organic)
+            let liveDelivered = 14391;
+            setInterval(() => {
+                if (currentStudioStep === 4) {
+                    liveDelivered += Math.floor(Math.random() * 5) + 3;
+                    if (liveDelivered > 18450) liveDelivered = 14391;
+                    const percent = Math.min(100, Math.floor((liveDelivered / 18450) * 100));
+                    
+                    const countEl = document.getElementById('live-progress-count');
+                    const percentEl = document.getElementById('live-progress-percent');
+                    const barEl = document.getElementById('live-progress-bar');
+
+                    if (countEl) countEl.textContent = `${liveDelivered.toLocaleString()} of 18,450 Delivered`;
+                    if (percentEl) percentEl.textContent = `${percent}% Complete`;
+                    if (barEl) barEl.style.width = `${percent}%`;
+                }
+            }, 1400);
+
+            // 2. Interactive Failover Simulation Engine
+            let simIsFailed = false;
+            function toggleSimFailover() {
+                simIsFailed = !simIsFailed;
+                const thumb = document.getElementById('simToggleThumb');
+                const gwA = document.getElementById('simGatewayA');
+                const gwB = document.getElementById('simGatewayB');
+                const statusA = document.getElementById('simStatusA');
+                const statusB = document.getElementById('simStatusB');
+                const badgeA = document.getElementById('simBadgeA');
+                const badgeB = document.getElementById('simBadgeB');
+                const report = document.getElementById('simDeliveryReport');
+
+                if (simIsFailed) {
+                    thumb.classList.remove('translate-x-0');
+                    thumb.classList.add('translate-x-5');
+
+                    gwA.className = "p-3 rounded-xl border transition-all duration-300 border-red-400 bg-red-50/50 dark:bg-red-950/20 flex items-center justify-between";
+                    statusA.className = "text-3xs text-red-500 font-semibold";
+                    statusA.textContent = "Status: Quota Cap Reached (Simulated)";
+                    badgeA.className = "text-3xs font-bold text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/60 px-1.5 py-0.5 rounded";
+                    badgeA.textContent = "CIRCUIT TRIPPED";
+
+                    gwB.className = "p-3 rounded-xl border transition-all duration-300 border-emerald-400 bg-emerald-50/50 dark:bg-emerald-950/20 flex items-center justify-between ring-1 ring-emerald-400/50";
+                    statusB.className = "text-3xs text-emerald-600 dark:text-emerald-400 font-semibold";
+                    statusB.textContent = "Status: Route Absorbed in 8ms";
+                    badgeB.className = "text-3xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded";
+                    badgeB.textContent = "DISPATCHING";
+
+                    report.textContent = "100% Delivered via Backup Relay • 0 Dropped Messages";
+                } else {
+                    thumb.classList.remove('translate-x-5');
+                    thumb.classList.add('translate-x-0');
+
+                    gwA.className = "p-3 rounded-xl border transition-all duration-300 border-emerald-400 bg-emerald-50/50 dark:bg-emerald-950/20 flex items-center justify-between";
+                    statusA.className = "text-3xs text-emerald-600 dark:text-emerald-400";
+                    statusA.textContent = "Status: Healthy • Active Route";
+                    badgeA.className = "text-3xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded";
+                    badgeA.textContent = "PRIMARY";
+
+                    gwB.className = "p-3 rounded-xl border transition-all duration-300 border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40 flex items-center justify-between";
+                    statusB.className = "text-3xs text-zinc-500";
+                    statusB.textContent = "Status: Standby • Armed";
+                    badgeB.className = "text-3xs font-bold text-zinc-500 bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 rounded";
+                    badgeB.textContent = "STANDBY";
+
+                    report.textContent = "100% Delivered • 0 Lost Emails";
+                }
+            }
+
+            // 3. Fast, Snappy Native Tilt & Interactive Spotlight Tracking (Zero-GSAP)
+            document.addEventListener('DOMContentLoaded', () => {
+                const mockupCard = document.getElementById('interactiveHeroMockup');
+                const glow = document.getElementById('mouseFollowerGlow');
+
+                if (mockupCard) {
+                    mockupCard.addEventListener('mousemove', (e) => {
+                        const rect = mockupCard.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+
+                        const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -5;
+                        const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
+
+                        mockupCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+
+                        if (glow) {
+                            glow.style.left = `${x}px`;
+                            glow.style.top = `${y}px`;
+                            glow.style.opacity = '1';
+                        }
+                    });
+
+                    mockupCard.addEventListener('mouseleave', () => {
+                        mockupCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+                        if (glow) glow.style.opacity = '0';
+                    });
+                }
+
+                // 4. Lightweight Mouse Glow on Interactive Cards
+                document.querySelectorAll('.interactive-card').forEach((card) => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+                    });
+                });
+
+                // 5. Ultra-Fast Native Bidirectional Scroll Reveal (Forward & Reverse, 120fps)
+                const revealElements = document.querySelectorAll('.reveal-on-scroll, .gsap-reveal');
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('is-revealed');
+                            } else {
+                                // Reverse scroll animation: reset smoothly when scrolled away
+                                entry.target.classList.remove('is-revealed');
+                            }
+                        });
+                    }, {
+                        threshold: 0.12,
+                        rootMargin: '0px 0px -40px 0px'
+                    });
+
+                    revealElements.forEach(el => {
+                        el.classList.add('reveal-on-scroll');
+                        observer.observe(el);
+                    });
+                } else {
+                    revealElements.forEach(el => el.classList.add('is-revealed'));
+                }
+            });
+
+            // 6. Sunrise / Twilight Ray Transition Handler
+            window.toggleTheme = function () {
+                const isDark = document.documentElement.classList.contains('dark');
+                const nextTheme = isDark ? 'light' : 'dark';
+
+                const x = window.innerWidth;
+                const y = 0;
+                const endRadius = Math.ceil(Math.hypot(window.innerWidth, window.innerHeight) * 1.35);
+
+                const performToggle = () => {
+                    if (nextTheme === 'dark') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+                    window.dispatchEvent(new Event('theme-changed'));
+                };
+
+                const wave = document.getElementById('themeLightWave');
+                if (wave) {
+                    const diameter = endRadius * 2.2;
+                    wave.style.width = diameter + 'px';
+                    wave.style.height = diameter + 'px';
+                    wave.style.left = (x - diameter / 2) + 'px';
+                    wave.style.top = (y - diameter / 2) + 'px';
+
+                    if (nextTheme === 'light') {
+                        wave.style.background = 'radial-gradient(circle at center, rgba(251, 191, 36, 0.45) 0%, rgba(254, 243, 199, 0.3) 40%, rgba(255, 255, 255, 0) 70%)';
+                    } else {
+                        wave.style.background = 'radial-gradient(circle at center, rgba(147, 197, 253, 0.35) 0%, rgba(59, 130, 246, 0.15) 40%, rgba(9, 9, 11, 0) 70%)';
+                    }
+
+                    wave.style.opacity = '1';
+                    wave.style.transform = 'scale(0.1)';
+
+                    requestAnimationFrame(() => {
+                        wave.style.transform = 'scale(1)';
+                        setTimeout(() => {
+                            wave.style.opacity = '0';
+                            setTimeout(() => {
+                                wave.style.transform = 'scale(0)';
+                            }, 300);
+                        }, 400);
+                    });
+                }
+
+                if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    const transition = document.startViewTransition(() => {
+                        performToggle();
+                    });
+
+                    transition.ready.then(() => {
+                        document.documentElement.animate(
+                            {
+                                clipPath: [
+                                    `circle(0px at 100% 0%)`,
+                                    `circle(${endRadius}px at 100% 0%)`
+                                ]
+                            },
+                            {
+                                duration: 600,
+                                easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                                pseudoElement: '::view-transition-new(root)'
+                            }
+                        );
+                    });
+                } else {
+                    setTimeout(() => {
+                        performToggle();
+                    }, 200);
+                }
+            };
+
+            // 3. 3D Orbital Horizon Curved Carousel Engine
+            const orbitalCards = document.querySelectorAll('.relay-orbital-card');
+            const orbitalStage = document.getElementById('orbital-relay-stage');
+
+            function renderOrbitalArc() {
+                if (orbitalStage && orbitalCards.length) {
+                    const stageRect = orbitalStage.getBoundingClientRect();
+                    const centerX = stageRect.left + stageRect.width / 2;
+                    const halfWidth = stageRect.width / 2;
+
+                    // Only compute when stage is visible in the viewport
+                    if (stageRect.bottom > -50 && stageRect.top < window.innerHeight + 50) {
+                        orbitalCards.forEach(card => {
+                            const cardRect = card.getBoundingClientRect();
+                            const cardCenter = cardRect.left + cardRect.width / 2;
+                            // Normalized distance from screen center (-1.0 to +1.0)
+                            const d = (cardCenter - centerX) / (halfWidth || 1);
+
+                            // Smooth 3D Cylindrical Horizon Arc Math:
+                            // Pushes backward into the void along Z-axis by up to -250px at edges
+                            const z = -Math.pow(d, 2) * 250;
+                            // Curves smoothly inward up to 26 degrees around the central horizon
+                            const rotY = -d * 26;
+                            // Subtle pitch elevation into the void
+                            const rotX = Math.pow(d, 2) * 3.5;
+                            // Gentle distance scale falloff
+                            const scale = Math.max(0.85, 1 - Math.abs(d) * 0.14);
+                            // Dissolves into the void as it wraps around the edges
+                            const opacity = Math.max(0.2, 1 - Math.pow(Math.abs(d), 2.2) * 0.8);
+
+                            card.style.transform = `perspective(1000px) translate3d(0, 0, ${z.toFixed(1)}px) rotateY(${rotY.toFixed(1)}deg) rotateX(${rotX.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
+                            card.style.opacity = opacity.toFixed(2);
+                        });
+                    }
+                }
+                requestAnimationFrame(renderOrbitalArc);
+            }
+            requestAnimationFrame(renderOrbitalArc);
+        </script>
     </body>
 </html>

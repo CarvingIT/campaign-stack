@@ -12,7 +12,10 @@ use Illuminate\Support\Str;
 class NewsletterController extends Controller
 {
     public function list(){
-        $newsletters = Newsletter::withCount(['sent_mails','queued_mails'])->get();
+        $newsletters = Newsletter::withCount(['sent_mails','queued_mails'])
+            ->with(['campaign', 'newsletter_tags.tag'])
+            ->latest()
+            ->get();
         return view('newslettersmanagement',['newsletters'=>$newsletters]);
     }
 
@@ -21,11 +24,20 @@ class NewsletterController extends Controller
             $newsletter = new Newsletter();
         }
         else{
-            $newsletter = Newsletter::find($newsletter_id);
+            $newsletter = Newsletter::with(['newsletter_tags', 'newsletter_outbound_mail_accounts'])->find($newsletter_id);
         }
         $campaigns = Campaign::all();
-        $tags = Tag::all();
-        return view('newsletter-form',['newsletter'=>$newsletter, 'campaigns'=>$campaigns, 'tags'=>$tags]);
+        $tags = Tag::withCount('contacts')->get();
+        $outboundAccounts = \App\Models\OutboundMailAccount::all();
+        $sampleContact = \App\Models\Contact::first();
+
+        return view('newsletter-form', [
+            'newsletter' => $newsletter,
+            'campaigns' => $campaigns,
+            'tags' => $tags,
+            'outboundAccounts' => $outboundAccounts,
+            'sampleContact' => $sampleContact,
+        ]);
     }
 
     public function save(Request $request){
@@ -43,11 +55,12 @@ class NewsletterController extends Controller
         $newsletter->status = $request->status;
         try{
             $newsletter->save();
-            $newsletter->updateTags($request->tag_ids);
-            Session::flash('alert-success', 'Newsletter saved successfully!');
+            $newsletter->updateTags($request->tag_ids ?: []);
+            $newsletter->updateOutboundAccounts($request->outbound_account_ids ?: []);
+            Session::flash('alert-success', 'Broadcast saved successfully!');
         }
         catch(\Exception $e){
-            Session::flash('alert-danger', "Error has orrcured: Please check. ".$e->getMessage());
+            Session::flash('alert-danger', "Error has occurred: Please check. ".$e->getMessage());
         }
         return redirect('/newsletters');
     }

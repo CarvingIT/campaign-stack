@@ -1,102 +1,405 @@
 @push('js')
 <link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" href="/css/jquery.dataTables.min.css" />
-<link rel="stylesheet" href="/css/jquery-ui.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/jquery.dataTables.min.js"></script>
-<script src="/js/jquery-ui.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const salutation = document.getElementById('salutation');
+        const firstname = document.getElementById('firstname');
+        const lastname = document.getElementById('lastname');
+        const email = document.getElementById('email');
+        const company = document.getElementById('company');
+        const mobile = document.getElementById('mobile');
+
+        const mockInitials = document.getElementById('mockInitials');
+        const mockName = document.getElementById('mockName');
+        const mockEmail = document.getElementById('mockEmail');
+        const mockMobile = document.getElementById('mockMobile');
+        const mockCompany = document.getElementById('mockCompany');
+        const mockTagsContainer = document.getElementById('mockTagsContainer');
+
+        function updateMockCard() {
+            const sal = salutation ? salutation.value.trim() : '';
+            const fn = firstname ? firstname.value.trim() : '';
+            const ln = lastname ? lastname.value.trim() : '';
+            const em = email ? email.value.trim() : '';
+            const comp = company ? company.value.trim() : '';
+            const mob = mobile ? mobile.value.trim() : '';
+
+            // Name
+            let displayName = [sal, fn, ln].filter(Boolean).join(' ');
+            if (!displayName) displayName = 'Subscriber Name';
+            if (mockName) mockName.textContent = displayName;
+
+            // Email
+            if (mockEmail) mockEmail.textContent = em || 'subscriber@example.com';
+
+            // Mobile
+            if (mockMobile) {
+                if (mob) {
+                    mockMobile.innerHTML = `<i class="fas fa-phone mr-1.5 text-4xs opacity-60"></i>${mob}`;
+                    mockMobile.style.display = 'flex';
+                } else {
+                    mockMobile.style.display = 'none';
+                }
+            }
+
+            // Company
+            if (mockCompany) {
+                if (comp) {
+                    mockCompany.innerHTML = `<i class="fas fa-building mr-1.5 text-4xs opacity-60"></i>${comp}`;
+                    mockCompany.style.display = 'inline-flex';
+                } else {
+                    mockCompany.innerHTML = '<span class="text-zinc-400 text-3xs italic">—</span>';
+                    mockCompany.style.display = 'inline-flex';
+                }
+            }
+
+            // Initials
+            let initials = ((fn ? fn[0] : '') + (ln ? ln[0] : '')).toUpperCase();
+            if (!initials && em) initials = em[0].toUpperCase();
+            if (!initials) initials = 'U';
+            if (mockInitials) mockInitials.textContent = initials;
+        }
+
+        function updateMockTags() {
+            if (!mockTagsContainer) return;
+            const checkedBoxes = Array.from(document.querySelectorAll('input[name="tags[]"]:checked'));
+            mockTagsContainer.innerHTML = '';
+
+            if (checkedBoxes.length === 0) {
+                mockTagsContainer.innerHTML = '<span class="text-zinc-400 text-3xs italic">No tags</span>';
+                return;
+            }
+
+            checkedBoxes.forEach(cb => {
+                const label = cb.getAttribute('data-label') || cb.parentElement.textContent.trim();
+                const span = document.createElement('span');
+                span.className = 'inline-flex items-center px-2 py-0.5 rounded-full text-3xs font-semibold bg-amber-50 text-amber-800 border border-amber-200/80 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-500/30 whitespace-nowrap shadow-2xs';
+                span.innerHTML = `<i class="fas fa-tag mr-1 text-4xs text-amber-500"></i>${label}`;
+                mockTagsContainer.appendChild(span);
+            });
+        }
+
+        [salutation, firstname, lastname, email, company, mobile].forEach(el => {
+            if (el) {
+                el.addEventListener('input', updateMockCard);
+                el.addEventListener('change', updateMockCard);
+            }
+        });
+
+        document.querySelectorAll('input[name="tags[]"]').forEach(cb => {
+            cb.addEventListener('change', updateMockTags);
+        });
+
+        updateMockCard();
+        updateMockTags();
+    });
+</script>
 @endpush
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-	@if(empty($book->id))
-            {{ __('New Contact') }}
-	@else
-            {{ __('Edit Contact') }}
-	@endif
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-	        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-    			<div class="mt-6 text-gray-500">
-				<form name="save-tag" action="/savecontact" method="post">
-				<input type="hidden" name="contact_id" value="{{ $contact->id }}" />	
-				@csrf	
-<div class="overflow-hidden sm:rounded-md">
-    <div class="px-4 py-5 bg-white sm:p-6 text-gray-900">
-       <div class="grid grid-cols-6 gap-6">
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="salutation">Salutation/Title</label>
-            <select name="salutation" class="form-input rounded-md shadow-sm mt-1 block w-full">
-                <option value=''>Select</option>
-                @php
-                    $salutations = ['Mr.','Mrs.','Ms.','Dr.','Prof.'];
-                    foreach($salutations as $s){
-                        $selected = ($contact->salutation == $s) ? 'selected' : '';
-                        echo "<option value=\"$s\" $selected>$s</option>";
-                    }
-                @endphp
-            </select>
-        </div>
-        <!-- Contact Name -->
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="firstname">Firstname</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="firstname" name="firstname" type="text" value="{{ $contact->firstname }}" >
-        </div>
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="lastname">Lastname</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="lastname" name="lastname" type="text" value="{{ $contact->lastname }}" >
-        </div>
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="email">Email</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="email" name="email" type="email" value="{{ $contact->email }}" >
-        </div>
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="company">Company</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="company" name="company" type="text" value="{{ $contact->company }}" >
-        </div>
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="mobile">Mobile</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="mobile" name="mobile" type="text" value="{{ $contact->mobile }}" >
-        </div>
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="company">Tags</label>
-            @php
-                $contact_tags = $contact->contactTags;
-                $contact_tag_ids = [];
-                foreach($contact_tags as $ct){
-                    $contact_tag_ids[] = $ct->tag_id;
-                }
-            @endphp
-            @foreach($tags as $t)
-                <div>
-                @if(in_array($t->id, $contact_tag_ids))
-                <input name="tags[]" type="checkbox" value="{{ $t->id }}" checked /> {{ $t->label }}
-                @else
-                <input name="tags[]" type="checkbox" value="{{ $t->id }}" /> {{ $t->label }}
-                @endif 
-                </div>
-            @endforeach
-        </div>
-    </div>
-
-    <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
-     <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled">
-    Save
-     </button>
-     <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled" onclick="window.history.back();">
-    Cancel
-     </button>
-   </div>
-          </div>
-				</form>
-                        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <nav class="flex text-3xs font-semibold text-zinc-500 dark:text-zinc-400 mb-1 space-x-2 uppercase tracking-wider">
+                    <a href="/contacts" class="hover:text-zinc-900 dark:hover:text-white transition-colors">Contacts</a>
+                    <span>/</span>
+                    <span class="text-amber-600 dark:text-amber-400">
+                        {{ empty($contact->id) ? 'Create Contact' : 'Edit Contact' }}
+                    </span>
+                </nav>
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 dark:bg-amber-400 shadow-2xs"></span>
+                    <h2 class="font-extrabold text-2xl text-zinc-900 dark:text-white tracking-tight flex items-center gap-2.5">
+                        <i class="fas {{ empty($contact->id) ? 'fa-user-plus' : 'fa-user-pen' }} text-amber-500"></i>
+                        <span>{{ empty($contact->id) ? __('New Subscriber Profile') : __('Edit Contact: ' . trim($contact->firstname . ' ' . $contact->lastname)) }}</span>
+                    </h2>
                 </div>
             </div>
+            <div>
+                <a href="/contacts" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#111114] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all shadow-2xs gap-1.5">
+                    <i class="fas fa-arrow-left text-3xs"></i>
+                    <span>Back to Contacts</span>
+                </a>
+            </div>
+        </div>
+    </x-slot>
+
+    <div class="pb-10 pt-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <form name="save-contact" action="/savecontact" method="post">
+                @csrf
+                <input type="hidden" name="contact_id" value="{{ $contact->id }}" />
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+
+                    <!-- LEFT COLUMN: Contact Profile Details -->
+                    <div class="bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between">
+                        
+                        <div class="space-y-5">
+                            <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-3.5 flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-2.5 py-0.5 rounded-md bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 font-extrabold text-3xs uppercase tracking-wider border border-amber-200/60 dark:border-amber-500/30">
+                                        Step 1
+                                    </span>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                                            <i class="fas fa-id-card text-amber-500 text-xs"></i>
+                                            Personal & Company Details
+                                        </h3>
+                                        <p class="text-3xs text-zinc-500 dark:text-zinc-400">Enter subscriber name, email address, and company metadata.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Salutation -->
+                                <div class="sm:col-span-2">
+                                    <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5" for="salutation">
+                                        Salutation / Title
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
+                                            <i class="fas fa-user-tag"></i>
+                                        </div>
+                                        <select name="salutation" id="salutation" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs">
+                                            <option value="">Select Salutation (Optional)</option>
+                                            @php
+                                                $salutations = ['Mr.','Mrs.','Ms.','Dr.','Prof.'];
+                                                foreach($salutations as $s){
+                                                    $selected = ($contact->salutation == $s) ? 'selected' : '';
+                                                    echo "<option value=\"$s\" $selected>$s</option>";
+                                                }
+                                            @endphp
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- First Name -->
+                                <div>
+                                    <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5" for="firstname">
+                                        First Name <span class="text-rose-500">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                               id="firstname" name="firstname" type="text" value="{{ $contact->firstname }}" placeholder="Jane" required autofocus>
+                                    </div>
+                                </div>
+
+                                <!-- Last Name -->
+                                <div>
+                                    <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5" for="lastname">
+                                        Last Name
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                               id="lastname" name="lastname" type="text" value="{{ $contact->lastname }}" placeholder="Smith">
+                                    </div>
+                                </div>
+
+                                <!-- Email Address -->
+                                <div class="sm:col-span-2">
+                                    <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5" for="email">
+                                        Email Address <span class="text-rose-500">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                               id="email" name="email" type="email" value="{{ $contact->email }}" placeholder="jane.smith@example.com" required>
+                                    </div>
+                                </div>
+
+                                <!-- Company -->
+                                <div>
+                                    <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5" for="company">
+                                        Company / Organization
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
+                                            <i class="fas fa-building"></i>
+                                        </div>
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                               id="company" name="company" type="text" value="{{ $contact->company }}" placeholder="Acme Corp">
+                                    </div>
+                                </div>
+
+                                <!-- Mobile / Phone -->
+                                <div>
+                                    <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5" for="mobile">
+                                        Mobile Phone Number
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
+                                            <i class="fas fa-phone"></i>
+                                        </div>
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                               id="mobile" name="mobile" type="text" value="{{ $contact->mobile }}" placeholder="+91 98765 43210">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Bar -->
+                        <div class="flex items-center justify-end space-x-3 pt-5 mt-6 border-t border-zinc-100 dark:border-zinc-800/80">
+                            <a href="/contacts" class="px-5 py-2.5 bg-white dark:bg-[#111114] hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-200 font-semibold text-xs rounded-xl border border-zinc-200/80 dark:border-zinc-800 transition-colors shadow-2xs">
+                                Cancel
+                            </a>
+                            <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 font-bold text-xs rounded-xl shadow-md shadow-amber-500/15 hover:shadow-amber-500/25 hover:-translate-y-0.5 transition-all gap-2">
+                                <i class="fas fa-check text-xs"></i>
+                                <span>{{ empty($contact->id) ? 'Save Contact' : 'Update Contact' }}</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN: Tag Assignment & Live Table Row Preview -->
+                    <div class="bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between space-y-6">
+                        
+                        <div class="space-y-5">
+                            <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-3.5 flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-2.5 py-0.5 rounded-md bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 font-extrabold text-3xs uppercase tracking-wider border border-amber-200/60 dark:border-amber-500/30">
+                                        Step 2
+                                    </span>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                                            <i class="fas fa-tags text-amber-500 text-xs"></i>
+                                            Assign Audience Tags
+                                        </h3>
+                                        <p class="text-3xs text-zinc-500 dark:text-zinc-400">Select audience segments to attach to this subscriber profile.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Tags Selector -->
+                            <div>
+                                <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-2">
+                                    Available Audience Tags
+                                </label>
+                                @php
+                                    $contact_tags = $contact->contactTags ?? [];
+                                    $contact_tag_ids = [];
+                                    foreach($contact_tags as $ct){
+                                        $contact_tag_ids[] = $ct->tag_id;
+                                    }
+                                @endphp
+
+                                @if(count($tags) > 0)
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-52 overflow-y-auto p-1 scrollbar-none">
+                                        @foreach($tags as $t)
+                                            @php $isChecked = in_array($t->id, $contact_tag_ids); @endphp
+                                            <label class="cursor-pointer relative flex items-center p-2.5 rounded-xl border transition-all text-xs font-semibold select-none group {{ $isChecked ? 'bg-amber-50/80 border-amber-300 dark:bg-amber-950/40 dark:border-amber-500/40 text-amber-900 dark:text-amber-200 shadow-2xs' : 'bg-zinc-50/70 dark:bg-[#09090B] border-zinc-200/80 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800' }}">
+                                                <input type="checkbox" name="tags[]" value="{{ $t->id }}" data-label="{{ $t->label }}" {{ $isChecked ? 'checked' : '' }} class="rounded border-zinc-300 dark:border-zinc-700 text-amber-500 focus:ring-amber-400 mr-2">
+                                                <span class="truncate">{{ $t->label }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="p-4 bg-zinc-50/70 dark:bg-[#09090B] rounded-xl border border-zinc-200/80 dark:border-zinc-800 text-center">
+                                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-2">No tags created yet.</p>
+                                        <a href="/tag-form/new" class="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline inline-flex items-center gap-1">
+                                            <i class="fas fa-plus text-3xs"></i> Create a tag first
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Live Directory Table Row Preview -->
+                            <div class="p-4 bg-zinc-50/70 dark:bg-[#09090B] rounded-xl border border-zinc-200/80 dark:border-zinc-800 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-3xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="fas fa-table text-amber-500 text-3xs"></i>
+                                        Live Contacts Table Row Preview
+                                    </span>
+                                    <span class="px-2 py-0.5 rounded-full text-3xs font-bold uppercase bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                                        Live Sync
+                                    </span>
+                                </div>
+
+                                <!-- High-Density Mock Table Container -->
+                                <div class="overflow-x-auto rounded-xl border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-[#111114] shadow-2xs">
+                                    <table class="w-full text-left border-collapse text-xs">
+                                        <thead>
+                                            <tr class="border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40 text-3xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                                                <th class="py-2.5 pl-3.5 pr-2">Subscriber</th>
+                                                <th class="py-2.5 px-2">Contact Info</th>
+                                                <th class="py-2.5 px-2">Company</th>
+                                                <th class="py-2.5 pl-2 pr-3.5">Tags</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40 transition-colors">
+                                                <!-- Subscriber Avatar + Name -->
+                                                <td class="py-3 pl-3.5 pr-2 whitespace-nowrap">
+                                                    <div class="flex items-center space-x-2.5">
+                                                        <div id="mockInitials" class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300 border border-amber-500/20 flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+                                                            U
+                                                        </div>
+                                                        <div class="min-w-0">
+                                                            <div id="mockName" class="font-bold text-xs text-zinc-900 dark:text-white truncate max-w-[110px]">
+                                                                Subscriber Name
+                                                            </div>
+                                                            <span class="text-3xs text-zinc-400 dark:text-zinc-500">
+                                                                Just now
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <!-- Contact Info -->
+                                                <td class="py-3 px-2 whitespace-nowrap">
+                                                    <div class="space-y-0.5">
+                                                        <div class="inline-flex items-center text-zinc-800 dark:text-zinc-200 font-medium text-xs truncate max-w-[130px]">
+                                                            <i class="fas fa-envelope mr-1.5 text-4xs text-amber-500 shrink-0"></i>
+                                                            <span id="mockEmail" class="truncate">subscriber@example.com</span>
+                                                        </div>
+                                                        <div id="mockMobile" class="text-3xs text-zinc-400 font-mono flex items-center" style="display: none;">
+                                                            <i class="fas fa-phone mr-1.5 text-4xs opacity-60"></i>
+                                                            <span></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <!-- Company -->
+                                                <td class="py-3 px-2 whitespace-nowrap">
+                                                    <span id="mockCompany" class="inline-flex items-center px-2 py-0.5 rounded-md text-3xs font-semibold bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 border border-zinc-200/60 dark:border-zinc-700">
+                                                        <span class="text-zinc-400 text-3xs italic">—</span>
+                                                    </span>
+                                                </td>
+
+                                                <!-- Assigned Tags -->
+                                                <td class="py-3 pl-2 pr-3.5">
+                                                    <div id="mockTagsContainer" class="flex flex-wrap items-center gap-1 max-w-[140px]">
+                                                        <span class="text-zinc-400 text-3xs italic">No tags</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Symmetrical Bottom Status Note -->
+                        <div class="pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-3xs text-zinc-500 dark:text-zinc-400">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-check-circle text-emerald-500"></i>
+                                Syncs live with directory table
+                            </span>
+                            <span class="font-mono text-zinc-400">#{{ $contact->id ?? 'new' }}</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
         </div>
     </div>
 </x-app-layout>

@@ -161,22 +161,89 @@ class EmailController extends Controller
     private function formatSentEmail($email)
     {
         return [
+            'id' => $email->id,
+            'type' => 'sent',
+            'status' => 'sent',
             'subject' => $email->subject,
-            'campaign_name' => $email->newsletter->campaign->name ?? '',
+            'campaign_name' => $email->newsletter->campaign->name ?? 'Direct Broadcast',
             'recipient' => $email->contact->email ?? '',
-            'sender_mail_account' => $email->outbound_mail_account->name ?? '',
+            'recipient_name' => trim(($email->contact->firstname ?? '') . ' ' . ($email->contact->lastname ?? '')),
+            'recipient_company' => $email->contact->company ?? '',
+            'sender_mail_account' => $email->outbound_mail_account->name ?? 'SMTP Server',
             'timestamp' => $email->created_at,
+            'opened' => (bool) $email->opened,
         ];
     }
 
     private function formatQueuedEmail($email)
     {
+        $isFailed = !empty($email->error) || $email->status === 'F';
         return [
+            'id' => $email->id,
+            'type' => $isFailed ? 'failed' : 'queued',
+            'status' => $isFailed ? 'failed' : 'queued',
             'subject' => $email->subject,
-            'campaign_name' => $email->newsletter->campaign->name ?? '',
+            'campaign_name' => $email->newsletter->campaign->name ?? 'Direct Broadcast',
             'recipient' => $email->contact->email ?? '',
-            'sender_mail_account' => 'Not assigned yet',
+            'recipient_name' => trim(($email->contact->firstname ?? '') . ' ' . ($email->contact->lastname ?? '')),
+            'recipient_company' => $email->contact->company ?? '',
+            'sender_mail_account' => $isFailed ? 'Failed Delivery' : 'Queued (Pending Dispatch)',
             'timestamp' => $email->created_at,
+            'attempt' => $email->attempt ?? 0,
+            'response_code' => $email->response_code,
+            'error' => $email->error,
         ];
+    }
+
+    public function details($id)
+    {
+        // Try SentMail first
+        $sent = SentMail::with(['newsletter.campaign', 'contact', 'outbound_mail_account'])->find($id);
+        if ($sent) {
+            return response()->json([
+                'success' => true,
+                'id' => $sent->id,
+                'type' => 'sent',
+                'status' => 'sent',
+                'subject' => $sent->subject,
+                'body' => $sent->body,
+                'recipient' => $sent->contact->email ?? '',
+                'recipient_name' => trim(($sent->contact->salutation ?? '') . ' ' . ($sent->contact->firstname ?? '') . ' ' . ($sent->contact->lastname ?? '')),
+                'recipient_company' => $sent->contact->company ?? '',
+                'recipient_phone' => $sent->contact->mobile ?? '',
+                'campaign_name' => $sent->newsletter->campaign->name ?? 'Direct Broadcast',
+                'newsletter_title' => $sent->newsletter->title ?? '',
+                'sender' => $sent->outbound_mail_account->name ?? 'Default SMTP Gateway',
+                'timestamp' => $sent->created_at->format('M d, Y h:i:s A'),
+                'opened' => (bool) $sent->opened,
+            ]);
+        }
+
+        // Try MailQueue
+        $queued = MailQueue::with(['newsletter.campaign', 'contact'])->find($id);
+        if ($queued) {
+            $isFailed = !empty($queued->error) || $queued->status === 'F';
+            return response()->json([
+                'success' => true,
+                'id' => $queued->id,
+                'type' => $isFailed ? 'failed' : 'queued',
+                'status' => $isFailed ? 'failed' : 'queued',
+                'subject' => $queued->subject,
+                'body' => $queued->body,
+                'recipient' => $queued->contact->email ?? '',
+                'recipient_name' => trim(($queued->contact->salutation ?? '') . ' ' . ($queued->contact->firstname ?? '') . ' ' . ($queued->contact->lastname ?? '')),
+                'recipient_company' => $queued->contact->company ?? '',
+                'recipient_phone' => $queued->contact->mobile ?? '',
+                'campaign_name' => $queued->newsletter->campaign->name ?? 'Direct Broadcast',
+                'newsletter_title' => $queued->newsletter->title ?? '',
+                'sender' => 'Pending Dispatch Engine',
+                'timestamp' => $queued->created_at->format('M d, Y h:i:s A'),
+                'attempt' => $queued->attempt ?? 0,
+                'response_code' => $queued->response_code,
+                'error' => $queued->error,
+            ]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Email record not found.'], 404);
     }
 }

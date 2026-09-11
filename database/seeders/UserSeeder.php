@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\UserRole;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -15,38 +16,51 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // add sample users 
-        User::create(
+        $users = [
             [
-            'name' => 'Campaign Stack Admin',
-            'email' => 'campaign-stack@carvingit.com',
-            'password'=>bcrypt('CampaignStack!@#'),
-            'remember_token'=>0,
-            'email_verified_at'=>NOW(),
-            'created_at'=>NOW(),
-            'updated_at'=>NOW()
-            ]
-        );
-        User::create(
+                'name' => 'Campaign Stack Admin',
+                'email' => 'campaign-stack@carvingit.com',
+                'password' => Hash::make('CampaignStack!@#'),
+                'email_verified_at' => now(),
+                'role_id' => 1, // Admin
+            ],
             [
-            'name' => 'Staff User',
-            'email' => 'staff@campaign-stack.com',
-            'password'=>bcrypt('CampaignStack!@#'),
-            'remember_token'=>0,
-            'email_verified_at'=>NOW(),
-            'created_at'=>NOW(),
-            'updated_at'=>NOW()
-            ]
-        );
+                'name' => 'Arjun Sharma',
+                'email' => 'arjun.sharma@campaignstack.in',
+                'password' => Hash::make('CampaignStack!@#'),
+                'email_verified_at' => now(),
+                'role_id' => 1, // Admin
+            ],
+            [
+                'name' => 'Staff User',
+                'email' => 'staff@campaign-stack.com',
+                'password' => Hash::make('CampaignStack!@#'),
+                'email_verified_at' => now(),
+                'role_id' => 2, // Staff
+            ],
+            [
+                'name' => 'Priya Nair',
+                'email' => 'priya.nair@campaignstack.in',
+                'password' => Hash::make('CampaignStack!@#'),
+                'email_verified_at' => now(),
+                'role_id' => 2, // Staff
+            ],
+        ];
 
-        UserRole::create([
-            'user_id'=>1,
-            'role_id'=>1
-        ]);
-        UserRole::create([
-            'user_id'=>2,
-            'role_id'=>2
-        ]);
+        foreach ($users as $userData) {
+            $roleId = $userData['role_id'];
+            unset($userData['role_id']);
+
+            $user = User::firstOrCreate(
+                ['email' => $userData['email']],
+                $userData
+            );
+
+            UserRole::firstOrCreate([
+                'user_id' => $user->id,
+                'role_id' => $roleId,
+            ]);
+        }
     }
 }
 

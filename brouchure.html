@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampaignStack | Open-Source Self-Hosted Marketing Platform | Carving IT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --gold: #F59E0B;
+            --gold-dark: #D97706;
+            --gold-gradient: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+            
+            /* Reimagined Obsidian Dark */
+            --dark-bg: #090D16;
+            --dark-card: #101626;
+            --dark-border: rgba(255, 255, 255, 0.08);
+            --dark-text: #F8FAFC;
+            --dark-muted: #94A3B8;
+
+            /* Reimagined Crisp Architectural Light */
+            --light-bg: #FFFFFF;
+            --light-surface: #F8FAFC;
+            --light-border: #E5E7EB;
+            --light-text: #0B0F19;
+            --light-muted: #4B5563;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body, html {
+            background-color: #1E293B;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0 40px 0;
+            gap: 20px;
+        }
+
+        .toolbar {
+            width: 297mm;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0B0F19;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 18px;
+            border-radius: 10px;
+            color: white;
+            z-index: 100;
+        }
+
+        .toolbar-btn {
+            background: var(--gold-gradient);
+            color: #090D16;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* EXACT A4 Landscape Sheets (297mm x 210mm) */
+        .page {
+            width: 297mm;
+            height: 210mm;
+            max-height: 210mm;
+            min-height: 210mm;
+            display: flex;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            position: relative;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            page-break-after: always !important;
+            break-after: page !important;
+        }
+
+        .page:last-child {
+            page-break-after: avoid !important;
+            break-after: avoid !important;
+        }
+
+        /* Clean Sculptural Backgrounds (No busy textures or micro-dots) */
+        .page-outside {
+            background: radial-gradient(circle at 85% 45%, #141C30 0%, #090D16 65%);
+            color: var(--dark-text);
+        }
+
+        .page-inside {
+            background: #FFFFFF;
+            color: var(--light-text);
+        }
+
+        /* 3 Tri-Fold Panels (99mm exact) */
+        .panel {
+            width: 99mm;
+            height: 210mm;
+            padding: 11mm 10mm 9mm 10mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .page-outside .panel { border-right: 1px solid var(--dark-border); }
+        .page-inside .panel { border-right: 1px solid var(--light-border); }
+        .panel:last-child { border-right: none; }
+
+        /* Reimagined Modern Typography (Outfit + Plus Jakarta Sans) */
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.16;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 28px; }
+        h2 { font-size: 23.5px; }
+        h3 { font-size: 15px; }
+
+        .page-outside h1, .page-outside h2, .page-outside h3 { color: #FFFFFF; }
+        .page-inside h2, .page-inside h3 { color: var(--light-text); }
+
+        p {
+            font-size: 12.5px;
+            font-weight: 400;
+            line-height: 1.48;
+        }
+        .page-outside p { color: var(--dark-muted); }
+        .page-inside p { color: var(--light-muted); }
+
+        .category-tag {
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .num-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            margin-right: 10px;
+            shrink-0;
+        }
+
+        .row-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .page-outside .row-item { border-bottom: 1px solid var(--dark-border); }
+
+        .panel-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .page-outside .panel-footer { border-top: 1px solid var(--dark-border); color: var(--dark-muted); }
+        .page-inside .panel-footer { color: var(--light-muted); }
+
+        .ledger-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11.5px;
+            margin: 4px 0;
+        }
+        .ledger-table th {
+            text-align: left;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--light-muted);
+            padding: 5px 6px;
+            border-bottom: 1px solid var(--light-border);
+        }
+        .ledger-table td {
+            padding: 5px 6px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-weight: 400;
+        }
+
+        @media print {
+            html, body { background: transparent !important; padding: 0 !important; margin: 0 !important; display: block !important; width: 297mm !important; }
+            .toolbar { display: none !important; }
+            .page { box-shadow: none !important; margin: 0 !important; width: 297mm !important; height: 210mm !important; max-height: 210mm !important; min-height: 210mm !important; page-break-inside: avoid !important; break-inside: avoid !important; page-break-after: always !important; break-after: page !important; }
+            .page:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            @page { size: 297mm 210mm; margin: 0mm; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack" style="height: 28px; width: auto;">
+            <span style="font-size: 11px; color: #94A3B8; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 10px;">
+                Open-Source &bull; Self-Hosted &bull; Multi-Gateway Architecture &bull; Exact 2-Page A4 Landscape
+            </span>
+        </div>
+        <button type="button" onclick="window.print()" class="toolbar-btn">Print 2-Page PDF</button>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- SHEET 1: OUTSIDE SPREAD (LUXURY OBSIDIAN NAVY)                            -->
+    <!-- Panels: [Panel 5: Flap | Panel 6: Back Cover | Panel 1: Front Cover]      -->
+    <!-- ========================================================================= -->
+    <div class="page page-outside">
+
+        <!-- PANEL 5: FOLD-IN FLAP -->
+        <div class="panel">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="category-tag">Open Source Freedom</div>
+                    <h2 style="font-size: 23px; line-height: 1.2; margin-bottom: 6px; letter-spacing: -0.02em;">
+                        Scale Your Audience<br>
+                        <span style="color: var(--gold);">Without Platform Limits.</span>
+                    </h2>
+                    <p style="color: #CBD5E1;">Proprietary email platforms lock your data into closed silos and impose tier penalties. Self-hosting gives your marketing engine complete autonomy.</p>
+                </div>
+
+                <!-- Clean Comparison Visual -->
+                <div style="background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 8px; padding: 10px 12px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 9px; font-weight: 700; margin-bottom: 5px;">
+                        <span style="color: #F87171;">PROPRIETARY SAAS: RESTRICTIVE</span>
+                        <span style="color: var(--gold);">OPEN SOURCE: UNLIMITED</span>
+                    </div>
+                    <svg viewBox="0 0 250 26" style="width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="20" x2="250" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                        <path d="M 10 18 Q 140 17 240 3" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-dasharray="3 3" />
+                        <line x1="10" y1="18" x2="240" y2="18" stroke="#F59E0B" stroke-width="3" />
+                    </svg>
+                </div>
+
+                <!-- 3 Editorial Points -->
+                <div>
+                    <div class="row-item">
+                        <div class="num-label">01</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">Zero Contact Penalties</h3>
+                            <p style="line-height: 1.42;">Store 10,000 or 1,000,000+ contacts in your private database without artificial tier limits or storage taxes.</p>
+                        </div>
+                    </div>
+                    <div class="row-item">
+                        <div class="num-label">02</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">Single Provider Lockout</h3>
+                            <p style="line-height: 1.42;">When your single sending vendor has an outage or rate freeze, business communication halts completely.</p>
+                        </div>
+                    </div>
+                    <div class="row-item" style="border-bottom: none;">
+                        <div class="num-label">03</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">The Spam Folder Trap</h3>
+                            <p style="line-height: 1.42;">Burst sending thousands of emails in seconds triggers spam filters and permanently harms domain reputation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Freedom Banner -->
+                <div style="border-left: 3px solid var(--gold); padding: 7px 11px; background: rgba(245, 158, 11, 0.08); border-radius: 0 6px 6px 0;">
+                    <div style="font-size: 9px; color: var(--gold); font-weight: 700;">OPEN-SOURCE &bull; SELF-HOSTED ADVANTAGE</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: white; margin-top: 2px;">
+                        <span>Data Ownership: <strong style="color: #34D399; font-weight: 600;">100% Private DB</strong></span>
+                        <span>Infrastructure: <strong style="color: #34D399; font-weight: 600;">Zero Vendor Lock-In</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <span>Dispatch Sovereignty</span>
+                <span style="color: #34D399;">100% Private Database</span>
+            </div>
+        </div>
+
+        <!-- PANEL 6: BACK COVER -->
+        <div class="panel">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="category-tag">Dedicated Architecture</div>
+                    <h2 style="font-size: 23px; line-height: 1.2; margin-bottom: 6px; letter-spacing: -0.02em;">
+                        Take Full Control of<br>
+                        <span style="color: var(--gold);">Your Email Broadcasts.</span>
+                    </h2>
+                    <p style="color: #CBD5E1;">Carving IT engineers deploy your private dispatch server, authenticate DNS, and configure redundant sending pipes.</p>
+                </div>
+
+                <!-- Architecture Comparison Card -->
+                <div style="background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 8px; padding: 10px 12px;">
+                    <div style="font-size: 9px; color: var(--gold); margin-bottom: 4px; font-weight: 700;">DEPLOYMENT & SOVEREIGNTY MODEL</div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--dark-border); font-size: 11.5px;">
+                        <span style="color: var(--dark-muted);">Proprietary Cloud SaaS</span>
+                        <span style="color: #F87171; font-weight: 600;">Closed Silo &bull; List Caps</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--dark-border); font-size: 11.5px;">
+                        <span style="color: var(--dark-muted);">Sending Gateways</span>
+                        <span style="color: #F87171; font-weight: 600;">Single Provider Lock-In</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 0 0 0; font-size: 11.5px;">
+                        <span style="color: var(--gold); font-weight: 700;">CampaignStack</span>
+                        <span style="color: #34D399; font-weight: 700;">Self-Hosted &bull; Sovereign</span>
+                    </div>
+                </div>
+
+                <!-- 3 Flowing Guarantees -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #CBD5E1;">
+                        <i class="fas fa-shield-halved text-amber-400"></i>
+                        <span><strong style="font-weight: 600; color: white;">Data Sovereignty:</strong> Customer records stay inside your private SQL DB</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #CBD5E1;">
+                        <i class="fas fa-bolt text-amber-400"></i>
+                        <span><strong style="font-weight: 600; color: white;">Multi-Gateway Redundancy:</strong> SES, Brevo, Google, and M365 hot standby</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #CBD5E1;">
+                        <i class="fas fa-check-double text-amber-400"></i>
+                        <span><strong style="font-weight: 600; color: white;">100% Sender Alignment:</strong> Strict SPF, DKIM 2048-bit, and DMARC setup</span>
+                    </div>
+                </div>
+
+                <!-- Corporate Credentials & Action -->
+                <div style="border-top: 1px solid var(--dark-border); padding-top: 8px;">
+                    <div style="font-size: 9.5px; color: var(--gold); font-weight: 700; margin-bottom: 3px;">CARVING IT PVT. LTD. &bull; PUNE, INDIA</div>
+                    <div style="font-size: 11px; color: #CBD5E1; line-height: 1.42; margin-bottom: 8px;">
+                        <div>+91 9420121704 &bull; +91 8605789833</div>
+                        <div>info@carvingit.com &bull; www.carvingit.com</div>
+                    </div>
+                    <a href="mailto:info@carvingit.com" style="display: block; text-align: center; text-decoration: none; background: var(--gold-gradient); color: #090D16; font-weight: 700; font-size: 11.5px; padding: 8.5px 12px; border-radius: 6px;">
+                        Schedule Architecture Consultation &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <span>Enterprise Onboarding</span>
+                <span style="color: var(--gold);">White-Glove Setup</span>
+            </div>
+        </div>
+
+        <!-- PANEL 1: FRONT COVER -->
+        <div class="panel">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <img src="public/i/opt1_pjs_bold_dark.png" alt="CampaignStack Logo" style="height: 44px; width: auto; object-fit: contain; margin-bottom: 2px;">
+                    <div class="category-tag" style="margin-top: 8px; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fab fa-osi" style="font-size: 11px;"></i>
+                        <span>Open Source &bull; Self-Hosted Platform</span>
+                    </div>
+                    <h1 style="font-size: 24.5px; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em;">
+                        Your Open-Source &amp;<br>
+                        Self-Hosted Email<br>
+                        <span style="color: var(--gold);">Marketing Platform.</span>
+                    </h1>
+                    <p style="font-size: 12.5px; color: #CBD5E1; line-height: 1.45;">Take complete ownership of your email dispatch. Deploy on your private infrastructure with unlimited subscribers, zero vendor lock-in, and high deliverability.</p>
+                </div>
+
+                <!-- Clean Hero Image -->
+                <div style="text-align: center; margin: 2px 0;">
+                    <img src="public/i/macbook_pro_transparent.webp" alt="CampaignStack Dashboard" style="width: 100%; max-height: 75mm; object-fit: contain; filter: drop-shadow(0 16px 32px rgba(0,0,0,0.8));">
+                </div>
+
+                <!-- 3 Clear Value Points -->
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #E2E8F0;">
+                        <i class="fas fa-check-circle text-amber-400"></i>
+                        <span><strong style="font-weight: 600;">100% Data Sovereignty:</strong> Self-hosted in your private database with zero contact limits</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #E2E8F0;">
+                        <i class="fas fa-check-circle text-amber-400"></i>
+                        <span><strong style="font-weight: 600;">Never Miss a Send:</strong> Multi-gateway standby failover protection</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #E2E8F0;">
+                        <i class="fas fa-check-circle text-amber-400"></i>
+                        <span><strong style="font-weight: 600;">100% In-Box Delivery:</strong> Paced, human cadence prevents spam traps</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <span>Open Source &bull; Self-Hosted &bull; Sovereign</span>
+                <span style="color: white;">CARVING IT</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- SHEET 2: INSIDE SPREAD (CRISP SWISS EDITORIAL)                            -->
+    <!-- Panels: [Panel 2: Overview | Panel 3: Capabilities | Panel 4: Proof]      -->
+    <!-- ========================================================================= -->
+    <div class="page page-inside">
+
+        <!-- PANEL 2: PHILOSOPHY & AUDIENCE OWNERSHIP -->
+        <div class="panel">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <img src="public/i/opt1_pjs_bold_light.png" alt="CampaignStack Logo" style="height: 42px; width: auto; object-fit: contain; margin-bottom: 2px;">
+                    <div class="category-tag" style="margin-top: 8px;">Overview & Mission</div>
+                    <h2 style="font-size: 23px; line-height: 1.2; margin-bottom: 6px; letter-spacing: -0.02em;">
+                        Built for Businesses That<br>
+                        <span style="color: #B45309;">Value Their Audience.</span>
+                    </h2>
+                    <p>CampaignStack was developed by Carving IT to give founders and marketing teams total control, rock-solid reliability, and true open-source freedom.</p>
+                </div>
+
+                <!-- 3 Editorial Stories -->
+                <div>
+                    <div class="row-item">
+                        <div class="num-label">01</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">You Own Your Audience</h3>
+                            <p style="line-height: 1.42;">Your subscriber list stays safely in your private database. No third party ever mines, analyzes, or holds your contacts hostage.</p>
+                        </div>
+                    </div>
+
+                    <div class="row-item">
+                        <div class="num-label">02</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">Total Provider Freedom</h3>
+                            <p style="line-height: 1.42;">Connect the email infrastructure you already trust, including Amazon SES, Google Workspace, Brevo, and Microsoft 365, with zero vendor lock-in.</p>
+                        </div>
+                    </div>
+
+                    <div class="row-item" style="border-bottom: none;">
+                        <div class="num-label">03</div>
+                        <div>
+                            <h3 style="margin-bottom: 2px;">Always-On Protection</h3>
+                            <p style="line-height: 1.42;">Intelligent circuit breakers automatically route around slow or throttled relays so your critical marketing announcements always arrive on time.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pull Quote Accent -->
+                <div style="border-left: 3.5px solid var(--gold); padding: 8px 12px; background: #FFFBEB; border-radius: 0 6px 6px 0;">
+                    <p style="font-size: 12px; font-weight: 600; color: #92400E; line-height: 1.44;">
+                        "Scale from 5,000 to 500,000+ contacts on your own private infrastructure with zero platform restrictions."
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <span>Data Privacy Guarantee</span>
+                <span style="color: #166534;">100% Private & Sovereign</span>
+            </div>
+        </div>
+
+        <!-- PANEL 3: CORE CAPABILITIES & WORKFLOW -->
+        <div class="panel">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="category-tag">High-Throughput Dispatch Engine</div>
+                    <h2 style="font-size: 23px; line-height: 1.2; margin-bottom: 6px; letter-spacing: -0.02em;">
+                        Simple Tools for<br>
+                        <span style="color: #2563EB;">Incredible Delivery.</span>
+                    </h2>
+                    <p>Everything you need to send campaigns that actually land in customer inboxes, explained in plain English:</p>
+                </div>
+
+                <!-- 4 Flowing Features -->
+                <div>
+                    <div class="row-item">
+                        <i class="fas fa-arrows-split-up-and-left text-amber-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 1px;">Smart Automatic Backup</h3>
+                            <p style="font-size: 12px; line-height: 1.4;">If Server A gets busy or encounters an issue, Server B takes over instantly. Zero lost emails.</p>
+                        </div>
+                    </div>
+
+                    <div class="row-item">
+                        <i class="fas fa-clock text-emerald-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 1px;">Natural Paced Sending</h3>
+                            <p style="font-size: 12px; line-height: 1.4;">We pace out your delivery with natural human delays so Gmail welcomes your email as friendly mail.</p>
+                        </div>
+                    </div>
+
+                    <div class="row-item">
+                        <i class="fas fa-envelope-circle-check text-blue-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 1px;">Clean Contact Verification</h3>
+                            <p style="font-size: 12px; line-height: 1.4;">Checks for typos and dead inboxes before dispatching, protecting your domain sender score.</p>
+                        </div>
+                    </div>
+
+                    <div class="row-item" style="border-bottom: none;">
+                        <i class="fas fa-sliders text-purple-500" style="font-size: 15px; margin-right: 10px; margin-top: 2px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 1px;">4-Step Studio Console</h3>
+                            <p style="font-size: 12px; line-height: 1.4;">Pick your audience, choose your servers, select your sending speed, and watch it deliver live.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supported Gateways -->
+                <div style="border-top: 1px solid var(--light-border); padding-top: 6px;">
+                    <div style="font-size: 9px; color: var(--light-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 3px;">Active Gateway Ecosystem</div>
+                    <div style="font-size: 11px; color: #334155; display: flex; flex-wrap: wrap; gap: 8px; font-weight: 600;">
+                        <span>&bull; Amazon SES</span>
+                        <span>&bull; Brevo</span>
+                        <span>&bull; Google</span>
+                        <span>&bull; M365</span>
+                        <span>&bull; Postmark</span>
+                        <span>&bull; Private SMTP</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer" style="background: #F8FAFC; padding: 5px 8px; border-radius: 4px; border-top: none;">
+                <span>01. Audience &rarr; 02. Relays &rarr; 03. Pacing &rarr; <strong style="color: #059669; font-weight: 700;">04. In-Box</strong></span>
+            </div>
+        </div>
+
+        <!-- PANEL 4: PROOF & ARCHITECTURE COMPARISON -->
+        <div class="panel">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="category-tag">Infrastructure Benchmarks</div>
+                    <h2 style="font-size: 23px; line-height: 1.2; margin-bottom: 6px; letter-spacing: -0.02em;">
+                        Engineered for Maximum<br>
+                        <span style="color: #059669;">In-Box Precision.</span>
+                    </h2>
+                    <p>Real technical benchmarks delivered by CampaignStack's multi-gateway dispatch core:</p>
+                </div>
+
+                <!-- 4 Performance Metric Stats -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 2px 0;">
+                    <div style="border-bottom: 2px solid #059669; padding-bottom: 2px;">
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 25px; font-weight: 700; color: #059669;">99.4%</div>
+                        <div style="font-size: 9.5px; color: var(--light-muted); font-weight: 600; text-transform: uppercase;">In-Box Delivery</div>
+                    </div>
+                    <div style="border-bottom: 2px solid #D97706; padding-bottom: 2px;">
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 25px; font-weight: 700; color: #D97706;">100%</div>
+                        <div style="font-size: 9.5px; color: var(--light-muted); font-weight: 600; text-transform: uppercase;">Open Source</div>
+                    </div>
+                    <div style="border-bottom: 2px solid #2563EB; padding-bottom: 2px;">
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 25px; font-weight: 700; color: #2563EB;">24ms</div>
+                        <div style="font-size: 9.5px; color: var(--light-muted); font-weight: 600; text-transform: uppercase;">Failover Switch</div>
+                    </div>
+                    <div style="border-bottom: 2px solid #7C3AED; padding-bottom: 2px;">
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 25px; font-weight: 700; color: #7C3AED;">0</div>
+                        <div style="font-size: 9.5px; color: var(--light-muted); font-weight: 600; text-transform: uppercase;">Dropped Messages</div>
+                    </div>
+                </div>
+
+                <!-- Ledger Table -->
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Capability</th>
+                            <th>Legacy ESPs</th>
+                            <th>CampaignStack</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="font-weight: 600;">Audience Scale</strong></td>
+                            <td style="color: #EF4444;">Tier limits & per-lead tax</td>
+                            <td style="color: #059669; font-weight: 600;">Unlimited &bull; Self-Hosted</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="font-weight: 600;">Code & Host</strong></td>
+                            <td style="color: #EF4444;">Proprietary lock-in</td>
+                            <td style="color: #059669; font-weight: 600;">Open-Source & Sovereign</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="font-weight: 600;">Gateways</strong></td>
+                            <td style="color: #EF4444;">Single locked pipe</td>
+                            <td style="color: #059669; font-weight: 600;">Multi-relay failover</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="font-weight: 600;">Data Privacy</strong></td>
+                            <td style="color: #EF4444;">Shared on third-party</td>
+                            <td style="color: #059669; font-weight: 600;">100% Private Database</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- White-Glove Support Box -->
+                <div style="border-left: 3px solid #059669; padding: 7px 11px; background: #F0FDF4; border-radius: 0 6px 6px 0;">
+                    <div style="font-size: 12px; font-weight: 700; color: #166534; margin-bottom: 1px;">Full Setup Support Included</div>
+                    <p style="font-size: 10.5px; color: #14532D; line-height: 1.4;">
+                        Carving IT engineers configure DNS records, SPF/DKIM/DMARC authentication, and test broadcasts with you step-by-step.
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <span>Enterprise Reliability</span>
+                <span style="color: #059669;">99.9% Uptime</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
