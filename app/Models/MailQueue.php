@@ -33,4 +33,9 @@ class MailQueue extends Model
     {
         return $this->belongsTo(Contact::class);
     }
+
+    public function outbound_mail_account(): BelongsTo
+    {
+        return $this->belongsTo(OutboundMailAccount::class, 'outbound_mail_account_id');
+    }
 }
