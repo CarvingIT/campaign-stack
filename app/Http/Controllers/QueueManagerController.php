@@ -155,7 +155,7 @@ class QueueManagerController extends Controller
         })->orderBy('id', 'asc')->get();
 
         foreach ($queuedMails as $q_m) {
-            if (!$q_m->contact || !$q_m->newsletter) {
+            if (!$q_m->contact) {
                 $q_m->delete();
                 continue;
             }
@@ -165,32 +165,47 @@ class QueueManagerController extends Controller
                 : ($q_m->contact->name ?? 'Lead');
             $recipientEmail = $q_m->contact->email;
 
-            // Gather candidate accounts for this newsletter in priority order
+            // Gather candidate accounts in priority order
             $candidateAccounts = collect();
             $accountDiagnostics = [];
 
-            // 1. Accounts linked directly to this newsletter
-            $linkedAccounts = $q_m->newsletter->outbound_mail_accounts;
-            if ($linkedAccounts && $linkedAccounts->count() > 0) {
-                foreach ($linkedAccounts as $m_a) {
-                    $isActiveStatus = ((int)$m_a->status !== 0 && $m_a->status !== '0' && $m_a->status !== false);
-                    $isActiveDate = empty($m_a->active_after) || (new \DateTime() >= new \DateTime($m_a->active_after));
-
-                    if ($isActiveStatus && $isActiveDate) {
-                        $candidateAccounts->push($m_a);
-                    } else {
-                        $reasons = [];
-                        if (!$isActiveStatus) {
-                            $reasons[] = 'status=0 (INACTIVE)';
-                        }
-                        if (!$isActiveDate) {
-                            $reasons[] = "active_after is in future ({$m_a->active_after})";
-                        }
-                        $accountDiagnostics[] = "Assigned Gateway \"{$m_a->name}\" [ID: {$m_a->id}]: Disqualified (" . implode('; ', $reasons) . ")";
+            // 1. Explicitly assigned account on transactional queue item
+            if (!empty($q_m->outbound_mail_account_id)) {
+                $designatedAcc = OutboundMailAccount::find($q_m->outbound_mail_account_id);
+                if ($designatedAcc && (int)$designatedAcc->status !== 0) {
+                    $isActiveDate = empty($designatedAcc->active_after) || (new \DateTime() >= new \DateTime($designatedAcc->active_after));
+                    if ($isActiveDate) {
+                        $candidateAccounts->push($designatedAcc);
                     }
                 }
-            } else {
-                // 2. ONLY fallback to active system accounts if this newsletter has no accounts linked
+            }
+
+            // 2. Accounts linked directly to newsletter (if broadcast)
+            if ($candidateAccounts->isEmpty() && $q_m->newsletter) {
+                $linkedAccounts = $q_m->newsletter->outbound_mail_accounts;
+                if ($linkedAccounts && $linkedAccounts->count() > 0) {
+                    foreach ($linkedAccounts as $m_a) {
+                        $isActiveStatus = ((int)$m_a->status !== 0 && $m_a->status !== '0' && $m_a->status !== false);
+                        $isActiveDate = empty($m_a->active_after) || (new \DateTime() >= new \DateTime($m_a->active_after));
+
+                        if ($isActiveStatus && $isActiveDate) {
+                            $candidateAccounts->push($m_a);
+                        } else {
+                            $reasons = [];
+                            if (!$isActiveStatus) {
+                                $reasons[] = 'status=0 (INACTIVE)';
+                            }
+                            if (!$isActiveDate) {
+                                $reasons[] = "active_after is in future ({$m_a->active_after})";
+                            }
+                            $accountDiagnostics[] = "Assigned Gateway \"{$m_a->name}\" [ID: {$m_a->id}]: Disqualified (" . implode('; ', $reasons) . ")";
+                        }
+                    }
+                }
+            }
+
+            // 3. Fallback to active system accounts
+            if ($candidateAccounts->isEmpty()) {
                 foreach ($systemActiveAccounts as $sys_a) {
                     $isActiveDate = empty($sys_a->active_after) || (new \DateTime() >= new \DateTime($sys_a->active_after));
                     if ($isActiveDate && !$candidateAccounts->contains('id', $sys_a->id)) {
@@ -198,7 +213,7 @@ class QueueManagerController extends Controller
                     }
                 }
                 if ($candidateAccounts->isEmpty()) {
-                    $accountDiagnostics[] = "Broadcast has no assigned gateways, and 0 active system-wide gateways were found in database.";
+                    $accountDiagnostics[] = "0 active system-wide gateways were found in database.";
                 }
             }
 
@@ -449,7 +464,7 @@ class QueueManagerController extends Controller
             })->orderBy('id', 'asc')->get();
 
             foreach ($queuedMails as $q_m) {
-                if (!$q_m->contact || !$q_m->newsletter) {
+                if (!$q_m->contact) {
                     $q_m->delete();
                     continue;
                 }
@@ -459,30 +474,47 @@ class QueueManagerController extends Controller
                     : ($q_m->contact->name ?? 'Lead');
                 $recipientEmail = $q_m->contact->email;
 
-                // Gather candidate accounts for this newsletter in priority order
+                // Gather candidate accounts in priority order
                 $candidateAccounts = collect();
                 $accountDiagnostics = [];
 
-                $linkedAccounts = $q_m->newsletter->outbound_mail_accounts;
-                if ($linkedAccounts && $linkedAccounts->count() > 0) {
-                    foreach ($linkedAccounts as $m_a) {
-                        $isActiveStatus = ((int)$m_a->status !== 0 && $m_a->status !== '0' && $m_a->status !== false);
-                        $isActiveDate = empty($m_a->active_after) || (new \DateTime() >= new \DateTime($m_a->active_after));
-
-                        if ($isActiveStatus && $isActiveDate) {
-                            $candidateAccounts->push($m_a);
-                        } else {
-                            $reasons = [];
-                            if (!$isActiveStatus) {
-                                $reasons[] = 'status=0 (INACTIVE)';
-                            }
-                            if (!$isActiveDate) {
-                                $reasons[] = "active_after is in future ({$m_a->active_after})";
-                            }
-                            $accountDiagnostics[] = "Assigned Gateway \"{$m_a->name}\" [ID: {$m_a->id}]: Disqualified (" . implode('; ', $reasons) . ")";
+                // 1. Explicitly assigned account on transactional queue item
+                if (!empty($q_m->outbound_mail_account_id)) {
+                    $designatedAcc = OutboundMailAccount::find($q_m->outbound_mail_account_id);
+                    if ($designatedAcc && (int)$designatedAcc->status !== 0) {
+                        $isActiveDate = empty($designatedAcc->active_after) || (new \DateTime() >= new \DateTime($designatedAcc->active_after));
+                        if ($isActiveDate) {
+                            $candidateAccounts->push($designatedAcc);
                         }
                     }
-                } else {
+                }
+
+                // 2. Accounts linked directly to newsletter (if broadcast)
+                if ($candidateAccounts->isEmpty() && $q_m->newsletter) {
+                    $linkedAccounts = $q_m->newsletter->outbound_mail_accounts;
+                    if ($linkedAccounts && $linkedAccounts->count() > 0) {
+                        foreach ($linkedAccounts as $m_a) {
+                            $isActiveStatus = ((int)$m_a->status !== 0 && $m_a->status !== '0' && $m_a->status !== false);
+                            $isActiveDate = empty($m_a->active_after) || (new \DateTime() >= new \DateTime($m_a->active_after));
+
+                            if ($isActiveStatus && $isActiveDate) {
+                                $candidateAccounts->push($m_a);
+                            } else {
+                                $reasons = [];
+                                if (!$isActiveStatus) {
+                                    $reasons[] = 'status=0 (INACTIVE)';
+                                }
+                                if (!$isActiveDate) {
+                                    $reasons[] = "active_after is in future ({$m_a->active_after})";
+                                }
+                                $accountDiagnostics[] = "Assigned Gateway \"{$m_a->name}\" [ID: {$m_a->id}]: Disqualified (" . implode('; ', $reasons) . ")";
+                            }
+                        }
+                    }
+                }
+
+                // 3. Fallback to active system accounts
+                if ($candidateAccounts->isEmpty()) {
                     foreach ($systemActiveAccounts as $sys_a) {
                         $isActiveDate = empty($sys_a->active_after) || (new \DateTime() >= new \DateTime($sys_a->active_after));
                         if ($isActiveDate && !$candidateAccounts->contains('id', $sys_a->id)) {
@@ -490,7 +522,7 @@ class QueueManagerController extends Controller
                         }
                     }
                     if ($candidateAccounts->isEmpty()) {
-                        $accountDiagnostics[] = "Broadcast has no assigned gateways, and 0 active system-wide gateways were found in database.";
+                        $accountDiagnostics[] = "0 active system-wide gateways were found in database.";
                     }
                 }
 

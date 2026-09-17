@@ -38,22 +38,36 @@ class FlushMailQueue extends Command
         MailQueue::whereIn('status', ['Q', 'N']) 
             ->chunk(100, function ($queued) use ($systemActiveAccounts) {
                 foreach ($queued as $q_m) {
-                    if (!$q_m->contact || !$q_m->newsletter) {
+                    if (!$q_m->contact) {
                         continue;
                     }
 
                     // Collect candidate outbound accounts in priority order
                     $candidateAccounts = collect();
 
-                    if ($q_m->newsletter->outbound_mail_accounts && $q_m->newsletter->outbound_mail_accounts->count() > 0) {
+                    // 1. Explicitly designated outbound account on queue item (Transactional)
+                    if (!empty($q_m->outbound_mail_account_id)) {
+                        $designatedAcc = OutboundMailAccount::find($q_m->outbound_mail_account_id);
+                        if ($designatedAcc && (int)$designatedAcc->status !== 0) {
+                            $isActiveDate = empty($designatedAcc->active_after) || (new \DateTime() >= new \DateTime($designatedAcc->active_after));
+                            if ($isActiveDate) {
+                                $candidateAccounts->push($designatedAcc);
+                            }
+                        }
+                    }
+
+                    // 2. Accounts assigned to newsletter (Broadcast)
+                    if ($candidateAccounts->isEmpty() && $q_m->newsletter && $q_m->newsletter->outbound_mail_accounts && $q_m->newsletter->outbound_mail_accounts->count() > 0) {
                         foreach ($q_m->newsletter->outbound_mail_accounts as $m_a) {
                             $isActiveDate = empty($m_a->active_after) || (new \DateTime() >= new \DateTime($m_a->active_after));
                             if ($isActiveDate && (int)$m_a->status !== 0) {
                                 $candidateAccounts->push($m_a);
                             }
                         }
-                    } else {
-                        // Fallback to active outbound mail accounts if newsletter has none
+                    }
+
+                    // 3. System-wide active accounts fallback
+                    if ($candidateAccounts->isEmpty()) {
                         foreach ($systemActiveAccounts as $s_a) {
                             $isActiveDate = empty($s_a->active_after) || (new \DateTime() >= new \DateTime($s_a->active_after));
                             if ($isActiveDate && !$candidateAccounts->contains('id', $s_a->id)) {
