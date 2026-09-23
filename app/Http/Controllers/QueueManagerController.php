@@ -125,6 +125,11 @@ class QueueManagerController extends Controller
         $batchStart = microtime(true);
         $workerPid = getmypid();
         $limit = (int) $request->input('limit', 20); // Process batch
+        $pauseMs = (int) $request->input('pause_ms', config('mail.send_delay_ms', 30));
+        if ($pauseMs < 0) {
+            $pauseMs = 0;
+        }
+
         $queuedMails = MailQueue::whereIn('status', ['Q', 'N'])
             ->with(['contact', 'newsletter.outbound_mail_accounts'])
             ->limit($limit)
@@ -147,7 +152,7 @@ class QueueManagerController extends Controller
         $logs = [];
         $memUsage = round(memory_get_usage(true) / 1024 / 1024, 1);
         $logs[] = "[WORKER:{$workerPid}] Daemon thread active (Mem: {$memUsage}MB). Acquired lock on {$queuedMails->count()} queue item(s)...";
-        $logs[] = "[PIPELINE] Initialized asynchronous transmission pool. Opening socket stream...";
+        $logs[] = "[PIPELINE] Initialized asynchronous transmission pool (Pacing delay: " . ($pauseMs > 0 ? "{$pauseMs}ms per email" : "None") . "). Opening socket stream...";
 
         // Preload all active outbound accounts in system for fallback & failover
         $systemActiveAccounts = OutboundMailAccount::where(function ($query) {
@@ -342,6 +347,11 @@ class QueueManagerController extends Controller
                 }
             }
 
+            // Apply pacing delay between outbound transmissions
+            if ($sentSuccessfully && $pauseMs > 0) {
+                usleep($pauseMs * 1000);
+            }
+
             if (!$sentSuccessfully) {
                 $attempt = (int) $q_m->attempt + 1;
                 $q_m->attempt = $attempt;
@@ -404,8 +414,12 @@ class QueueManagerController extends Controller
     public function flushStream(Request $request)
     {
         $limit = (int) $request->input('limit', 20);
+        $pauseMs = (int) $request->input('pause_ms', config('mail.send_delay_ms', 30));
+        if ($pauseMs < 0) {
+            $pauseMs = 0;
+        }
 
-        return response()->stream(function () use ($limit) {
+        return response()->stream(function () use ($limit, $pauseMs) {
             // Disable output buffering so chunks are delivered immediately to the client
             while (ob_get_level() > 0) {
                 @ob_end_clean();
@@ -455,7 +469,7 @@ class QueueManagerController extends Controller
             ]);
             $emit([
                 'type' => 'log',
-                'message' => "[PIPELINE] Initialized asynchronous transmission pool. Opening socket stream...",
+                'message' => "[PIPELINE] Initialized asynchronous transmission pool (Pacing: " . ($pauseMs > 0 ? "{$pauseMs}ms delay/email" : "Zero-delay max speed") . "). Opening socket stream...",
             ]);
 
             // Preload system active accounts for fallback
@@ -708,6 +722,11 @@ class QueueManagerController extends Controller
                             ]);
                         }
                     }
+                }
+
+                // Apply pacing delay between outbound transmissions
+                if ($sentSuccessfully && $pauseMs > 0) {
+                    usleep($pauseMs * 1000);
                 }
 
                 if (!$sentSuccessfully) {
