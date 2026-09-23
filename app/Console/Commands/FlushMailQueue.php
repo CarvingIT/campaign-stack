@@ -15,14 +15,20 @@ use Illuminate\Support\Facades\Mail;
 
 class FlushMailQueue extends Command
 {
-    protected $signature = 'CS:FlushMailQueue';
+    protected $signature = 'CS:FlushMailQueue {--pause-ms= : Pause in milliseconds between sending emails (default from config/mail.php or 30ms)}';
     /**
      * Execute the console command.
      */
     public function handle()
     {
+        $pauseOption = $this->option('pause-ms');
+        $pauseMs = ($pauseOption !== null && $pauseOption !== '') ? (int) $pauseOption : (int) config('mail.send_delay_ms', 30);
+        if ($pauseMs < 0) {
+            $pauseMs = 0;
+        }
+
         $count = MailQueue::whereIn('status', ['Q', 'N'])->count();
-        $this->info("Flushing mail queue. Found {$count} email(s) in queue.");
+        $this->info("Flushing mail queue. Found {$count} email(s) in queue. Pacing delay: " . ($pauseMs > 0 ? "{$pauseMs}ms per email" : "None (0ms)"));
 
         if ($count === 0) {
             $this->warn("No queued emails to send. Make sure you run 'php artisan CS:queue-mails' with ready newsletters.");
@@ -36,7 +42,7 @@ class FlushMailQueue extends Command
 
         // get queued mails 
         MailQueue::whereIn('status', ['Q', 'N']) 
-            ->chunk(100, function ($queued) use ($systemActiveAccounts) {
+            ->chunk(100, function ($queued) use ($systemActiveAccounts, $pauseMs) {
                 foreach ($queued as $q_m) {
                     if (!$q_m->contact) {
                         continue;
@@ -148,6 +154,11 @@ class FlushMailQueue extends Command
                                 $this->warn("Account {$active_m_a->name} failed for {$q_m->contact->email}. Failing over to next account: {$nextAccount->name}...");
                             }
                         }
+                    }
+
+                    // Apply pacing delay between outbound transmissions
+                    if ($sentSuccessfully && $pauseMs > 0) {
+                        usleep($pauseMs * 1000);
                     }
 
                     if (!$sentSuccessfully) {

@@ -26,6 +26,7 @@
         }
         
         goToStage(1);
+        initPacingControls();
         refreshQueueMetrics();
         setInterval(refreshQueueMetrics, 4000);
         setPreviewZoom(0.8);
@@ -852,6 +853,74 @@
         setTimeout(processNextStreamLog, delay);
     }
 
+    let currentPacingMs = 30;
+
+    function initPacingControls() {
+        const saved = localStorage.getItem('cs_dispatch_pause_ms');
+        if (saved !== null && saved !== '') {
+            currentPacingMs = parseInt(saved, 10);
+            if (isNaN(currentPacingMs) || currentPacingMs < 0) {
+                currentPacingMs = 30;
+            }
+        }
+        setPacingDelay(currentPacingMs, false, true);
+    }
+
+    function setPacingDelay(ms, isCustom = false, skipSave = false) {
+        currentPacingMs = Math.max(0, parseInt(ms, 10) || 0);
+        if (!skipSave) {
+            localStorage.setItem('cs_dispatch_pause_ms', currentPacingMs);
+        }
+
+        // Update Preset Buttons state
+        const presets = [0, 30, 100, 500];
+        presets.forEach(p => {
+            const btn = document.getElementById(`pacingBtn${p}`);
+            if (btn) {
+                if (currentPacingMs === p && !isCustom) {
+                    btn.className = 'pacing-btn active-pacing px-2.5 py-1 text-3xs font-bold rounded-lg border transition-all cursor-pointer flex items-center gap-1 bg-amber-500 text-zinc-950 border-amber-400 font-extrabold shadow-2xs';
+                } else {
+                    btn.className = 'pacing-btn px-2.5 py-1 text-3xs font-bold rounded-lg border transition-all cursor-pointer flex items-center gap-1 bg-white dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700 hover:border-amber-400';
+                }
+            }
+        });
+
+        // Update custom input
+        const customInput = document.getElementById('customPacingInput');
+        if (customInput) {
+            customInput.value = currentPacingMs;
+        }
+
+        // Update labels and theoretical speed
+        const currentLabel = document.getElementById('pacingCurrentLabel');
+        if (currentLabel) {
+            currentLabel.textContent = `${currentPacingMs} ms`;
+        }
+
+        const rpsBadge = document.getElementById('pacingRpsBadge');
+        if (rpsBadge) {
+            if (currentPacingMs === 0) {
+                rpsBadge.textContent = 'Unlimited (Max Speed)';
+                rpsBadge.className = 'px-1.5 py-0.2 rounded text-4xs font-mono font-bold bg-rose-100 text-rose-900 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-300/50 dark:border-rose-700/50';
+            } else {
+                const rps = (1000 / currentPacingMs).toFixed(1);
+                rpsBadge.textContent = `~${rps} msgs/sec cap`;
+                rpsBadge.className = 'px-1.5 py-0.2 rounded text-4xs font-mono font-bold bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300/50 dark:border-amber-700/50';
+            }
+        }
+    }
+
+    function onCustomPacingInput(val) {
+        const ms = parseInt(val, 10);
+        if (!isNaN(ms) && ms >= 0) {
+            setPacingDelay(ms, true);
+        }
+    }
+
+    function getSelectedPauseMs() {
+        return currentPacingMs;
+    }
+
     async function readNdjsonStream(url, options, onEvent) {
         const response = await fetch(url, options);
         if (!response.ok) {
@@ -1028,7 +1097,7 @@
                         'Accept': 'application/x-ndjson',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify({ limit: 15 })
+                    body: JSON.stringify({ limit: 15, pause_ms: getSelectedPauseMs() })
                 }, (evt) => {
                     if (evt.type === 'log') {
                         renderTerminalLogLine(evt.message);
@@ -2045,6 +2114,58 @@
                             <i id="iconStudioFlush" class="fas fa-paper-plane text-3xs"></i>
                             <span>Dispatch Live Batch Now</span>
                         </button>
+                    </div>
+                </div>
+
+                <!-- Transmission Pacing & Rate Limiting (Pause Setting) -->
+                <div class="p-3.5 rounded-xl bg-gradient-to-r from-zinc-50 via-amber-50/20 to-zinc-50 dark:from-zinc-900/50 dark:via-amber-950/10 dark:to-zinc-900/50 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2.5">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center text-3xs shrink-0">
+                                <i class="fas fa-gauge-high"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-3xs font-extrabold text-zinc-900 dark:text-white uppercase tracking-wider">Dispatch Velocity &amp; Pacing Delay</span>
+                                    <span id="pacingRpsBadge" class="px-1.5 py-0.2 rounded text-4xs font-mono font-bold bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300/50 dark:border-amber-700/50">~33.3 msgs/sec</span>
+                                </div>
+                                <p class="text-4xs text-zinc-500 dark:text-zinc-400">Pause duration between outbound socket dispatches to comply with SMTP provider rate limits.</p>
+                            </div>
+                        </div>
+
+                        <!-- Selected Status Tag -->
+                        <div class="flex items-center gap-1 text-3xs font-mono text-zinc-400 shrink-0">
+                            <span>Active Delay: <strong id="pacingCurrentLabel" class="text-amber-600 dark:text-amber-400 font-bold">30 ms</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Preset Options & Custom Input -->
+                    <div class="flex flex-wrap items-center gap-2 pt-0.5">
+                        <button type="button" onclick="setPacingDelay(0)" id="pacingBtn0" class="pacing-btn px-2.5 py-1 text-3xs font-bold rounded-lg border transition-all cursor-pointer flex items-center gap-1 bg-white dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700 hover:border-amber-400">
+                            <i class="fas fa-bolt text-4xs text-amber-500"></i>
+                            <span>0ms (Max Speed)</span>
+                        </button>
+                        <button type="button" onclick="setPacingDelay(30)" id="pacingBtn30" class="pacing-btn px-2.5 py-1 text-3xs font-bold rounded-lg border transition-all cursor-pointer flex items-center gap-1 bg-amber-500 text-zinc-950 border-amber-400 font-extrabold shadow-2xs">
+                            <i class="fas fa-shield-halved text-4xs"></i>
+                            <span>30ms (Safe • Default)</span>
+                        </button>
+                        <button type="button" onclick="setPacingDelay(100)" id="pacingBtn100" class="pacing-btn px-2.5 py-1 text-3xs font-bold rounded-lg border transition-all cursor-pointer flex items-center gap-1 bg-white dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700 hover:border-amber-400">
+                            <i class="fas fa-clock text-4xs text-sky-400"></i>
+                            <span>100ms (Gentle)</span>
+                        </button>
+                        <button type="button" onclick="setPacingDelay(500)" id="pacingBtn500" class="pacing-btn px-2.5 py-1 text-3xs font-bold rounded-lg border transition-all cursor-pointer flex items-center gap-1 bg-white dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700 hover:border-amber-400">
+                            <i class="fas fa-seedling text-4xs text-emerald-400"></i>
+                            <span>500ms (Warmup)</span>
+                        </button>
+
+                        <!-- Custom Input Field -->
+                        <div class="flex items-center gap-1.5 sm:ml-auto">
+                            <label for="customPacingInput" class="text-4xs font-mono text-zinc-500 uppercase">Custom:</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="customPacingInput" min="0" max="10000" step="5" value="30" oninput="onCustomPacingInput(this.value)" class="w-20 pl-2 pr-6 py-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg text-3xs font-mono font-bold text-zinc-900 dark:text-white focus:ring-1 focus:ring-amber-400 focus:border-amber-400">
+                                <span class="absolute right-2 text-4xs font-mono text-zinc-400 pointer-events-none">ms</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

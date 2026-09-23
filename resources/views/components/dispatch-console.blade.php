@@ -51,6 +51,18 @@
                 <span class="text-3xs opacity-80 font-mono px-1.5 py-0.5 rounded bg-emerald-700">CS:FlushMailQueue</span>
             </button>
 
+            <!-- Pacing Delay Control -->
+            <div class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 text-xs" title="Pause duration in milliseconds between sending emails">
+                <i class="fas fa-gauge-high text-amber-500 text-2xs"></i>
+                <span class="text-3xs font-semibold text-zinc-600 dark:text-zinc-400">Pacing:</span>
+                <select id="consolePacingSelect" class="bg-transparent text-xs font-mono font-bold text-zinc-900 dark:text-white border-0 p-0 focus:ring-0 cursor-pointer">
+                    <option value="0">0ms (Max Speed)</option>
+                    <option value="30" selected>30ms (Safe)</option>
+                    <option value="100">100ms (Gentle)</option>
+                    <option value="500">500ms (Warmup)</option>
+                </select>
+            </div>
+
             <!-- Retry Failed Button -->
             <button type="button" id="btnRetryFailed" onclick="triggerRetryFailed();" class="inline-flex items-center px-3.5 py-2.5 bg-slate-100 dark:bg-[#09090B] hover:bg-slate-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-semibold rounded-xl border border-slate-200 dark:border-zinc-800 transition-colors gap-2 cursor-pointer">
                 <i class="fas fa-sync-alt text-2xs text-amber-500"></i>
@@ -208,7 +220,8 @@
         if (btn) btn.disabled = true;
         if (icon) icon.className = 'fas fa-spinner fa-spin text-xs';
 
-        appendTerminalLog('🚀 Dispatch Engine Activated (php artisan CS:FlushMailQueue)...', 'info');
+        const pauseMs = parseInt(document.getElementById('consolePacingSelect')?.value || '30', 10);
+        appendTerminalLog(`🚀 Dispatch Engine Activated (php artisan CS:FlushMailQueue --pause-ms=${pauseMs})...`, 'info');
 
         function processNextBatch() {
             fetch('/queue/flush-all', {
@@ -217,7 +230,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({ limit: 15 })
+                body: JSON.stringify({ limit: 15, pause_ms: pauseMs })
             })
             .then(res => res.json())
             .then(data => {
