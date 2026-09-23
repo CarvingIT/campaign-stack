@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Newsletter;
 use App\Models\Campaign;
 use App\Models\Tag;
+use App\Models\OutboundMailAccount;
+use App\Models\NewsletterOutboundMailAccount;
 use Session;
 use Illuminate\Support\Str; 
 
@@ -24,8 +26,17 @@ class NewsletterController extends Controller
             $newsletter = Newsletter::find($newsletter_id);
         }
         $campaigns = Campaign::all();
-        $tags = Tag::all();
-        return view('newsletter-form',['newsletter'=>$newsletter, 'campaigns'=>$campaigns, 'tags'=>$tags]);
+        $tags = Tag::orderBy('label')->get();
+        $mailAccounts = OutboundMailAccount::all();
+        $selectedMailAccountId = $newsletter->newsletter_outbound_mail_accounts->first()?->outbound_mail_account_id;
+
+        return view('newsletter-form', [
+            'newsletter' => $newsletter,
+            'campaigns' => $campaigns,
+            'tags' => $tags,
+            'mailAccounts' => $mailAccounts,
+            'selectedMailAccountId' => $selectedMailAccountId,
+        ]);
     }
 
     public function save(Request $request){
@@ -43,7 +54,16 @@ class NewsletterController extends Controller
         $newsletter->status = $request->status;
         try{
             $newsletter->save();
-            $newsletter->updateTags($request->tag_ids);
+            if ($request->filled('outbound_mail_account_id')) {
+                NewsletterOutboundMailAccount::updateOrCreate(
+                    ['newsletter_id' => $newsletter->id],
+                    [
+                        'outbound_mail_account_id' => $request->outbound_mail_account_id,
+                        'priority' => 1,
+                    ]
+                );
+            }
+            $newsletter->updateTags($request->input('tag_ids', []));
             Session::flash('alert-success', 'Newsletter saved successfully!');
         }
         catch(\Exception $e){

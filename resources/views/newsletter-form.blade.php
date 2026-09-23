@@ -77,21 +77,40 @@
             			<input class="form-input rounded-md shadow-sm mt-1 block w-full" id="subject_template" name="subject_template" type="text" value="{{ $newsletter->subject_template }}" placeholder="New feature [[feature_name]]">
         		</div>
 
+				<!-- Mail Account -->
+				<div class="col-span-4 md:col-span-4">
+					<label class="block font-medium text-sm" for="outbound_mail_account_id">Mail Account</label>
+
+					<select class="form-input rounded-md shadow-sm mt-1 block w-full"
+							id="outbound_mail_account_id"
+							name="outbound_mail_account_id">
+						<option value="">Select Mail Account</option>
+
+						@foreach($mailAccounts as $mailAccount)
+							<option value="{{ $mailAccount->id }}"
+								@if($selectedMailAccountId == $mailAccount->id) selected @endif>
+								{{ $mailAccount->name }}
+							</option>
+						@endforeach
+					</select>
+				</div>
+
         		<!-- Tags -->
-        		<div class="col-span-4 md:col-span-4">
-            			<label class="block font-medium text-sm mb-1" for="tag_id">Tags</label>
-            			@php
-                		$tags_array = explode(",", $newsletter->tag_ids);
-            			@endphp
-            			<div class="flex flex-wrap gap-4 mt-2">
-                		@foreach($tags as $tag)
-                    		<label class="inline-flex items-center space-x-2">
-                        		<input class="form-input rounded-md shadow-sm" id="tag_ids" name="tag_ids[]" type="checkbox" value="{{ $tag->id }}" @if(in_array($tag->id, $newsletter->newsletter_tags->pluck('tag_id')->toArray())) checked @endif>
-                        		<span>{{ $tag->label }}</span>
-                    		</label>
-                		@endforeach
-            			</div>
-        		</div>
+				<div class="col-span-4 md:col-span-4">
+					<label class="block font-medium text-sm mb-1" for="tag_ids">Tags</label>
+
+					<select class="form-input rounded-md shadow-sm mt-1 block w-full"
+							id="tag_ids"
+							name="tag_ids[]"
+							multiple>
+						@foreach($tags as $tag)
+							<option value="{{ $tag->id }}"
+								@if(in_array($tag->id, $newsletter->newsletter_tags->pluck('tag_id')->toArray())) selected @endif>
+								{{ $tag->label }}
+							</option>
+						@endforeach
+					</select>
+				</div>
 			<div class="col-span-4 md:col-span-4">
              			<label class="block font-medium text-sm" for="campaign_id">Campaings</label>
              			<select class="form-input rounded-md shadow-sm mt-1 block w-full" id="campaign_id" name="campaign_id">
@@ -107,8 +126,6 @@
                 			<option value="">Select Status</option>
                 			<option value="D" @if($newsletter->status == 'D') selected @endif>Draft</option>
                 			<option value="N" @if($newsletter->status == 'N') selected @endif>New</option>
-                			<option value="Q" @if($newsletter->status == 'Q') selected @endif>Queing</option>
-                			<option value="S" @if($newsletter->status == 'S') selected @endif>Sent</option>
              			</select>
         		</div>
 
