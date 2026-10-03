@@ -255,6 +255,25 @@ class QueueManagerController extends Controller
             $candidateNames = $candidateAccounts->pluck('name')->implode(' -> ');
             $logs[] = "[DISPATCH:{$leadUid}] Target: {$recipientName} <{$recipientEmail}> | Gateway pipeline: [{$candidateNames}]";
 
+            $trackingId = (string) Str::uuid();
+
+            $trackingUrl = route('email.track', ['id' => $trackingId]);
+
+            $trackingPixel = '<img src="' . e($trackingUrl) . '" width="1" height="1" alt="" style="display:none;" />';
+
+            $emailBody = $q_m->body;
+
+            if (preg_match('~</body\s*>~i', $emailBody)) {
+                $emailBody = preg_replace_callback(
+                    '~</body\s*>~i',
+                    fn($matches) => $trackingPixel . $matches[0],
+                    $emailBody,
+                    1
+                );
+            } else {
+                $emailBody .= $trackingPixel;
+            }
+
             $sentSuccessfully = false;
             $attemptErrors = [];
 
@@ -297,18 +316,18 @@ class QueueManagerController extends Controller
                         ],
                     ];
 
-                    $mailable = new DynamicDbMail($q_m->subject, $q_m->body, $fromAddress, $fromName);
+                    $mailable = new DynamicDbMail($q_m->subject, $emailBody, $fromAddress, $fromName);
                     $mailer = Mail::build($mailConfig);
                     $mailer->to($recipientEmail)->send($mailable);
 
                     // On success, save to sent_mails
                     $sent_mail = new SentMail;
-                    $sent_mail->id = (string) Str::uuid();
+                    $sent_mail->id = $trackingId;
                     $sent_mail->newsletter_id = $q_m->newsletter_id;
                     $sent_mail->outbound_mail_account_id = $active_m_a->id;
                     $sent_mail->contact_id = $q_m->contact_id;
                     $sent_mail->subject = $q_m->subject;
-                    $sent_mail->body = $q_m->body;
+                    $sent_mail->body = $emailBody;
                     $sent_mail->opened = 0;
                     $sent_mail->save();
 
@@ -593,6 +612,25 @@ class QueueManagerController extends Controller
                     'message' => "[DISPATCH:{$leadUid}] Target: {$recipientName} <{$recipientEmail}> | Gateway pipeline: [{$candidateNames}]",
                 ]);
 
+                $trackingId = (string) Str::uuid();
+
+                $trackingUrl = route('email.track', ['id' => $trackingId]);
+
+                $trackingPixel = '<img src="' . e($trackingUrl) . '" width="1" height="1" alt="" style="display:none;" />';
+
+                $emailBody = $q_m->body;
+
+                if (preg_match('~</body\s*>~i', $emailBody)) {
+                    $emailBody = preg_replace_callback(
+                        '~</body\s*>~i',
+                        fn($matches) => $trackingPixel . $matches[0],
+                        $emailBody,
+                        1
+                    );
+                } else {
+                    $emailBody .= $trackingPixel;
+                }
+
                 $sentSuccessfully = false;
                 $attemptErrors = [];
 
@@ -647,18 +685,18 @@ class QueueManagerController extends Controller
                             ],
                         ];
 
-                        $mailable = new DynamicDbMail($q_m->subject, $q_m->body, $fromAddress, $fromName);
+                        $mailable = new DynamicDbMail($q_m->subject, $emailBody, $fromAddress, $fromName);
                         $mailer = Mail::build($mailConfig);
                         $mailer->to($recipientEmail)->send($mailable);
 
                         // On success, save to sent_mails
                         $sent_mail = new SentMail;
-                        $sent_mail->id = (string) Str::uuid();
+                        $sent_mail->id = $trackingId;
                         $sent_mail->newsletter_id = $q_m->newsletter_id;
                         $sent_mail->outbound_mail_account_id = $active_m_a->id;
                         $sent_mail->contact_id = $q_m->contact_id;
                         $sent_mail->subject = $q_m->subject;
-                        $sent_mail->body = $q_m->body;
+                        $sent_mail->body = $emailBody;
                         $sent_mail->opened = 0;
                         $sent_mail->save();
 
