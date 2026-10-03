@@ -161,7 +161,7 @@
                     Compose, schedule, personalize merge tags, and monitor broadcast dispatches.
                 </p>
             </div>
-            
+
             <div class="flex items-center gap-2.5">
                 <a href="/dispatch" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#111114] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all shadow-2xs gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
@@ -312,7 +312,7 @@
 
             <!-- Main Newsletters Directory Card -->
             <div class="bg-white dark:bg-[#111114] rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs overflow-hidden">
-                
+
                 @if(count($newsletters) > 0)
                     <!-- Top Toolbar & Filter Strip -->
                     <div class="p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800/80 space-y-4 bg-zinc-50/50 dark:bg-zinc-900/30">
@@ -320,7 +320,7 @@
                             <!-- Search Bar -->
                             <div class="relative flex-1 max-w-md">
                                 <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 text-xs"></i>
-                                <input type="text" id="newsletterSearchInput" placeholder="Search broadcasts by title, campaign, or subject..." 
+                                <input type="text" id="newsletterSearchInput" placeholder="Search broadcasts by title, campaign, or subject..."
                                        class="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs">
                             </div>
 
@@ -369,7 +369,7 @@
                                 $tagsString = implode(' ', $tagLabels);
                                 $campaignName = $n->campaign->name ?? 'Unassigned Campaign';
                                 $searchString = strtolower(($n->title ?? '') . ' ' . $campaignName . ' ' . ($n->subject_template ?? '') . ' ' . $tagsString);
-                                
+
                                 $statusConfig = [
                                     'D' => ['label' => 'Draft', 'class' => 'bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700', 'icon' => 'fa-pen'],
                                     'N' => ['label' => 'Ready / New', 'class' => 'bg-blue-50 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800', 'icon' => 'fa-sparkles'],
@@ -381,7 +381,7 @@
 
                             <div class="newsletter-row p-4 sm:p-5 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40 transition-colors flex flex-col lg:flex-row lg:items-center justify-between gap-4"
                                  data-search="{{ $searchString }}" data-status="{{ $n->status }}" data-index="{{ $index }}">
-                                
+
                                 <!-- Left Info Pod -->
                                 <div class="flex items-start space-x-3.5 min-w-0 flex-1">
                                     <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300 border border-amber-500/20 flex items-center justify-center text-sm font-bold shrink-0 shadow-2xs mt-0.5 sm:mt-0">
@@ -466,12 +466,12 @@
                                                 <span>Queue</span>
                                             </button>
                                         @endif
-                                        <a href="/newsletter-form/{{ $n->id }}" title="Edit Newsletter" 
+                                        <a href="/newsletter-form/{{ $n->id }}" title="Edit Newsletter"
                                            class="px-2.5 py-1.5 text-3xs font-semibold text-zinc-700 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl transition-colors flex items-center gap-1">
                                             <i class="fas fa-pen text-3xs text-zinc-400"></i>
                                             <span class="hidden sm:inline">Edit</span>
                                         </a>
-                                        <button type="button" onclick="confirmDelete({{ $n->id }}, '{{ addslashes($n->title ?? 'Untitled Broadcast') }}')" title="Delete Newsletter" 
+                                        <button type="button" onclick="confirmDelete({{ $n->id }}, '{{ addslashes($n->title ?? 'Untitled Broadcast') }}')" title="Delete Newsletter"
                                                 class="p-1.5 text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors">
                                             <i class="fas fa-trash-can text-xs"></i>
                                         </button>
@@ -494,7 +494,7 @@
                     <!-- Progressive Load More Pagination Footer -->
                     @if(count($newsletters) > 15)
                         <div class="p-4 border-t border-zinc-100 dark:border-zinc-800/80 text-center bg-zinc-50/50 dark:bg-zinc-900/30">
-                            <button type="button" id="showMoreBtn" 
+                            <button type="button" id="showMoreBtn"
                                     class="inline-flex items-center justify-center px-5 py-2 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-xs rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-2xs hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all gap-2">
                                 <i class="fas fa-chevron-down text-3xs"></i>
                                 <span id="remainingCountText">Show More Newsletters</span>
@@ -535,7 +535,7 @@
                 </div>
             </div>
             <p class="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                Are you sure you want to delete <span id="deleteNewsletterTitle" class="font-bold text-zinc-900 dark:text-white"></span>? 
+                Are you sure you want to delete <span id="deleteNewsletterTitle" class="font-bold text-zinc-900 dark:text-white"></span>?
                 This will permanently remove the broadcast draft and delivery history.
             </p>
             <form method="POST" action="/newsletter/delete">

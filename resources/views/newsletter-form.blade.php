@@ -116,7 +116,7 @@
     <h2 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 12px 0;">Important Platform Update</h2>
     <p style="font-size: 15px; line-height: 1.6; color: #334155;">Hello @{{ firstname | Valued Partner }},</p>
     <p style="font-size: 15px; line-height: 1.6; color: #334155;">We are writing to share an important milestone and upcoming enhancement that directly benefits <strong>@{{ company | your account }}</strong>.</p>
-    
+
     <div style="background-color: #f8fafc; border-left: 4px solid #0f172a; padding: 16px 20px; border-radius: 6px; margin: 20px 0;">
         <h4 style="margin: 0 0 6px 0; color: #0f172a; font-size: 15px;">Key Summary Points:</h4>
         <ul style="margin: 0; padding-left: 18px; font-size: 14px; color: #475569; line-height: 1.6;">
@@ -127,7 +127,7 @@
     </div>
 
     <p style="font-size: 15px; line-height: 1.6; color: #334155;">If you have any questions, our support team is available 24/7 to assist you.</p>
-    
+
     <div style="margin: 25px 0;">
         <a href="https://example.com/learn-more" style="background-color: #0f172a; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; display: inline-block;">Read Full Release Notes &rarr;</a>
     </div>
@@ -149,7 +149,7 @@
     <span style="background-color: #fef3c7; color: #92400e; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 15px;">Exclusive Access</span>
     <h2 style="font-size: 24px; font-weight: 800; color: #0f172a; margin: 0 0 10px 0;">Upgrade Your Outreach Pipeline</h2>
     <p style="font-size: 15px; color: #64748b; margin: 0 0 20px 0; line-height: 1.5;">Hi @{{ firstname | there }}, claim complimentary setup support for @{{ company | your organization }}.</p>
-    
+
     <div style="background-color: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 15px; margin: 20px 0;">
         <div style="font-size: 13px; color: #475569;">Use Code: <strong style="color: #0f172a; font-family: monospace; font-size: 16px;">GROWTH2026</strong></div>
     </div>
@@ -294,7 +294,7 @@
 
     <p style="font-size: 15px; line-height: 1.6;">Dear @{{ salutation | Mr./Ms. }} @{{ lastname | Colleague }},</p>
     <p style="font-size: 15px; line-height: 1.6;">As <strong>@{{ company | your enterprise }}</strong> expands its critical digital infrastructure, meeting zero-trust compliance standards is essential.</p>
-    
+
     <div style="background-color: #f8fafc; border-left: 4px solid #f59e0b; padding: 14px 18px; border-radius: 6px; margin: 18px 0;">
         <h4 style="margin: 0 0 5px 0; color: #0f172a; font-size: 14px;">Roundtable Agenda Highlights</h4>
         <p style="margin: 0; font-size: 13px; color: #475569; line-height: 1.5;">Join 40+ engineering heads &amp; CTOs for an exclusive closed-door discussion on automated data residency, AI governance, and infrastructure security.</p>
@@ -326,7 +326,7 @@
         <a href="https://example.com/rate/4" style="display: inline-block; width: 44px; height: 44px; line-height: 44px; background-color: #f1f5f9; border-radius: 8px; text-decoration: none; font-weight: 800; color: #0f172a; font-size: 15px; border: 1px solid #cbd5e1;">4</a>
         <a href="https://example.com/rate/5" style="display: inline-block; width: 44px; height: 44px; line-height: 44px; background-color: #f59e0b; border-radius: 8px; text-decoration: none; font-weight: 800; color: #0f172a; font-size: 15px; border: 1px solid #d97706;">5</a>
     </div>
-    
+
     <div style="font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between; max-width: 260px; margin: 5px auto 0 auto;">
         <span>1 = Not likely</span>
         <span>5 = Extremely likely</span>
@@ -871,8 +871,8 @@ OUTPUT INSTRUCTIONS:
 
     function openLivePreview() {
         const subjectRaw = document.getElementById('subject_template').value;
-        const bodyRaw = isCodeModeActive 
-            ? document.getElementById('rawHtmlCodeEditor').value 
+        const bodyRaw = isCodeModeActive
+            ? document.getElementById('rawHtmlCodeEditor').value
             : window.getEditorContent();
 
         const renderedSubject = replaceMergeTags(subjectRaw, sampleLead);
@@ -880,7 +880,7 @@ OUTPUT INSTRUCTIONS:
 
         document.getElementById('previewModalSubject').textContent = renderedSubject || '(No Subject Line)';
         document.getElementById('previewModalBody').innerHTML = renderedBody || '<p class="text-zinc-400 italic">No email body content entered yet.</p>';
-        
+
         // Apply current device mode classes
         setPreviewDevice(previewDeviceMode || 'desktop');
 
@@ -1002,7 +1002,7 @@ OUTPUT INSTRUCTIONS:
                     </h2>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-2 flex-wrap">
                 <!-- Choose from Pre-built Templates Button -->
                 <button type="button" onclick="openTemplateLibrary();" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 font-bold text-xs rounded-xl shadow-md shadow-amber-500/15 hover:shadow-amber-500/25 hover:-translate-y-0.5 transition-all gap-2 cursor-pointer">
@@ -1031,8 +1031,52 @@ OUTPUT INSTRUCTIONS:
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- MAIN COMPOSER COLUMN (8 cols) -->
                     <div class="lg:col-span-8 space-y-6">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         <!-- Subject Line & Title Card -->
                         <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 space-y-5">
@@ -1055,7 +1099,7 @@ OUTPUT INSTRUCTIONS:
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-sm">
                                         <i class="fas fa-envelope"></i>
                                     </div>
-                                    <input class="w-full pl-10 pr-4 py-3 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 shadow-2xs focus:border-amber-300 focus:ring-amber-300 text-sm font-semibold" 
+                                    <input class="w-full pl-10 pr-4 py-3 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 shadow-2xs focus:border-amber-300 focus:ring-amber-300 text-sm font-semibold"
                                            id="subject_template" name="subject_template" type="text" value="{{ $newsletter->subject_template }}" placeholder="e.g. @{{ firstname | Founder }}, scaling outreach for @{{ company | your team }}" required autofocus>
                                 </div>
 
@@ -1088,7 +1132,7 @@ OUTPUT INSTRUCTIONS:
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-sm">
                                         <i class="fas fa-tag"></i>
                                     </div>
-                                    <input class="w-full pl-10 pr-4 py-2.5 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 shadow-2xs focus:border-amber-300 focus:ring-amber-300 text-xs font-medium" 
+                                    <input class="w-full pl-10 pr-4 py-2.5 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 shadow-2xs focus:border-amber-300 focus:ring-amber-300 text-xs font-medium"
                                            id="title" name="title" type="text" value="{{ $newsletter->title }}" placeholder="e.g. Q3 Outreach Sequence" required>
                                 </div>
                             </div>
@@ -1096,7 +1140,7 @@ OUTPUT INSTRUCTIONS:
 
                         <!-- DUAL-MODE EMAIL BODY STUDIO (WYSIWYG Visual + HTML Code View) -->
                         <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 space-y-4">
-                            
+
                             <!-- Editor Header: Mode Switcher + Smart Snippets -->
                             <div class="border-b border-zinc-100 dark:border-zinc-800 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                                 <div>
@@ -1120,12 +1164,12 @@ OUTPUT INSTRUCTIONS:
                             <!-- Smart Component Snippet Inserters -->
                             <div class="flex items-center flex-wrap gap-2 p-2.5 bg-slate-50 dark:bg-[#09090B] rounded-xl border border-slate-200 dark:border-zinc-800 text-xs">
                                 <span class="text-3xs font-bold text-zinc-400 uppercase tracking-wider mr-1">Quick Components:</span>
-                                
+
                                 <button type="button" onclick="insertSnippet('cta_button')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#141417] text-zinc-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-800 hover:border-amber-300 text-2xs font-semibold flex items-center gap-1.5 shadow-2xs">
                                     <i class="fas fa-mouse-pointer text-amber-500 text-3xs"></i>
                                     <span>CTA Button</span>
                                 </button>
-                                
+
                                 <button type="button" onclick="insertSnippet('quote_box')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#141417] text-zinc-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-800 hover:border-amber-300 text-2xs font-semibold flex items-center gap-1.5 shadow-2xs">
                                     <i class="fas fa-quote-left text-amber-500 text-3xs"></i>
                                     <span>Quote / Callout</span>
@@ -1192,7 +1236,7 @@ OUTPUT INSTRUCTIONS:
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-sm">
                                         <i class="fas fa-folder"></i>
                                     </div>
-                                    <select class="w-full pl-10 pr-4 py-2.5 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white shadow-2xs focus:border-amber-300 focus:ring-amber-300 text-xs font-semibold" 
+                                    <select class="w-full pl-10 pr-4 py-2.5 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white shadow-2xs focus:border-amber-300 focus:ring-amber-300 text-xs font-semibold"
                                             id="campaign_id" name="campaign_id" required>
                                         <option value="">Select Campaign</option>
                                         @foreach($campaigns as $camp)
@@ -1211,7 +1255,7 @@ OUTPUT INSTRUCTIONS:
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-sm">
                                         <i class="fas fa-toggle-on"></i>
                                     </div>
-                                    <select class="w-full pl-10 pr-4 py-2.5 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white shadow-2xs focus:border-amber-300 focus:ring-amber-300 text-xs font-semibold" 
+                                    <select class="w-full pl-10 pr-4 py-2.5 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white shadow-2xs focus:border-amber-300 focus:ring-amber-300 text-xs font-semibold"
                                             id="status" name="status" required>
                                         <option value="D" @if($newsletter->status == 'D' || empty($newsletter->status)) selected @endif>Draft (Not queued)</option>
                                         <option value="N" @if($newsletter->status == 'N') selected @endif>Ready (Ready for Dispatch Studio)</option>
@@ -1302,7 +1346,7 @@ OUTPUT INSTRUCTIONS:
     <!-- PRE-BUILT EMAIL TEMPLATE LIBRARY & PREVIEW MODAL -->
     <div id="templateLibraryModal" class="fixed inset-0 z-[999999] hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
         <div class="bg-white dark:bg-[#141417] rounded-3xl max-w-5xl w-full h-[85vh] max-h-[85vh] flex flex-col p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-zinc-800 transform transition-all">
-            
+
             <!-- Modal Header (Pinned) -->
             <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3 shrink-0">
                 <div class="flex items-center space-x-3">
@@ -1349,7 +1393,7 @@ OUTPUT INSTRUCTIONS:
 
             <!-- VIEW 1: STANDARD TEMPLATES BROWSER -->
             <div id="standardTemplatesView" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start flex-1 min-h-0 py-3 overflow-hidden">
-                
+
                 <!-- Left: Template Cards List (Scrolls Internally) -->
                 <div id="templateCardsContainer" class="lg:col-span-5 space-y-2.5 h-full overflow-y-auto pr-1">
                     <!-- Dynamically populated via JS -->
@@ -1388,7 +1432,7 @@ OUTPUT INSTRUCTIONS:
 
             <!-- VIEW 2: AI PROMPT GENERATOR & CUSTOM HTML IMPORTER STUDIO -->
             <div id="aiCustomStudioView" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-5 items-start flex-1 min-h-0 py-3 overflow-hidden">
-                
+
                 <!-- Left: AI Prompt Generator Studio (Col 6) -->
                 <div class="lg:col-span-6 bg-slate-50 dark:bg-[#09090B] rounded-2xl border border-slate-200 dark:border-zinc-800 p-4 space-y-3.5 h-full overflow-y-auto">
                     <div class="flex items-center justify-between border-b border-slate-200 dark:border-zinc-800 pb-2.5">
@@ -1499,7 +1543,7 @@ OUTPUT INSTRUCTIONS:
                         </div>
 
                         <textarea id="aiGeneratedPromptText" rows="5" readonly class="w-full p-2.5 font-mono text-3xs bg-slate-900 text-amber-300 border border-zinc-700 rounded-xl leading-relaxed focus:outline-none select-all"></textarea>
-                        
+
                         <!-- 1-Click Launch Directly into AI Model with Logos -->
                         <div class="space-y-1.5 pt-1">
                             <div class="grid grid-cols-3 gap-2">
@@ -1596,7 +1640,7 @@ OUTPUT INSTRUCTIONS:
     <!-- LIVE DESKTOP & MOBILE EMAIL PREVIEW MODAL -->
     <div id="previewModal" class="fixed inset-0 z-[999999] hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
         <div class="bg-white dark:bg-[#141417] rounded-3xl max-w-3xl w-full h-[85vh] max-h-[85vh] flex flex-col p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-zinc-800 transform transition-all">
-            
+
             <!-- Modal Header (Pinned) -->
             <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3 shrink-0">
                 <div class="flex items-center space-x-3">
@@ -1623,7 +1667,7 @@ OUTPUT INSTRUCTIONS:
             <!-- Rendered Email Frame Container (Flex-1) -->
             <div class="flex-1 min-h-0 py-2 flex flex-col items-center justify-center overflow-hidden">
                 <div id="previewDeviceFrame" class="w-full h-full flex flex-col min-h-0 bg-slate-100 dark:bg-[#09090B] p-4 rounded-2xl border border-slate-200 dark:border-zinc-800 space-y-3 font-sans transition-all">
-                    
+
                     <!-- Mobile Top Speaker Notch Bar (Visible only in mobile mode) -->
                     <div id="mobilePreviewNotch" class="hidden w-24 h-3.5 bg-zinc-800 dark:bg-zinc-700 rounded-full mx-auto shrink-0 flex items-center justify-center space-x-1.5 mb-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>

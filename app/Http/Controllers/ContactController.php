@@ -44,7 +44,7 @@ class ContactController extends Controller
         $file = $request->file('contacts');
         $handle = fopen($file->getRealPath(), 'r');
 
-        $headers = fgetcsv($handle, 1000, ','); 
+        $headers = fgetcsv($handle, 1000, ',');
         $batch = [];
 
         while (($row = fgetcsv($handle, 1000, ',')) !== false) {
@@ -89,16 +89,20 @@ class ContactController extends Controller
         $contact->email = $request->email;
         $contact->company = $request->company;
         $contact->mobile = $request->mobile;
-        try{
+
+        try {
             $contact->save();
- 	    if(!empty($request->tags)){		
-            	$contact->updateTags($request->tags);
- 	    }		
+
+            if (!empty($request->tags)) {
+                $contact->updateTags($request->tags);
+            }
+
             Session::flash('alert-success', 'Contact saved successfully!');
         }
-        catch(\Exception $e){
+        catch(\Exception $e) {
             Session::flash('alert-danger', "Error has orrcured: Please check. ".$e->getMessage());
         }
+
         return redirect('/contacts');
     }
 

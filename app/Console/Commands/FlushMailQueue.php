@@ -40,8 +40,8 @@ class FlushMailQueue extends Command
             $query->where('status', '!=', 0)->orWhereNull('status');
         })->orderBy('id', 'asc')->get();
 
-        // get queued mails 
-        MailQueue::whereIn('status', ['Q', 'N']) 
+        // get queued mails
+        MailQueue::whereIn('status', ['Q', 'N'])
             ->chunk(100, function ($queued) use ($systemActiveAccounts, $pauseMs) {
                 foreach ($queued as $q_m) {
                     if (!$q_m->contact) {
@@ -94,22 +94,22 @@ class FlushMailQueue extends Command
                         try {
                             $rawConfig = json_decode($active_m_a->config, true) ?: [];
 
-                            $fromAddress = !empty($rawConfig['from_address']) 
-                                ? $rawConfig['from_address'] 
-                                : (!empty($rawConfig['username']) && filter_var($rawConfig['username'], FILTER_VALIDATE_EMAIL) 
-                                    ? $rawConfig['username'] 
+                            $fromAddress = !empty($rawConfig['from_address'])
+                                ? $rawConfig['from_address']
+                                : (!empty($rawConfig['username']) && filter_var($rawConfig['username'], FILTER_VALIDATE_EMAIL)
+                                    ? $rawConfig['username']
                                     : config('mail.from.address', 'noreply@campaignstack.in'));
 
-                            $fromName = !empty($rawConfig['from_username']) 
-                                ? $rawConfig['from_username'] 
+                            $fromName = !empty($rawConfig['from_username'])
+                                ? $rawConfig['from_username']
                                 : 'Campaign Stack';
 
                             $mailConfig = [
                                 'transport' => 'smtp',
                                 'host' => $rawConfig['ip_address'] ?? $rawConfig['host'] ?? '127.0.0.1',
                                 'port' => (int) ($rawConfig['port'] ?? 587),
-                                'encryption' => (!empty($rawConfig['encryption']) && strtolower($rawConfig['encryption']) !== 'none') 
-                                    ? strtolower($rawConfig['encryption']) 
+                                'encryption' => (!empty($rawConfig['encryption']) && strtolower($rawConfig['encryption']) !== 'none')
+                                    ? strtolower($rawConfig['encryption'])
                                     : null,
                                 'username' => $rawConfig['username'] ?? null,
                                 'password' => $rawConfig['password'] ?? null,

@@ -147,7 +147,7 @@
                     Organize newsletters, automated sequences, and strategic broadcast tracks into structured marketing programs.
                 </p>
             </div>
-            
+
             <div class="flex items-center gap-2.5">
                 <a href="/newsletters" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#111114] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all shadow-2xs gap-1.5">
                     <i class="fas fa-paper-plane text-3xs text-amber-500"></i>
@@ -297,15 +297,15 @@
 
             <!-- Main Campaigns Directory Card -->
             <div class="bg-white dark:bg-[#111114] rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs overflow-hidden">
-                
+
                 @if(count($campaigns) > 0)
                     <!-- Top Toolbar & Filter Strip -->
                     <div class="p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800/80 flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-zinc-50/50 dark:bg-zinc-900/30">
-                        
+
                         <!-- Search Bar -->
                         <div class="relative flex-1 max-w-md">
                             <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 text-xs"></i>
-                            <input type="text" id="campaignSearchInput" placeholder="Search campaigns by name, classification, or ID..." 
+                            <input type="text" id="campaignSearchInput" placeholder="Search campaigns by name, classification, or ID..."
                                    class="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs">
                         </div>
 
@@ -347,7 +347,7 @@
                                         $attributes = json_decode($c->other_attributes);
                                         $campaignType = $attributes->type ?? 'broadcast';
                                         $searchString = strtolower(($c->name ?? '') . ' ' . $campaignType . ' ' . ($c->newsletters_count ?? 0) . ' newsletters');
-                                        
+
                                         $typeIcons = [
                                             'broadcast' => 'fa-bullhorn',
                                             'newsletter' => 'fa-newspaper',
@@ -361,7 +361,7 @@
 
                                     <tr class="campaign-row hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40 transition-colors group"
                                         data-search="{{ $searchString }}" data-count="{{ $c->newsletters_count ?? 0 }}" data-type="{{ strtolower($campaignType) }}" data-index="{{ $index }}">
-                                        
+
                                         <!-- Campaign Name + Icon Pod -->
                                         <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
                                             <div class="flex items-center space-x-3.5">
@@ -411,15 +411,15 @@
                                         <!-- Actions -->
                                         <td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap">
                                             <div class="flex items-center justify-end space-x-1">
-                                                <a href="/newsletter-form/new?campaign_id={{ $c->id }}" title="Create Newsletter in Campaign" 
+                                                <a href="/newsletter-form/new?campaign_id={{ $c->id }}" title="Create Newsletter in Campaign"
                                                    class="p-1.5 text-zinc-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 rounded-lg transition-colors">
                                                     <i class="fas fa-plus text-3xs"></i>
                                                 </a>
-                                                <a href="/campaign-form/{{ $c->id }}" title="Edit Campaign" 
+                                                <a href="/campaign-form/{{ $c->id }}" title="Edit Campaign"
                                                    class="p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
                                                     <i class="fas fa-pen text-3xs"></i>
                                                 </a>
-                                                <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($c->name ?? '') }}', {{ $c->newsletters_count ?? 0 }})" title="Delete Campaign" 
+                                                <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($c->name ?? '') }}', {{ $c->newsletters_count ?? 0 }})" title="Delete Campaign"
                                                         class="p-1.5 text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors">
                                                     <i class="fas fa-trash-can text-3xs"></i>
                                                 </button>
@@ -444,7 +444,7 @@
                     <!-- Progressive Load More Pagination Footer -->
                     @if(count($campaigns) > 15)
                         <div class="p-4 border-t border-zinc-100 dark:border-zinc-800/80 text-center bg-zinc-50/50 dark:bg-zinc-900/30">
-                            <button type="button" id="showMoreBtn" 
+                            <button type="button" id="showMoreBtn"
                                     class="inline-flex items-center justify-center px-5 py-2 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-xs rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-2xs hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all gap-2">
                                 <i class="fas fa-chevron-down text-3xs"></i>
                                 <span id="remainingCountText">Show More Campaigns</span>
@@ -485,7 +485,7 @@
                 </div>
             </div>
             <p class="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                Are you sure you want to delete <span id="deleteCampaignName" class="font-bold text-zinc-900 dark:text-white"></span>? 
+                Are you sure you want to delete <span id="deleteCampaignName" class="font-bold text-zinc-900 dark:text-white"></span>?
                 This campaign currently has <span id="deleteNewsletterCount" class="font-bold text-zinc-900 dark:text-white">0</span> linked newsletter(s).
             </p>
             <form method="POST" action="/campaign/delete">

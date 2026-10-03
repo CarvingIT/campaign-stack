@@ -78,12 +78,12 @@
             </div>
 
             <div class="pt-3 flex items-center justify-end gap-2.5 border-t border-zinc-100 dark:border-zinc-800/80">
-                <button type="button" x-on:click="$dispatch('close')" 
+                <button type="button" x-on:click="$dispatch('close')"
                         class="inline-flex items-center px-4 py-2 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all shadow-2xs">
                     {{ __('Cancel') }}
                 </button>
 
-                <button type="submit" 
+                <button type="submit"
                         class="inline-flex items-center px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl transition-all shadow-xs shadow-rose-500/20 gap-2">
                     <i class="fas fa-trash-can text-2xs"></i>
                     <span>{{ __('Permanently Delete') }}</span>

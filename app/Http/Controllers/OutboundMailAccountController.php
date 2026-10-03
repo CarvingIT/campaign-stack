@@ -15,7 +15,7 @@ class OutboundMailAccountController extends Controller
 
     public function addEditAccount($account_id){
         if($account_id == 'new'){
-            $account = new OutboundMailAccount(); 
+            $account = new OutboundMailAccount();
         }
         else{
             $account = OutboundMailAccount::find($account_id);
@@ -40,7 +40,7 @@ class OutboundMailAccountController extends Controller
 	if($request->account_type == 'SMTP'){
         	$config = array('username'=>$request->account_username,'password'=>$request->account_password,
                         'ip_address'=>$request->account_ip_address,'port'=>$request->account_port,
-                        'encryption'=>$request->account_encryption, 
+                        'encryption'=>$request->account_encryption,
                         'from_username'=>$request->account_from_username,
                         'from_address'=>$request->account_from_address);
 	}
@@ -70,7 +70,7 @@ class OutboundMailAccountController extends Controller
         $account = OutboundMailAccount::find($account_id);
         return view('accountdetails',['account'=>$account]);
     }
-    
+
     public function deleteAccount(Request $request){
         $account = OutboundMailAccount::find($request->account_id);
         if(!empty($account->id)){
@@ -98,10 +98,10 @@ class OutboundMailAccountController extends Controller
         }
 
         try {
-            $fromAddress = !empty($rawConfig['from_address']) 
-                ? $rawConfig['from_address'] 
-                : (!empty($rawConfig['username']) && filter_var($rawConfig['username'], FILTER_VALIDATE_EMAIL) 
-                    ? $rawConfig['username'] 
+            $fromAddress = !empty($rawConfig['from_address'])
+                ? $rawConfig['from_address']
+                : (!empty($rawConfig['username']) && filter_var($rawConfig['username'], FILTER_VALIDATE_EMAIL)
+                    ? $rawConfig['username']
                     : config('mail.from.address', 'noreply@campaignstack.in'));
 
             $fromName = !empty($rawConfig['from_username']) ? $rawConfig['from_username'] : 'Campaign Stack';
@@ -110,8 +110,8 @@ class OutboundMailAccountController extends Controller
                 'transport' => 'smtp',
                 'host' => $rawConfig['ip_address'] ?? $rawConfig['host'] ?? '127.0.0.1',
                 'port' => (int) ($rawConfig['port'] ?? 587),
-                'encryption' => (!empty($rawConfig['encryption']) && strtolower($rawConfig['encryption']) !== 'none') 
-                    ? strtolower($rawConfig['encryption']) 
+                'encryption' => (!empty($rawConfig['encryption']) && strtolower($rawConfig['encryption']) !== 'none')
+                    ? strtolower($rawConfig['encryption'])
                     : null,
                 'username' => $rawConfig['username'] ?? null,
                 'password' => $rawConfig['password'] ?? null,

@@ -93,7 +93,7 @@
                     </h2>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-2.5 flex-wrap">
                 <a href="/mail-accounts" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#111114] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all shadow-2xs gap-1.5">
                     <i class="fas fa-arrow-left text-3xs"></i>
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                             @if(!empty($config->from_address))
-                                <button type="button" id="copyFromBtn" onclick="copyText('{{ $config->from_address }}', 'copyFromBtn')" 
+                                <button type="button" id="copyFromBtn" onclick="copyText('{{ $config->from_address }}', 'copyFromBtn')"
                                         class="p-2 text-zinc-400 hover:text-amber-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors text-xs" title="Copy Address">
                                     <i class="fas fa-copy"></i>
                                 </button>
@@ -219,7 +219,7 @@
                                 {{ $config->ip_address ?? 'Not specified' }}
                             </div>
                             @if(!empty($config->ip_address))
-                                <button type="button" id="copyHostBtn" onclick="copyText('{{ $config->ip_address }}', 'copyHostBtn')" 
+                                <button type="button" id="copyHostBtn" onclick="copyText('{{ $config->ip_address }}', 'copyHostBtn')"
                                         class="absolute top-3 right-3 text-zinc-400 hover:text-amber-500 text-3xs transition-colors" title="Copy Host">
                                     <i class="fas fa-copy"></i>
                                 </button>
@@ -245,7 +245,7 @@
                                 {{ $config->username ?? 'Not specified' }}
                             </div>
                             @if(!empty($config->username))
-                                <button type="button" id="copyUserBtn" onclick="copyText('{{ $config->username }}', 'copyUserBtn')" 
+                                <button type="button" id="copyUserBtn" onclick="copyText('{{ $config->username }}', 'copyUserBtn')"
                                         class="absolute top-3 right-3 text-zinc-400 hover:text-amber-500 text-3xs transition-colors" title="Copy User">
                                     <i class="fas fa-copy"></i>
                                 </button>
@@ -307,7 +307,7 @@
                 <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-200 uppercase tracking-wider mb-1.5" for="testRecipientEmail">
                     Send Verification Email To <span class="text-rose-500">*</span>
                 </label>
-                <input type="email" id="testRecipientEmail" value="{{ Auth::user()->email ?? '' }}" placeholder="e.g. your-email@gmail.com" 
+                <input type="email" id="testRecipientEmail" value="{{ Auth::user()->email ?? '' }}" placeholder="e.g. your-email@gmail.com"
                        class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all">
                 <p class="text-3xs text-zinc-400 dark:text-zinc-500 mt-1">
                     An actual test message will be sent through this SMTP gateway to verify authentication and deliverability.

@@ -109,7 +109,7 @@
                     <i class="fas fa-paper-plane text-2xs transition-transform group-hover:-rotate-12"></i>
                     <span>New Broadcast</span>
                 </a>
-                
+
                 <a href="/dispatch" class="inline-flex items-center justify-center px-3.5 py-2 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-950 text-xs font-semibold rounded-xl border border-transparent transition-all hover:-translate-y-0.5 gap-2 shadow-2xs">
                     <i class="fas fa-layer-group text-2xs text-amber-400 dark:text-amber-600"></i>
                     <span>Dispatch Studio</span>
@@ -137,7 +137,7 @@
 
             <!-- 4 High-End Glass KPI Cards with Layered Gradients -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                
+
                 <!-- Card 1: Subscribers & Audience -->
                 <div class="relative overflow-hidden group bg-white dark:bg-[#111114] p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs hover:border-amber-500/40 dark:hover:border-amber-500/30 transition-all duration-200">
                     <div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-amber-500/5 dark:bg-amber-400/5 blur-xl group-hover:bg-amber-500/10 transition-colors pointer-events-none"></div>
@@ -384,14 +384,14 @@
 
                             <!-- Date Range Controls -->
                             <div class="flex items-center space-x-1.5 self-start sm:self-auto bg-zinc-50 dark:bg-zinc-900 p-1 rounded-xl border border-zinc-200/60 dark:border-zinc-800">
-                                <a href="{{ route('dashboard', ['end_date' => $endDate->copy()->subDays(7)->format('Y-m-d')]) }}" 
+                                <a href="{{ route('dashboard', ['end_date' => $endDate->copy()->subDays(7)->format('Y-m-d')]) }}"
                                    class="px-2.5 py-1 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white rounded-lg hover:bg-white dark:hover:bg-zinc-800 transition-colors text-2xs font-semibold flex items-center gap-1.5" title="Previous 7 days">
                                     <i class="fas fa-chevron-left text-3xs"></i>
                                     <span>Previous</span>
                                 </a>
 
                                 @if($endDate->lt(now()->startOfDay()))
-                                    <a href="{{ route('dashboard', ['end_date' => $endDate->copy()->addDays(7)->format('Y-m-d')]) }}" 
+                                    <a href="{{ route('dashboard', ['end_date' => $endDate->copy()->addDays(7)->format('Y-m-d')]) }}"
                                        class="px-2.5 py-1 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white rounded-lg hover:bg-white dark:hover:bg-zinc-800 transition-colors text-2xs font-semibold flex items-center gap-1.5" title="Next 7 days">
                                         <span>Next</span>
                                         <i class="fas fa-chevron-right text-3xs"></i>
@@ -418,7 +418,7 @@
                                 $usableWidth = $chartWidth - $leftPadding - $rightPadding;
                                 $usableHeight = $chartHeight - $topPadding - $bottomPadding;
                                 $pointCount = count($emailCounts);
-                                
+
                                 $rawPoints = [];
                                 foreach ($emailCounts as $index => $value) {
                                     $x = $leftPadding;

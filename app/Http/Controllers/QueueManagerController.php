@@ -165,8 +165,8 @@ class QueueManagerController extends Controller
                 continue;
             }
 
-            $recipientName = $q_m->contact->firstname 
-                ? trim("{$q_m->contact->firstname} {$q_m->contact->lastname}") 
+            $recipientName = $q_m->contact->firstname
+                ? trim("{$q_m->contact->firstname} {$q_m->contact->lastname}")
                 : ($q_m->contact->name ?? 'Lead');
             $recipientEmail = $q_m->contact->email;
 
@@ -227,8 +227,8 @@ class QueueManagerController extends Controller
                 $q_m->attempt = $attempt;
                 $q_m->sending_attempted_at = now();
                 $q_m->response_code = 500;
-                $reasonText = !empty($accountDiagnostics) 
-                    ? implode(' | ', $accountDiagnostics) 
+                $reasonText = !empty($accountDiagnostics)
+                    ? implode(' | ', $accountDiagnostics)
                     : "No active outbound mail account configured in system.";
                 $q_m->error = substr($reasonText, 0, 250);
                 $q_m->save();
@@ -271,22 +271,22 @@ class QueueManagerController extends Controller
                 $logs[] = "[SMTP:AUTH] Exchanging AUTH LOGIN credentials for \"{$active_m_a->name}\"... 235 2.7.0 Accepted";
 
                 try {
-                    $fromAddress = !empty($rawConfig['from_address']) 
-                        ? $rawConfig['from_address'] 
-                        : (!empty($rawConfig['username']) && filter_var($rawConfig['username'], FILTER_VALIDATE_EMAIL) 
-                            ? $rawConfig['username'] 
+                    $fromAddress = !empty($rawConfig['from_address'])
+                        ? $rawConfig['from_address']
+                        : (!empty($rawConfig['username']) && filter_var($rawConfig['username'], FILTER_VALIDATE_EMAIL)
+                            ? $rawConfig['username']
                             : config('mail.from.address', 'noreply@campaignstack.in'));
 
-                    $fromName = !empty($rawConfig['from_username']) 
-                        ? $rawConfig['from_username'] 
+                    $fromName = !empty($rawConfig['from_username'])
+                        ? $rawConfig['from_username']
                         : 'Campaign Stack';
 
                     $mailConfig = [
                         'transport' => 'smtp',
                         'host' => $host,
                         'port' => $port,
-                        'encryption' => (!empty($rawConfig['encryption']) && strtolower($rawConfig['encryption']) !== 'none') 
-                            ? strtolower($rawConfig['encryption']) 
+                        'encryption' => (!empty($rawConfig['encryption']) && strtolower($rawConfig['encryption']) !== 'none')
+                            ? strtolower($rawConfig['encryption'])
                             : null,
                         'username' => $rawConfig['username'] ?? null,
                         'password' => $rawConfig['password'] ?? null,
@@ -483,8 +483,8 @@ class QueueManagerController extends Controller
                     continue;
                 }
 
-                $recipientName = $q_m->contact->firstname 
-                    ? trim("{$q_m->contact->firstname} {$q_m->contact->lastname}") 
+                $recipientName = $q_m->contact->firstname
+                    ? trim("{$q_m->contact->firstname} {$q_m->contact->lastname}")
                     : ($q_m->contact->name ?? 'Lead');
                 $recipientEmail = $q_m->contact->email;
 
@@ -545,8 +545,8 @@ class QueueManagerController extends Controller
                     $q_m->attempt = $attempt;
                     $q_m->sending_attempted_at = now();
                     $q_m->response_code = 500;
-                    $reasonText = !empty($accountDiagnostics) 
-                        ? implode(' | ', $accountDiagnostics) 
+                    $reasonText = !empty($accountDiagnostics)
+                        ? implode(' | ', $accountDiagnostics)
                         : "No active outbound mail account configured in system.";
                     $q_m->error = substr($reasonText, 0, 250);
                     $q_m->save();
@@ -621,22 +621,22 @@ class QueueManagerController extends Controller
                     ]);
 
                     try {
-                        $fromAddress = !empty($rawConfig['from_address']) 
-                            ? $rawConfig['from_address'] 
-                            : (!empty($rawConfig['username']) && filter_var($rawConfig['username'], FILTER_VALIDATE_EMAIL) 
-                                ? $rawConfig['username'] 
+                        $fromAddress = !empty($rawConfig['from_address'])
+                            ? $rawConfig['from_address']
+                            : (!empty($rawConfig['username']) && filter_var($rawConfig['username'], FILTER_VALIDATE_EMAIL)
+                                ? $rawConfig['username']
                                 : config('mail.from.address', 'noreply@campaignstack.in'));
 
-                        $fromName = !empty($rawConfig['from_username']) 
-                            ? $rawConfig['from_username'] 
+                        $fromName = !empty($rawConfig['from_username'])
+                            ? $rawConfig['from_username']
                             : 'Campaign Stack';
 
                         $mailConfig = [
                             'transport' => 'smtp',
                             'host' => $host,
                             'port' => $port,
-                            'encryption' => (!empty($rawConfig['encryption']) && strtolower($rawConfig['encryption']) !== 'none') 
-                                ? strtolower($rawConfig['encryption']) 
+                            'encryption' => (!empty($rawConfig['encryption']) && strtolower($rawConfig['encryption']) !== 'none')
+                                ? strtolower($rawConfig['encryption'])
                                 : null,
                             'username' => $rawConfig['username'] ?? null,
                             'password' => $rawConfig['password'] ?? null,

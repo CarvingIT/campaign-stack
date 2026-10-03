@@ -351,4 +351,3 @@ if ($response->successful()) {
     // Log error in mail_queues table
 }
 ```
-

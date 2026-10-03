@@ -44,7 +44,7 @@
                 const rowTags = parseRowTags(row);
 
                 const matchesQuery = (query === '' || searchData.includes(query));
-                
+
                 let matchesTag = true;
                 if (selectedTagFilter === 'all') {
                     matchesTag = true;
@@ -127,7 +127,7 @@
 
                 selectedTagFilter = normalizeTag(this.getAttribute('data-tag') || 'all');
                 visibleCount = pageSize;
-                
+
                 // Update URL without page reload
                 const currentUrl = new URL(window.location);
                 if (selectedTagFilter === 'all') {
@@ -203,7 +203,7 @@
                     Manage subscriber directory, audience tag assignments, and recipient targeting metadata.
                 </p>
             </div>
-            
+
             <div class="flex items-center gap-2.5">
                 <a href="/import-contact-form" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#111114] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all shadow-2xs gap-1.5">
                     <i class="fas fa-file-import text-3xs text-amber-500"></i>
@@ -354,7 +354,7 @@
 
             <!-- Main Contacts Directory Card -->
             <div class="bg-white dark:bg-[#111114] rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs overflow-hidden">
-                
+
                 @if(count($contacts) > 0)
                     <!-- Top Toolbar & Filter Strip -->
                     <div class="p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800/80 space-y-4 bg-zinc-50/50 dark:bg-zinc-900/30">
@@ -362,7 +362,7 @@
                             <!-- Search Bar -->
                             <div class="relative flex-1 max-w-md">
                                 <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 text-xs"></i>
-                                <input type="text" id="contactSearchInput" placeholder="Search by name, email, company, or tag..." 
+                                <input type="text" id="contactSearchInput" placeholder="Search by name, email, company, or tag..."
                                        class="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs">
                             </div>
 
@@ -388,7 +388,7 @@
                                     @php
                                         $isActiveTag = !empty($selectedTag) && strtolower($selectedTag) === strtolower($tagItem->label);
                                     @endphp
-                                    <button type="button" data-tag="{{ strtolower($tagItem->label) }}" data-tag-raw="{{ $tagItem->label }}" 
+                                    <button type="button" data-tag="{{ strtolower($tagItem->label) }}" data-tag-raw="{{ $tagItem->label }}"
                                             class="tag-filter-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all {{ $isActiveTag ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 shadow-xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800' }} shrink-0 flex items-center gap-1.5">
                                         <span>{{ $tagItem->label }}</span>
                                         <span class="text-3xs px-1.5 py-0.2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">{{ $tagItem->contact_tags_count }}</span>
@@ -415,21 +415,21 @@
                                     @php
                                         $fullName = trim((@$c->salutation ? $c->salutation . ' ' : '') . (@$c->firstname ?? '') . ' ' . (@$c->lastname ?? ''));
                                         if (empty($fullName)) $fullName = 'Unnamed Contact';
-                                        
+
                                         $tagNames = [];
                                         foreach($c->contactTags as $ct){
                                             if ($ct->tag) $tagNames[] = $ct->tag->label;
                                         }
                                         $tagsString = implode(' ', $tagNames);
                                         $searchString = strtolower($fullName . ' ' . ($c->email ?? '') . ' ' . ($c->company ?? '') . ' ' . ($c->mobile ?? '') . ' ' . $tagsString);
-                                        
+
                                         $initials = strtoupper(substr($c->firstname ?? $c->email ?? 'U', 0, 1) . substr($c->lastname ?? '', 0, 1));
                                         if (empty(trim($initials))) $initials = 'U';
                                     @endphp
 
                                     <tr class="contact-row hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40 transition-colors group"
                                         data-search="{{ $searchString }}" data-tags='@json($tagNames)' data-index="{{ $index }}">
-                                        
+
                                         <!-- Subscriber (Avatar + Name) -->
                                         <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
                                             <div class="flex items-center space-x-3.5">
@@ -498,11 +498,11 @@
                                         <!-- Actions -->
                                         <td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap">
                                             <div class="flex items-center justify-end space-x-1">
-                                                <a href="/contact-form/{{ $c->id }}" title="Edit Contact" 
+                                                <a href="/contact-form/{{ $c->id }}" title="Edit Contact"
                                                    class="p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors">
                                                     <i class="fas fa-pen text-3xs"></i>
                                                 </a>
-                                                <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($fullName) }}', '{{ addslashes($c->email ?? '') }}')" title="Delete Contact" 
+                                                <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($fullName) }}', '{{ addslashes($c->email ?? '') }}')" title="Delete Contact"
                                                         class="p-1.5 text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors">
                                                     <i class="fas fa-trash-can text-3xs"></i>
                                                 </button>
@@ -527,7 +527,7 @@
                     <!-- Progressive Load More Pagination Footer -->
                     @if(count($contacts) > 15)
                         <div class="p-4 border-t border-zinc-100 dark:border-zinc-800/80 text-center bg-zinc-50/50 dark:bg-zinc-900/30">
-                            <button type="button" id="showMoreBtn" 
+                            <button type="button" id="showMoreBtn"
                                     class="inline-flex items-center justify-center px-5 py-2 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-xs rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-2xs hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all gap-2">
                                 <i class="fas fa-chevron-down text-3xs"></i>
                                 <span id="remainingCountText">Show More Contacts</span>
@@ -574,7 +574,7 @@
                 </div>
             </div>
             <p class="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                Are you sure you want to delete <span id="deleteContactName" class="font-bold text-zinc-900 dark:text-white"></span>? 
+                Are you sure you want to delete <span id="deleteContactName" class="font-bold text-zinc-900 dark:text-white"></span>?
                 This contact will be permanently removed from all audience tags and recipient broadcast lists.
             </p>
             <form method="POST" action="/contact/delete">

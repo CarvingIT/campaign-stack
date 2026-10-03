@@ -641,7 +641,7 @@
                         POWERED BY INDUSTRY-STANDARD RELAYS & PROTOCOLS
                     </p>
                 </div>
-                
+
                 <div id="orbital-relay-stage" class="w-full marquee-mask relative overflow-hidden py-4 [perspective:1200px] [transform-style:preserve-3d]">
                     <div class="marquee-track gap-5 sm:gap-6 [transform-style:preserve-3d]">
                         @php
@@ -1385,7 +1385,7 @@
                     liveDelivered += Math.floor(Math.random() * 5) + 3;
                     if (liveDelivered > 18450) liveDelivered = 14391;
                     const percent = Math.min(100, Math.floor((liveDelivered / 18450) * 100));
-                    
+
                     const countEl = document.getElementById('live-progress-count');
                     const percentEl = document.getElementById('live-progress-percent');
                     const barEl = document.getElementById('live-progress-bar');

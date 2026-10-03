@@ -12,7 +12,7 @@
 
 	function selectConnectionType(type) {
 		document.getElementById('account_type').value = type;
-		
+
 		const smtpCard = document.getElementById('typeCardSMTP');
 		const apiCard = document.getElementById('typeCardAPI');
 		const smtpForm = document.getElementById('SMTP');
@@ -183,7 +183,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                     <i class="fas fa-server"></i>
                                 </div>
-                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                        id="account_name" name="account_name" type="text" value="{{ $account->name }}" placeholder="e.g. Primary SendGrid SMTP Relay" required>
                             </div>
                         </div>
@@ -194,12 +194,12 @@
                                 Transmission Status <span class="text-rose-500">*</span>
                             </label>
                             <div class="flex items-center p-1 bg-zinc-100 dark:bg-[#09090B] rounded-xl border border-zinc-200/80 dark:border-zinc-800">
-                                <button type="button" id="statusBtnActive" onclick="setStatusValue('1');" 
+                                <button type="button" id="statusBtnActive" onclick="setStatusValue('1');"
                                         class="flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 shadow-xs transition-all">
                                     <i class="fas fa-tower-broadcast text-3xs"></i>
                                     <span>Active (In Rotation)</span>
                                 </button>
-                                <button type="button" id="statusBtnInactive" onclick="setStatusValue('0');" 
+                                <button type="button" id="statusBtnInactive" onclick="setStatusValue('0');"
                                         class="flex-1 py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-all">
                                     <i class="fas fa-pause-circle text-3xs"></i>
                                     <span>Paused (Disabled)</span>
@@ -216,7 +216,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                     <i class="fas fa-user"></i>
                                 </div>
-                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                        id="account_from_username" name="account_from_username" type="text" value="{{ @$config_array->from_username }}" placeholder="e.g. Campaign Stack Dispatcher">
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                     <i class="fas fa-envelope"></i>
                                 </div>
-                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                        id="account_from_address" name="account_from_address" type="email" value="{{ @$config_array->from_address }}" placeholder="e.g. dispatch@yourdomain.com">
                             </div>
                         </div>
@@ -256,7 +256,7 @@
 
                     <!-- Connection Protocol Choice Cards -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div id="typeCardSMTP" onclick="selectConnectionType('SMTP');" 
+                        <div id="typeCardSMTP" onclick="selectConnectionType('SMTP');"
                              class="cursor-pointer p-4 rounded-2xl border-2 transition-all duration-200 relative flex items-start space-x-3.5">
                             <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-sm shrink-0 border border-blue-200/60 dark:border-blue-500/20 shadow-2xs">
                                 <i class="fas fa-network-wired"></i>
@@ -272,7 +272,7 @@
                             </div>
                         </div>
 
-                        <div id="typeCardAPI" onclick="selectConnectionType('API');" 
+                        <div id="typeCardAPI" onclick="selectConnectionType('API');"
                              class="cursor-pointer p-4 rounded-2xl border transition-all duration-200 relative flex items-start space-x-3.5">
                             <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center text-sm shrink-0 border border-purple-200/60 dark:border-purple-500/20 shadow-2xs">
                                 <i class="fas fa-code"></i>
@@ -316,27 +316,27 @@
                             1-Click Provider Presets (Auto-fill host & port)
                         </label>
                         <div class="flex flex-wrap gap-2">
-                            <button type="button" onclick="applyPreset('smtp.sendgrid.net', '587', 'TLS');" 
+                            <button type="button" onclick="applyPreset('smtp.sendgrid.net', '587', 'TLS');"
                                     class="px-2.5 py-1.5 bg-white dark:bg-[#111114] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fas fa-bolt text-amber-500 text-3xs"></i> SendGrid
                             </button>
-                            <button type="button" onclick="applyPreset('smtp.gmail.com', '587', 'TLS');" 
+                            <button type="button" onclick="applyPreset('smtp.gmail.com', '587', 'TLS');"
                                     class="px-2.5 py-1.5 bg-white dark:bg-[#111114] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fab fa-google text-rose-500 text-3xs"></i> Google / Gmail
                             </button>
-                            <button type="button" onclick="applyPreset('email-smtp.us-east-1.amazonaws.com', '587', 'TLS');" 
+                            <button type="button" onclick="applyPreset('email-smtp.us-east-1.amazonaws.com', '587', 'TLS');"
                                     class="px-2.5 py-1.5 bg-white dark:bg-[#111114] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fab fa-aws text-amber-500 text-3xs"></i> Amazon SES
                             </button>
-                            <button type="button" onclick="applyPreset('sandbox.smtp.mailtrap.io', '2525', 'TLS');" 
+                            <button type="button" onclick="applyPreset('sandbox.smtp.mailtrap.io', '2525', 'TLS');"
                                     class="px-2.5 py-1.5 bg-white dark:bg-[#111114] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fas fa-flask text-emerald-500 text-3xs"></i> Mailtrap
                             </button>
-                            <button type="button" onclick="applyPreset('smtp.mailgun.org', '587', 'TLS');" 
+                            <button type="button" onclick="applyPreset('smtp.mailgun.org', '587', 'TLS');"
                                     class="px-2.5 py-1.5 bg-white dark:bg-[#111114] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fas fa-paper-plane text-purple-500 text-3xs"></i> Mailgun
                             </button>
-                            <button type="button" onclick="applyPreset('smtp.postmarkapp.com', '587', 'TLS');" 
+                            <button type="button" onclick="applyPreset('smtp.postmarkapp.com', '587', 'TLS');"
                                     class="px-2.5 py-1.5 bg-white dark:bg-[#111114] hover:bg-amber-50/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                 <i class="fas fa-envelope-open-text text-yellow-500 text-3xs"></i> Postmark
                             </button>
@@ -353,7 +353,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                     <i class="fas fa-globe"></i>
                                 </div>
-                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                        id="account_ip_address" name="account_ip_address" type="text" value="{{ @$config_array->ip_address }}" placeholder="e.g. smtp.sendgrid.net">
                             </div>
                         </div>
@@ -367,7 +367,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                     <i class="fas fa-network-wired"></i>
                                 </div>
-                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                        id="account_port" name="account_port" type="text" value="{{ @$config_array->port }}" placeholder="587">
                             </div>
                         </div>
@@ -381,7 +381,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                     <i class="fas fa-user-lock"></i>
                                 </div>
-                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                        id="account_username" name="account_username" type="text" value="{{ @$config_array->username }}" placeholder="apikey or username">
                             </div>
                         </div>
@@ -395,7 +395,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                     <i class="fas fa-lock"></i>
                                 </div>
-                                <input class="w-full pl-9 pr-10 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                <input class="w-full pl-9 pr-10 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                        id="account_password" name="account_password" type="password" value="{{ @$config_array->password }}" placeholder="••••••••••••••••">
                                 <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 top-3 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors">
                                     <i id="passToggleIcon" class="fas fa-eye text-xs"></i>
@@ -412,7 +412,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                     <i class="fas fa-shield-halved"></i>
                                 </div>
-                                <select class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                <select class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                         id="account_encryption" name="account_encryption">
                                     <option value="">Select Security Encryption (None / Plain)</option>
                                     <option value="TLS" @if(@$config_array->encryption == 'TLS') selected @endif>TLS (STARTTLS - Standard for Port 587)</option>
@@ -450,12 +450,12 @@
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
                                         <div>
                                             <label class="block font-semibold text-3xs text-zinc-600 dark:text-zinc-300 uppercase tracking-wider mb-1">Key / Label</label>
-                                            <input class="w-full rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#111114] dark:text-white text-xs focus:ring-2 focus:ring-purple-400/80 focus:border-purple-400" 
+                                            <input class="w-full rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#111114] dark:text-white text-xs focus:ring-2 focus:ring-purple-400/80 focus:border-purple-400"
                                                    type="text" name="label[]" value="{{ $api_acc->key ?? '' }}" placeholder="e.g. Authorization">
                                         </div>
                                         <div>
                                             <label class="block font-semibold text-3xs text-zinc-600 dark:text-zinc-300 uppercase tracking-wider mb-1">Value</label>
-                                            <input class="w-full rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#111114] dark:text-white text-xs font-mono focus:ring-2 focus:ring-purple-400/80 focus:border-purple-400" 
+                                            <input class="w-full rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#111114] dark:text-white text-xs font-mono focus:ring-2 focus:ring-purple-400/80 focus:border-purple-400"
                                                    type="text" name="value[]" value="{{ $api_acc->value ?? '' }}" placeholder="e.g. Bearer SG.xxxx">
                                         </div>
                                     </div>

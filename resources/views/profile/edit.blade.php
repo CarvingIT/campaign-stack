@@ -44,7 +44,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                
+
                 <!-- LEFT COLUMN: Operator Identity Card & Quick Navigation -->
                 <div class="lg:col-span-4 space-y-5 lg:sticky lg:top-20">
                     <div class="relative overflow-hidden bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80">
@@ -140,7 +140,7 @@
 
                 <!-- RIGHT COLUMN: Settings Forms -->
                 <div class="lg:col-span-8 space-y-6">
-                    
+
                     <!-- Card 1: Profile Information -->
                     <div id="profile-info" class="bg-white dark:bg-[#111114] rounded-2xl p-6 sm:p-7 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80">
                         @include('profile.partials.update-profile-information-form')

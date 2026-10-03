@@ -77,7 +77,7 @@
 
                     <!-- LEFT COLUMN: Campaign Configuration -->
                     <div class="bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between">
-                        
+
                         <div class="space-y-5">
                             <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-3.5 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
@@ -108,7 +108,7 @@
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                         <i class="fas fa-bullhorn"></i>
                                     </div>
-                                    <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-semibold focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                    <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-semibold focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                            id="name" name="name" type="text" value="{{ $campaign->name }}" placeholder="e.g. Q3 Product Launch, Weekly Digest, Black Friday Sale" required autofocus autocomplete="off">
                                 </div>
                                 <p class="text-3xs text-zinc-400 dark:text-zinc-500 mt-1 pl-1">
@@ -157,7 +157,7 @@
                                         ];
                                     @endphp
                                     @foreach($campaignPresets as $p)
-                                        <button type="button" onclick="applyCampaignPreset('{{ $p['name'] }}', '{{ $p['type'] }}')" 
+                                        <button type="button" onclick="applyCampaignPreset('{{ $p['name'] }}', '{{ $p['type'] }}')"
                                                 class="px-2.5 py-1.5 bg-white dark:bg-[#111114] hover:bg-amber-50/80 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 text-zinc-700 dark:text-zinc-200 text-xs font-medium rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                             <i class="fas fa-plus text-4xs text-amber-500"></i>
                                             <span>{{ $p['name'] }}</span>
@@ -182,7 +182,7 @@
 
                     <!-- RIGHT COLUMN: Live Contextual Campaign Studio Preview -->
                     <div class="bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between space-y-6">
-                        
+
                         <div class="space-y-5">
                             <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-3.5 flex items-center justify-between">
                                 <h4 class="text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">

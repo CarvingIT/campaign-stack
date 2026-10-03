@@ -55,7 +55,7 @@
 
                     <!-- LEFT COLUMN: File Upload & Guidelines -->
                     <div class="bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between space-y-6">
-                        
+
                         <div class="space-y-5">
                             <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-3.5 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
@@ -79,8 +79,8 @@
                                 </div>
                                 <h4 class="font-bold text-sm text-zinc-900 dark:text-white">Choose a CSV file to upload</h4>
                                 <p class="text-3xs text-zinc-400 dark:text-zinc-500 mt-1 mb-4">Supported formats: .csv, .txt (up to 10MB)</p>
-                                
-                                <input type="file" id="contacts" name="contacts" accept=".csv, .txt" required 
+
+                                <input type="file" id="contacts" name="contacts" accept=".csv, .txt" required
                                        class="block w-full text-xs text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-zinc-900 file:text-white dark:file:bg-white dark:file:text-zinc-950 hover:file:bg-zinc-800 cursor-pointer">
 
                                 <div class="mt-3.5 hidden">
@@ -128,7 +128,7 @@
 
                     <!-- RIGHT COLUMN: Batch Tag Assignment -->
                     <div class="bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between space-y-6">
-                        
+
                         <div class="space-y-5">
                             <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-3.5 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">

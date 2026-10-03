@@ -20,7 +20,7 @@
             allItems.forEach(item => {
                 const searchText = item.getAttribute('data-search') || '';
                 const contactCount = parseInt(item.getAttribute('data-count') || '0', 10);
-                
+
                 let matchesFilter = true;
                 if (currentFilter === 'active') {
                     matchesFilter = contactCount > 0;
@@ -157,7 +157,7 @@
                     Organize contacts into high-precision segments for targeted broadcast campaigns and delivery filters.
                 </p>
             </div>
-            
+
             <div class="flex items-center gap-2.5">
                 <a href="/contacts" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#121215] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all shadow-2xs gap-1.5">
                     <i class="fas fa-users text-3xs text-zinc-400"></i>
@@ -308,15 +308,15 @@
 
             <!-- Main Tags Directory Card -->
             <div class="bg-white dark:bg-[#111114] rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs overflow-hidden">
-                
+
                 @if(count($tags) > 0)
                     <!-- Top Toolbar & Filter Strip -->
                     <div class="p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800/80 flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-zinc-50/50 dark:bg-zinc-900/30">
-                        
+
                         <!-- Search Bar -->
                         <div class="relative flex-1 max-w-md">
                             <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 text-xs"></i>
-                            <input type="text" id="tagSearchInput" placeholder="Filter tags by label name..." 
+                            <input type="text" id="tagSearchInput" placeholder="Filter tags by label name..."
                                    class="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs">
                         </div>
 
@@ -351,7 +351,7 @@
 
                             <div class="tag-item p-4 sm:p-5 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
                                  data-search="{{ $searchString }}" data-count="{{ $contactsCount }}" data-index="{{ $index }}">
-                                
+
                                 <!-- Left Info Block -->
                                 <div class="flex items-start sm:items-center space-x-3.5 min-w-0 flex-1">
                                     <!-- Hash Tag Icon Pod -->
@@ -407,7 +407,7 @@
                                         <i class="fas fa-pen text-3xs text-zinc-400"></i>
                                         <span>Edit</span>
                                     </a>
-                                    <button type="button" onclick="confirmDelete({{ $t->id }}, '{{ addslashes($t->label ?? '') }}', {{ $contactsCount }})" title="Delete Tag" 
+                                    <button type="button" onclick="confirmDelete({{ $t->id }}, '{{ addslashes($t->label ?? '') }}', {{ $contactsCount }})" title="Delete Tag"
                                             class="p-1.5 text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors">
                                         <i class="fas fa-trash-can text-xs"></i>
                                     </button>
@@ -429,7 +429,7 @@
                     <!-- Progressive Load More Pagination Footer -->
                     @if(count($tags) > 12)
                         <div class="p-4 border-t border-zinc-100 dark:border-zinc-800/80 text-center bg-zinc-50/50 dark:bg-zinc-900/30">
-                            <button type="button" id="showMoreBtn" 
+                            <button type="button" id="showMoreBtn"
                                     class="inline-flex items-center justify-center px-5 py-2 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-xs rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-2xs hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all gap-2">
                                 <i class="fas fa-chevron-down text-3xs"></i>
                                 <span id="remainingCountText">Show More Tags</span>
@@ -470,7 +470,7 @@
                 </div>
             </div>
             <p class="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                Are you sure you want to delete <strong id="deleteTagLabel" class="text-zinc-900 dark:text-white"></strong>? 
+                Are you sure you want to delete <strong id="deleteTagLabel" class="text-zinc-900 dark:text-white"></strong>?
                 This tag is assigned to <strong id="deleteTagCount" class="text-zinc-900 dark:text-white">0</strong> contact(s). The contacts themselves will not be deleted, but they will lose this segment assignment.
             </p>
             <form method="POST" action="/tag/delete">

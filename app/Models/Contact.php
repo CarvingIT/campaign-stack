@@ -27,7 +27,7 @@ class Contact extends Model
             'tag_id'
         );
     }
-    
+
     public function updateTags(array $tag_ids){
         // first remove all for this model
         ContactTag::where('contact_id', $this->id)->delete();

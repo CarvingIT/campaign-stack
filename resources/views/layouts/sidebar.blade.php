@@ -1,8 +1,8 @@
 <!-- Professional SaaS Vertical Sidebar Navigation & Top Bar Wrapper -->
 <div id="verticalNavContainer" x-data="{ mobileSidebarOpen: false }" class="hidden">
-    
+
     <!-- Mobile Off-Canvas Backdrop Overlay -->
-    <div x-show="mobileSidebarOpen" 
+    <div x-show="mobileSidebarOpen"
          x-transition:enter="transition-opacity ease-linear duration-200"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
@@ -14,13 +14,13 @@
          style="display: none;"></div>
 
     <!-- Main Sidebar Panel (Fixed Desktop + Off-Canvas Mobile) -->
-    <aside id="verticalSidebar" 
+    <aside id="verticalSidebar"
            :class="mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
            class="fixed inset-y-0 left-0 z-50 bg-white dark:bg-[#09090B] border-r border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between transition-all duration-250 ease-in-out shadow-lg lg:shadow-none">
-        
+
         <!-- Top Section: Brand Header & Navigation List -->
         <div class="flex-1 flex flex-col min-h-0 overflow-y-auto overflow-x-hidden">
-            
+
             <!-- Brand Logo & Minimize Toggle Header -->
             <div class="sidebar-header h-14 px-3 flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/80 shrink-0">
                 <a href="{{ route('dashboard') }}" class="flex items-center group overflow-hidden" title="Campaign Stack">
@@ -35,9 +35,9 @@
                 </a>
 
                 <!-- Desktop Minimize / Collapse Button with Proper UX Directional Chevrons -->
-                <button type="button" 
-                        onclick="window.toggleSidebarMinimize()" 
-                        title="Collapse sidebar" 
+                <button type="button"
+                        onclick="window.toggleSidebarMinimize()"
+                        title="Collapse sidebar"
                         aria-label="Toggle Sidebar Collapse"
                         class="sidebar-toggle-btn hidden lg:inline-flex items-center justify-center w-7 h-7 rounded-lg text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/70 transition-colors">
                     <!-- Point LEFT when expanded (meaning: collapse) -->
@@ -56,7 +56,7 @@
 
             <!-- Fast Action Launcher: New Broadcast -->
             <div class="p-3">
-                <a href="/newsletter-form/new" 
+                <a href="/newsletter-form/new"
                    title="New Broadcast"
                    class="sidebar-broadcast-btn group w-full inline-flex items-center justify-center px-3.5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 text-xs font-bold rounded-xl shadow-xs shadow-amber-500/15 hover:shadow-md hover:shadow-amber-500/25 transition-all gap-2">
                     <i class="fas fa-paper-plane text-2xs transition-transform group-hover:-rotate-12"></i>
@@ -66,15 +66,15 @@
 
             <!-- Navigation Links Structured by Categorized Workflows -->
             <nav class="flex-1 px-2.5 py-1 space-y-4 text-xs font-medium">
-                
+
                 <!-- Category 1: Overview -->
                 <div class="space-y-1">
                     <span class="sidebar-category-title px-3 text-3xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                         Overview
                     </span>
-                    
+
                     <!-- Dashboard -->
-                    <a href="{{ route('dashboard') }}" 
+                    <a href="{{ route('dashboard') }}"
                        title="Dashboard"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('dashboard') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -87,7 +87,7 @@
                     </a>
 
                     <!-- Dispatch Studio -->
-                    <a href="{{ route('dispatch') }}" 
+                    <a href="{{ route('dispatch') }}"
                        title="Dispatch Studio"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('dispatch') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -107,7 +107,7 @@
                     </span>
 
                     <!-- Contacts -->
-                    <a href="{{ route('contacts') }}" 
+                    <a href="{{ route('contacts') }}"
                        title="Contacts"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('contacts') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -117,7 +117,7 @@
                     </a>
 
                     <!-- Tags -->
-                    <a href="{{ route('tags') }}" 
+                    <a href="{{ route('tags') }}"
                        title="Tags & Segments"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('tags') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -127,7 +127,7 @@
                     </a>
 
                     <!-- Mail Accounts -->
-                    <a href="{{ route('mail-accounts') }}" 
+                    <a href="{{ route('mail-accounts') }}"
                        title="SMTP Gateways"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('mail-accounts') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -144,7 +144,7 @@
                     </span>
 
                     <!-- Campaigns -->
-                    <a href="{{ route('campaigns') }}" 
+                    <a href="{{ route('campaigns') }}"
                        title="Campaigns"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('campaigns') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -154,7 +154,7 @@
                     </a>
 
                     <!-- Newsletters -->
-                    <a href="{{ route('newsletters') }}" 
+                    <a href="{{ route('newsletters') }}"
                        title="Newsletters"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('newsletters') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -164,7 +164,7 @@
                     </a>
 
                     <!-- Emails / Activity Log -->
-                    <a href="{{ route('emails') }}" 
+                    <a href="{{ route('emails') }}"
                        title="Delivery Logs"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('emails') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -174,7 +174,7 @@
                     </a>
 
                     <!-- Account Settings -->
-                    <a href="{{ route('profile.edit') }}" 
+                    <a href="{{ route('profile.edit') }}"
                        title="Settings & Profile"
                        class="sidebar-link group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ request()->routeIs('profile.edit') ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800/90 dark:text-white border border-zinc-200/80 dark:border-zinc-700/60 font-semibold shadow-2xs' : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100/70 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -188,10 +188,10 @@
 
             <!-- Dynamic SaaS System Health & Telemetry Pill Deck (Fills empty gap with cute minimal widgets) -->
             <div class="sidebar-status-card px-3 pt-2 pb-1 mt-auto space-y-2">
-                
+
                 <!-- Dynamic Status Pill -->
                 @if(($sidebarFailedCount ?? 0) > 0)
-                    <a href="/emails" 
+                    <a href="/emails"
                        title="Inspect {{ $sidebarFailedCount }} delivery errors"
                        class="group flex items-center justify-between px-3 py-1.5 rounded-xl bg-rose-50/80 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 border border-rose-200/70 dark:border-rose-800/60 transition-all text-3xs">
                         <div class="flex items-center gap-2 text-rose-700 dark:text-rose-300 min-w-0">
@@ -201,7 +201,7 @@
                         <span class="text-3xs font-semibold text-rose-600 dark:text-rose-400 group-hover:translate-x-0.5 transition-transform">Fix →</span>
                     </a>
                 @elseif(($sidebarQueuedCount ?? 0) > 0)
-                    <a href="/dispatch" 
+                    <a href="/dispatch"
                        title="{{ $sidebarQueuedCount }} emails currently in dispatch queue"
                        class="group flex items-center justify-between px-3 py-1.5 rounded-xl bg-amber-50/80 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 border border-amber-200/70 dark:border-amber-800/60 transition-all text-3xs">
                         <div class="flex items-center gap-2 text-amber-800 dark:text-amber-300 min-w-0">
@@ -211,7 +211,7 @@
                         <span class="text-3xs font-semibold text-amber-700 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform">Run →</span>
                     </a>
                 @elseif(($sidebarActiveRelays ?? 0) === 0)
-                    <a href="/mail-accounts" 
+                    <a href="/mail-accounts"
                        title="No active SMTP relays configured"
                        class="group flex items-center justify-between px-3 py-1.5 rounded-xl bg-amber-50/80 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 border border-amber-200/70 dark:border-amber-800/60 transition-all text-3xs">
                         <div class="flex items-center gap-2 text-amber-800 dark:text-amber-300 min-w-0">
@@ -221,7 +221,7 @@
                         <span class="text-3xs font-semibold text-amber-700 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform">+ Add</span>
                     </a>
                 @else
-                    <a href="/dispatch" 
+                    <a href="/dispatch"
                        title="All relays active and operational"
                        class="group flex items-center justify-between px-3 py-1.5 rounded-full bg-zinc-100/70 hover:bg-zinc-100 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-800/60 transition-all text-3xs">
                         <div class="flex items-center gap-2 text-zinc-600 dark:text-zinc-400 min-w-0">
@@ -241,7 +241,7 @@
                         </span>
                         <span class="font-mono font-bold text-zinc-700 dark:text-zinc-300">{{ $sidebarActiveRelays ?? 0 }} / {{ $sidebarTotalRelays ?? 0 }}</span>
                     </div>
-                    
+
                     <!-- Clean 1.5px Progress Pulse Bar -->
                     @php
                         $totalR = $sidebarTotalRelays ?? 0;
@@ -284,25 +284,25 @@
 
         <!-- Bottom User Dock & Layout Controls (Stacked cleanly when minimized) -->
         <div class="p-2 border-t border-zinc-100 dark:border-zinc-800/80 shrink-0 space-y-1.5 bg-zinc-50/50 dark:bg-zinc-950/40">
-            
+
             <!-- Controls Bar: Layout Switcher + Theme Toggle -->
             <div class="sidebar-prefs-bar flex items-center justify-between px-1">
                 <span class="sidebar-prefs-title text-3xs text-zinc-400 dark:text-zinc-500 font-semibold uppercase tracking-wider">Prefs</span>
-                
+
                 <div class="sidebar-prefs-buttons flex items-center space-x-1.5">
                     <!-- Layout Switcher Button (Switch to Horizontal Topbar) -->
-                    <button type="button" 
-                            onclick="window.toggleNavLayout()" 
-                            title="Switch to Topbar Nav Layout" 
+                    <button type="button"
+                            onclick="window.toggleNavLayout()"
+                            title="Switch to Topbar Nav Layout"
                             aria-label="Switch to Topbar Nav Layout"
                             class="inline-flex items-center justify-center w-7 h-7 rounded-lg border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs">
                         <i class="fas fa-table-columns text-3xs text-amber-500 dark:text-amber-400"></i>
                     </button>
 
                     <!-- Theme Toggle -->
-                    <button type="button" 
-                            onclick="window.toggleTheme(event)" 
-                            title="Toggle Dark / Light Mode" 
+                    <button type="button"
+                            onclick="window.toggleTheme(event)"
+                            title="Toggle Dark / Light Mode"
                             aria-label="Toggle Dark / Light Mode"
                             class="inline-flex items-center justify-center w-7 h-7 rounded-lg border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs">
                         <span class="dark:hidden inline-flex items-center justify-center">
@@ -367,9 +367,9 @@
 
         <div class="flex items-center space-x-2">
             <!-- Minimize / Expand Toggle Button in Topbar with UX chevrons -->
-            <button type="button" 
-                    onclick="window.toggleSidebarMinimize()" 
-                    title="Toggle Sidebar Collapse" 
+            <button type="button"
+                    onclick="window.toggleSidebarMinimize()"
+                    title="Toggle Sidebar Collapse"
                     class="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-xs font-medium transition-all shadow-2xs">
                 <i class="fas fa-angles-left text-3xs text-amber-500 dark:text-amber-400 sidebar-collapse-icon"></i>
                 <i class="fas fa-angles-right text-3xs text-amber-500 dark:text-amber-400 sidebar-expand-icon hidden"></i>
@@ -377,18 +377,18 @@
             </button>
 
             <!-- Layout Switcher Button (Switch to Horizontal Topbar) -->
-            <button type="button" 
-                    onclick="window.toggleNavLayout()" 
-                    title="Switch to Horizontal Topbar Layout" 
+            <button type="button"
+                    onclick="window.toggleNavLayout()"
+                    title="Switch to Horizontal Topbar Layout"
                     class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-xs font-medium transition-all shadow-2xs">
                 <i class="fas fa-table-columns text-3xs text-amber-500 dark:text-amber-400"></i>
                 <span class="hidden sm:inline text-3xs">Top Nav</span>
             </button>
 
             <!-- Quick Theme Toggle in Top Bar -->
-            <button type="button" 
-                    onclick="window.toggleTheme(event)" 
-                    title="Toggle Dark / Light Mode" 
+            <button type="button"
+                    onclick="window.toggleTheme(event)"
+                    title="Toggle Dark / Light Mode"
                     class="inline-flex items-center justify-center w-8 h-8 rounded-lg border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all shadow-2xs">
                 <span class="dark:hidden inline-flex items-center justify-center">
                     <i class="fas fa-moon text-2xs text-zinc-700"></i>

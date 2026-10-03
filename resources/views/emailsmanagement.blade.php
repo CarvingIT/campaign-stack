@@ -294,7 +294,7 @@
                     </h2>
                 </div>
             </div>
-            
+
             <div class="flex items-center space-x-2">
                 <a href="/dispatch" class="inline-flex items-center px-4 py-2 bg-amber-50 dark:bg-amber-950/50 hover:bg-amber-100 text-amber-900 dark:text-amber-200 border border-amber-300/80 dark:border-amber-500/30 text-xs font-bold rounded-xl shadow-2xs transition-all gap-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
@@ -314,13 +314,13 @@
 
             <!-- Main High-Density Table Container -->
             <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-200/90 dark:border-zinc-800 overflow-hidden">
-                
+
                 <!-- Top Toolbar: Search Bar + 1-Click Status Filter -->
                 <div class="p-5 border-b border-zinc-100 dark:border-zinc-800 space-y-4 bg-slate-50/80 dark:bg-[#09090B]/60">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div class="relative flex-1 max-w-md">
                             <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 dark:text-zinc-400 text-sm"></i>
-                            <input type="text" id="emailSearchInput" placeholder="Search logs by recipient, subject, or campaign..." 
+                            <input type="text" id="emailSearchInput" placeholder="Search logs by recipient, subject, or campaign..."
                                    class="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-300 dark:border-zinc-800 rounded-xl text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-300/80 focus:border-amber-300/80 transition-all">
                         </div>
                         <div class="text-xs font-semibold text-zinc-600 dark:text-zinc-400" id="emailCountDisplay">
@@ -380,7 +380,7 @@
 
                 <!-- Progressive Load More Pagination Footer -->
                 <div id="showMoreContainer" class="hidden p-6 border-t border-zinc-100 dark:border-zinc-800 text-center bg-slate-50/60 dark:bg-[#09090B]/50">
-                    <button type="button" id="showMoreBtn" 
+                    <button type="button" id="showMoreBtn"
                             class="inline-flex items-center justify-center px-6 py-2.5 bg-white dark:bg-[#141417] text-zinc-800 dark:text-zinc-200 font-bold text-sm rounded-xl border border-zinc-300 dark:border-zinc-800 shadow-2xs hover:bg-slate-50 dark:hover:bg-zinc-800 transition-all duration-200 gap-2">
                         <i class="fas fa-chevron-down text-xs"></i>
                         <span id="remainingCountText">Show More Emails</span>

@@ -48,4 +48,3 @@
 ## Default Credentials (Seeded via `php artisan db:seed`)
 - **Admin**: `campaign-stack@carvingit.com` / `CampaignStack!@#`
 - **Staff User**: `staff@campaign-stack.com` / `CampaignStack!@#`
-

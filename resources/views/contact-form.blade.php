@@ -134,7 +134,7 @@
 
                     <!-- LEFT COLUMN: Contact Profile Details -->
                     <div class="bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between">
-                        
+
                         <div class="space-y-5">
                             <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-3.5 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
@@ -183,7 +183,7 @@
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                             <i class="fas fa-user"></i>
                                         </div>
-                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                                id="firstname" name="firstname" type="text" value="{{ $contact->firstname }}" placeholder="Jane" required autofocus>
                                     </div>
                                 </div>
@@ -197,7 +197,7 @@
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                             <i class="fas fa-user"></i>
                                         </div>
-                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                                id="lastname" name="lastname" type="text" value="{{ $contact->lastname }}" placeholder="Smith">
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                             <i class="fas fa-envelope"></i>
                                         </div>
-                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                                id="email" name="email" type="email" value="{{ $contact->email }}" placeholder="jane.smith@example.com" required>
                                     </div>
                                 </div>
@@ -225,7 +225,7 @@
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                             <i class="fas fa-building"></i>
                                         </div>
-                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                                id="company" name="company" type="text" value="{{ $contact->company }}" placeholder="Acme Corp">
                                     </div>
                                 </div>
@@ -239,7 +239,7 @@
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-xs">
                                             <i class="fas fa-phone"></i>
                                         </div>
-                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs" 
+                                        <input class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 text-xs font-mono focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs"
                                                id="mobile" name="mobile" type="text" value="{{ $contact->mobile }}" placeholder="+91 98765 43210">
                                     </div>
                                 </div>
@@ -261,7 +261,7 @@
 
                     <!-- RIGHT COLUMN: Tag Assignment & Live Table Row Preview -->
                     <div class="bg-white dark:bg-[#111114] rounded-2xl p-6 shadow-xs border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between space-y-6">
-                        
+
                         <div class="space-y-5">
                             <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-3.5 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">

@@ -44,7 +44,7 @@
 
             <!-- Right Area: Theme Toggle + Layout Switcher + Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center space-x-2 shrink-0">
-                
+
                 <!-- Layout Switcher Button (Switch to Vertical Sidebar Nav) -->
                 <button type="button" id="desktop-layout-toggle" onclick="window.toggleNavLayout()" title="Switch to Sidebar Navigation Layout" aria-label="Switch to Sidebar Navigation Layout"
                         class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all shadow-2xs focus:outline-none">

@@ -30,8 +30,8 @@
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
                     <i class="fas fa-lock"></i>
                 </div>
-                <input id="update_password_current_password" name="current_password" type="password" 
-                       class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400" 
+                <input id="update_password_current_password" name="current_password" type="password"
+                       class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400"
                        autocomplete="current-password" placeholder="••••••••••••" />
             </div>
             <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-1.5" />
@@ -46,8 +46,8 @@
                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
                         <i class="fas fa-key"></i>
                     </div>
-                    <input id="update_password_password" name="password" type="password" 
-                           class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400" 
+                    <input id="update_password_password" name="password" type="password"
+                           class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400"
                            autocomplete="new-password" placeholder="Min. 8 characters" />
                 </div>
                 <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-1.5" />
@@ -61,8 +61,8 @@
                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
                         <i class="fas fa-circle-check"></i>
                     </div>
-                    <input id="update_password_password_confirmation" name="password_confirmation" type="password" 
-                           class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400" 
+                    <input id="update_password_password_confirmation" name="password_confirmation" type="password"
+                           class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400"
                            autocomplete="new-password" placeholder="Repeat new password" />
                 </div>
                 <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-1.5" />

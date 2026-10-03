@@ -24,7 +24,7 @@
         if (currentNewsletterId) {
             loadAudienceForNewsletter(currentNewsletterId);
         }
-        
+
         goToStage(1);
         initPacingControls();
         refreshQueueMetrics();
@@ -222,7 +222,7 @@
             const isChecked = selectedContactIds.has(c.id);
             const tr = document.createElement('tr');
             tr.className = `border-b border-zinc-100 dark:border-zinc-800/80 transition-colors ${isChecked ? 'hover:bg-amber-50/30 dark:hover:bg-amber-950/15' : 'opacity-40 bg-zinc-50/50 dark:bg-zinc-900/30'}`;
-            
+
             const initials = (c.firstname ? c.firstname.charAt(0) : '') + (c.lastname ? c.lastname.charAt(0) : '') || c.email.charAt(0).toUpperCase();
 
             const tagsHtml = c.tags.map(t => `<span class="inline-flex items-center px-1.5 py-0.2 rounded-full text-3xs font-semibold bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200/60 dark:border-amber-500/30">${escapeHtml(t)}</span>`).join(' ');
@@ -1818,7 +1818,7 @@
                 <div class="flex items-center justify-between gap-3 bg-zinc-50/70 dark:bg-zinc-900/40 px-3 py-1.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800/80">
                     <div class="relative flex-1 max-w-sm">
                         <i class="fas fa-search absolute left-2.5 top-2 text-zinc-400 text-4xs"></i>
-                        <input type="text" id="audienceSearchInput" oninput="renderAudienceTable()" placeholder="Search leads by name, email, or company..." 
+                        <input type="text" id="audienceSearchInput" oninput="renderAudienceTable()" placeholder="Search leads by name, email, or company..."
                                class="w-full pl-7 pr-2 py-1 bg-white dark:bg-[#09090B] border border-zinc-200 dark:border-zinc-800 rounded-lg text-3xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-amber-400">
                     </div>
                     <div id="selectedLeadCountDisplay" class="text-3xs font-mono text-zinc-600 dark:text-zinc-300 font-medium">
@@ -2341,7 +2341,7 @@
     <!-- ======================================================== -->
     <div id="mailboxSimulatorModal" class="fixed inset-0 z-[999999] hidden overflow-hidden w-screen h-screen bg-[#f6f8fc] dark:bg-[#1f1f23] flex flex-col p-0 m-0 select-none">
         <div class="w-full h-full bg-[#f6f8fc] dark:bg-[#1f1f23] flex flex-col overflow-hidden animate-in fade-in duration-150">
-            
+
             <!-- Top Authentic Gmail Navigation Bar (Full Viewport Width) -->
             <div class="h-16 px-4 py-2 border-b border-zinc-200/80 dark:border-zinc-800 flex items-center justify-between shrink-0 bg-[#f6f8fc] dark:bg-[#1f1f23]">
                 <!-- Left: Hamburger + Gmail 4-Color Logo & Wordmark -->
@@ -2415,7 +2415,7 @@
 
             <!-- Gmail Body Layout: Left Sidebar + Right Mail Canvas -->
             <div class="flex-1 flex overflow-hidden">
-                
+
                 <!-- Left Authentic Gmail Sidebar -->
                 <div class="w-56 lg:w-60 bg-[#f6f8fc] dark:bg-[#1f1f23] px-3 py-3 flex flex-col justify-between shrink-0 hidden md:flex select-none border-r border-transparent">
                     <div class="space-y-1">
@@ -2497,7 +2497,7 @@
 
                 <!-- Right Main Message View (White Gmail Surface) -->
                 <div class="flex-1 bg-white dark:bg-[#111114] sm:rounded-tl-2xl shadow-sm border-t border-l border-zinc-200/80 dark:border-zinc-800/80 flex flex-col overflow-hidden">
-                    
+
                     <!-- Gmail Top Action Toolbar -->
                     <div class="px-4 py-2 bg-white dark:bg-[#111114] border-b border-zinc-200/80 dark:border-zinc-800/80 flex items-center justify-between flex-wrap gap-2 text-zinc-600 dark:text-zinc-400 shrink-0">
                         <!-- Standard Gmail Action Buttons -->
@@ -2548,7 +2548,7 @@
                             </div>
 
                             <span id="simMailboxCounter" class="text-3xs text-zinc-500 dark:text-zinc-400 font-mono">1 of 1</span>
-                            
+
                             <div class="flex items-center">
                                 <button type="button" onclick="navigatePreview(-1)" title="Previous email" class="w-7 h-7 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 text-3xs cursor-pointer">
                                     <i class="fas fa-chevron-left"></i>
@@ -2596,14 +2596,14 @@
                                 <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-500 to-amber-500 text-white font-extrabold flex items-center justify-center text-sm shadow-xs shrink-0 mt-0.5">
                                     {{ substr($outboundAccounts->first()->name ?? 'C', 0, 1) }}
                                 </div>
-                                
+
                                 <div class="min-w-0 space-y-0.5">
                                     <div class="flex items-center space-x-2 flex-wrap text-xs">
                                         <span class="font-bold text-zinc-900 dark:text-white">{{ $outboundAccounts->first()->name ?? 'Campaign Dispatcher' }}</span>
                                         <span class="text-zinc-500 dark:text-zinc-400 font-mono text-3xs">&lt;{{ $outboundAccounts->first()->from_email ?? 'broadcast@campaign-stack.com' }}&gt;</span>
                                         <a href="#" onclick="event.preventDefault()" class="text-3xs text-blue-600 dark:text-blue-400 hover:underline">Unsubscribe</a>
                                     </div>
-                                    
+
                                     <!-- "to me" button with dropdown arrow -->
                                     <div class="flex items-center space-x-1 text-xs">
                                         <button type="button" onclick="toggleGmailDetails()" class="inline-flex items-center gap-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white text-3xs py-0.5 rounded cursor-pointer">
@@ -2637,16 +2637,16 @@
                             <div class="grid grid-cols-3 gap-2 text-3xs">
                                 <span class="text-zinc-400 font-medium">From:</span>
                                 <span class="col-span-2 font-medium text-zinc-800 dark:text-zinc-200">{{ $outboundAccounts->first()->name ?? 'Campaign Dispatcher' }} &lt;{{ $outboundAccounts->first()->from_email ?? 'broadcast@campaign-stack.com' }}&gt;</span>
-                                
+
                                 <span class="text-zinc-400 font-medium">To:</span>
                                 <span id="simDetailTo" class="col-span-2 font-medium text-zinc-800 dark:text-zinc-200">Recipient Lead</span>
-                                
+
                                 <span class="text-zinc-400 font-medium">Date:</span>
                                 <span id="simDetailDate" class="col-span-2 font-medium text-zinc-800 dark:text-zinc-200">Today</span>
-                                
+
                                 <span class="text-zinc-400 font-medium">Subject:</span>
                                 <span id="simDetailSubject" class="col-span-2 font-medium text-zinc-800 dark:text-zinc-200">(No Subject Line)</span>
-                                
+
                                 <span class="text-zinc-400 font-medium">Mailed-by:</span>
                                 <span class="col-span-2 font-mono text-zinc-600 dark:text-zinc-400">campaign-stack.com</span>
 
@@ -2661,7 +2661,7 @@
 
                     <!-- Email Body Content Viewport (Desktop Iframe vs Mobile Phone Frame) -->
                     <div class="flex-1 overflow-hidden bg-zinc-100/50 dark:bg-[#070709] relative flex flex-col">
-                        
+
                         <!-- Desktop Iframe Viewport (Direct HTML Email Render) -->
                         <div id="simDesktopFrame" class="w-full h-full flex flex-col bg-white">
                             <iframe id="simMailboxIframe" class="w-full h-full border-0 bg-white" title="Email Mailbox Rendered Body"></iframe>
@@ -2720,7 +2720,7 @@
                                 <i class="fas fa-share text-3xs text-zinc-500"></i>
                                 <span>Forward</span>
                             </button>
-                            
+
                             <!-- Quick emoji reactions just like Gmail -->
                             <div class="hidden sm:flex items-center space-x-1 pl-2">
                                 <button type="button" class="w-8 h-8 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-sm cursor-pointer transition-transform hover:scale-110" title="Smile">😊</button>

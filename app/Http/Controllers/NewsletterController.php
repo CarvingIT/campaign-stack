@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Newsletter;
 use App\Models\Campaign;
 use App\Models\Tag;
+use App\Models\OutboundMailAccount;
+use App\Models\NewsletterOutboundMailAccount;
 use Session;
-use Illuminate\Support\Str; 
+use Illuminate\Support\Str;
 
 class NewsletterController extends Controller
 {
@@ -27,16 +29,107 @@ class NewsletterController extends Controller
             $newsletter = Newsletter::with(['newsletter_tags', 'newsletter_outbound_mail_accounts'])->find($newsletter_id);
         }
         $campaigns = Campaign::all();
-        $tags = Tag::withCount('contacts')->get();
-        $outboundAccounts = \App\Models\OutboundMailAccount::all();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $tags = Tag::withCount('contacts')->orderBy('label')->get();
+        $mailAccounts = OutboundMailAccount::all();
+        $outboundAccounts = $mailAccounts;
+        $selectedMailAccountId = $newsletter->newsletter_outbound_mail_accounts->first()?->outbound_mail_account_id;
         $sampleContact = \App\Models\Contact::first();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return view('newsletter-form', [
             'newsletter' => $newsletter,
             'campaigns' => $campaigns,
             'tags' => $tags,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            'mailAccounts' => $mailAccounts,
+            'selectedMailAccountId' => $selectedMailAccountId,
             'outboundAccounts' => $outboundAccounts,
             'sampleContact' => $sampleContact,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ]);
     }
 
@@ -55,9 +148,78 @@ class NewsletterController extends Controller
         $newsletter->status = $request->status;
         try{
             $newsletter->save();
-            $newsletter->updateTags($request->tag_ids ?: []);
-            $newsletter->updateOutboundAccounts($request->outbound_account_ids ?: []);
-            Session::flash('alert-success', 'Broadcast saved successfully!');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if ($request->exists('outbound_account_ids')) {
+                $newsletter->updateOutboundAccounts(
+                    $request->input('outbound_account_ids', [])
+                );
+            } elseif ($request->filled('outbound_mail_account_id')) {
+                $newsletter->updateOutboundAccounts([
+                    $request->input('outbound_mail_account_id')
+                ]);
+            }
+
+            $newsletter->updateTags($request->input('tag_ids', []));
+            Session::flash('alert-success', 'Newsletter saved successfully!');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
         catch(\Exception $e){
             Session::flash('alert-danger', "Error has occurred: Please check. ".$e->getMessage());

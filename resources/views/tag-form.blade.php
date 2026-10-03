@@ -69,7 +69,7 @@
 
                     <!-- LEFT COLUMN: Tag Configuration & Presets (Equal Height) -->
                     <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 flex flex-col justify-between">
-                        
+
                         <div class="space-y-5">
                             <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3.5 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
@@ -95,7 +95,7 @@
                                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 dark:text-zinc-400 text-sm">
                                         <i class="fas fa-tag"></i>
                                     </div>
-                                    <input class="w-full pl-10 pr-4 py-3 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 shadow-2xs focus:border-amber-300/80 focus:ring-amber-300/80 text-sm font-semibold" 
+                                    <input class="w-full pl-10 pr-4 py-3 rounded-xl border-zinc-300 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white placeholder-zinc-400 shadow-2xs focus:border-amber-300/80 focus:ring-amber-300/80 text-sm font-semibold"
                                            id="label" name="label" type="text" value="{{ $tag->label }}" placeholder="e.g. VIP Customers, Newsletter Subscribers, Leads" required autofocus autocomplete="off">
                                 </div>
                                 <p class="text-2xs text-zinc-500 dark:text-zinc-400 mt-1.5 pl-1">
@@ -126,7 +126,7 @@
                                         ];
                                     @endphp
                                     @foreach($presets as $preset)
-                                        <button type="button" onclick="applyTagPreset('{{ $preset }}')" 
+                                        <button type="button" onclick="applyTagPreset('{{ $preset }}')"
                                                 class="px-3 py-1.5 bg-white dark:bg-[#141417] hover:bg-amber-50/80 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium rounded-lg shadow-2xs transition-colors flex items-center gap-1.5">
                                             <i class="fas fa-plus text-3xs text-amber-500"></i>
                                             <span>{{ $preset }}</span>
@@ -151,7 +151,7 @@
 
                     <!-- RIGHT COLUMN: Live Interactive Contextual Preview (Equal Height) -->
                     <div class="bg-white/95 dark:bg-[#141417] backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-2xs border border-slate-200/90 dark:border-zinc-800 flex flex-col justify-between">
-                        
+
                         <div class="space-y-5">
                             <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3 flex items-center justify-between">
                                 <h4 class="text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">

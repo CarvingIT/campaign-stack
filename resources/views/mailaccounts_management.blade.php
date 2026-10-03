@@ -21,7 +21,7 @@
                 const searchText = item.getAttribute('data-search') || '';
                 const itemStatus = item.getAttribute('data-status') || '';
                 const itemType = item.getAttribute('data-type') || '';
-                
+
                 let matchesFilter = true;
                 if (currentFilter === 'active') {
                     matchesFilter = itemStatus === '1';
@@ -147,7 +147,7 @@
                     Manage SMTP transmission gateways and API credentials rotated across broadcast dispatches.
                 </p>
             </div>
-            
+
             <div class="flex items-center gap-2.5">
                 <a href="/dispatch" class="inline-flex items-center px-3.5 py-2 bg-white dark:bg-[#121215] text-zinc-700 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-all shadow-2xs gap-1.5">
                     <i class="fas fa-layer-group text-3xs text-amber-500"></i>
@@ -297,15 +297,15 @@
 
             <!-- Main Accounts Directory Card -->
             <div class="bg-white dark:bg-[#111114] rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs overflow-hidden">
-                
+
                 @if(count($accounts) > 0)
                     <!-- Top Toolbar & Filter Strip -->
                     <div class="p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800/80 flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-zinc-50/50 dark:bg-zinc-900/30">
-                        
+
                         <!-- Search Bar -->
                         <div class="relative flex-1 max-w-md">
                             <i class="fas fa-search absolute left-3.5 top-3 text-zinc-400 text-xs"></i>
-                            <input type="text" id="accountSearchInput" placeholder="Search accounts by name, host, or email..." 
+                            <input type="text" id="accountSearchInput" placeholder="Search accounts by name, host, or email..."
                                    class="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#09090B] border border-zinc-200/90 dark:border-zinc-800 rounded-xl text-xs text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all shadow-2xs">
                         </div>
 
@@ -344,7 +344,7 @@
                                 $port_info = @$config_data->port ?? '';
                                 $enc_info = @$config_data->encryption ?? '';
                                 $user_info = @$config_data->from_username ?? @$config_data->username ?? '';
-                                
+
                                 $isActive = (int)$c->status === 1;
                                 $isCooling = $isActive && !empty($c->active_after) && \Carbon\Carbon::parse($c->active_after)->gt(now());
                                 $searchString = strtolower(($c->name ?? '') . ' ' . ($c->type ?? '') . ' ' . ($isActive ? 'active' : 'inactive') . ' ' . $host_info . ' ' . $user_info);
@@ -352,7 +352,7 @@
 
                             <div class="account-item p-4 sm:p-5 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/40 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
                                  data-search="{{ $searchString }}" data-status="{{ $c->status }}" data-type="{{ strtolower($c->type ?? '') }}" data-index="{{ $index }}">
-                                
+
                                 <!-- Left Info Block -->
                                 <div class="flex items-start sm:items-center space-x-3.5 min-w-0 flex-1">
                                     <!-- Gateway Icon Pod -->
@@ -425,17 +425,17 @@
                                         <i class="fas fa-bolt text-3xs text-amber-500"></i>
                                         <span>Test Relay</span>
                                     </button>
-                                    <a href="/account/{{ $c->id }}" title="View Account Details" 
+                                    <a href="/account/{{ $c->id }}" title="View Account Details"
                                        class="px-2.5 py-1.5 text-3xs font-semibold text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-lg transition-colors flex items-center gap-1">
                                         <i class="fas fa-eye text-3xs text-zinc-400"></i>
                                         <span>Details</span>
                                     </a>
-                                    <a href="/account-form/{{ $c->id }}" title="Edit Account Settings" 
+                                    <a href="/account-form/{{ $c->id }}" title="Edit Account Settings"
                                        class="px-2.5 py-1.5 text-3xs font-semibold text-zinc-700 dark:text-zinc-200 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700/80 rounded-lg transition-colors flex items-center gap-1">
                                         <i class="fas fa-pen text-3xs text-zinc-400"></i>
                                         <span>Edit</span>
                                     </a>
-                                    <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($c->name ?? '') }}')" title="Delete Account" 
+                                    <button type="button" onclick="confirmDelete({{ $c->id }}, '{{ addslashes($c->name ?? '') }}')" title="Delete Account"
                                             class="p-1.5 text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors">
                                         <i class="fas fa-trash-can text-xs"></i>
                                     </button>
@@ -457,7 +457,7 @@
                     <!-- Progressive Load More Pagination Footer -->
                     @if(count($accounts) > 10)
                         <div class="p-4 border-t border-zinc-100 dark:border-zinc-800/80 text-center bg-zinc-50/50 dark:bg-zinc-900/30">
-                            <button type="button" id="showMoreBtn" 
+                            <button type="button" id="showMoreBtn"
                                     class="inline-flex items-center justify-center px-5 py-2 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-xs rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-2xs hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all gap-2">
                                 <i class="fas fa-chevron-down text-3xs"></i>
                                 <span id="remainingCountText">Show More Accounts</span>
@@ -507,7 +507,7 @@
                 <label class="block font-semibold text-3xs text-zinc-700 dark:text-zinc-200 uppercase tracking-wider mb-1.5" for="testRecipientEmail">
                     Send Verification Email To <span class="text-rose-500">*</span>
                 </label>
-                <input type="email" id="testRecipientEmail" value="{{ Auth::user()->email ?? '' }}" placeholder="e.g. your-email@gmail.com" 
+                <input type="email" id="testRecipientEmail" value="{{ Auth::user()->email ?? '' }}" placeholder="e.g. your-email@gmail.com"
                        class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-[#09090B] dark:text-white text-xs font-medium focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400 transition-all">
                 <p class="text-3xs text-zinc-400 dark:text-zinc-500 mt-1">
                     An actual test message will be sent through this SMTP gateway to verify authentication and deliverability.

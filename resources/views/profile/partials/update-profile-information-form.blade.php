@@ -34,8 +34,8 @@
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
                     <i class="fas fa-user"></i>
                 </div>
-                <input id="name" name="name" type="text" 
-                       class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400" 
+                <input id="name" name="name" type="text"
+                       class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400"
                        value="{{ old('name', $user->name) }}" required autofocus autocomplete="name" placeholder="Operator Name" />
             </div>
             <x-input-error class="mt-1.5" :messages="$errors->get('name')" />
@@ -49,8 +49,8 @@
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
                     <i class="fas fa-envelope"></i>
                 </div>
-                <input id="email" name="email" type="email" 
-                       class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400" 
+                <input id="email" name="email" type="email"
+                       class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 text-xs font-semibold focus:bg-white dark:focus:bg-zinc-900 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all shadow-2xs placeholder-zinc-400"
                        value="{{ old('email', $user->email) }}" required autocomplete="username" placeholder="name@company.com" />
             </div>
             <x-input-error class="mt-1.5" :messages="$errors->get('email')" />
