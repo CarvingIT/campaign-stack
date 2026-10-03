@@ -119,4 +119,15 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Send Pacing / Dispatch Delay (Milliseconds)
+    |--------------------------------------------------------------------------
+    |
+    | Delay in milliseconds (ms) applied between sending individual emails
+    | in high-volume queue runs to comply with SMTP provider rate limits.
+    |
+    */
+    'send_delay_ms' => (int) env('MAIL_SEND_DELAY_MS', 30),
+
 ];

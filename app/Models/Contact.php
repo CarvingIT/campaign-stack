@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,7 +17,17 @@ class Contact extends Model
     {
         return $this->hasMany(ContactTag::class);
     }
-    
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Tag::class,
+            'contact_tags',
+            'contact_id',
+            'tag_id'
+        );
+    }
+
     public function updateTags(array $tag_ids){
         // first remove all for this model
         ContactTag::where('contact_id', $this->id)->delete();

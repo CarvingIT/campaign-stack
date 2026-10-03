@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Tag;
 
@@ -13,30 +12,21 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        Tag::create(
-            [
-                'label'=>'Librarian'
-            ]
-        );
-        Tag::create(
-            [
-                'label'=>'Koha user'
-            ]
-        );
-        Tag::create(
-            [
-                'label'=>'Client'
-            ]
-        );
-        Tag::create(
-            [
-                'label'=>'CITPL'
-            ]
-        );
-        Tag::create(
-            [
-                'label'=>'Ex CITPL'
-            ]
-        );
+        $tags = [
+            'CTO & Tech Leaders - India',
+            'SaaS & Startup Founders',
+            'Fintech Product Managers',
+            'IT & Infrastructure Heads - Mumbai/BLR',
+            'Academic & Library Directors',
+            'HR & People Operations',
+            'Marketing & Growth Leads',
+            'Enterprise Procurement',
+            'Koha LMS Users - India',
+            'IIT & NIT Institutional Contacts',
+        ];
+
+        foreach ($tags as $tagLabel) {
+            Tag::firstOrCreate(['label' => $tagLabel]);
+        }
     }
 }

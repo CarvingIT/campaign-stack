@@ -9,7 +9,7 @@ use Session;
 class CampaignController extends Controller
 {
     public function list(){
-        $campaigns = Campaign::withCount('newsletters')->get();
+        $campaigns = Campaign::withCount('newsletters')->latest()->get();
         return view('campaignsmanagement',['campaigns'=>$campaigns]);
     }
 
