@@ -39,12 +39,24 @@
                     data: 'subject',
                     name: 'subject',
                     render: function (data, type, row) {
+                        let openIndicator = '';
+                        if (row.type === 'sent') {
+                            if (row.opened) {
+                                openIndicator = '<span class="inline-flex items-center px-1.5 py-0.5 rounded text-3xs font-semibold bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border border-purple-200 dark:border-purple-800 shrink-0" title="Opened by recipient"><i class="fas fa-envelope-open mr-1 text-3xs"></i>Opened</span>';
+                            } else {
+                                openIndicator = '<span class="inline-flex items-center px-1.5 py-0.5 rounded text-3xs font-semibold bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700 shrink-0" title="Not opened yet"><i class="fas fa-envelope mr-1 text-3xs opacity-60"></i>Unopened</span>';
+                            }
+                        }
+
                         return `<div class="flex items-center space-x-2.5 py-1">
                                     <div class="w-8 h-8 rounded-xl bg-amber-50/80 dark:bg-amber-950/30 text-amber-700 dark:text-amber-200 border border-amber-200/60 dark:border-amber-500/20 flex items-center justify-center text-xs shrink-0 shadow-2xs">
                                         <i class="fas fa-envelope"></i>
                                     </div>
-                                    <div class="font-bold text-sm text-zinc-900 dark:text-white max-w-sm truncate cursor-pointer hover:text-amber-600 dark:hover:text-amber-300 transition-colors" onclick="inspectEmail('${row.id}')">
-                                        ${data || 'No Subject'}
+                                    <div class="min-w-0 flex items-center gap-2">
+                                        <div class="font-bold text-sm text-zinc-900 dark:text-white max-w-sm truncate cursor-pointer hover:text-amber-600 dark:hover:text-amber-300 transition-colors" onclick="inspectEmail('${row.id}')">
+                                            ${data || 'No Subject'}
+                                        </div>
+                                        ${openIndicator}
                                     </div>
                                 </div>`;
                     }
@@ -203,8 +215,12 @@
                 }
 
                 let statusBadge = '';
+                let openBadge = '';
                 if (data.status === 'sent') {
                     statusBadge = '<span class="px-2.5 py-1 rounded-full text-3xs font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300">DISPATCHED SUCCESS</span>';
+                    openBadge = data.opened 
+                        ? '<span class="px-2.5 py-1 rounded-full text-3xs font-extrabold bg-purple-100 text-purple-800 border border-purple-300 dark:bg-purple-950/70 dark:text-purple-300 flex items-center gap-1"><i class="fas fa-envelope-open text-3xs"></i>OPENED</span>' 
+                        : '<span class="px-2.5 py-1 rounded-full text-3xs font-extrabold bg-zinc-100 text-zinc-600 border border-zinc-300 dark:bg-zinc-800 dark:text-zinc-400 flex items-center gap-1"><i class="fas fa-envelope text-3xs"></i>UNOPENED</span>';
                 } else if (data.status === 'failed') {
                     statusBadge = '<span class="px-2.5 py-1 rounded-full text-3xs font-extrabold bg-red-100 text-red-800 border border-red-300 dark:bg-red-950/70 dark:text-red-300">DELIVERY FAILED</span>';
                 } else {
@@ -228,6 +244,7 @@
                         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800 pb-3">
                             <div class="flex items-center space-x-2">
                                 ${statusBadge}
+                                ${openBadge}
                                 <span class="text-3xs text-zinc-400 font-mono">${data.timestamp}</span>
                             </div>
                             <div class="text-2xs text-zinc-500">

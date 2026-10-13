@@ -12,6 +12,7 @@ use App\Models\OutboundMailAccount;
 
 use App\Mail\DynamicDbMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class FlushMailQueue extends Command
 {
@@ -90,6 +91,22 @@ class FlushMailQueue extends Command
                     $sentSuccessfully = false;
                     $attemptErrors = [];
 
+                    $trackingId = (string) Str::uuid();
+                    $trackingUrl = route('email.track', ['id' => $trackingId]);
+                    $trackingPixel = '<img src="' . e($trackingUrl) . '" width="1" height="1" alt="" style="display:none;" />';
+
+                    $emailBody = $q_m->body;
+                    if (preg_match('~</body\s*>~i', $emailBody)) {
+                        $emailBody = preg_replace_callback(
+                            '~</body\s*>~i',
+                            fn($matches) => $trackingPixel . $matches[0],
+                            $emailBody,
+                            1
+                        );
+                    } else {
+                        $emailBody .= $trackingPixel;
+                    }
+
                     foreach ($candidateAccounts as $accIndex => $active_m_a) {
                         try {
                             $rawConfig = json_decode($active_m_a->config, true) ?: [];
@@ -120,18 +137,19 @@ class FlushMailQueue extends Command
                                 ],
                             ];
 
-                            $mailable = new DynamicDbMail($q_m->subject, $q_m->body, $fromAddress, $fromName);
+                            $mailable = new DynamicDbMail($q_m->subject, $emailBody, $fromAddress, $fromName);
                             $mailer = Mail::build($mailConfig);
                             $mailer->to($q_m->contact->email)->send($mailable);
 
                             // On success add an entry in the sent_mails
                             $sent_mail = new SentMail;
-                            $sent_mail->id = (string) \Illuminate\Support\Str::uuid();
+                            $sent_mail->id = $trackingId;
                             $sent_mail->newsletter_id = $q_m->newsletter_id;
                             $sent_mail->outbound_mail_account_id = $active_m_a->id;
                             $sent_mail->contact_id = $q_m->contact_id;
                             $sent_mail->subject = $q_m->subject;
-                            $sent_mail->body = $q_m->body;
+                            $sent_mail->body = $emailBody;
+                            $sent_mail->opened = 0;
                             $sent_mail->save();
 
                             // Remove from queue
