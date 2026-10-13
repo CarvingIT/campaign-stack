@@ -9,6 +9,7 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SentMailController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +24,9 @@ Route::get('/emails', [EmailController::class, 'list'])
 
 Route::get('/emails/data', [EmailController::class, 'data'])
     ->name('emails.data');
+
+Route::get('/email/track/{id}', [SentMailController::class, 'track'])
+    ->name('email.track');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
