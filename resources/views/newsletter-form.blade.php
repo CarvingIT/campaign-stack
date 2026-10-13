@@ -1215,8 +1215,6 @@ OUTPUT INSTRUCTIONS:
                                             id="status" name="status" required>
                                         <option value="D" @if($newsletter->status == 'D' || empty($newsletter->status)) selected @endif>Draft (Not queued)</option>
                                         <option value="N" @if($newsletter->status == 'N') selected @endif>Ready (Ready for Dispatch Studio)</option>
-                                        <option value="Q" @if($newsletter->status == 'Q') selected @endif>Queuing (In delivery)</option>
-                                        <option value="S" @if($newsletter->status == 'S') selected @endif>Sent (Completed)</option>
                                     </select>
                                 </div>
                             </div>

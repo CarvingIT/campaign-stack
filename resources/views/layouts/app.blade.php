@@ -316,7 +316,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @stack('js')
+        <!--@stack('js')-->
     </head>
     <body class="font-sans antialiased text-zinc-900 dark:text-zinc-100 bg-slate-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(254,243,199,0.35),rgba(255,255,255,0))] dark:bg-[#09090B] dark:bg-none">
         <!-- Realistic Ambient Light Wave Element -->
@@ -453,5 +453,6 @@
                 window.dispatchEvent(new Event('sidebar-toggled'));
             };
         </script>
+        @stack('js')
     </body>
 </html>
